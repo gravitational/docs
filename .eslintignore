@@ -1,0 +1,5 @@
+/.build
+/.next
+/node_modules
+/pages/ver/*
+/content

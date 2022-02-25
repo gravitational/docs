@@ -1,0 +1,21 @@
+name: CI
+on: push
+jobs:
+  lint-code-base:
+    name: Lint code base
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Install Packages
+        run: yarn
+      - name: Check TypeScript integrity
+        run: yarn typecheck
+      - name: Check .js and .ts code
+        run: yarn lint-check
+      - name: Run tests
+        run: yarn test

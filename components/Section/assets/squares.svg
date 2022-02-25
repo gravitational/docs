@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1431px" height="728px" viewBox="0 0 1431 728" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Rectangle</title>
+    <defs>
+        <rect id="path-1" x="1" y="2856" width="1432" height="728"></rect>
+        <pattern id="pattern-2" width="80" height="80" x="-79" y="2776" patternUnits="userSpaceOnUse">
+            <use xlink:href="#image-3"></use>
+        </pattern>
+        <image id="image-3" width="80" height="80" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAABGdBTUEAALGN5fIAKQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAUKADAAQAAAABAAAAUAAAAAASKG51AAABdUlEQVR4Ae3csY0CQRBE0QWTJCBYTGLDIxUEFogApmqkP8LZf253nfHU2imdcdsWfp6v9yeMt73Pt+v9fExAzrqAgN0obggYefpQwG4UNwSMPH0oYDeKG4dWRWJ658PT7XGJBA1373N7YDyfuaHfwDmn4ZaAQ5q5gYBzTsMtAYc0cwMB55yGW/bAIU0f2APh3zvtgf3I6obfwEqUFwTMPnUqYCXKCwJmnzoVsBLlBXtg9olTe6A9MB7IX4Z+AyGzgAJCARj3AgWEAjBuDwSA9kB7IDifRVEfEQgpoIBQAMa9QAGhAIzbAwGgPdAeCM5nUdRHBEIKKCAUgHEvUEAoAOP2QABoD7QHgvNZFPURgZACCggFYNwLFBAKwLg9EADaA+2B4HwWRX1EIKSAAkIBGPcCBYQCMG4PBID2QHsgOJ9FUR8RCCmggFAAxr1AAaEAjNsDAaA90B4IzmdR1EcEQgooIBSAcS9QQCgA44ffv3CDv2PX8S+fwKBC2p8aKAAAAABJRU5ErkJggg=="></image>
+    </defs>
+    <g id="Feature-Page" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Rectangle" transform="translate(-1.000000, -2856.000000)">
+            <use fill="#FFFFFF" xlink:href="#path-1"></use>
+            <use fill="url(#pattern-2)" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>
