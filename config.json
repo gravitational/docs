@@ -1,0 +1,41 @@
+{
+  "versions": [
+    {
+      "name": "4.4",
+      "branch": "branch/4.4"
+    },
+    {
+      "name": "5.0",
+      "branch": "branch/5.0"
+    },
+    {
+      "name": "6.0",
+      "branch": "branch/v6.0"
+    },
+    {
+      "name": "6.1",
+      "branch": "branch/v6.1"
+    },
+    {
+      "name": "6.2",
+      "branch": "branch/v6.2"
+    },
+    {
+      "name": "7.0",
+      "branch": "branch/v7"
+    },
+    {
+      "name": "8.0",
+      "branch": "branch/v8",
+      "latest": true
+    },
+    {
+      "name": "9.0",
+      "branch": "branch/v9"
+    },
+    {
+      "name": "10.0",
+      "branch": "master"
+    }
+  ]
+}

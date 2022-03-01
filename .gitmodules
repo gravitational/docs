@@ -1,0 +1,36 @@
+[submodule "content/4.4"]
+	path = content/4.4
+	url = https://github.com/gravitational/teleport/
+	branch = branch/4.4
+[submodule "content/5.0"]
+	path = content/5.0
+	url = https://github.com/gravitational/teleport/
+	branch = branch/5.0
+[submodule "content/6.0"]
+	path = content/6.0
+	url = https://github.com/gravitational/teleport/
+	branch = branch/v6.0
+[submodule "content/6.1"]
+	path = content/6.1
+	url = https://github.com/gravitational/teleport/
+	branch = branch/v6.1
+[submodule "content/6.2"]
+	path = content/6.2
+	url = https://github.com/gravitational/teleport/
+	branch = branch/v6.2
+[submodule "content/7.0"]
+	path = content/7.0
+	url = https://github.com/gravitational/teleport/
+	branch = branch/v7
+[submodule "content/8.0"]
+	path = content/8.0
+	url = https://github.com/gravitational/teleport/
+	branch = branch/v8
+[submodule "content/9.0"]
+	path = content/9.0
+	url = https://github.com/gravitational/teleport/
+	branch = branch/v9
+[submodule "content/10.0"]
+	path = content/10.0
+	url = https://github.com/gravitational/teleport/
+	branch = master
