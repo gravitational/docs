@@ -40,7 +40,7 @@
     "@styled-system/css": "^5.1.5",
     "date-fns": "^2.27.0",
     "docsearch.js": "^2.6.3",
-    "next": "12.0.9",
+    "next": "12.1.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-use": "^17.3.1",
