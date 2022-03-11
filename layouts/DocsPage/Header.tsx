@@ -9,6 +9,7 @@ import Versions from "./Versions";
 import NextImage from "next/image";
 import { VersionsInfo } from "./types";
 import { DocsContext } from "./context";
+import forkmeSrc from "./assets/forkme.webp";
 
 interface DocHeaderProps {
   title: string;
@@ -34,7 +35,7 @@ const DocHeader = ({
           <NextImage
             width="112"
             height="112"
-            src="https://github.blog/wp-content/uploads/2008/12/forkme_right_white_ffffff.png?resize=149%2C149"
+            src={forkmeSrc}
             alt="Fork me on GitHub"
           />
         </Box>

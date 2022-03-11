@@ -103,7 +103,7 @@ export async function fetchVideoMeta(id: string): Promise<Meta | FullMeta> {
     data = {
       href: "#",
       title: "This is a fake video link, YouTube API key is not available",
-      thumbnail: "/static/placeholder-videobar.jpg",
+      thumbnail: "/docs/placeholder-videobar.jpg",
       duration: "03:44",
     };
   }

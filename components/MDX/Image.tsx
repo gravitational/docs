@@ -5,7 +5,6 @@ import Box from "components/Box";
 import Flex from "components/Flex";
 
 type PositioningValue = "left" | "center" | "right";
-type MarginValue = number | number[] | string | string[];
 
 const getAlignItems = (align?: PositioningValue) => {
   switch (align) {
@@ -22,8 +21,6 @@ interface SharedProps {
   align?: PositioningValue;
   bordered?: boolean;
   caption?: string;
-  yMargin?: MarginValue;
-  xMargin?: MarginValue;
   imagePositioning?: PositioningValue;
 }
 
@@ -47,26 +44,19 @@ export const Image = ({
   align,
   bordered,
   caption,
-  xMargin,
-  yMargin = 3,
   imagePositioning,
   ...props
 }: ImageProps) => {
   const imageProps = useMemo((): NextImageProps => {
-    const imageTemp = {
+    return {
       ...props,
       layout: "intrinsic",
-      sizes: "(min-width: 1460px) 900px, 100vw",
-    };
-
-    return imageTemp as NextImageProps;
+    } as NextImageProps;
   }, [props]);
 
   return (
     <Flex
       as="span"
-      mx={xMargin}
-      my={yMargin}
       flexDirection="column"
       alignItems={getAlignItems(align)}
       css={css({
