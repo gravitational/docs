@@ -22,8 +22,8 @@ export default withBundleAnalyzer({
   ],
   redirects: async () => getRedirects(),
   images: {
+    path: "/docs/_next/image",
     disableStaticImages: true,
-    domains: ["github.blog"],
   },
   trailingSlash: true,
   env: {
