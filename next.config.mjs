@@ -24,6 +24,7 @@ export default withBundleAnalyzer({
   images: {
     path: "/docs/_next/image",
     disableStaticImages: true,
+    domains: ["i.ytimg.com"], // Images for youtube preview
   },
   trailingSlash: true,
   env: {
