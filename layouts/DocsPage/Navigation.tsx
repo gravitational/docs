@@ -118,9 +118,9 @@ export const getCurrentCategoryIndex = (
   categories: NavigationCategory[],
   href: string
 ) => {
-  const scopeLessHref = href.split("?")[0];
+  const scopelessHref = href.split("?")[0];
   const index = categories.findIndex(({ entries }) =>
-    hasSlug(entries, scopeLessHref)
+    hasSlug(entries, scopelessHref)
   );
 
   return index !== -1 ? index : null;

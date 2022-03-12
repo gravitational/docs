@@ -56,7 +56,7 @@ const renderScope = (scope: Option) => (
 );
 
 const pickId = ({ value }: Option) => value;
-const pickOption = (optins: Option[], id: string) =>
+const pickOption = (options: Option[], id: string) =>
   options.find(({ value }) => value === id);
 
 export const Scopes = ({ ...props }: BoxProps) => {
