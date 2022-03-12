@@ -2,6 +2,7 @@ import Admonition from "components/Admonition";
 import Command, { CommandLine, CommandComment } from "components/Command";
 import BaseLink from "components/Link";
 import Notice from "components/Notice";
+import ScopedBlock from "components/ScopedBlock";
 import Snippet from "components/Snippet";
 import { Tabs, TabItem } from "components/Tabs";
 import {
@@ -65,6 +66,7 @@ export const components = {
   Command,
   CommandLine,
   CommandComment,
+  ScopedBlock,
   Tabs,
   TabItem,
   Tile,
