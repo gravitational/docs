@@ -72,8 +72,8 @@ export const normalizePath = (fullPath: string) => {
 
 // urls in meta and link tags in the headers should be absolute
 
-export const buildCanonicalUrl = (path: string) =>
-  `${host}${normalizePath(splitPath(path).path)}`;
+export const buildCanonicalUrl = (basePath: string, path: string) =>
+  `${host}${basePath}${normalizePath(splitPath(path).path)}`;
 
 export const getExtension = (href: string): string | undefined => {
   const parts = href.split("/");
