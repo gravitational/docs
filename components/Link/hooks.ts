@@ -25,15 +25,24 @@ export const useCurrentHref = () => {
  */
 
 export const useNormalizedHref = (href: string) => {
-  const { asPath } = useRouter();
+  const { asPath, basePath } = useRouter();
+
+  const noBaseHref = href.startsWith(basePath)
+    ? href.substring(basePath.length)
+    : href;
+
   const { scope } = useContext(DocsContext);
 
-  if (isHash(href) || isExternalLink(href) || isLocalAssetFile(href)) {
-    return href;
+  if (
+    isHash(noBaseHref) ||
+    isExternalLink(noBaseHref) ||
+    isLocalAssetFile(noBaseHref)
+  ) {
+    return noBaseHref;
   }
 
   const currentHref = normalizePath(asPath);
-  let fullHref = resolve(splitPath(currentHref).path, href);
+  let fullHref = resolve(splitPath(currentHref).path, noBaseHref);
 
   return updateScopeInUrl(fullHref, scope);
 };
