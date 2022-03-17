@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
-import { ScopesType, getScopeFromUrl } from "layouts/DocsPage/context";
+import { getScopeFromUrl } from "layouts/DocsPage/context";
+import { ScopesType } from "layouts/DocsPage/types";
 
 interface ScopedBlockProps {
   scope: ScopesType;

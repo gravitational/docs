@@ -1,12 +1,7 @@
 import { useRouter } from "next/router";
 import { createContext, useState, useEffect } from "react";
 import { splitPath, buildPath } from "utils/url";
-import { VersionsInfo } from "./types";
-
-const scopeValues = ["oss", "cloud", "enterprise"] as const;
-
-export type ScopeType = typeof scopeValues[number];
-export type ScopesType = ScopeType | ScopeType[];
+import { VersionsInfo, scopeValues, ScopeType } from "./types";
 
 export const getScopes = (scope?: ScopeType | ScopeType[]) => {
   if (!scope) {

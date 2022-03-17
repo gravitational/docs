@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import css from "@styled-system/css";
+import { useRouter } from "next/router";
 import { transition } from "components/system";
 import { all } from "components/system";
 import Box from "components/Box";
@@ -9,6 +10,7 @@ import HeadlessButton from "components/HeadlessButton";
 import Search from "components/Search";
 import Icon from "components/Icon";
 import Link, { useCurrentHref } from "components/Link";
+import { getScopeFromUrl } from "./context";
 import { NavigationItem, NavigationCategory } from "./types";
 
 interface DocsNavigationItemsProps {
@@ -20,7 +22,9 @@ const DocsNavigationItems = ({
   entries,
   onClick,
 }: DocsNavigationItemsProps) => {
+  const router = useRouter();
   const docPath = useCurrentHref();
+  const urlScope = getScopeFromUrl(router.asPath);
 
   return (
     <>
@@ -31,7 +35,7 @@ const DocsNavigationItems = ({
             (entry) => entry.slug === docPath
           );
 
-          return (
+          return entry.hideInScopes === urlScope ? null : (
             <Box as="li" key={entry.slug}>
               <NavigationLink
                 href={entry.slug}

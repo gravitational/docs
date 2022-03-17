@@ -3,7 +3,8 @@ import Box, { BoxProps } from "components/Box";
 import Flex from "components/Flex";
 import Icon, { IconName } from "components/Icon";
 import { Dropdown } from "components/Dropdown";
-import { DocsContext, ScopeType } from "./context";
+import { DocsContext } from "./context";
+import { ScopeType } from "./types";
 
 interface Option {
   value: ScopeType;
