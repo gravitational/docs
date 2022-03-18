@@ -13,6 +13,8 @@ import Link, { useCurrentHref } from "components/Link";
 import { getScopeFromUrl } from "./context";
 import { NavigationItem, NavigationCategory } from "./types";
 
+const SCOPLESS_HREF_REGEX = /\?|\#/;
+
 interface DocsNavigationItemsProps {
   entries: NavigationItem[];
   onClick: () => void;
@@ -23,7 +25,7 @@ const DocsNavigationItems = ({
   onClick,
 }: DocsNavigationItemsProps) => {
   const router = useRouter();
-  const docPath = useCurrentHref();
+  const docPath = useCurrentHref().split(SCOPLESS_HREF_REGEX)[0];
   const urlScope = getScopeFromUrl(router.asPath);
 
   return (
@@ -34,21 +36,24 @@ const DocsNavigationItems = ({
           const childrenActive = entry.entries?.some(
             (entry) => entry.slug === docPath
           );
+          const hide = entry.hideInScopes === urlScope;
 
-          return entry.hideInScopes === urlScope ? null : (
-            <Box as="li" key={entry.slug}>
-              <NavigationLink
-                href={entry.slug}
-                active={entryActive || childrenActive}
-                isSelected={entryActive}
-                onClick={onClick}
-              >
-                {entry.title}
-                {!!entry.entries?.length && (
-                  <EllipsisIcon size="sm" name="ellipsis" />
-                )}
-              </NavigationLink>
-              {!!entry.entries?.length && (
+          return (
+            <Box as="li" key={entry.slug} display={hide ? "none" : "block"}>
+              {hide ? null : (
+                <NavigationLink
+                  href={entry.slug}
+                  active={entryActive || childrenActive}
+                  isSelected={entryActive}
+                  onClick={onClick}
+                >
+                  {entry.title}
+                  {!!entry.entries?.length && (
+                    <EllipsisIcon size="sm" name="ellipsis" />
+                  )}
+                </NavigationLink>
+              )}
+              {!!entry.entries?.length && !hide && (
                 <WrapperLevelMenu as="ul" listStyle="none">
                   <DocsNavigationItems
                     entries={entry.entries}
@@ -122,7 +127,7 @@ export const getCurrentCategoryIndex = (
   categories: NavigationCategory[],
   href: string
 ) => {
-  const scopelessHref = href.split(/\?|\#/)[0];
+  const scopelessHref = href.split(SCOPLESS_HREF_REGEX)[0];
   const index = categories.findIndex(({ entries }) =>
     hasSlug(entries, scopelessHref)
   );
