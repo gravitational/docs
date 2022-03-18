@@ -36,11 +36,13 @@ const DocsNavigationItems = ({
           const childrenActive = entry.entries?.some(
             (entry) => entry.slug === docPath
           );
-          const hide = entry.hideInScopes === urlScope;
+          const isHide = Array.isArray(entry.hideInScopes)
+            ? entry.hideInScopes.includes(urlScope)
+            : entry.hideInScopes === urlScope;
 
           return (
-            <Box as="li" key={entry.slug} display={hide ? "none" : "block"}>
-              {hide ? null : (
+            <Box as="li" key={entry.slug}>
+              {isHide ? null : (
                 <NavigationLink
                   href={entry.slug}
                   active={entryActive || childrenActive}
@@ -53,7 +55,7 @@ const DocsNavigationItems = ({
                   )}
                 </NavigationLink>
               )}
-              {!!entry.entries?.length && !hide && (
+              {!!entry.entries?.length && !isHide && (
                 <WrapperLevelMenu as="ul" listStyle="none">
                   <DocsNavigationItems
                     entries={entry.entries}

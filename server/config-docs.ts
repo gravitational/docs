@@ -69,7 +69,7 @@ const validator = ajv.compile({
               properties: {
                 title: { type: "string" },
                 slug: { type: "string" },
-                hideInScopes: { type: "string" || "array" },
+                hideInScopes: { type: ["string", "array"] },
                 entries: {
                   type: "array",
                   items: { $ref: "navigation-item" },
