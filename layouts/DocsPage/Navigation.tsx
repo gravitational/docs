@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import css from "@styled-system/css";
+import { useRouter } from "next/router";
 import { transition } from "components/system";
 import { all } from "components/system";
 import Box from "components/Box";
@@ -9,7 +10,10 @@ import HeadlessButton from "components/HeadlessButton";
 import Search from "components/Search";
 import Icon from "components/Icon";
 import Link, { useCurrentHref } from "components/Link";
+import { getScopeFromUrl } from "./context";
 import { NavigationItem, NavigationCategory } from "./types";
+
+const SCOPELESS_HREF_REGEX = /\?|\#/;
 
 interface DocsNavigationItemsProps {
   entries: NavigationItem[];
@@ -20,7 +24,9 @@ const DocsNavigationItems = ({
   entries,
   onClick,
 }: DocsNavigationItemsProps) => {
-  const docPath = useCurrentHref();
+  const router = useRouter();
+  const docPath = useCurrentHref().split(SCOPELESS_HREF_REGEX)[0];
+  const urlScope = getScopeFromUrl(router.asPath);
 
   return (
     <>
@@ -30,21 +36,26 @@ const DocsNavigationItems = ({
           const childrenActive = entry.entries?.some(
             (entry) => entry.slug === docPath
           );
+          const isHidden = Array.isArray(entry.hideInScopes)
+            ? entry.hideInScopes.includes(urlScope)
+            : entry.hideInScopes === urlScope;
 
           return (
             <Box as="li" key={entry.slug}>
-              <NavigationLink
-                href={entry.slug}
-                active={entryActive || childrenActive}
-                isSelected={entryActive}
-                onClick={onClick}
-              >
-                {entry.title}
-                {!!entry.entries?.length && (
-                  <EllipsisIcon size="sm" name="ellipsis" />
-                )}
-              </NavigationLink>
-              {!!entry.entries?.length && (
+              {isHidden ? null : (
+                <NavigationLink
+                  href={entry.slug}
+                  active={entryActive || childrenActive}
+                  isSelected={entryActive}
+                  onClick={onClick}
+                >
+                  {entry.title}
+                  {!!entry.entries?.length && (
+                    <EllipsisIcon size="sm" name="ellipsis" />
+                  )}
+                </NavigationLink>
+              )}
+              {!!entry.entries?.length && !isHidden && (
                 <WrapperLevelMenu as="ul" listStyle="none">
                   <DocsNavigationItems
                     entries={entry.entries}
@@ -118,7 +129,7 @@ export const getCurrentCategoryIndex = (
   categories: NavigationCategory[],
   href: string
 ) => {
-  const scopelessHref = href.split(/\?|\#/)[0];
+  const scopelessHref = href.split(SCOPELESS_HREF_REGEX)[0];
   const index = categories.findIndex(({ entries }) =>
     hasSlug(entries, scopelessHref)
   );

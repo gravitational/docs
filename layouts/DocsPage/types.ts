@@ -3,9 +3,15 @@
 import type { IconName } from "components/Icon/types";
 import { VideoBarProps } from "components/VideoBar/types";
 
+export const scopeValues = ["oss", "cloud", "enterprise"] as const;
+
+export type ScopeType = typeof scopeValues[number];
+export type ScopesType = ScopeType | ScopeType[];
+
 export interface NavigationItem {
   title: string;
   slug: string;
+  hideInScopes?: ScopesType;
   entries?: NavigationItem[];
 }
 
