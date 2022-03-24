@@ -13,7 +13,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   let rawResults = [];
-  const docsVer = req.headers.referer.includes("ver")
+  const docsVer = req.headers.referer.includes("ver/")
     ? req.headers.referer.split("ver/")[1].split("/")[0]
     : "current";
 
