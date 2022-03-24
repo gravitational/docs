@@ -1,3 +1,4 @@
+<<<<<<< HEAD:styles/algolia-search.css
 /* stylelint-disable max-line-length */
 /* stylelint-disable no-descending-specificity */
 /* stylelint-disable selector-class-pattern */
@@ -389,9 +390,20 @@
 @media all and (min-width: 768px) {
   .algolia-autocomplete .algolia-docsearch-suggestion .algolia-docsearch-suggestion--subcategory-column {
     display: block;
-  }
-}
+=======
+import { createGlobalStyle } from "styled-components";
 
+export const SearchStyles = createGlobalStyle`
+.aa-Panel {
+  width: 500px !important;
+  z-index: 1000;
+
+  & .aa-Item + .aa-Item {
+    margin-top: 8px;
+>>>>>>> 72c848f (search through algolia is implemented):components/Search/SearchStyles.ts
+  }
+
+<<<<<<< HEAD:styles/algolia-search.css
 @media all and (max-width: 768px) {
   .algolia-autocomplete .algolia-docsearch-suggestion .algolia-docsearch-suggestion--subcategory-column {
     display: inline-block;
@@ -531,7 +543,17 @@
   height: 100%;
   display: block;
 }
+=======
+  & .found-part {
+    background-color: #d2dbdf;
+    color: #651fff;
+  }
 
-.algolia-autocomplete {
-  width: 100% !important;
+>>>>>>> 72c848f (search through algolia is implemented):components/Search/SearchStyles.ts
+
+  /* @media(max-width: 680px) {
+    width: auto !important;
+    left: 0 !important;
+    transform: translateX(0);
+  } */
 }

@@ -1,17 +1,18 @@
-const SITE_INDEX = process.env.ALGOLIA_SITE_INDEX_NAME;
-const BLOG_INDEX = process.env.ALGOLIA_BLOG_INDEX_NAME;
-const RESOURCES_INDEX = process.env.ALGOLIA_RESOURCES_INDEX_NAME;
-
-export type indexName = "blog" | "site" | "resources";
+const DOCS_INDEX = process.env.ALGOLIA_DOCS_INDEX_NAME;
 
 // Algolia API Parametres list: https://www.algolia.com/doc/api-reference/api-parameters/
-export const getSearchQuery = (indexName: indexName, query: string) => {
+export const getSearchQuery = (
+  indexName: string,
+  query: string,
+  docsVer: string
+) => {
   return {
     indexName: indexName,
     query: query,
     params: {
       hitsPerPage: 50,
     },
+    filters: `docs_ver:${docsVer}`,
     restrictHighlightAndSnippetArrays: true,
     attributesToHighlight: ["content", "headers"],
     attributesToSnippet: ["content:30", "headers"],
@@ -21,21 +22,8 @@ export const getSearchQuery = (indexName: indexName, query: string) => {
   };
 };
 
-export const getSearchQueries = (indexName: indexName, query: string) => {
-  let setIndexName = [];
-
-  switch (indexName) {
-    case "blog":
-      setIndexName = [BLOG_INDEX, RESOURCES_INDEX, SITE_INDEX];
-      break;
-    case "resources":
-      setIndexName = [RESOURCES_INDEX, BLOG_INDEX, SITE_INDEX];
-      break;
-    default:
-      setIndexName = [SITE_INDEX, BLOG_INDEX, RESOURCES_INDEX];
-  }
-
-  return setIndexName.map((index) => getSearchQuery(index, query));
+export const getSearchQueries = (query: string, docsVer: string) => {
+  return [getSearchQuery(DOCS_INDEX, query, docsVer)];
 };
 
 function debouncePromise(fn, time: number) {
