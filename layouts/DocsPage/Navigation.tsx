@@ -28,10 +28,9 @@ const DocsNavigationItems = ({
     <>
       {!!entries.length &&
         entries.map((entry) => {
-          const entryActive = entry.slug === docPath;
-          const childrenActive = entry.entries?.some(
-            (entry) => entry.slug === docPath
-          );
+          const selected = entry.slug === docPath;
+          const active =
+            selected || entry.entries?.some((entry) => entry.slug === docPath);
           const isHidden = Array.isArray(entry.hideInScopes)
             ? entry.hideInScopes.includes(urlScope)
             : entry.hideInScopes === urlScope;
@@ -42,8 +41,8 @@ const DocsNavigationItems = ({
                 <Link
                   className={cn(
                     styles.link,
-                    (entryActive || childrenActive) && styles.active,
-                    entryActive && styles.selected
+                    active && styles.active,
+                    selected && styles.selected
                   )}
                   href={entry.slug}
                   onClick={onClick}

@@ -111,7 +111,7 @@
   text-transform: uppercase;
   background-color: var(--color-lightest-gray);
 
-  .opened & {
+  .wrapper.opened & {
     color: var(--color-white);
     background-color: var(--color-dark-purple);
   }

@@ -4,6 +4,7 @@
 }
 
 .menu {
+  box-sizing: border-box;
   width: 240px;
   padding: var(--m-3);
   position: sticky;

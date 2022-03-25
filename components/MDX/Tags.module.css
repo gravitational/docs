@@ -56,7 +56,7 @@
     border-bottom-right-radius: var(--r-default);
   }
 
-  .tbody &:nth-child(even) {
+  &:nth-child(even) {
     background-color: var(--color-lightest-gray);
   }
 }
