@@ -5,6 +5,7 @@ export { default as building } from "./svg/building.svg?react";
 export { default as calendar } from "./svg/calendar.svg?react";
 export { default as card } from "./svg/card.svg?react";
 export { default as check } from "./svg/check.svg?react";
+export { default as chip } from "./svg/chip.svg?react";
 export { default as clock } from "./svg/clock.svg?react";
 export { default as close } from "./svg/close.svg?react";
 export { default as cloud } from "./svg/cloud.svg?react";
