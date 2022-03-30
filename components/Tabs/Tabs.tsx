@@ -98,7 +98,7 @@ export const Tabs = ({ children }: TabsProps) => {
         return (
           <div
             key={tab.props.label}
-            className={tab.props.label !== currentLabel && styles.hidden}
+            className={tab.props.label !== currentLabel ? styles.hidden : null}
           >
             {tab.props.scope === "cloud" && latest !== current ? (
               <TabItem label={tab.props.label}>
