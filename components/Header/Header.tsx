@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { css, media, transition } from "components/system";
 import Flex from "components/Flex";
 import Icon from "components/Icon";
-import Link from "components/Link";
 import Logo from "components/Logo";
 import Menu from "components/Menu";
 import HeadlessButton from "components/HeadlessButton";
@@ -45,13 +44,13 @@ const Header = ({ mode, headerColor, border, shadow = false }: HeaderProps) => {
           alignItems="center"
         >
           <Centrator>
-            <Link href="/">
+            <a href="/">
               <Logo
                 width={["121px", "150px"]}
                 height={["24px", "30px"]}
                 color="dark-purple"
               />
-            </Link>
+            </a>
           </Centrator>
         </Flex>
       );
@@ -104,8 +103,9 @@ const StyledHeader = styled(Flex)(
   })
 );
 
-const StyledLogoLink = styled(Link)(
+const StyledLogoLink = styled("a")(
   css({
+    boxSizing: "border-box",
     color: "dark-purple",
     flexDirection: "row",
     fontSize: "text-xl",
