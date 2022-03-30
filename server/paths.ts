@@ -64,7 +64,7 @@ export const generateSitemap = (root: string) => {
 
   sitemapGenerator({
     pages: [...currentDocPages],
-    path: resolve("public", "docs_sitemap.xml"),
+    path: resolve("public", "sitemap.xml"),
     root,
   });
 };
