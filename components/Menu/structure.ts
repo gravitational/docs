@@ -104,7 +104,7 @@ const menu: MenuCategoryProps[] = [
         icon: "stack",
         title: "Documentation",
         description: "Installation and Teleport user guides",
-        href: "/docs/",
+        href: "https://goteleport.com/docs/",
       },
       {
         icon: "gamepad",
