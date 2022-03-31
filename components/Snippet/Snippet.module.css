@@ -1,0 +1,10 @@
+.wrapper {
+  & pre {
+    color: #75715e;
+  }
+}
+
+.scroll {
+  width: max-content;
+  min-width: 100%;
+}

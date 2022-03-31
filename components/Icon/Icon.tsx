@@ -1,35 +1,22 @@
-import { ComponentProps } from "react";
-import Box from "components/Box";
+import cn from "classnames";
 import * as icons from "./icons";
+import { IconName } from "./types";
+import styles from "./Icon.module.css";
 
-const sizes = {
-  xs: 12,
-  sm: 16,
-  md: 24,
-  lg: 32,
-  xl: 40,
-};
-
-export type IconName = keyof typeof icons;
-
-export interface IconProps
-  extends Omit<ComponentProps<typeof Box>, "name" | "size"> {
+export interface IconProps {
   name: IconName;
-  size?: keyof typeof sizes;
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  className?: string;
 }
 
-const Icon = ({ name, size = "md", ...props }: IconProps) => {
+const Icon = ({ name, size = "md", className }: IconProps) => {
   const IconSVG = icons[name];
 
   if (!IconSVG) {
-    return <Box size={sizes[size]} {...props} />;
+    return <span className={cn(styles.wrapper, styles[size], className)} />;
   }
 
-  return (
-    <Box size={sizes[size]} {...props}>
-      <IconSVG width="100%" height="100%" display="block" />
-    </Box>
-  );
+  return <IconSVG className={cn(styles.wrapper, styles[size], className)} />;
 };
 
 export default Icon;

@@ -1,0 +1,5 @@
+.wrapper {
+  @media (--md-scr) {
+    width: 110px;
+  }
+}

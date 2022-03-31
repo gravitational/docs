@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import css from "@styled-system/css";
+import cn from "classnames";
 import {
   isValidElement,
   Children,
@@ -8,13 +7,11 @@ import {
   useMemo,
   useState,
 } from "react";
-import { variant } from "components/system";
-import Box from "components/Box";
-import Flex from "components/Flex";
 import HeadlessButton from "components/HeadlessButton";
 import { VersionWarning } from "layouts/DocsPage";
 import { DocsContext, getScopes } from "layouts/DocsPage/context";
 import { ScopesType } from "layouts/DocsPage/types";
+import styles from "./Tabs.module.css";
 
 const getSelectedLabel = (
   tabs: React.ReactComponentElement<typeof TabItem>[]
@@ -32,11 +29,7 @@ export interface TabItemProps {
 }
 
 export const TabItem = ({ children }: TabItemProps) => {
-  return (
-    <Box p={[2, 3]} overflowX="auto">
-      {children}
-    </Box>
-  );
+  return <div className={styles.item}>{children}</div>;
 };
 
 interface TabsLabel {
@@ -47,20 +40,13 @@ interface TabsLabel {
 
 const TabLabel = ({ selected, label, onClick }: TabsLabel) => {
   return (
-    <Label
+    <HeadlessButton
       disabled={selected}
       onClick={() => onClick(label)}
-      variant={selected ? "selected" : "default"}
-      px={[3, 5]}
-      py={2}
-      borderTopLeftRadius="default"
-      borderTopRightRadius="default"
-      fontSize="text-md"
-      fontWeight="bold"
-      lineHeight="md"
+      className={cn(styles.label, selected ? styles.selected : styles.default)}
     >
       {label}
-    </Label>
+    </HeadlessButton>
   );
 };
 
@@ -97,24 +83,8 @@ export const Tabs = ({ children }: TabsProps) => {
   }, [scope, childTabs]);
 
   return (
-    <Box
-      bg="white"
-      boxShadow="0 1px 4px rgba(0,0,0,.24)"
-      borderRadius="default"
-      mb={3}
-      css={css({
-        "&:last-child": {
-          mb: 0,
-        },
-      })}
-    >
-      <Flex
-        bg="lightest-gray"
-        overflowX="auto"
-        height="auto"
-        borderTopLeftRadius="default"
-        borderTopRightRadius="default"
-      >
+    <div className={styles.wrapper}>
+      <div className={styles.header}>
         {labels.map((label) => (
           <TabLabel
             key={label}
@@ -123,12 +93,12 @@ export const Tabs = ({ children }: TabsProps) => {
             selected={label === currentLabel}
           />
         ))}
-      </Flex>
+      </div>
       {childTabs.map((tab) => {
         return (
-          <Box
+          <div
             key={tab.props.label}
-            display={tab.props.label === currentLabel ? "block" : "none"}
+            className={tab.props.label !== currentLabel && styles.hidden}
           >
             {tab.props.scope === "cloud" && latest !== current ? (
               <TabItem label={tab.props.label}>
@@ -137,36 +107,11 @@ export const Tabs = ({ children }: TabsProps) => {
             ) : (
               tab
             )}
-          </Box>
+          </div>
         );
       })}
-    </Box>
+    </div>
   );
 };
 
 Tabs.Item = TabItem;
-
-const Label = styled(HeadlessButton)<{ variant: "default" | "selected" }>(
-  css({
-    whiteSpace: "nowrap",
-    flexShrink: 0,
-    m: 0,
-    "&:hover, &:active, &:focus": {
-      color: "darkest",
-      outline: "none",
-    },
-  }),
-  variant({
-    variants: {
-      default: {
-        color: "gray",
-        cursor: "pointer",
-      },
-      selected: {
-        pointerEvents: "none",
-        bg: "white",
-        color: "dark-purple",
-      },
-    },
-  })
-);

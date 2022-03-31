@@ -1,7 +1,5 @@
-import styled from "styled-components";
-import css from "@styled-system/css";
 import Pre from "components/MDX/Pre";
-import Box from "components/Box";
+import styles from "./Snippet.module.css";
 
 export interface SnippetProps {
   children: React.ReactNode;
@@ -9,18 +7,8 @@ export interface SnippetProps {
 
 export default function Snippet({ children }: SnippetProps) {
   return (
-    <StyledPre>
-      <Box width="max-content" minWidth="100%">
-        {children}
-      </Box>
-    </StyledPre>
+    <Pre className={styles.wrapper}>
+      <div className={styles.scroll}>{children}</div>
+    </Pre>
   );
 }
-
-const StyledPre = styled(Pre)(
-  css({
-    "& pre": {
-      color: "#75715e",
-    },
-  })
-);

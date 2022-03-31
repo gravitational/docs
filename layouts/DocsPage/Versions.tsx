@@ -1,8 +1,9 @@
+import cn from "classnames";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import Box, { BoxProps } from "components/Box";
 import { Dropdown } from "components/Dropdown";
 import type { VersionsInfo } from "./types";
+import styles from "./Versions.module.css";
 
 const renderVersion = (version: string) => `Version ${version}`;
 
@@ -11,8 +12,8 @@ const Versions = ({
   latest,
   available,
   disabled,
-  ...props
-}: VersionsInfo & BoxProps) => {
+  className,
+}: VersionsInfo) => {
   const router = useRouter();
   const [currentItem, setCurrentItem] = useState<string>(current);
 
@@ -34,16 +35,14 @@ const Versions = ({
   }, [current]);
 
   return (
-    <Box {...props}>
-      <Dropdown
-        width={["auto", 110]}
-        value={currentItem}
-        options={versions}
-        disabled={disabled}
-        onChange={navigateToVersion}
-        renderOption={renderVersion}
-      />
-    </Box>
+    <Dropdown
+      className={cn(styles.wrapper, className)}
+      value={currentItem}
+      options={versions}
+      disabled={disabled}
+      onChange={navigateToVersion}
+      renderOption={renderVersion}
+    />
   );
 };
 

@@ -1,0 +1,25 @@
+.wrapper {
+  display: block;
+  width: var(--size);
+  height: var(--size);
+
+  &.xs {
+    --size: 12px;
+  }
+
+  &.sm {
+    --size: 16px;
+  }
+
+  &.md {
+    --size: 24px;
+  }
+
+  &.lg {
+    --size: 32px;
+  }
+
+  &.xl {
+    --size: 40px;
+  }
+}

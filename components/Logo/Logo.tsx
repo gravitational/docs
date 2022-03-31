@@ -1,21 +1,13 @@
-import Flex, { FlexProps } from "components/Flex";
-import LogoSvg from "./logo.svg?react";
+import cn from "classnames";
+import styles from "./Logo.module.css";
+import LogoSvg from "./assets/logo.svg?react";
 
 export type LogoProps = {
-  width?: string | string[];
-  height?: string | string[];
-} & FlexProps;
+  className?: string;
+};
 
-const Logo = (props: LogoProps) => (
-  <Flex
-    display="inline-block"
-    lineHeight="0"
-    width="121px"
-    height="24px"
-    {...props}
-  >
-    <LogoSvg width="100%" height="100%" />
-  </Flex>
+const Logo = ({ className }: LogoProps) => (
+  <LogoSvg className={cn(styles.wrapper, className)} />
 );
 
 export default Logo;

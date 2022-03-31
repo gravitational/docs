@@ -3,4 +3,5 @@ export interface VideoBarProps {
   href: string;
   title: string;
   duration?: string;
+  className?: string;
 }

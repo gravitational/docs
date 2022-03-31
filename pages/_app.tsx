@@ -1,13 +1,15 @@
 import Script from "next/script";
 import { useEffect } from "react";
-import { ThemeProvider } from "styled-components";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { DocsContextProvider } from "layouts/DocsPage/context";
-import theme from "components/theme";
 import { GTMPageView } from "utils/gtm";
-import { Lato, UbuntuMono } from "components/Fonts";
-import GlobalStyles from "components/GlobalStyles";
+
+import "styles/varaibles.css";
+import "styles/fonts-ubuntu.css";
+import "styles/fonts-lato.css";
+import "styles/global.css";
+import "styles/algolia-search.css";
 
 const { NEXT_PUBLIC_GTM_ID } = process.env;
 const { NEXT_PUBLIC_GTAG_ID } = process.env;
@@ -76,12 +78,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <>
       <Analytics />
       <DocsContextProvider>
-        <ThemeProvider theme={theme}>
-          <Lato />
-          <UbuntuMono />
-          <GlobalStyles />
-          <Component {...pageProps} />
-        </ThemeProvider>
+        <Component {...pageProps} />
       </DocsContextProvider>
     </>
   );

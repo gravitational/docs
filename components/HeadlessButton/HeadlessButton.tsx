@@ -1,20 +1,15 @@
-import styled from "styled-components";
+import cn from "classnames";
+import { DetailedHTMLProps, ButtonHTMLAttributes } from "react";
+import styles from "./HeadlessButton.module.css";
 
-import { all, StyledSystemProps } from "components/system";
-
-export const HeadlessButton = styled("button")<StyledSystemProps>(
-  {
-    appearance: "none",
-    boxSizing: "border-box",
-    display: "inline-block",
-    minWidth: 0,
-    lineHeight: "inherit",
-    fontSize: "inherit",
-    border: 0,
-    padding: 0,
-    backgroundColor: "transparent",
-  },
-  all
-);
+export const HeadlessButton = ({
+  className,
+  ...props
+}: DetailedHTMLProps<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+>) => {
+  return <button {...props} className={cn(styles.wrapper, className)} />;
+};
 
 export default HeadlessButton;

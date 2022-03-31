@@ -1,17 +1,13 @@
+import cn from "classnames";
 import { useState, useCallback, useEffect } from "react";
-import styled from "styled-components";
-import css from "@styled-system/css";
 import { useRouter } from "next/router";
-import { transition } from "components/system";
-import { all } from "components/system";
-import Box from "components/Box";
-import Flex from "components/Flex";
 import HeadlessButton from "components/HeadlessButton";
 import Search from "components/Search";
 import Icon from "components/Icon";
 import Link, { useCurrentHref } from "components/Link";
 import { getScopeFromUrl } from "./context";
 import { NavigationItem, NavigationCategory } from "./types";
+import styles from "./Navigation.module.css";
 
 const SCOPELESS_HREF_REGEX = /\?|\#/;
 
@@ -41,29 +37,36 @@ const DocsNavigationItems = ({
             : entry.hideInScopes === urlScope;
 
           return (
-            <Box as="li" key={entry.slug}>
+            <li key={entry.slug}>
               {isHidden ? null : (
-                <NavigationLink
+                <Link
+                  className={cn(
+                    styles.link,
+                    (entryActive || childrenActive) && styles.active,
+                    entryActive && styles.selected
+                  )}
                   href={entry.slug}
-                  active={entryActive || childrenActive}
-                  isSelected={entryActive}
                   onClick={onClick}
                 >
                   {entry.title}
                   {!!entry.entries?.length && (
-                    <EllipsisIcon size="sm" name="ellipsis" />
+                    <Icon
+                      size="sm"
+                      name="ellipsis"
+                      className={styles.ellipsis}
+                    />
                   )}
-                </NavigationLink>
+                </Link>
               )}
               {!!entry.entries?.length && !isHidden && (
-                <WrapperLevelMenu as="ul" listStyle="none">
+                <ul className={styles.submenu}>
                   <DocsNavigationItems
                     entries={entry.entries}
                     onClick={onClick}
                   />
-                </WrapperLevelMenu>
+                </ul>
               )}
-            </Box>
+            </li>
           );
         })}
     </>
@@ -93,27 +96,18 @@ const DocNavigationCategory = ({
 
   return (
     <>
-      <CategoryButton active={opened} onClick={toggleOpened}>
-        <Icon name={icon} ml="12px" mr={2} />
-        <Box text="text-md">{title}</Box>
-        <StyledIcon
-          size="sm"
-          name="arrow"
-          transform={
-            opened ? "translateY(-50%) rotate(180deg)" : "translateY(-50%)"
-          }
-        />
-      </CategoryButton>
+      <HeadlessButton
+        className={cn(styles["category-header"], opened && styles.opened)}
+        onClick={toggleOpened}
+      >
+        <Icon name={icon} className={styles["icon-category"]} />
+        <div className={styles["category-title"]}>{title}</div>
+        <Icon size="sm" name="arrow" className={styles["icon-arrow"]} />
+      </HeadlessButton>
       {opened && (
-        <Box
-          as="ul"
-          listStyle="none"
-          bg="lightest-gray"
-          py={1}
-          boxShadow="inset 0 1px 2px rgba(0, 0, 0, 0.24)"
-        >
+        <ul className={styles["category-links"]}>
           <DocsNavigationItems entries={entries} onClick={onClick} />
-        </Box>
+        </ul>
       )}
     </>
   );
@@ -161,43 +155,21 @@ const DocNavigation = ({
   }, [data, route]);
 
   return (
-    <Box
-      width={["auto", "240px"]}
-      height={["48px", "100%"]}
-      position="relative"
-      zIndex={1000}
-      boxShadow={section ? ["none", "1px 0 4px rgba(0,0,0,.12)"] : "none"}
-      borderRight={section ? "none" : ["none", "1px solid"]}
-      borderColor={["none", "lightest-gray"]}
-    >
-      <Flex height="48px" py={2} bg="lighter-gray" alignItems="center">
-        <Search id="mobile" mx={2} width="100%" version={currentVersion} />
-        <HeadlessButton
-          onClick={toggleMenu}
-          mr={3}
-          color="gray"
-          display={["block", "none"]}
-          css={css({
-            "&:focus": {
-              outline: "none",
-            },
-          })}
-        >
+    <div className={cn(styles.wrapper, section && styles.section)}>
+      <div className={styles.searchbar}>
+        <Search
+          id="mobile"
+          version={currentVersion}
+          className={styles.search}
+        />
+        <HeadlessButton onClick={toggleMenu} className={styles.menu}>
           <Icon name={visible ? "close" : "hamburger"} size="md" />
         </HeadlessButton>
-      </Flex>
-      <Box
-        as="nav"
-        position={["absolute", "static"]}
-        display={[visible ? "block" : "none", "block"]}
-        top="48px"
-        bg="white"
-        width="100%"
-        overflow={["none", "auto"]}
-      >
-        <Box as="ul" listStyle="none">
+      </div>
+      <nav className={cn(styles.nav, visible && styles.visible)}>
+        <ul className={styles.categories}>
           {data.map((props, index) => (
-            <Box as="li" key={index}>
+            <li key={index}>
               <DocNavigationCategory
                 key={index}
                 id={index}
@@ -206,101 +178,12 @@ const DocNavigation = ({
                 onClick={toggleMenu}
                 {...props}
               />
-            </Box>
+            </li>
           ))}
-        </Box>
-      </Box>
-    </Box>
+        </ul>
+      </nav>
+    </div>
   );
 };
 
 export default DocNavigation;
-
-const CategoryButton = styled(HeadlessButton)(
-  ({ active }: { active?: boolean }) =>
-    css({
-      position: "relative",
-      display: "flex",
-      alignItems: "center",
-      width: "100%",
-      height: "56px",
-      borderBottom: "1px solid",
-      borderBottomColor: "lightest-gray",
-      borderLeft: "4px solid",
-      borderLeftColor: active ? "light-purple" : "white",
-      color: active ? "dark-purple" : "gray",
-      transition: transition([["color", "interaction"]]),
-      "&:focus, &:hover, &:active": {
-        cursor: "pointer",
-        outline: "none",
-        color: "light-purple",
-      },
-      [`&:focus ${StyledIcon}, &:hover ${StyledIcon}, &:active ${StyledIcon}`]:
-        {
-          color: "light-purple",
-        },
-      [`& ${StyledIcon}`]: {
-        color: active ? "dark-purple" : "light-gray",
-      },
-    })
-);
-
-const NavigationLink = styled(Link)(
-  ({ active, isSelected }: { active?: boolean; isSelected?: boolean }) =>
-    css({
-      position: "relative",
-      display: "block",
-      width: "100%",
-      px: 3,
-      fontSize: "13px",
-      lineHeight: "lg",
-      color: active ? "dark-purple" : "gray",
-      fontWeight: active ? "bold" : "regular",
-      textDecoration: "none",
-      backgroundColor: isSelected ? "white" : "transpatent",
-      "&:focus, &:hover, &:active": {
-        outline: "none",
-        bg: "white",
-      },
-
-      "& + ul": {
-        display: active ? "block" : "none",
-      },
-
-      [`& ${EllipsisIcon}`]: {
-        display: active ? "none" : "block",
-      },
-    })
-);
-
-const WrapperLevelMenu = styled(Box)(
-  css({
-    display: "none",
-
-    "& a": {
-      fontSize: "text-sm",
-      lineHeight: "lg",
-      pl: 5,
-    },
-  })
-);
-
-const StyledIcon = styled(Icon)(
-  css({
-    position: "absolute",
-    right: 3,
-    top: "50%",
-    transition: transition([["color", "interaction"]]),
-  }),
-  all
-);
-
-const EllipsisIcon = styled(Icon)(
-  css({
-    position: "absolute",
-    right: 3,
-    top: "50%",
-    transform: "translateY(-50%)",
-    color: "light-gray",
-  })
-);

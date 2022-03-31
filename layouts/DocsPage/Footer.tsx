@@ -1,6 +1,5 @@
-import Box from "components/Box";
-import Flex from "components/Flex";
-import landscapeSvgUrl from "./assets/landscape.svg";
+import cn from "classnames";
+import styles from "./Footer.module.css";
 
 interface DocsFooterProps {
   section?: boolean;
@@ -9,23 +8,9 @@ interface DocsFooterProps {
 
 const DocsFooter = ({ children, section }: DocsFooterProps) => {
   return (
-    <Flex
-      width="100%"
-      flexDirection="column"
-      alignItems="center"
-      pt={6}
-      bg={section ? "page-bg" : "white"}
-    >
+    <div className={cn(styles.wrapper, { [`${styles.section}`]: section })}>
       {children}
-      <Box
-        width="100%"
-        height={["50px", "280px"]}
-        mt={3}
-        backgroundSize="cover"
-        backgroundRepeat="no-repeat"
-        backgroundImage={`url(${landscapeSvgUrl})`}
-      ></Box>
-    </Flex>
+    </div>
   );
 };
 

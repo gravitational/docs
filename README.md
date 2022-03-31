@@ -59,6 +59,8 @@ Now run one of the following commands:
 - `yarn markdown-lint` – lints `*.mdx` files inside `content/**/docs/pages/` folders for syntax errors.
 - `yarn markdown-lint-external-links` – same as `yarn markdown-lint` but checks that external links work. Separate command because of slowness.
 - `yarn markdown-fix` – fixes syntax automatically in `*.mdx` files inside `content/**/docs/pages/`.
+- `yarn storybook` – runs [Storybook](https://storybook.js.org/) instance at the `6006` port. You can check existing components here and try different options.
+- `yarn build-storybook` – builds static version of Storybook.
 
 ### Previewing changes locally with Docker
 
@@ -77,6 +79,7 @@ docker run --rm -ti -v $NEXT_PATH:/src -v $TELEPORT_PATH:/src/content/$SEM_VER -
 File that configures build options:
 
 - `versions` - array of the available options, should match the names of the folders inside `content` dir. Will be shown in the version select in inverted order.
+- `redirects` - optional array of redirects. Uses [Next.js syntax](https://nextjs.org/docs/api-reference/next.config.js/redirects) inside.
 
 Format of version entry:
 

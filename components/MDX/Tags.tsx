@@ -1,111 +1,21 @@
-import styled from "styled-components";
-import css from "@styled-system/css";
+import styles from "./Tags.module.css";
 
-export const P = styled("p")(
-  css({
-    mt: 0,
-    mb: 3,
-    fontSize: ["text-lg", "text-lg"],
-    "&:last-child": {
-      mb: 0,
-    },
-  })
-);
+export const P = (props) => <p {...props} className={styles.p} />;
 
-export const UL = styled("ul")(
-  css({
-    mt: 0,
-    mb: 3,
-    pl: 4,
-    "&:last-child": {
-      mb: 0,
-    },
-  })
-);
+export const UL = (props) => <ul {...props} className={styles.ul} />;
 
-export const OL = styled("ol")(
-  css({
-    mt: 0,
-    mb: 3,
-    pl: 4,
-    "&:last-child": {
-      mb: 0,
-    },
-  })
-);
+export const OL = (props) => <ol {...props} className={styles.ol} />;
 
-export const LI = styled("li")(
-  css({
-    fontSize: ["text-lg", "text-lg"],
-    mb: 2,
-    "&:last-child": {
-      mb: 0,
-    },
-  })
-);
+export const LI = (props) => <li {...props} className={styles.li} />;
 
-export const Table = styled("table")(
-  css({
-    display: ["block", "table"],
-    mb: 4,
-    bg: "white",
-    boxShadow: "0 1px 4px rgba(0,0,0,.24)",
-    borderRadius: "default",
-    borderCollapse: "collapse",
-    boxSizing: "border-box",
-    width: "100%",
-    overflow: "auto",
-    whiteSpace: ["nowrap", "normal"],
-    "&:last-child": {
-      mb: 0,
-    },
-  })
-);
+export const Table = (props) => <table {...props} className={styles.table} />;
 
-export const THead = styled("thead")(
-  css({
-    borderBottom: "1px solid #D2DBDF",
-  })
-);
+export const THead = (props) => <thead {...props} className={styles.thead} />;
 
-export const TBody = styled("tbody")(css({}));
+export const TR = (props) => <tr {...props} className={styles.tr} />;
 
-export const TR = styled("tr")(
-  css({
-    "&:last-child": {
-      borderBottomLeftRadius: "default",
-      borderBottomRightRadius: "default",
-    },
-    [`${TBody} &:nth-child(even)`]: {
-      bg: "lightest-gray",
-    },
-  })
-);
+export const TH = (props) => <th {...props} className={styles.th} />;
 
-export const TH = styled("th")(
-  css({
-    fontSize: ["text-md", "text-lg"],
-    fontWeight: "bold",
-    textAlign: "left",
-    px: 3,
-    py: 2,
-  })
-);
+export const TD = (props) => <td {...props} className={styles.td} />;
 
-export const TD = styled("td")(
-  css({
-    fontSize: ["text-md", "text-lg"],
-    lineHeight: "md",
-    p: 3,
-  })
-);
-
-export const Video = styled("video")(
-  css({
-    mb: 3,
-    maxWidth: "100%",
-    "&:last-child": {
-      mb: 0,
-    },
-  })
-);
+export const Video = (props) => <video {...props} className={styles.video} />;

@@ -1,6 +1,4 @@
-import css from "@styled-system/css";
-import Box from "components/Box";
-
+import styles from "./IFrame.module.css";
 interface IFrameProps {
   width?: string;
   height?: string;
@@ -10,50 +8,29 @@ interface IFrameProps {
 const IFrame = ({ width, height, src, ...props }: IFrameProps) => {
   if (src.indexOf("youtube") !== -1 && width && height) {
     return (
-      <Box
-        maxWidth={`${width}px`}
-        maxHeight={`${height}px`}
-        mb={[2, "12px"]}
-        css={css({
-          "&:last-child": {
-            mb: 0,
-          },
-        })}
+      <div
+        className={styles.styles}
+        style={{ maxWidth: `${width}px`, maxHeight: `${height}px` }}
       >
-        <Box
-          width="100%"
-          pb={`${(parseInt(height, 10) / parseInt(width, 10)) * 100}%`}
-          position="relative"
+        <div
+          className={styles.shaper}
+          style={{
+            paddingBottom: `${
+              (parseInt(height, 10) / parseInt(width, 10)) * 100
+            }%`,
+          }}
         >
-          <Box
-            as="iframe"
-            position="absolute"
-            top="0"
-            right="0"
-            bottom="0"
-            left="0"
-            width="100%"
-            height="100%"
-            src={src}
-            {...props}
-          />
-        </Box>
-      </Box>
+          <iframe className={styles.video} src={src} {...props} />
+        </div>
+      </div>
     );
   }
 
   return (
-    <Box
-      as="iframe"
-      mb={[2, "12px"]}
-      width={width}
-      height={height}
+    <iframe
+      className={styles.styles}
+      style={{ width, height }}
       src={src}
-      css={css({
-        "&:last-child": {
-          mb: 0,
-        },
-      })}
       {...props}
     />
   );

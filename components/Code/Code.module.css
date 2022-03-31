@@ -1,0 +1,91 @@
+/* stylelint-disable selector-class-pattern */
+/* stylelint-disable no-descending-specificity */
+
+/* theme taken from https://github.com/highlightjs/highlight.js/blob/master/src/styles/monokai.css */
+
+.wrapper {
+  display: block;
+  overflow-x: auto;
+  margin: 0;
+  padding: var(--m-1) var(--m-2);
+  border-radius: var(--r-default);
+  color: #ddd;
+  font-family: var(--font-monospace);
+  line-height: var(--lh-md);
+  white-space: pre;
+  background-color: var(--color-code);
+
+  @media (--sm-scr) {
+    font-size: var(--fs-text-sm);
+  }
+
+  @media (--md-scr) {
+    font-size: var(--fs-text-md);
+  }
+
+  & code {
+    font-family: inherit;
+  }
+
+  & :global {
+    .hljs-tag,
+    .hljs-keyword,
+    .hljs-selector-tag,
+    .hljs-literal,
+    .hljs-strong,
+    .hljs-name {
+      color: #f92672;
+    }
+
+    .hljs-code {
+      color: #66d9ef;
+    }
+
+    .hljs-class .hljs-title {
+      color: white;
+    }
+
+    .hljs-attribute,
+    .hljs-symbol,
+    .hljs-regexp,
+    .hljs-link {
+      color: #bf79db;
+    }
+
+    .hljs-string,
+    .hljs-bullet,
+    .hljs-subst,
+    .hljs-title,
+    .hljs-section,
+    .hljs-emphasis,
+    .hljs-type,
+    .hljs-built_in,
+    .hljs-builtin-name,
+    .hljs-selector-attr,
+    .hljs-selector-pseudo,
+    .hljs-addition,
+    .hljs-variable,
+    .hljs-template-tag,
+    .hljs-template-variable {
+      color: #a6e22e;
+    }
+
+    .hljs-comment,
+    .hljs-quote,
+    .hljs-deletion,
+    .hljs-meta {
+      color: #75715e;
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag,
+    .hljs-literal,
+    .hljs-doctag,
+    .hljs-title,
+    .hljs-section,
+    .hljs-type,
+    .hljs-selector-id {
+      font-weight: bold;
+    }
+  }
+}
