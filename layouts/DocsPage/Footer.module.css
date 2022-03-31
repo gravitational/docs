@@ -20,6 +20,8 @@
   }
 
   @media (--sm-scr) {
+    padding-bottom: calc(50px + var(--m-2));
+
     &::before {
       height: 50px;
     }

@@ -1,4 +1,8 @@
 .wrapper {
+  @media (--sm-scr) {
+    width: auto;
+  }
+
   @media (--md-scr) {
     width: 110px;
   }

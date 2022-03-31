@@ -22,7 +22,7 @@
 
   @media (--sm-scr) {
     font-size: var(--fs-text-lg);
-    height: 56px;
+    height: 56px !important;
     width: 100%;
     margin-top: var(--m-1);
   }

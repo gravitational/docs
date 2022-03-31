@@ -35,14 +35,6 @@
     color: white;
     outline: none;
   }
-
-  @media (--sm-scr) {
-    display: none;
-    animation-name: none;
-    position: initial;
-    transform: translateX(0);
-    margin-left: calc(-var(--m-0-5));
-  }
 }
 
 .line {
@@ -53,7 +45,7 @@
   box-sizing: border-box;
   flex-direction: column;
   position: relative;
-  margin: 0 calc(0 - var(--m-2));
+  margin: 0 calc(0px - var(--m-2));
   padding: 0 var(--m-2);
   color: var(--color-white);
   background-color: var(--color-code);
