@@ -103,7 +103,7 @@ const menu: MenuCategoryProps[] = [
       {
         icon: "stack",
         title: "Documentation",
-        description: "Developer documentation for using Teleport",
+        description: "Installation and Teleport user guides",
         href: "/docs/",
       },
       {
