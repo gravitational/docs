@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import algoliasearch from "algoliasearch";
 import { getSearchQueries } from "server/search-api-helpers";
-import { P } from "components/MDX";
 
 const APP_ID = process.env.ALGOLIA_APP_ID;
 const API_KEY = process.env.ALGOLIA_API_KEY;
@@ -28,6 +27,11 @@ export default async function handler(
 
     const finishResult = rawResults.reduce((total, res) => {
       total.push(...res.hits);
+      total.map((hit) => {
+        hit.title = hit.title.includes("|")
+          ? hit.title.split("|")[0]
+          : hit.title;
+      });
       return total;
     }, []);
     res.status(200).json(finishResult);

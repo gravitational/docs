@@ -3,6 +3,8 @@ import styles from "./Search.module.css";
 import { autocomplete } from "@algolia/autocomplete-js";
 import "@algolia/autocomplete-theme-classic";
 import { render } from "react-dom";
+import { debounced } from "utils/debounced";
+import { SearchStyles } from "./SearchStyles";
 
 export interface SearchProps {
   id?: string;
@@ -11,23 +13,15 @@ export interface SearchProps {
 }
 
 export const getSearchResults = async (query: string) => {
-  let href = "";
-  if (typeof window !== "undefined") {
-    href = window.location.href;
-  }
-
   try {
-    const rawResponse = await fetch(
-      `/docs/api/search/?query=${query}&url=${encodeURIComponent(href)}`,
-      {
-        method: "GET",
-      }
-    );
+    const rawResponse = await fetch(`/docs/api/search/?query=${query}`, {
+      method: "GET",
+    });
 
     const response = await rawResponse.json();
     return response.map((res) => ({ ...res, label: res.title }));
   } catch (e) {
-    throw e;
+    console.error(e);
   }
 };
 
@@ -62,7 +56,6 @@ const SearchAutocomplete = ({
 };
 
 function ProductItem({ hit }) {
-  const title = hit.title.includes("|") ? hit.title.split("|")[0] : hit.title;
   let foundHeader = "";
   let foundContent = "";
 
@@ -73,10 +66,10 @@ function ProductItem({ hit }) {
   }
 
   return (
-    <a href={hit.url} className="aa-ItemLink">
+    <a href={hit.objectID} className="aa-ItemLink">
       <div className="aa-ItemContent">
         <div className="aa-ItemTitle">
-          <p className={styles.title}>{title}</p>
+          <p className={styles.title}>{hit.title}</p>
           {foundHeader && (
             <h3 className={styles["found-header"]}>{foundHeader}</h3>
           )}
