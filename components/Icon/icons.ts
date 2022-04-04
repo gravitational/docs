@@ -11,6 +11,7 @@ export { default as close } from "./svg/close.svg?react";
 export { default as cloud } from "./svg/cloud.svg?react";
 export { default as clouds } from "./svg/clouds.svg?react";
 export { default as code } from "./svg/code.svg?react";
+export { default as code2 } from "./svg/code2.svg?react";
 export { default as copy } from "./svg/copy.svg?react";
 export { default as database } from "./svg/database.svg?react";
 export { default as desktop } from "./svg/desktop.svg?react";
