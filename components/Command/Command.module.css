@@ -1,0 +1,87 @@
+@keyframes shift-button {
+  0% {
+    opacity: 0;
+    transform: translateX(3px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.button {
+  display: none;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: var(--m-0-5) 6px;
+  color: var(--color-light-gray);
+  background-color: var(--color-darkest);
+  cursor: pointer;
+  opacity: 0;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+  transition: color var(--t-interaction);
+  transform: translateX(3px);
+  appearance: none;
+  animation-name: shift-button;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: white;
+    outline: none;
+  }
+}
+
+.line {
+  display: block;
+}
+
+.command {
+  box-sizing: border-box;
+  flex-direction: column;
+  position: relative;
+  margin: 0 calc(0px - var(--m-2));
+  padding: 0 var(--m-2);
+  color: var(--color-white);
+  background-color: var(--color-code);
+  line-height: var(--lh-md);
+  transition: background-color var(--t-interaction);
+
+  @media (--sm-scr) {
+    font-size: var(-fs-text-sm);
+  }
+
+  @media (--md-scr) {
+    font-size: var(-fs-text-md);
+  }
+
+  & .line:first-of-type::before {
+    content: attr(data-content);
+  }
+
+  &:hover,
+  &:focus {
+    background-color: var(--color-darkest);
+  }
+
+  &:hover .button,
+  &:focus .button {
+    display: flex;
+  }
+}
+
+.comment {
+  margin: 0;
+  font-size: var(--fs-text-md);
+  line-height: var(--lh-md);
+
+  &[data-type="descr"] {
+    white-space: break-spaces;
+    word-break: break-word;
+  }
+}

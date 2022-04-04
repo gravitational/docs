@@ -1,26 +1,18 @@
-import Box from "components/Box";
+import cn from "classnames";
+import { DetailedHTMLProps, HTMLAttributes } from "react";
+import styles from "./Code.module.css";
 
-const isHLJSNode = ({ className }) =>
+const isHLJSNode = (className?: string) =>
   Boolean(className) && className.indexOf("hljs") !== -1;
 
-const Code = (props) => {
-  if (isHLJSNode(props)) {
+const Code = (
+  props: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
+) => {
+  if (isHLJSNode(props.className)) {
     return <code {...props} />;
   }
 
-  return (
-    <Box
-      as="code"
-      {...props}
-      px={1}
-      bg="lightest-gray"
-      border="1px solid"
-      borderColor="light-gray"
-      borderRadius="sm"
-      fontSize="text-md"
-      wordBreak="break-word"
-    />
-  );
+  return <code {...props} className={cn(styles.wrapper, props.className)} />;
 };
 
 export default Code;

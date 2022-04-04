@@ -1,0 +1,101 @@
+.wrapper {
+  appearance: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border-style: solid;
+  border-radius: var(--r-default);
+  overflow: hidden;
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--t-interaction), color var(--t-interaction);
+
+  &:focus {
+    outline: none;
+  }
+
+  &:active {
+    transition-duration: 0s;
+    opacity: 0.56;
+  }
+
+  ,
+  &&:disabled {
+    background-color: var(--color-lightest-gray);
+    border-color: var(--lightest-gray);
+    color: var(--color-dark-gray);
+    cursor: default;
+    pointer-events: none;
+  }
+
+  &.variant-primary {
+    background-color: var(--color-dark-purple);
+    border-color: var(--color-dark-purple);
+    color: var(--color-white);
+
+    &:focus,
+    &:hover {
+      background-color: var(--color-light-purple);
+      border-color: var(--color-light-purple);
+      color: var(--color-white);
+    }
+  }
+
+  &.variant-secondary {
+    background-color: var(--color-white);
+    border-color: var(--color-dark-purple);
+    color: var(--color-dark-purple);
+
+    &:focus,
+    &:hover {
+      background-color: var(--color-white);
+      border-color: var(--color-light-purple);
+      color: var(--color-light-purple);
+    }
+  }
+
+  &.variant-secondary-white {
+    background-color: transparent;
+    border-color: var(--color-white);
+    color: var(--color-white);
+
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: rgba(255 255 255 / 12%);
+    }
+  }
+
+  &.shape-sm {
+    height: 24px;
+    padding: 0 var(--m-1);
+    font-size: var(--fs-text-xs);
+    text-transform: uppercase;
+    border-width: 1px;
+  }
+
+  &.shape-md {
+    height: 32px;
+    padding: 0 var(--m-3);
+    font-size: var(--fs-text-md);
+    border-width: 1px;
+  }
+
+  &.shape-lg {
+    height: 48px;
+    padding: 0 var(--m-6);
+    font-size: var(--fs-text-lg);
+    border-width: 1px;
+  }
+
+  &.shape-outline {
+    height: 48px;
+    padding: 0 var(--m-6);
+    font-size: var(--fs-text-lg);
+    font-weight: var(--fw-bold);
+    border-width: 1px;
+  }
+}

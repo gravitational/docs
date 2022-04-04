@@ -1,0 +1,22 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+
+  &.left {
+    align-items: flex-start;
+  }
+
+  &.right {
+    align-items: flex-end;
+  }
+}
+
+.border {
+  box-shadow: 0 1px 4px rgba(0 0 0 / 24%);
+}
+
+.caption {
+  margin-top: var(--m-1);
+  color: var(--color-gray);
+  font-style: italic;
+}

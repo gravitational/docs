@@ -28,7 +28,7 @@
       "eslint",
       "prettier --check"
     ],
-    "*.{css,json}": "prettier --check"
+    "*.{json}": "prettier --check"
   },
   "simple-git-hooks": {
     "pre-commit": "yarn lint-staged"
@@ -37,15 +37,13 @@
     "@mdx-js/mdx": "^2.0.0-rc.2",
     "@mdx-js/react": "^2.0.0-rc.2",
     "@reach/listbox": "^0.16.2",
-    "@styled-system/css": "^5.1.5",
+    "classnames": "^2.3.1",
     "date-fns": "^2.27.0",
     "docsearch.js": "^2.6.3",
     "next": "12.1.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-use": "^17.3.1",
-    "styled-components": "^5.3.3",
-    "styled-system": "^5.1.5",
     "url": "^0.11.0"
   },
   "devDependencies": {
@@ -58,15 +56,12 @@
     "@types/js-yaml": "^4.0.5",
     "@types/node": "^17.0.8",
     "@types/react": "^17.0.38",
-    "@types/rebass": "^4.0.10",
-    "@types/styled-components": "^5.1.20",
     "@typescript-eslint/eslint-plugin": "^5.9.1",
     "@typescript-eslint/parser": "^5.9.1",
     "acorn": "^8.6.0",
     "acorn-jsx": "^5.3.2",
     "acorn-walk": "^8.2.0",
     "ajv": "^8.8.2",
-    "babel-plugin-styled-components": "^2.0.2",
     "dotenv": "^14.3.2",
     "eslint": "^8.6.0",
     "eslint-config-next": "^12.0.8",
@@ -85,6 +80,9 @@
     "micromark-extension-frontmatter": "^1.0.0",
     "micromark-extension-gfm": "2.0.1",
     "micromark-extension-mdxjs": "^1.0.0",
+    "postcss": "^8.4.7",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-preset-env": "^7.3.0",
     "prettier": "^2.5.0",
     "prettier-config-standard": "^4.0.0",
     "probe-image-size": "^7.2.2",
@@ -101,6 +99,8 @@
     "sharp": "^0.29.3",
     "simple-git-hooks": "^2.7.0",
     "stringify-object": "^4.0.0",
+    "stylelint": "^14.3.0",
+    "stylelint-config-standard": "^24.0.0",
     "to-vfile": "7.2.3",
     "tsc-esm-fix": "^2.7.6",
     "tsm": "^2.2.1",

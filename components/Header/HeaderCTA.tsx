@@ -1,15 +1,12 @@
 import { useState, useCallback, useRef, MouseEvent } from "react";
 import { useClickAway } from "react-use";
-import { css, media } from "components/system";
-import styled from "styled-components";
-import Box from "components/Box";
 import Button from "components/Button";
-import Flex from "components/Flex";
 import {
   DropdownMenu,
   DropdownMenuItem,
   DropdownMenuOverlay,
 } from "../DropdownMenu";
+import styles from "./HeaderCTA.module.css";
 
 const HeaderCTA = () => {
   const ref = useRef(null);
@@ -30,34 +27,18 @@ const HeaderCTA = () => {
   return (
     <>
       {isSignInVisible && <DropdownMenuOverlay />}
-      <Flex
-        flexGrow={0}
-        alignItems="center"
-        justifyContent="flex-end"
-        flexDirection={["column", "row"]}
-        flexShrink={0}
-        mt={[5, 0]}
-        ml={[0, "auto"]}
-        width={["100%", "auto"]}
-      >
-        <Box position="relative" width={["100%", "auto"]} ref={ref}>
-          <StyledCTA
-            as="a"
+      <div className={styles.wrapper}>
+        <div className={styles.group} ref={ref}>
+          <Button
+            as="link"
             href="https://teleport.sh/"
             onClick={toggleSignIn}
             variant="secondary"
+            className={styles.cta}
           >
             Sign In
-          </StyledCTA>
-          <Box
-            display={isSignInVisible ? "block" : "none"}
-            right={[0, 3]}
-            position={["relative", "absolute"]}
-            width={["100%", "auto"]}
-            minWidth={[0, "400px"]}
-            top={[0, "32px"]}
-            zIndex={3000}
-          >
+          </Button>
+          <div className={styles.dropdown}>
             <DropdownMenu title="Sign in to Teleport">
               <DropdownMenuItem
                 href="https://teleport.sh/"
@@ -72,27 +53,14 @@ const HeaderCTA = () => {
                 description="Legacy Login &amp; Teleport Enterprise Downloads"
               />
             </DropdownMenu>
-          </Box>
-        </Box>
-        <StyledCTA as="a" href="/pricing/">
+          </div>
+        </div>
+        <Button as="link" href="/pricing/" className={styles.cta}>
           Get Started
-        </StyledCTA>
-      </Flex>
+        </Button>
+      </div>
     </>
   );
 };
 
 export default HeaderCTA;
-
-const StyledCTA = styled(Button)(
-  css({
-    mt: [2, 0],
-    mr: [0, 3],
-    flexShrink: 0,
-  }),
-  media("sm", {
-    fontSize: "text-lg",
-    height: "56px",
-    width: "100%",
-  })
-);

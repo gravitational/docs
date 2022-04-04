@@ -1,18 +1,7 @@
-import Box from "components/Box";
+import styles from "./DropdownMenuOverlay.module.css";
 
 const DropdownMenuOverlay = () => {
-  return (
-    <Box
-      display={["none", "block"]}
-      position="fixed"
-      top="80px"
-      right={0}
-      bottom={0}
-      left={0}
-      zIndex={1000}
-      background="blur(60px)"
-    />
-  );
+  return <div className={styles.wrapper} />;
 };
 
 export default DropdownMenuOverlay;

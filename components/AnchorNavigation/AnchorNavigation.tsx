@@ -1,69 +1,27 @@
-import css from "@styled-system/css";
-import Box, { BoxProps } from "components/Box";
+import cn from "classnames";
 import Link from "components/Link";
 import { HeaderMeta } from "./types";
+import styles from "./AnchorNavigation.module.css";
 
 export interface AnchorNavigationProps {
+  className?: string;
   headers: HeaderMeta[];
 }
 
-const AnchorNavigation = ({
-  headers,
-  ...props
-}: AnchorNavigationProps & BoxProps) => {
+const AnchorNavigation = ({ className, headers }: AnchorNavigationProps) => {
   return (
-    <Box as="nav" flexShrink={0} position="relative">
-      <Box
-        width="240px"
-        p={4}
-        position="sticky"
-        top="0"
-        maxHeight="100vh"
-        overflow="auto"
-        {...props}
-      >
-        <Box
-          text="text-sm"
-          maxHeight="100%"
-          overflowY="auto"
-          mx={1}
-          mb={1}
-          py={1}
-          fontWeight="bold"
-          color="darkest"
-          borderBottom="1px solid"
-          borderColor="lightest-gray"
-        >
-          Table of Contents
-        </Box>
+    <nav className={cn(styles.wrapper, className)}>
+      <div className={styles.menu}>
+        <div className={styles.header}>Table of Contents</div>
         {headers.map(({ id, title }) => {
           return (
-            <Link
-              key={id}
-              href={`#${id}`}
-              display="block"
-              fontSize="text-sm"
-              lineHeight="sm"
-              color="dark-gray"
-              p={1}
-              css={css({
-                textDecoration: "none",
-                maxWidth: "100%",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-                "&:focus, &:hover, &:active": {
-                  bg: "lightest-gray",
-                  borderRadius: "default",
-                },
-              })}
-            >
+            <Link key={id} href={`#${id}`} className={styles.link}>
               {title}
             </Link>
           );
         })}
-      </Box>
-    </Box>
+      </div>
+    </nav>
   );
 };
 
