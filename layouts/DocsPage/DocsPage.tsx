@@ -6,7 +6,7 @@ import AnchorNavigation, { HeaderMeta } from "components/AnchorNavigation";
 import Button from "components/Button";
 import Head from "components/Head";
 import SiteHeader from "components/Header";
-import Link from "components/Link";
+import Link, { useCurrentHref } from "components/Link";
 import Notice from "components/Notice";
 import VideoBar from "components/VideoBar";
 import { components } from "./components";
@@ -38,7 +38,7 @@ const DocsPage = ({
   tableOfConents,
   children,
 }: DocsPageProps) => {
-  const router = useRouter();
+  const route = useCurrentHref();
   const { setVersions } = useContext(DocsContext);
 
   const { current, latest, available } = versions;
@@ -50,8 +50,8 @@ const DocsPage = ({
   const isSectionLayout = layout === "section";
   const isTocVisible = (!layout || layout === "doc") && tableOfConents.length;
 
-  const categoryId = getCurrentCategoryIndex(navigation, router.asPath);
-  const icon = categoryId ? navigation[categoryId]?.icon : "book";
+  const categoryId = getCurrentCategoryIndex(navigation, route);
+  const icon = navigation[categoryId]?.icon || "book";
 
   const isOldVersion = available.indexOf(current) < available.indexOf(latest);
   const isBetaVersion = available.indexOf(current) > available.indexOf(latest);

@@ -31,13 +31,13 @@ const DocsNavigationItems = ({
           const selected = entry.slug === docPath;
           const active =
             selected || entry.entries?.some((entry) => entry.slug === docPath);
-          const isHidden = Array.isArray(entry.hideInScopes)
+          const hidden = Array.isArray(entry.hideInScopes)
             ? entry.hideInScopes.includes(urlScope)
             : entry.hideInScopes === urlScope;
 
           return (
             <li key={entry.slug}>
-              {isHidden ? null : (
+              {hidden ? null : (
                 <Link
                   className={cn(
                     styles.link,
@@ -57,8 +57,13 @@ const DocsNavigationItems = ({
                   )}
                 </Link>
               )}
-              {!!entry.entries?.length && !isHidden && (
-                <ul className={styles.submenu}>
+              {!!entry.entries?.length && (
+                <ul
+                  className={cn(
+                    styles.submenu,
+                    active && !hidden && styles.opened
+                  )}
+                >
                   <DocsNavigationItems
                     entries={entry.entries}
                     onClick={onClick}
