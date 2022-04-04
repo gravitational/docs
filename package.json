@@ -34,8 +34,8 @@
     "pre-commit": "yarn lint-staged"
   },
   "dependencies": {
-    "@mdx-js/mdx": "^2.0.0-rc.2",
-    "@mdx-js/react": "^2.0.0-rc.2",
+    "@mdx-js/mdx": "^2.1.1",
+    "@mdx-js/react": "^2.1.1",
     "@reach/listbox": "^0.16.2",
     "classnames": "^2.3.1",
     "date-fns": "^2.27.0",
@@ -47,7 +47,7 @@
     "url": "^0.11.0"
   },
   "devDependencies": {
-    "@mdx-js/loader": "^2.0.0-rc.2",
+    "@mdx-js/loader": "^2.1.1",
     "@next/bundle-analyzer": "^12.1.0",
     "@svgr/webpack": "^6.2.0",
     "@types/estree-jsx": "^0.0.1",
@@ -75,8 +75,8 @@
     "loadr": "^0.1.1",
     "mdast-util-from-markdown": "^1.2.0",
     "mdast-util-frontmatter": "^1.0.0",
-    "mdast-util-gfm": "^2.0.0",
-    "mdast-util-mdx": "^1.1.0",
+    "mdast-util-gfm": "^2.0.1",
+    "mdast-util-mdx": "^2.0.0",
     "micromark-extension-frontmatter": "^1.0.0",
     "micromark-extension-gfm": "2.0.1",
     "micromark-extension-mdxjs": "^1.0.0",
@@ -110,7 +110,7 @@
     "unist-util-visit": "4.0.0",
     "unist-util-visit-parents": "^5.1.0",
     "uvu": "^0.5.3",
-    "vfile": "^5.3.0",
+    "vfile": "^5.3.2",
     "webpack": "^5.67.0"
   }
 }
