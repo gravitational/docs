@@ -74,7 +74,6 @@ const config: MdxConfig = {
         defaultExportTemplate,
       },
     ],
-    remarkCodeSnippet, // Plugin for custom code snippets with multiple copy buttons
     [
       remarkIncludes, // Resolves (!include.ext!) syntax
       {
@@ -89,6 +88,7 @@ const config: MdxConfig = {
         },
       },
     ],
+    remarkCodeSnippet, // Plugin for custom code snippets with multiple copy buttons
     remarkGFM, // Adds tables
     remarkImportFiles, // Replaces paths to files with imports
     remarkLinks, // Make links in docs absolute with /ver/X.X included
