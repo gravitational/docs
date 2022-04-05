@@ -125,7 +125,7 @@ export default function remarkIncludes({
                   const tree = fromMarkdown(result, {
                     extensions: [mdxjs(), gfm(), frontmatter()],
                     mdastExtensions: [
-                      mdxFromMarkdown,
+                      mdxFromMarkdown(),
                       gfmFromMarkdown(),
                       frontmatterFromMarkdown(["yaml"]),
                     ],
