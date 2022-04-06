@@ -95,4 +95,22 @@ Suite("Work with mdx components", () => {
   assert.equal(result, '<Component href="../workflow/"/>\n');
 });
 
+Suite("Leaves query parameters untouched", () => {
+  // No trailing slash
+  const result1 = transformer({
+    value: "[Some link](../workflow.md?scope=cloud)",
+    path: "/docs/enterprize.md",
+  });
+
+  assert.equal(result1, "[Some link](../../workflow/?scope=cloud)\n");
+
+  // Trailing slash
+  const result2 = transformer({
+    value: "[Some link](../workflow.md/?scope=cloud)",
+    path: "/docs/enterprize.md",
+  });
+
+  assert.equal(result2, "[Some link](../../workflow/?scope=cloud)\n");
+});
+
 Suite.run();

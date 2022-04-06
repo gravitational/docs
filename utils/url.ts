@@ -90,7 +90,8 @@ export const isExternalLink = (href: string): boolean =>
 
 export const isHash = (href: string): boolean => href.startsWith("#");
 
-export const isMdxLink = (href: string): boolean => /\.md(x)?(#|$)/.test(href);
+export const isMdxLink = (href: string): boolean =>
+  /\.md(x)?(#|$|\/?\?)/.test(href);
 
 export const isPage = (href: string): boolean =>
   isMdxLink(href) || !getExtension(href);
