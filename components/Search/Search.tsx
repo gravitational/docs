@@ -4,7 +4,6 @@ import { autocomplete } from "@algolia/autocomplete-js";
 import "@algolia/autocomplete-theme-classic";
 import { render } from "react-dom";
 import { debounced } from "utils/debounced";
-import { SearchStyles } from "./SearchStyles";
 
 export interface SearchProps {
   id?: string;
@@ -25,14 +24,9 @@ export const getSearchResults = async (query: string) => {
   }
 };
 
-const SearchAutocomplete = ({
-  id = "search",
-  version,
-  className,
-  ...props
-}: SearchProps) => {
+const SearchAutocomplete = (props) => {
   const containerRef = useRef(null);
-  // docsearch.js is using "window" inside, so it will break ssr if we import it directly
+
   useEffect(() => {
     if (!containerRef.current) {
       return undefined;
@@ -85,7 +79,6 @@ function ProductItem({ hit }) {
 export default function Search() {
   return (
     <>
-      <SearchStyles />
       <SearchAutocomplete
         openOnFocus={false}
         placeholder="Search Docs"
