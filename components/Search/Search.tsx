@@ -58,7 +58,7 @@ function ProductItem({ hit }) {
   } else if (hit._snippetResult.content) {
     foundContent = hit._snippetResult.content.value;
   }
-  debugger;
+
   return (
     <a href={hit.objectID} className="aa-ItemLink">
       <div className="aa-ItemContent">
