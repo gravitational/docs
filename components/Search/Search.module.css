@@ -79,12 +79,6 @@
   }
 }
 
-.aa-Form {
-  height: 30px;
-  border-radius: 24px;
-  border-color: var(--color-light-gray);
-}
-
 .title {
   margin: 0;
   font-size: var(--fs-text-sm);
