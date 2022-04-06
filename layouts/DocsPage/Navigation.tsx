@@ -161,11 +161,7 @@ const DocNavigation = ({
   return (
     <div className={cn(styles.wrapper, section && styles.section)}>
       <div className={styles.searchbar}>
-        <Search
-          id="mobile"
-          version={currentVersion}
-          className={styles.search}
-        />
+        <Search />
         <HeadlessButton onClick={toggleMenu} className={styles.menu}>
           <Icon name={visible ? "close" : "hamburger"} size="md" />
         </HeadlessButton>
