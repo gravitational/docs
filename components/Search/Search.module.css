@@ -57,22 +57,28 @@
   margin-right: var(--m-1);
   margin-left: var(--m-1);
 
-  & .aa-Form,
-  & .aa-DetachedSearchButton {
+  & :global(.aa-Form),
+  & :global(.aa-DetachedSearchButton) {
     height: 30px;
     border-radius: 24px;
     border-color: var(--color-light-gray);
   }
-  & .aa-SubmitIcon {
+  & :global(.aa-SubmitIcon) {
     color: var(--color-lighter-gray);
   }
-  & .aa-Input {
+  & :global(.aa-Input) {
     fontsize: var(--fs-text-md);
   }
 
   @media (max-width: 560px) {
     width: 100%;
   }
+}
+
+.aa-Form {
+  height: 30px;
+  border-radius: 24px;
+  border-color: var(--color-light-gray);
 }
 
 .title {
