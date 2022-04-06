@@ -12,6 +12,7 @@ import {
   TileImage,
 } from "components/Tile";
 import Details from "components/Details";
+import { ScopeSwitchTile } from "components/ScopeSwitchTile";
 import {
   Code,
   H1,
@@ -74,4 +75,5 @@ export const components = {
   Notice,
   Snippet,
   Details,
+  ScopeSwitchTile,
 };
