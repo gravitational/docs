@@ -1,8 +1,9 @@
-import cn from "classnames";
-import { useEffect } from "react";
-import Icon from "components/Icon";
-import docVersions from "../../config.json";
+import React, { useEffect, useRef, createElement, Fragment } from "react";
 import styles from "./Search.module.css";
+import { autocomplete } from "@algolia/autocomplete-js";
+import "@algolia/autocomplete-theme-classic";
+import { render } from "react-dom";
+import { debounced } from "utils/debounced";
 
 export interface SearchProps {
   id?: string;
@@ -10,54 +11,103 @@ export interface SearchProps {
   className?: string;
 }
 
-const ALGOLIA_HITS = 5 * docVersions.versions.length;
-const CURRENT_VERS = docVersions.versions.find((vers) => vers.latest).name;
-
-const Search = ({
-  id = "search",
-  version,
-  className,
-  ...props
-}: SearchProps) => {
-  // docsearch.js is using "window" inside, so it will break ssr if we import it directly
-  useEffect(() => {
-    import("docsearch.js").then(({ default: docsearch }) => {
-      docsearch({
-        apiKey: process.env.NEXT_PUBLIC_DOCSEARCH_API_KEY,
-        indexName: "goteleport",
-        inputSelector: `[data-docsearch-input="${id}"]`,
-        debug: false,
-        algoliaOptions: {
-          hitsPerPage: ALGOLIA_HITS,
-        },
-        transformData: function (hits) {
-          return hits
-            .filter((hit) => {
-              if (CURRENT_VERS === version) {
-                return !hit.url.includes("/ver/");
-              }
-
-              return hit.url.includes(version);
-            })
-            .slice(0, 5);
-        },
-      });
+export const getSearchResults = async (query: string) => {
+  try {
+    const rawResponse = await fetch(`/docs/api/search/?query=${query}`, {
+      method: "GET",
     });
-  }, [id, version]);
 
-  return (
-    <>
-      <div className={cn(styles.wrapper, className)} {...props}>
-        <Icon name="magnify" className={styles.icon} />
-        <input
-          className={styles.input}
-          type="text"
-          placeholder="Search docs..."
-          data-docsearch-input={id}
-        />
-      </div>
-    </>
-  );
+    const response = await rawResponse.json();
+    return response.map((res) => ({ ...res, label: res.title }));
+  } catch (e) {
+    console.error(e);
+  }
 };
 
-export default Search;
+const SearchAutocomplete = (props) => {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    if (!containerRef.current) {
+      return undefined;
+    }
+
+    const search = autocomplete({
+      container: containerRef.current,
+      renderer: { createElement, Fragment },
+      render({ children }, root) {
+        render(children, root);
+      },
+      ...props,
+    });
+
+    return () => {
+      search.destroy();
+    };
+  }, [props]);
+
+  return <div className={styles["wrapper-autocomplete"]} ref={containerRef} />;
+};
+
+function ProductItem({ hit }) {
+  let foundHeader = "";
+  let foundContent = "";
+
+  if (hit._snippetResult.headers?.length) {
+    foundHeader = hit._snippetResult.headers[0].value;
+  } else if (hit._snippetResult.content) {
+    foundContent = hit._snippetResult.content.value;
+  }
+
+  return (
+    <a href={hit.objectID} className="aa-ItemLink">
+      <div className="aa-ItemContent">
+        <div className="aa-ItemTitle">
+          <p className={styles.title}>{hit.title}</p>
+          {foundHeader && (
+            <h3
+              className={styles["found-header"]}
+              dangerouslySetInnerHTML={{ __html: foundHeader }}
+            ></h3>
+          )}
+          {foundContent && (
+            <p
+              className={styles["found-content"]}
+              dangerouslySetInnerHTML={{ __html: foundContent }}
+            ></p>
+          )}
+        </div>
+      </div>
+    </a>
+  );
+}
+
+export default function Search() {
+  return (
+    <>
+      <SearchAutocomplete
+        openOnFocus={false}
+        placeholder="Search Docs"
+        getSources={({ query }) => {
+          return debounced([
+            {
+              sourceId: "docs_search",
+              async getItems() {
+                const result = await getSearchResults(query);
+                return result;
+              },
+              templates: {
+                item({ item }) {
+                  return <ProductItem hit={item} />;
+                },
+                noResults() {
+                  return `No results were found for the search '${query}'`;
+                },
+              },
+            },
+          ]);
+        }}
+      />
+    </>
+  );
+}
