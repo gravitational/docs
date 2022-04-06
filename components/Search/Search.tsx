@@ -58,17 +58,23 @@ function ProductItem({ hit }) {
   } else if (hit._snippetResult.content) {
     foundContent = hit._snippetResult.content.value;
   }
-
+  debugger;
   return (
     <a href={hit.objectID} className="aa-ItemLink">
       <div className="aa-ItemContent">
         <div className="aa-ItemTitle">
           <p className={styles.title}>{hit.title}</p>
           {foundHeader && (
-            <h3 className={styles["found-header"]}>{foundHeader}</h3>
+            <h3
+              className={styles["found-header"]}
+              dangerouslySetInnerHTML={{ __html: foundHeader }}
+            ></h3>
           )}
           {foundContent && (
-            <p className={styles["found-content"]}>{foundContent}</p>
+            <p
+              className={styles["found-content"]}
+              dangerouslySetInnerHTML={{ __html: foundContent }}
+            ></p>
           )}
         </div>
       </div>

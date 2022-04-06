@@ -82,15 +82,18 @@
 }
 
 .title {
+  margin: 0;
   font-size: var(--fs-text-sm);
   color: var(--color-lighter-gray);
 }
 
 .found-header {
+  margin: 0;
   font-size: var(--fs-text-lg);
   color: var(--color-dark-purple);
 }
 
 .found-content {
+  margin: 0;
   font-size: var(--fs-text-md);
 }

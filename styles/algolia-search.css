@@ -15,7 +15,3 @@
     background-color: #d2dbdf;
   }
 }
-
-.aa-Panel .aa-Item + .aa-Item {
-  margin-top: 8px;
-}
