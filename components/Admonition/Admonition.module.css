@@ -26,6 +26,10 @@
   &.danger {
     --main-color: var(--color-danger);
   }
+
+  &.hidden {
+    display: none;
+  }
 }
 
 .header {
