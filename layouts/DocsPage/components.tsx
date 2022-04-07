@@ -12,6 +12,7 @@ import {
   TileImage,
 } from "components/Tile";
 import Details from "components/Details";
+import { ScopeLink } from "components/ScopeLink";
 import {
   Code,
   H1,
@@ -74,4 +75,5 @@ export const components = {
   Notice,
   Snippet,
   Details,
+  ScopeLink,
 };
