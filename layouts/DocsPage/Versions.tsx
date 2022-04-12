@@ -2,6 +2,7 @@ import cn from "classnames";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Dropdown } from "components/Dropdown";
+import { getCurrentPageWithScope } from "utils/url";
 import type { VersionsInfo } from "./types";
 import styles from "./Versions.module.css";
 
@@ -16,11 +17,7 @@ const Versions = ({
 }: VersionsInfo) => {
   const router = useRouter();
   const [currentItem, setCurrentItem] = useState<string>(current);
-
-  let currentPage = router.asPath.startsWith("/ver/")
-    ? router.asPath.split("/")[3]
-    : router.asPath.slice(1);
-
+  const currentPage = getCurrentPageWithScope(router.asPath);
   const versions = useMemo(() => [...available].reverse(), [available]);
 
   const navigateToVersion = useCallback(

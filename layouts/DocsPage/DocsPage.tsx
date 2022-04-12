@@ -1,6 +1,5 @@
 import cn from "classnames";
 import { MDXProvider } from "@mdx-js/react";
-import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
 import AnchorNavigation, { HeaderMeta } from "components/AnchorNavigation";
 import Button from "components/Button";
@@ -9,6 +8,7 @@ import SiteHeader from "components/Header";
 import Link, { useCurrentHref } from "components/Link";
 import Notice from "components/Notice";
 import VideoBar from "components/VideoBar";
+import { getCurrentPageWithScope } from "utils/url";
 import { components } from "./components";
 import { DocsContext } from "./context";
 import Header from "./Header";
@@ -39,6 +39,7 @@ const DocsPage = ({
   children,
 }: DocsPageProps) => {
   const route = useCurrentHref();
+  const currentPage = getCurrentPageWithScope(route);
   const { setVersions } = useContext(DocsContext);
 
   const { current, latest, available } = versions;
@@ -89,7 +90,8 @@ const DocsPage = ({
                   {isOldVersion && (
                     <>
                       This chapter covers a past release: {versions.current}. We
-                      recommend the <Link href="/docs/">latest</Link> version
+                      recommend the{" "}
+                      <Link href={`/docs/${currentPage}`}>latest</Link> version
                       instead.
                     </>
                   )}
@@ -97,7 +99,8 @@ const DocsPage = ({
                     <>
                       This chapter covers an upcoming release:{" "}
                       {versions.current}. We recommend the{" "}
-                      <Link href="/">latest</Link> version instead.
+                      <Link href={`/${currentPage}`}>latest</Link> version
+                      instead.
                     </>
                   )}
                 </Notice>
