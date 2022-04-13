@@ -38,6 +38,8 @@ const RULE_ID = "code-snippet";
 const isCode = (node: MdxastNode): node is MdastCode =>
   node.type === "code" && node.lang === "code";
 
+const isBash = (node: MdastCode): node is MdastCode => node.lang === "bash";
+
 const getCommandNode = (content: string, prefix = "$"): MdxJsxFlowElement => ({
   type: "mdxJsxFlowElement",
   name: "Command",
@@ -99,6 +101,16 @@ export default function remarkCodeSnippet(
   { lint }: RemarkCodeSnippetOptions = { resolve: true }
 ): Transformer {
   return (root, vfile) => {
+    visit(root, isBash, (node: MdastCode, index, parent) => {
+      if (lint) {
+        vfile.fail('"bash" code blocks are deprecated. Use "code" instead');
+      } else {
+        console.error(
+          `ERROR: using a "bash" code block in the file ${vfile.path}, which is deprecated. Use "code" instead.`
+        );
+      }
+    });
+
     visit(root, isCode, (node: MdastCode, index, parent) => {
       const content: string = node.value;
       const codeLines = content.split("\n");

@@ -164,4 +164,34 @@ Suite("Returns correct error message on multiline command lint", () => {
   );
 });
 
+Suite('Shows a linter warning when using "bash" code blocks', () => {
+  const value = `
+## This is a bash code block:
+
+\`\`\`bash
+$ teleport start;
+\`\`\`
+
+This is a yaml code block:
+
+\`\`\`yaml
+key: value
+key2: value
+\`\`\`
+
+`;
+
+  assert.throws(
+    () =>
+      transformer(
+        {
+          value,
+          path: "/docs/index.mdx",
+        },
+        { lint: true, resolve: false }
+      ),
+    '"bash" code blocks are deprecated. Use "code" instead'
+  );
+});
+
 Suite.run();
