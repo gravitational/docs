@@ -22,7 +22,7 @@ const Versions = ({
 
   useEffect(() => {
     async function getRedirectsMap() {
-      const res = await require("../../utils/sitemapWithRedirects.json");
+      const res = await require("../../utils/articleLinks.json");
       console.log(res);
     }
 
