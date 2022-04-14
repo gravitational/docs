@@ -20,6 +20,15 @@ const Versions = ({
   const currentPage = getCurrentPageWithScope(router.asPath);
   const versions = useMemo(() => [...available].reverse(), [available]);
 
+  useEffect(() => {
+    async function getRedirectsMap() {
+      const res = await require("../../utils/sitemapWithRedirects.json");
+      console.log(res);
+    }
+
+    getRedirectsMap();
+  }, []);
+
   const navigateToVersion = useCallback(
     (version: string) => {
       const isLatest = version === latest;

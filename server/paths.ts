@@ -1,5 +1,6 @@
 import glob from "glob";
 import { resolve, join } from "path";
+import { writeFileSync } from "fs";
 import { loadConfig as loadDocsConfig } from "./config-docs";
 import { loadConfig as loadSiteConfig } from "./config-site";
 import { generateSitemap as sitemapGenerator } from "./sitemap";
@@ -105,4 +106,43 @@ export const getRedirects = () => {
   });
 
   return result;
+};
+
+export const generateArticleLinks = () => {
+  const map = {};
+  const currentDocPages = getSlugsForVersion(latest).map((slug) =>
+    normalizeDocSlug(slug, latest)
+  );
+
+  versions.forEach((ver) => {
+    const currentConfigRedirects = loadDocsConfig(latest).redirects;
+
+    map[ver] = [
+      ...getSlugsForVersion(ver).map((slug) => {
+        const docSlug = normalizeDocSlug(slug, ver);
+        const pageWithoutVer = `/${slug.split("/").slice(3).join("/")}`;
+        let needRedirect = false;
+        if (ver !== latest) {
+          needRedirect = !currentDocPages.includes(pageWithoutVer);
+        }
+        let currentRedirectDestination;
+        if (needRedirect) {
+          currentRedirectDestination = currentConfigRedirects.find(
+            (redir) => redir.source === pageWithoutVer
+          )?.destination;
+        }
+        if (needRedirect && !currentRedirectDestination) {
+          currentRedirectDestination = "/";
+        }
+
+        return {
+          path: docSlug,
+          needRedirect,
+          ...(needRedirect && { currentRedirectDestination }),
+        };
+      }),
+    ];
+  });
+
+  writeFileSync(resolve("utils", "articleLinks.json"), JSON.stringify(map));
 };

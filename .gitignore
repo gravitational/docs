@@ -13,6 +13,7 @@
 /public/docs_sitemap.xml
 /public/algolia_sitemap.xml
 /pages/ver/*
+/utils/articleLinks.json
 
 # misc
 .DS_Store
