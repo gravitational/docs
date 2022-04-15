@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { vars, media } from "styles/variables.css";
+import { vars } from "styles/variables.css";
 
 const {
   color,
@@ -24,23 +24,23 @@ export const menu = style({
 });
 
 export const header = style({
-  fontSize: size["text-sm"],
+  fontSize: size.sm,
   lineHeight: lineHeight.md,
   maxHeight: "100%",
   overflowY: "auto",
-  margin: `0 ${spacing["m0.5"]} ${spacing["m0.5"]}`,
-  padding: `${spacing["m0.5"]} 0`,
+  margin: `0 ${spacing.m0_5} ${spacing.m0_5}`,
+  padding: `${spacing.m0_5} 0`,
   fontWeight: weight.bold,
   color: color.darkest,
-  borderBottom: `1px solid ${color["lightest-gray"]}`,
+  borderBottom: `1px solid ${color.lightestGray}`,
 });
 
 export const link = style({
   display: "block",
-  fontSize: size["text-sm"],
+  fontSize: size.sm,
   lineHeight: lineHeight.sm,
-  color: color["dark-gray"],
-  padding: spacing["m0.5"],
+  color: color.darkGray,
+  padding: spacing.m0_5,
   textDecoration: "none",
   maxWidth: "100%",
   overflow: "hidden",
@@ -48,12 +48,12 @@ export const link = style({
   whiteSpace: "nowrap",
   borderRadius: radii.default,
   ":focus": {
-    backgroundColor: color["lightest-gray"],
+    backgroundColor: color.lightestGray,
   },
   ":hover": {
-    backgroundColor: color["lightest-gray"],
+    backgroundColor: color.lightestGray,
   },
   ":active": {
-    backgroundColor: color["lightest-gray"],
+    backgroundColor: color.lightestGray,
   },
 });

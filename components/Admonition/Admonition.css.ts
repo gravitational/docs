@@ -61,7 +61,7 @@ export const header = style({
   borderTopLeftRadius: radii.default,
   borderTopRightRadius: radii.default,
   height: spacing.m3,
-  fontSize: size["text-sm"],
+  fontSize: size.sm,
   lineHeight: lineHeight.md,
   padding: `0 ${spacing.m1}`,
   textTransform: "uppercase",
@@ -74,11 +74,11 @@ export const header = style({
 
 export const body = style({
   padding: vars.spacing.m1,
-  fontSize: size["text-md"],
+  fontSize: size.md,
   "@media": {
     [media.md]: {
       padding: `${spacing.m1} ${spacing.m2}`,
-      fontSize: size["text-lg"],
+      fontSize: size.lg,
     },
   },
 });

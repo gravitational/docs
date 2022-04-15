@@ -9,7 +9,7 @@ import {
 } from "@reach/listbox";
 import "@reach/listbox/styles.css";
 import Icon from "components/Icon";
-import styles from "./Dropdown.module.css";
+import * as styles from "./Dropdown.css";
 
 export type DropdownProps<T> = {
   options: T[];

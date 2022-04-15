@@ -1,7 +1,7 @@
-import styles from "./DropdownMenuOverlay.module.css";
+import { wrapper } from "./DropdownMenuOverlay.css";
 
 const DropdownMenuOverlay = () => {
-  return <div className={styles.wrapper} />;
+  return <div className={wrapper} />;
 };
 
 export default DropdownMenuOverlay;

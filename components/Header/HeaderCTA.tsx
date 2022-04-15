@@ -6,7 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuOverlay,
 } from "../DropdownMenu";
-import styles from "./HeaderCTA.module.css";
+import * as styles from "./HeaderCTA.css";
 
 const HeaderCTA = () => {
   const ref = useRef(null);
@@ -38,7 +38,7 @@ const HeaderCTA = () => {
           >
             Sign In
           </Button>
-          <div className={styles.dropdown}>
+          <div className={styles.dropdown({ visible: isSignInVisible })}>
             <DropdownMenu title="Sign in to Teleport">
               <DropdownMenuItem
                 href="https://teleport.sh/"

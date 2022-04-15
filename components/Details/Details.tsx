@@ -4,7 +4,7 @@ import HeadlessButton from "components/HeadlessButton";
 import Icon from "components/Icon";
 import { DocsContext, getScopes } from "layouts/DocsPage/context";
 import { ScopesType } from "layouts/DocsPage/types";
-import styles from "./Details.module.css";
+import * as styles from "./Details.css";
 
 export interface DetailsProps {
   scope?: ScopesType;

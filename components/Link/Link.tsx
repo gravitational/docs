@@ -2,11 +2,11 @@ import cn from "classnames";
 import NextLink, { LinkProps as NextLinkProps } from "next/link";
 import { isHash, isExternalLink, isLocalAssetFile } from "utils/url";
 import { useNormalizedHref } from "./hooks";
-import styles from "./Link.module.css";
+import { wrapper } from "./Link.css";
 
 export interface LinkProps extends Omit<NextLinkProps, "href"> {
   passthrough?: boolean;
-  scheme?: string;
+  scheme?: "docs";
   className?: string;
   href: string;
   onClick?: () => void;
@@ -38,7 +38,7 @@ const Link = ({
       <a
         href={normalizedHref}
         {...linkProps}
-        className={cn(styles.wrapper, styles[scheme], className)}
+        className={cn(wrapper({ scheme }), className)}
       >
         {children}
       </a>
@@ -50,7 +50,7 @@ const Link = ({
         target="_blank"
         rel="noopener noreferrer"
         {...linkProps}
-        className={cn(styles.wrapper, styles[scheme], className)}
+        className={cn(wrapper({ scheme }), className)}
       >
         {children}
       </a>
@@ -69,10 +69,7 @@ const Link = ({
 
   return (
     <NextLink {...nextProps} prefetch={false}>
-      <a
-        {...linkProps}
-        className={cn(styles.wrapper, styles[scheme], className)}
-      >
+      <a {...linkProps} className={cn(wrapper({ scheme }), className)}>
         {children}
       </a>
     </NextLink>

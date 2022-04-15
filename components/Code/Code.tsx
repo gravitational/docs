@@ -1,5 +1,5 @@
 import cn from "classnames";
-import styles from "./Code.module.css";
+import { wrapper } from "./Code.css";
 
 export type CodeProps = {
   children: React.ReactNode;
@@ -7,5 +7,5 @@ export type CodeProps = {
 };
 
 export const Code = ({ children, className }: CodeProps) => {
-  return <pre className={cn(styles.wrapper, className)}>{children}</pre>;
+  return <pre className={cn(wrapper, className)}>{children}</pre>;
 };

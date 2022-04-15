@@ -2,7 +2,7 @@ import cn from "classnames";
 import { useContext, useMemo } from "react";
 import { DocsContext, getScopes } from "layouts/DocsPage/context";
 import { ScopesType } from "layouts/DocsPage/types";
-import { wrapper, header, body } from "./Admonition.css";
+import * as styles from "./Admonition.css";
 
 const capitalize = (text: string): string =>
   text.replace(/^\w/, (c) => c.toUpperCase());
@@ -31,9 +31,11 @@ const Admonition = ({
   const isHidden = scopeOnly && !isInCurrentScope;
 
   return (
-    <div className={wrapper({ type: isHidden ? "hidden" : resolvedType })}>
-      <div className={header}>{title || capitalize(type)}</div>
-      <div className={body}>{children}</div>
+    <div
+      className={styles.wrapper({ type: isHidden ? "hidden" : resolvedType })}
+    >
+      <div className={styles.header}>{title || capitalize(type)}</div>
+      <div className={styles.body}>{children}</div>
     </div>
   );
 };
