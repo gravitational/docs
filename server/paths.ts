@@ -127,11 +127,9 @@ export const generateArticleLinks = () => {
 
         if (ver !== latest) {
           needRedirectToCurrent = !currentDocPages.includes(pageWithoutVer);
-          foundedConfigRedirect = `/${configRedirects
-            ?.find((elem) => elem.destination === docSlug)
-            ?.source.split("/")
-            .slice(3)
-            .join("/")}`;
+          foundedConfigRedirect = configRedirects?.find(
+            (elem) => elem.destination === docSlug
+          )?.source;
         }
         let currentRedirectDestination;
         if (needRedirectToCurrent) {

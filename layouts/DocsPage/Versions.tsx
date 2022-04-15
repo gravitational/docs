@@ -23,11 +23,11 @@ const findExistingPage = ({
     (elem) => elem.path === currentPageWithVersion
   );
 
-  // if (!foundElement) {
-  //   foundElement.path = articleList[version].find(
-  //     (elem) => elem.foundedConfigRedirect === currentPageWithVersion
-  //   )?.foundedConfigRedirect;
-  // }
+  if (!foundElement) {
+    foundElement = articleList[version].find(
+      (elem) => elem.foundedConfigRedirect === currentPageWithVersion
+    );
+  }
 
   let cutPath = `${currentPageWithVersion.split("/").slice(0, -2).join("/")}/`;
   let i = 0;
