@@ -41,3 +41,14 @@ export interface PageMeta {
   navigation: NavigationCategory[];
   versions: VersionsInfo;
 }
+
+interface LinkWithRedirect {
+  path: string;
+  needRedirectToCurrent: boolean;
+  currentRedirectDestination?: string;
+  foundedConfigRedirect?: string;
+}
+
+export interface LinkWithRedirectList {
+  [key: string]: LinkWithRedirect[];
+}

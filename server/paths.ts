@@ -119,26 +119,35 @@ export const generateArticleLinks = () => {
 
     map[ver] = [
       ...getSlugsForVersion(ver).map((slug) => {
+        const configRedirects = loadDocsConfig(ver).redirects;
         const docSlug = normalizeDocSlug(slug, ver);
+        let foundedConfigRedirect = "";
         const pageWithoutVer = `/${slug.split("/").slice(3).join("/")}`;
-        let needRedirect = false;
+        let needRedirectToCurrent = false;
+
         if (ver !== latest) {
-          needRedirect = !currentDocPages.includes(pageWithoutVer);
+          needRedirectToCurrent = !currentDocPages.includes(pageWithoutVer);
+          foundedConfigRedirect = `/${configRedirects
+            ?.find((elem) => elem.destination === docSlug)
+            ?.source.split("/")
+            .slice(3)
+            .join("/")}`;
         }
         let currentRedirectDestination;
-        if (needRedirect) {
+        if (needRedirectToCurrent) {
           currentRedirectDestination = currentConfigRedirects.find(
             (redir) => redir.source === pageWithoutVer
           )?.destination;
         }
-        if (needRedirect && !currentRedirectDestination) {
+        if (needRedirectToCurrent && !currentRedirectDestination) {
           currentRedirectDestination = "/";
         }
 
         return {
           path: docSlug,
-          needRedirect,
-          ...(needRedirect && { currentRedirectDestination }),
+          needRedirect: needRedirectToCurrent,
+          ...(needRedirectToCurrent && { currentRedirectDestination }),
+          ...(foundedConfigRedirect && { foundedConfigRedirect }),
         };
       }),
     ];
