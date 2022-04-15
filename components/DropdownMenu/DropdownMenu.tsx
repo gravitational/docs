@@ -1,4 +1,4 @@
-import styles from "./DropdownMenu.module.css";
+import * as styles from "./DropdownMenu.css";
 
 export interface DropdownMenuProps {
   title: string;

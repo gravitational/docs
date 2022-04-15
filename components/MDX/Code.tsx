@@ -1,6 +1,6 @@
 import cn from "classnames";
 import { DetailedHTMLProps, HTMLAttributes } from "react";
-import styles from "./Code.module.css";
+import { wrapper } from "./Code.css";
 
 const isHLJSNode = (className?: string) =>
   Boolean(className) && className.indexOf("hljs") !== -1;
@@ -12,7 +12,7 @@ const Code = (
     return <code {...props} />;
   }
 
-  return <code {...props} className={cn(styles.wrapper, props.className)} />;
+  return <code {...props} className={cn(wrapper, props.className)} />;
 };
 
 export default Code;

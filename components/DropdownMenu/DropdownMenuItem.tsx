@@ -1,7 +1,7 @@
 import NextImage from "next/image";
 import Link from "components/Link";
 import Icon, { IconName } from "components/Icon";
-import styles from "./DropdownMenuItem.module.css";
+import * as styles from "./DropdownMenuItem.css";
 
 export interface MenuItemProps {
   title: string;
@@ -21,7 +21,7 @@ const DropdownMenuItem = ({
   return (
     <Link href={href} passthrough className={styles.wrapper}>
       {image && (
-        <div className={styles["image-wrapper"]}>
+        <div className={styles.imageWrapper}>
           <NextImage
             src={image}
             alt=""

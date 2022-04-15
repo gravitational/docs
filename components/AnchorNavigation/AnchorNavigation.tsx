@@ -1,7 +1,7 @@
 import cn from "classnames";
 import Link from "components/Link";
 import { HeaderMeta } from "./types";
-import styles from "./AnchorNavigation.module.css";
+import * as styles from "./AnchorNavigation.css";
 
 export interface AnchorNavigationProps {
   className?: string;

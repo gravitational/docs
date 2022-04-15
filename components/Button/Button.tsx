@@ -4,15 +4,7 @@ import {
   ButtonHTMLAttributes,
 } from "react";
 import cn from "classnames";
-import styles from "./Button.module.css";
-
-export type ButtonVariant = "primary" | "secondary" | "secondary-white";
-export type ButtonShape = "sm" | "md" | "lg" | "outline";
-
-export interface BaseProps {
-  variant?: ButtonVariant | ButtonVariant[];
-  shape?: ButtonShape | ButtonShape[];
-}
+import { wrapper, ButtonVariants } from "./Button.css";
 
 type DefaultButtonProps = DetailedHTMLProps<
   ButtonHTMLAttributes<HTMLButtonElement>,
@@ -24,8 +16,8 @@ type DefaultAnchorProps = DetailedHTMLProps<
   HTMLAnchorElement
 >;
 
-type ButtonProps = BaseProps & DefaultButtonProps & { as: "button" };
-type AnchorProps = BaseProps & DefaultAnchorProps & { as: "link" };
+type ButtonProps = ButtonVariants & DefaultButtonProps & { as: "button" };
+type AnchorProps = ButtonVariants & DefaultAnchorProps & { as: "link" };
 
 const Button = ({
   as,
@@ -36,12 +28,7 @@ const Button = ({
 }: ButtonProps | AnchorProps) => {
   const props = {
     ...restProps,
-    className: cn(
-      styles.wrapper,
-      styles[`variant-${variant}`],
-      styles[`shape-${shape}`],
-      className
-    ),
+    className: cn(wrapper({ variant, shape }), className),
   };
 
   if (as === "link") {

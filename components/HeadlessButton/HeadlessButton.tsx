@@ -1,7 +1,7 @@
 import { forwardRef, RefObject } from "react";
 import cn from "classnames";
 import { DetailedHTMLProps, ButtonHTMLAttributes } from "react";
-import styles from "./HeadlessButton.module.css";
+import { wrapper } from "./HeadlessButton.css";
 
 // eslint-disable-next-line react/display-name
 export const HeadlessButton = forwardRef(
@@ -15,9 +15,7 @@ export const HeadlessButton = forwardRef(
     >,
     ref: RefObject<HTMLButtonElement>
   ) => {
-    return (
-      <button {...props} className={cn(styles.wrapper, className)} ref={ref} />
-    );
+    return <button {...props} className={cn(wrapper, className)} ref={ref} />;
   }
 );
 
