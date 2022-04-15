@@ -1,3 +1,4 @@
+import cn from "classnames";
 import { useState, useCallback, useRef, MouseEvent } from "react";
 import { useClickAway } from "react-use";
 import Button from "components/Button";
@@ -38,7 +39,9 @@ const HeaderCTA = () => {
           >
             Sign In
           </Button>
-          <div className={styles.dropdown}>
+          <div
+            className={cn(styles.dropdown, isSignInVisible && styles.visible)}
+          >
             <DropdownMenu title="Sign in to Teleport">
               <DropdownMenuItem
                 href="https://teleport.sh/"
