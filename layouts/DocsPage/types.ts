@@ -44,8 +44,6 @@ export interface PageMeta {
 
 interface LinkWithRedirect {
   path: string;
-  needRedirectToCurrent: boolean;
-  currentRedirectDestination?: string;
   foundedConfigRedirect?: string;
 }
 

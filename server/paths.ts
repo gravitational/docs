@@ -110,41 +110,22 @@ export const getRedirects = () => {
 
 export const generateArticleLinks = () => {
   const map = {};
-  const currentDocPages = getSlugsForVersion(latest).map((slug) =>
-    normalizeDocSlug(slug, latest)
-  );
 
   versions.forEach((ver) => {
-    const currentConfigRedirects = loadDocsConfig(latest).redirects;
-
     map[ver] = [
       ...getSlugsForVersion(ver).map((slug) => {
         const configRedirects = loadDocsConfig(ver).redirects;
         const docSlug = normalizeDocSlug(slug, ver);
         let foundedConfigRedirect = "";
-        const pageWithoutVer = `/${slug.split("/").slice(3).join("/")}`;
-        let needRedirectToCurrent = false;
 
         if (ver !== latest) {
-          needRedirectToCurrent = !currentDocPages.includes(pageWithoutVer);
           foundedConfigRedirect = configRedirects?.find(
             (elem) => elem.destination === docSlug
           )?.source;
         }
-        let currentRedirectDestination;
-        if (needRedirectToCurrent) {
-          currentRedirectDestination = currentConfigRedirects.find(
-            (redir) => redir.source === pageWithoutVer
-          )?.destination;
-        }
-        if (needRedirectToCurrent && !currentRedirectDestination) {
-          currentRedirectDestination = "/";
-        }
 
         return {
           path: docSlug,
-          needRedirect: needRedirectToCurrent,
-          ...(needRedirectToCurrent && { currentRedirectDestination }),
           ...(foundedConfigRedirect && { foundedConfigRedirect }),
         };
       }),

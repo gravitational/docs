@@ -55,8 +55,6 @@ const findExistingPage = ({
           (elem) =>
             elem.foundedConfigRedirect === foundedRedirectionWithNewVersion
         );
-        console.log("elemVers", elemVers);
-        console.log("foundElement", foundElement);
       } else {
         foundElement = articleList[elemVers].find(
           (elem) => elem.foundedConfigRedirect === initialPageWithNewVersion
@@ -129,7 +127,7 @@ const Versions = ({
       setCurrentItem(version);
       router.push(href);
     },
-    [latest, router, currentPage, articleList, current]
+    [latest, router, currentPage, articleList, current, versions]
   );
 
   useEffect(() => {
