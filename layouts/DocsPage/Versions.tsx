@@ -14,6 +14,7 @@ interface Props {
   currentPageWithVersion: string;
   initialVersion: string;
   initialPage: string;
+  versions: string[];
 }
 
 const findExistingPage = ({
@@ -22,24 +23,50 @@ const findExistingPage = ({
   currentPageWithVersion,
   initialVersion,
   initialPage,
+  versions,
 }: Props) => {
-  console.log("initialPage", initialPage);
   let foundElement = articleList[version].find(
     (elem) => elem.path === currentPageWithVersion
   );
 
   if (Number(initialVersion) < Number(version) && !foundElement) {
-    console.log("version upper");
-    const initialPageWithNewVersion = initialPage.replace(
-      initialVersion,
-      version
+    const sortVersions = versions.sort((a, b) => Number(a) - Number(b));
+    const startedIndex = sortVersions.indexOf(initialVersion);
+    const endedIndex = sortVersions.indexOf(version);
+    const appropriateVersionRange = sortVersions.slice(
+      startedIndex + 1,
+      endedIndex + 1
     );
+    let foundedRedirection = "";
 
-    console.log("initialPageWithNewVersion", initialPageWithNewVersion);
+    appropriateVersionRange.forEach((elemVers, index) => {
+      const initialPageWithNewVersion = initialPage.replace(
+        initialVersion,
+        elemVers
+      );
 
-    foundElement = articleList[version].find(
-      (elem) => elem.foundedConfigRedirect === initialPageWithNewVersion
-    );
+      if (foundedRedirection && foundElement) {
+        const foundedRedirectionWithNewVersion = foundElement.path.replace(
+          appropriateVersionRange[index - 1],
+          elemVers
+        );
+
+        foundElement = articleList[elemVers].find(
+          (elem) =>
+            elem.foundedConfigRedirect === foundedRedirectionWithNewVersion
+        );
+        console.log("elemVers", elemVers);
+        console.log("foundElement", foundElement);
+      } else {
+        foundElement = articleList[elemVers].find(
+          (elem) => elem.foundedConfigRedirect === initialPageWithNewVersion
+        );
+      }
+
+      if (foundElement) {
+        foundedRedirection = foundElement.foundedConfigRedirect;
+      }
+    });
   }
 
   if (!foundElement) {
@@ -49,15 +76,11 @@ const findExistingPage = ({
   }
 
   let cutPath = `${currentPageWithVersion.split("/").slice(0, -2).join("/")}/`;
-  let i = 0;
-  while (!foundElement && i !== 10) {
+
+  while (!foundElement) {
     foundElement = articleList[version].find((elem) => elem.path === cutPath);
-    console.log("cutPath", cutPath);
     cutPath = `${cutPath.split("/").slice(0, -2).join("/")}/`;
-    i++;
   }
-  console.log("current page", currentPageWithVersion);
-  console.log("found elem", foundElement);
 
   return foundElement ? foundElement.path : `/ver/${version}/`;
 };
@@ -99,13 +122,14 @@ const Versions = ({
           currentPageWithVersion,
           initialVersion: current,
           initialPage: router.asPath,
+          versions,
         });
       }
 
       setCurrentItem(version);
       router.push(href);
     },
-    [latest, router, currentPage, articleList]
+    [latest, router, currentPage, articleList, current]
   );
 
   useEffect(() => {
