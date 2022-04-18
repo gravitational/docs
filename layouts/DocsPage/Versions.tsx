@@ -12,16 +12,35 @@ interface Props {
   articleList: LinkWithRedirectList;
   version: string;
   currentPageWithVersion: string;
+  initialVersion: string;
+  initialPage: string;
 }
 
 const findExistingPage = ({
   articleList,
   version,
   currentPageWithVersion,
+  initialVersion,
+  initialPage,
 }: Props) => {
+  console.log("initialPage", initialPage);
   let foundElement = articleList[version].find(
     (elem) => elem.path === currentPageWithVersion
   );
+
+  if (Number(initialVersion) < Number(version) && !foundElement) {
+    console.log("version upper");
+    const initialPageWithNewVersion = initialPage.replace(
+      initialVersion,
+      version
+    );
+
+    console.log("initialPageWithNewVersion", initialPageWithNewVersion);
+
+    foundElement = articleList[version].find(
+      (elem) => elem.foundedConfigRedirect === initialPageWithNewVersion
+    );
+  }
 
   if (!foundElement) {
     foundElement = articleList[version].find(
@@ -78,6 +97,8 @@ const Versions = ({
           articleList,
           version,
           currentPageWithVersion,
+          initialVersion: current,
+          initialPage: router.asPath,
         });
       }
 
