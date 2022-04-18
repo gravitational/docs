@@ -3,7 +3,7 @@ import { useRef, useState, useCallback, ReactNode } from "react";
 import Code from "components/Code";
 import Icon from "components/Icon";
 import HeadlessButton from "components/HeadlessButton";
-import styles from "./Pre.module.css";
+import * as styles from "./Pre.css";
 
 interface CodeProps {
   children: ReactNode;

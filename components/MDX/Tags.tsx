@@ -1,4 +1,4 @@
-import styles from "./Tags.module.css";
+import * as styles from "./Tags.css";
 
 export const P = (props) => <p {...props} className={styles.p} />;
 

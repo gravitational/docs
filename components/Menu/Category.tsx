@@ -1,7 +1,6 @@
-import cn from "classnames";
 import { useClickAway } from "react-use";
 import { useCallback, useRef } from "react";
-import styles from "./Category.module.css";
+import * as styles from "./Category.css";
 
 import {
   DropdownMenu,
@@ -58,11 +57,11 @@ const MenuCategory = ({
         <a
           href={href}
           onClick={toggleOpened}
-          className={cn(styles.link, opened && styles.active)}
+          className={styles.link({ active: opened })}
         >
           {title}
         </a>
-        <div className={cn(styles.dropdown, opened && styles.opened)}>
+        <div className={styles.dropdown({ opened })}>
           {children && (
             <DropdownMenu title={description}>
               {children.map((props) => (

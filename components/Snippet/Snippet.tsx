@@ -1,5 +1,5 @@
 import Pre from "components/MDX/Pre";
-import styles from "./Snippet.module.css";
+import * as styles from "./Snippet.css";
 
 export interface SnippetProps {
   children: React.ReactNode;

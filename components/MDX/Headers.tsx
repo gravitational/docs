@@ -1,5 +1,5 @@
 import cn from "classnames";
-import styles from "./Headers.module.css";
+import * as styles from "./Headers.css";
 
 export const H1 = ({ children, ...props }) => (
   <h1 className={cn(styles.wrapper, styles.h1)} {...props}>

@@ -1,7 +1,6 @@
-import cn from "classnames";
-import { Children, cloneElement, useMemo } from "react";
+import { Children, cloneElement } from "react";
 import NextImage, { ImageProps as NextImageProps } from "next/image";
-import styles from "./Image.module.css";
+import * as styles from "./Image.css";
 
 type PositioningValue = "left" | "center" | "right";
 interface SharedProps {
@@ -19,7 +18,7 @@ export const Image = ({
   ...props
 }: ImageProps) => {
   return (
-    <span className={cn(styles.wrapper, styles[align])}>
+    <span className={styles.wrapper({ align })}>
       {bordered ? (
         <span className={styles.border}>
           <NextImage {...props} layout="intrinsic" />

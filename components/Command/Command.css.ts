@@ -60,7 +60,7 @@ export const button = style({
   top: 0,
   left: 0,
   margin: 0,
-  padding: `${spacing["m0.5"]} 6px`,
+  padding: `${spacing.m0_5} 6px`,
   color: color.lightGray,
   backgroundColor: color.darkest,
   cursor: "pointer",

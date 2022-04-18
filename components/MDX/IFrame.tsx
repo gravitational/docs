@@ -1,4 +1,5 @@
-import styles from "./IFrame.module.css";
+import * as styles from "./IFrame.css";
+
 interface IFrameProps {
   width?: string;
   height?: string;
@@ -9,7 +10,7 @@ const IFrame = ({ width, height, src, ...props }: IFrameProps) => {
   if (src.indexOf("youtube") !== -1 && width && height) {
     return (
       <div
-        className={styles.styles}
+        className={styles.wrapper}
         style={{ maxWidth: `${width}px`, maxHeight: `${height}px` }}
       >
         <div
@@ -28,7 +29,7 @@ const IFrame = ({ width, height, src, ...props }: IFrameProps) => {
 
   return (
     <iframe
-      className={styles.styles}
+      className={styles.wrapper}
       style={{ width, height }}
       src={src}
       {...props}
