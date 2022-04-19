@@ -4,7 +4,7 @@ import Icon, { IconName } from "components/Icon";
 import { Dropdown } from "components/Dropdown";
 import { DocsContext } from "./context";
 import { ScopeType } from "./types";
-import styles from "./Scopes.module.css";
+import * as styles from "./Scopes.css";
 
 interface Option {
   value: ScopeType;

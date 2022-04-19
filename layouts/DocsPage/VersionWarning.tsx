@@ -2,7 +2,7 @@ import { useContext } from "react";
 import Icon from "components/Icon";
 import Link from "components/Link";
 import { DocsContext } from "./context";
-import styles from "./VersionWarning.module.css";
+import * as styles from "./VersionWarning.css";
 
 export const VersionWarning = () => {
   const {

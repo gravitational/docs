@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Dropdown } from "components/Dropdown";
 import type { VersionsInfo } from "./types";
-import styles from "./Versions.module.css";
+import { wrapper } from "./Versions.css";
 
 const renderVersion = (version: string) => `Version ${version}`;
 
@@ -36,7 +36,7 @@ const Versions = ({
 
   return (
     <Dropdown
-      className={cn(styles.wrapper, className)}
+      className={cn(wrapper, className)}
       value={currentItem}
       options={versions}
       disabled={disabled}
