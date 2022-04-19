@@ -1,4 +1,3 @@
-import cn from "classnames";
 import {
   isValidElement,
   Children,
@@ -11,7 +10,7 @@ import HeadlessButton from "components/HeadlessButton";
 import { VersionWarning } from "layouts/DocsPage";
 import { DocsContext, getScopes } from "layouts/DocsPage/context";
 import { ScopesType } from "layouts/DocsPage/types";
-import styles from "./Tabs.module.css";
+import * as styles from "./Tabs.css";
 
 const getSelectedLabel = (
   tabs: React.ReactComponentElement<typeof TabItem>[]
@@ -43,7 +42,7 @@ const TabLabel = ({ selected, label, onClick }: TabsLabel) => {
     <HeadlessButton
       disabled={selected}
       onClick={() => onClick(label)}
-      className={cn(styles.label, selected ? styles.selected : styles.default)}
+      className={styles.label({ selected })}
     >
       {label}
     </HeadlessButton>

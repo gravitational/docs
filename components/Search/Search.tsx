@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, createElement, Fragment } from "react";
-import styles from "./Search.module.css";
 import { autocomplete } from "@algolia/autocomplete-js";
 import "@algolia/autocomplete-theme-classic";
+import * as styles from "./Search.css";
 import { render } from "react-dom";
 import { debounced } from "utils/debounced";
 
@@ -46,7 +46,7 @@ const SearchAutocomplete = (props) => {
     };
   }, [props]);
 
-  return <div className={styles["wrapper-autocomplete"]} ref={containerRef} />;
+  return <div className={styles.wrapperAutocomplete} ref={containerRef} />;
 };
 
 function ProductItem({ hit }) {
@@ -66,13 +66,13 @@ function ProductItem({ hit }) {
           <p className={styles.title}>{hit.title}</p>
           {foundHeader && (
             <h3
-              className={styles["found-header"]}
+              className={styles.foundHeader}
               dangerouslySetInnerHTML={{ __html: foundHeader }}
             ></h3>
           )}
           {foundContent && (
             <p
-              className={styles["found-content"]}
+              className={styles.foundContent}
               dangerouslySetInnerHTML={{ __html: foundContent }}
             ></p>
           )}

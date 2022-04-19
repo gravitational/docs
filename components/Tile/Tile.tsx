@@ -1,7 +1,7 @@
 import Icon, { IconName } from "components/Icon";
 import Link from "components/Link";
 import { TileWrapper } from "./TileSet";
-import styles from "./Tile.module.css";
+import * as styles from "./Tile.css";
 
 export interface TileProps {
   children: React.ReactNode;

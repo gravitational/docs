@@ -3,7 +3,7 @@ import NextImage from "next/image";
 import Icon from "components/Icon";
 import Button from "components/Button";
 import { VideoBarProps } from "./types";
-import styles from "./VideoBar.module.css";
+import * as styles from "./VideoBar.css";
 
 export default function VideoBar({
   thumbnail,

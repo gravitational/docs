@@ -1,6 +1,6 @@
 import Tile from "./Tile";
 import TileList from "./TileList";
-import styles from "./TileSet.module.css";
+import * as styles from "./TileSet.css";
 
 type TileType = React.ReactElement<typeof Tile>;
 type TileListTyle = React.ReactElement<typeof TileList>;

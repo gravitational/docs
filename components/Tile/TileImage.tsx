@@ -1,7 +1,7 @@
 import NextImage from "next/image";
 import Link from "components/Link";
 import { TileWrapper } from "./TileSet";
-import styles from "./TileImage.module.css";
+import * as styles from "./TileImage.css";
 
 export interface TileImageProps {
   alt: string;
@@ -23,7 +23,7 @@ const TileImage = ({
   return (
     <TileWrapper>
       <div className={styles.wrapper}>
-        <Link href={href} className={styles["image-wrapper"]}>
+        <Link href={href} className={styles.imageWrapper}>
           <NextImage
             src={src}
             alt={alt}
@@ -33,7 +33,7 @@ const TileImage = ({
         </Link>
         <div className={styles.body}>
           <h3 className={styles.title}>
-            <Link href={href} className={styles["title-link"]}>
+            <Link href={href} className={styles.titleLink}>
               {title}
             </Link>
           </h3>

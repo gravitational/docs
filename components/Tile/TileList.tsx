@@ -1,7 +1,7 @@
 import Link from "components/Link";
 import Icon, { IconName } from "components/Icon";
 import { TileWrapper } from "./TileSet";
-import styles from "./TileList.module.css";
+import * as styles from "./TileList.css";
 
 export interface TileListItemProps {
   href: string;
@@ -11,7 +11,7 @@ export interface TileListItemProps {
 export const TileListItem = ({ href, children }: TileListItemProps) => {
   return (
     <li className={styles.item}>
-      <Link href={href} className={styles["item-link"]}>
+      <Link href={href} className={styles.itemLink}>
         {children}
       </Link>
     </li>
