@@ -26,39 +26,75 @@ const findExistingPage = ({
   versions,
 }: Props) => {
   let foundElement = articleList[version].find(
-    (elem) => elem.path === currentPageWithVersion
+    (elem) =>
+      elem.path === currentPageWithVersion ||
+      elem.foundedConfigRedirect === currentPageWithVersion
   );
 
-  if (Number(initialVersion) < Number(version) && !foundElement) {
-    const sortVersions = versions.sort((a, b) => Number(a) - Number(b));
-    const startedIndex = sortVersions.indexOf(initialVersion);
-    const endedIndex = sortVersions.indexOf(version);
-    const appropriateVersionRange = sortVersions.slice(
-      startedIndex + 1,
-      endedIndex + 1
-    );
+  const sortVersions = versions.sort((a, b) => Number(a) - Number(b));
+  const initialIndex = sortVersions.indexOf(initialVersion);
+  const distinationIndex = sortVersions.indexOf(version);
+
+  let appropriateVersionRange = sortVersions.slice(
+    initialIndex + 1,
+    distinationIndex + 1
+  );
+
+  //In this case we need to check for redirects from the version from which we are switching.
+  //There is no need to check for redirects in the destination version
+  if (initialIndex > distinationIndex) {
+    appropriateVersionRange = sortVersions
+      .slice(distinationIndex + 1, initialIndex + 1)
+      .sort((a, b) => Number(b) - Number(a));
+  }
+
+  if (!foundElement) {
     let foundedRedirection = "";
 
     appropriateVersionRange.forEach((elemVers, index) => {
-      const initialPageWithNewVersion = initialPage.replace(
+      let initialPageWithNewVersion = initialPage.replace(
         initialVersion,
         elemVers
       );
+      if (initialVersion === "9.0") {
+        initialPageWithNewVersion = `/ver/${elemVers}${initialPage}`;
+      }
 
-      if (foundedRedirection && foundElement) {
-        const foundedRedirectionWithNewVersion = foundElement.path.replace(
-          appropriateVersionRange[index - 1],
-          elemVers
-        );
+      if (Number(initialVersion) < Number(version)) {
+        if (foundedRedirection && foundElement) {
+          const foundedRedirectionWithNewVersion = foundElement.path.replace(
+            appropriateVersionRange[index - 1],
+            elemVers
+          );
 
-        foundElement = articleList[elemVers].find(
-          (elem) =>
-            elem.foundedConfigRedirect === foundedRedirectionWithNewVersion
-        );
-      } else {
-        foundElement = articleList[elemVers].find(
-          (elem) => elem.foundedConfigRedirect === initialPageWithNewVersion
-        );
+          foundElement = articleList[elemVers].find(
+            (elem) =>
+              elem.foundedConfigRedirect === foundedRedirectionWithNewVersion
+          );
+        } else {
+          foundElement = articleList[elemVers].find(
+            (elem) => elem.foundedConfigRedirect === initialPageWithNewVersion
+          );
+        }
+      }
+
+      if (Number(initialVersion) > Number(version)) {
+        articleList[elemVers].forEach((elem) => {
+          const prevVers = versions[sortVersions.indexOf(elemVers) - 1];
+          if (
+            elem.path === initialPageWithNewVersion &&
+            elem.foundedConfigRedirect
+          ) {
+            const pathInPreviewVers = elem.foundedConfigRedirect.replace(
+              elemVers,
+              prevVers
+            );
+
+            foundElement = articleList[prevVers].find(
+              (elem) => elem.path === pathInPreviewVers
+            );
+          }
+        });
       }
 
       if (foundElement) {
@@ -68,16 +104,15 @@ const findExistingPage = ({
   }
 
   if (!foundElement) {
-    foundElement = articleList[version].find(
-      (elem) => elem.foundedConfigRedirect === currentPageWithVersion
-    );
-  }
+    let cutPath = `${currentPageWithVersion
+      .split("/")
+      .slice(0, -2)
+      .join("/")}/`;
 
-  let cutPath = `${currentPageWithVersion.split("/").slice(0, -2).join("/")}/`;
-
-  while (!foundElement) {
-    foundElement = articleList[version].find((elem) => elem.path === cutPath);
-    cutPath = `${cutPath.split("/").slice(0, -2).join("/")}/`;
+    while (!foundElement) {
+      foundElement = articleList[version].find((elem) => elem.path === cutPath);
+      cutPath = `${cutPath.split("/").slice(0, -2).join("/")}/`;
+    }
   }
 
   return foundElement ? foundElement.path : `/ver/${version}/`;
