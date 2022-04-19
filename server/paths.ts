@@ -118,11 +118,9 @@ export const generateArticleLinks = () => {
         const docSlug = normalizeDocSlug(slug, ver);
         let foundedConfigRedirect = "";
 
-        if (ver !== latest) {
-          foundedConfigRedirect = configRedirects?.find(
-            (elem) => elem.destination === docSlug
-          )?.source;
-        }
+        foundedConfigRedirect = configRedirects?.find(
+          (elem) => elem.destination === docSlug
+        )?.source;
 
         return {
           path: docSlug,

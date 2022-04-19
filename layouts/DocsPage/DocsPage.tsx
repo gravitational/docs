@@ -1,6 +1,6 @@
 import cn from "classnames";
 import { MDXProvider } from "@mdx-js/react";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import AnchorNavigation, { HeaderMeta } from "components/AnchorNavigation";
 import Button from "components/Button";
 import Head from "components/Head";
@@ -14,7 +14,7 @@ import { DocsContext } from "./context";
 import Header from "./Header";
 import Footer from "./Footer";
 import Navigation, { getCurrentCategoryIndex } from "./Navigation";
-import { PageMeta } from "./types";
+import { PageMeta, LinkWithRedirectList } from "./types";
 
 import styles from "./DocsPage.module.css";
 
@@ -41,10 +41,17 @@ const DocsPage = ({
   const route = useCurrentHref();
   const currentPage = getCurrentPageWithScope(route);
   const { setVersions } = useContext(DocsContext);
+  const [articleList, setArticleList] = useState<LinkWithRedirectList>({});
 
   const { current, latest, available } = versions;
 
   useEffect(() => {
+    async function getRedirectsMap() {
+      const res = await require("../../utils/articleLinks.json");
+      setArticleList(res);
+    }
+
+    getRedirectsMap();
     setVersions(versions);
   }, [versions, setVersions]);
 
@@ -56,6 +63,43 @@ const DocsPage = ({
 
   const isOldVersion = available.indexOf(current) < available.indexOf(latest);
   const isBetaVersion = available.indexOf(current) > available.indexOf(latest);
+  let redirectFromBeta = false;
+
+  let foundElement = articleList[latest]?.find(
+    (elem) =>
+      `/${currentPage}` === elem.path ||
+      `/${currentPage}` === elem.foundedConfigRedirect
+  );
+
+  if (isBetaVersion && !foundElement) {
+    foundElement = articleList[current]?.find(
+      (elem) => `/${currentPage}` === elem.foundedConfigRedirect
+    );
+    if (foundElement) {
+      redirectFromBeta = true;
+    }
+  }
+
+  if (!foundElement) {
+    let cutPath = `${currentPage.split("/").slice(0, -2).join("/")}/`;
+    let i = 0;
+
+    while (!foundElement && i < 10) {
+      foundElement = articleList[latest]?.find((elem) => elem.path === cutPath);
+      cutPath = `${cutPath.split("/").slice(0, -2).join("/")}/`;
+
+      if (cutPath === "/") break;
+    }
+  }
+
+  const path = foundElement ? foundElement.path : "/";
+
+  let pathFromBeta = "/";
+  if (redirectFromBeta) {
+    pathFromBeta = foundElement.foundedConfigRedirect;
+  } else if (foundElement) {
+    pathFromBeta = foundElement.path;
+  }
 
   return (
     <>
@@ -90,16 +134,15 @@ const DocsPage = ({
                   {isOldVersion && (
                     <>
                       This chapter covers a past release: {versions.current}. We
-                      recommend the{" "}
-                      <Link href={`/docs/${currentPage}`}>latest</Link> version
-                      instead.
+                      recommend the <Link href={`/docs${path}`}>latest</Link>{" "}
+                      version instead.
                     </>
                   )}
                   {isBetaVersion && (
                     <>
                       This chapter covers an upcoming release:{" "}
                       {versions.current}. We recommend the{" "}
-                      <Link href={`/${currentPage}`}>latest</Link> version
+                      <Link href={`${pathFromBeta}`}>latest</Link> version
                       instead.
                     </>
                   )}
