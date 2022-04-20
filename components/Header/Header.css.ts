@@ -78,6 +78,7 @@ export const hamburger = style({
 
 export const content = recipe({
   base: {
+    display: "flex",
     alignItems: "center",
     width: "100%",
     "@media": {
@@ -99,10 +100,13 @@ export const content = recipe({
   variants: {
     visible: {
       true: {
-        display: "flex",
+        "@media": {
+          [media.sm]: {
+            display: "flex",
+          },
+        },
       },
       false: {
-        display: "none",
         "@media": {
           [media.sm]: {
             display: "none",
