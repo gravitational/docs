@@ -6454,6 +6454,11 @@ react-dom@17.0.2:
     object-assign "^4.1.1"
     scheduler "^0.20.2"
 
+react-driftjs@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-driftjs/-/react-driftjs-1.2.2.tgz#56353857a8b70d5bb271ab39f9deb9f06e45e8c5"
+  integrity sha512-rQKRVJ5JaI4bTSHoDpvDORyUnWpLr/EZoeZLbdm2J5oqcdCbnOT+iKZJkzYskQXU4sg4X9XppdDfQ7Z/o0pErw==
+
 react-is@^16.13.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
