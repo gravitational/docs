@@ -6464,6 +6464,11 @@ react-is@^16.13.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-live-chat-loader@^2.7.3:
+  version "2.7.3"
+  resolved "https://registry.yarnpkg.com/react-live-chat-loader/-/react-live-chat-loader-2.7.3.tgz#a66a7d64eacdf0a680570b4e9a99639a88bffaae"
+  integrity sha512-VviVqnF3PYDBJ77JiPZv4cpulx806L22WfsIQxvlxlEWmzKNp/0lEs57uP6EJcE+d1jQwGcR9DIsj5qouE6OkA==
+
 react-universal-interface@^0.6.2:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/react-universal-interface/-/react-universal-interface-0.6.2.tgz#5e8d438a01729a4dbbcbeeceb0b86be146fe2b3b"

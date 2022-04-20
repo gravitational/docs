@@ -6,6 +6,7 @@ import AnchorNavigation, { HeaderMeta } from "components/AnchorNavigation";
 import Button from "components/Button";
 import Drift from "components/Drift";
 import Head from "components/Head";
+import { LiveChatLoaderProvider } from "react-live-chat-loader";
 import SiteHeader from "components/Header";
 import Link, { useCurrentHref } from "components/Link";
 import Notice from "components/Notice";
@@ -114,7 +115,12 @@ const DocsPage = ({
               />
             )}
           </div>
-          <Drift />
+          <LiveChatLoaderProvider
+            providerKey={process.env.NEXT_PUBLIC_DRIFT_ID}
+            provider="drift"
+          >
+            <Drift />
+          </LiveChatLoaderProvider>
           <Footer section={isSectionLayout}>
             <div className={styles.footer}>
               Have a suggestion or can’t find something?
