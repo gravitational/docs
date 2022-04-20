@@ -6,7 +6,6 @@ import AnchorNavigation, { HeaderMeta } from "components/AnchorNavigation";
 import Button from "components/Button";
 import Drift from "components/Drift";
 import Head from "components/Head";
-import { LiveChatLoaderProvider } from "react-live-chat-loader";
 import SiteHeader from "components/Header";
 import Link, { useCurrentHref } from "components/Link";
 import Notice from "components/Notice";
@@ -17,6 +16,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Navigation, { getCurrentCategoryIndex } from "./Navigation";
 import { PageMeta } from "./types";
+import dynamic from "next/dynamic";
 
 import styles from "./DocsPage.module.css";
 
@@ -25,6 +25,8 @@ interface DocsPageProps {
   tableOfConents: HeaderMeta[];
   children: React.ReactNode;
 }
+
+const DynamicLazyDrift = dynamic(() => import("../../components/Drift"));
 
 const DocsPage = ({
   meta: {
@@ -115,12 +117,7 @@ const DocsPage = ({
               />
             )}
           </div>
-          <LiveChatLoaderProvider
-            providerKey={process.env.NEXT_PUBLIC_DRIFT_ID}
-            provider="drift"
-          >
-            <Drift />
-          </LiveChatLoaderProvider>
+          <DynamicLazyDrift />
           <Footer section={isSectionLayout}>
             <div className={styles.footer}>
               Have a suggestion or can’t find something?
