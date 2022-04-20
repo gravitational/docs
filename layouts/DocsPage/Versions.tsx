@@ -50,7 +50,6 @@ const findExistingPage = ({
 
   if (!foundElement) {
     let foundedRedirection = "";
-
     appropriateVersionRange.forEach((elemVers, index) => {
       let initialPageWithNewVersion = initialPage.replace(
         initialVersion,
@@ -79,22 +78,39 @@ const findExistingPage = ({
       }
 
       if (Number(initialVersion) > Number(version)) {
-        articleList[elemVers].forEach((elem) => {
-          const prevVers = versions[sortVersions.indexOf(elemVers) - 1];
-          if (
-            elem.path === initialPageWithNewVersion &&
-            elem.foundedConfigRedirect
-          ) {
-            const pathInPreviewVers = elem.foundedConfigRedirect.replace(
-              elemVers,
-              prevVers
-            );
+        const prevVers = versions[sortVersions.indexOf(elemVers) - 1];
+        console.log(foundElement);
 
-            foundElement = articleList[prevVers].find(
-              (elem) => elem.path === pathInPreviewVers
-            );
-          }
-        });
+        if (foundElement) {
+          const pathInPreviewVers = foundElement.path.replace(
+            elemVers,
+            prevVers
+          );
+          const redirectInPreviewVers =
+            foundElement.foundedConfigRedirect?.replace(elemVers, prevVers);
+
+          foundElement = articleList[prevVers].find(
+            (elem) =>
+              elem.path === pathInPreviewVers ||
+              elem.path === redirectInPreviewVers
+          );
+        }
+
+        if (!foundElement) {
+          articleList[elemVers].forEach((elem) => {
+            if (
+              elem.path === initialPageWithNewVersion &&
+              elem.foundedConfigRedirect
+            ) {
+              const pathRedirectInPreviewVers =
+                elem.foundedConfigRedirect.replace(elemVers, prevVers);
+
+              foundElement = articleList[prevVers].find(
+                (elem) => elem.path === pathRedirectInPreviewVers
+              );
+            }
+          });
+        }
       }
 
       if (foundElement) {
@@ -103,6 +119,8 @@ const findExistingPage = ({
     });
   }
 
+  //if the page is not found and a redirect for it is not found,
+  //then try to find the page to the node above
   if (!foundElement) {
     let cutPath = `${currentPageWithVersion
       .split("/")
