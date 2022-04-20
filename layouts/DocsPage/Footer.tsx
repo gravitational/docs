@@ -1,17 +1,12 @@
-import cn from "classnames";
-import styles from "./Footer.module.css";
+import { wrapper } from "./Footer.css";
 
 interface DocsFooterProps {
-  section?: boolean;
+  section: boolean;
   children: React.ReactNode;
 }
 
 const DocsFooter = ({ children, section }: DocsFooterProps) => {
-  return (
-    <div className={cn(styles.wrapper, { [`${styles.section}`]: section })}>
-      {children}
-    </div>
-  );
+  return <div className={wrapper({ section })}>{children}</div>;
 };
 
 export default DocsFooter;

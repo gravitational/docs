@@ -6,7 +6,7 @@ import Versions from "./Versions";
 import NextImage from "next/image";
 import { VersionsInfo } from "./types";
 import { DocsContext } from "./context";
-import styles from "./Header.module.css";
+import * as styles from "./Header.css";
 import forkmeUrl from "./assets/forkme.webp";
 
 interface DocHeaderProps {
@@ -28,7 +28,7 @@ const DocHeader = ({
 
   return (
     <div className={styles.wrapper}>
-      <a href={GITHUB_DOCS} className={styles["github-link"]}>
+      <a href={GITHUB_DOCS} className={styles.githubLink}>
         <NextImage
           width="112"
           height="112"

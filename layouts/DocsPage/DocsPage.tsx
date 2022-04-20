@@ -1,6 +1,4 @@
-import cn from "classnames";
 import { MDXProvider } from "@mdx-js/react";
-import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
 import AnchorNavigation, { HeaderMeta } from "components/AnchorNavigation";
 import Button from "components/Button";
@@ -16,7 +14,7 @@ import Footer from "./Footer";
 import Navigation, { getCurrentCategoryIndex } from "./Navigation";
 import { PageMeta } from "./types";
 
-import styles from "./DocsPage.module.css";
+import * as styles from "./DocsPage.css";
 
 interface DocsPageProps {
   meta: PageMeta;
@@ -82,7 +80,7 @@ const DocsPage = ({
           {videoBanner && (
             <VideoBar className={styles.video} {...videoBanner} />
           )}
-          <div className={cn(styles["main-wrapper"], styles[layout])}>
+          <div className={styles.mainWrapper({ section: isSectionLayout })}>
             <div className={styles.main}>
               {(isOldVersion || isBetaVersion) && (
                 <Notice type="danger" className={styles.notice}>
@@ -102,14 +100,14 @@ const DocsPage = ({
                   )}
                 </Notice>
               )}
-              <div className={cn(styles.text, styles[layout])}>
+              <div className={styles.text({ layout })}>
                 <MDXProvider components={components}>{children}</MDXProvider>
               </div>
             </div>
             {isTocVisible && (
               <AnchorNavigation
                 headers={tableOfConents}
-                className={styles["anchor-navigation"]}
+                className={styles.anchorNavigation}
               />
             )}
           </div>
