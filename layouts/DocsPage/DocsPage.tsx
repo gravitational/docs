@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
 import AnchorNavigation, { HeaderMeta } from "components/AnchorNavigation";
 import Button from "components/Button";
-import Drift from "components/Drift";
 import Head from "components/Head";
 import SiteHeader from "components/Header";
 import Link, { useCurrentHref } from "components/Link";
