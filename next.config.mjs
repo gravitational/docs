@@ -14,6 +14,7 @@ const { latest } = loadConfig();
 
 export default withBundleAnalyzer(
   withVanillaExtract({
+    outputFileTracing: false,
     pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
     basePath: "/docs",
     rewrites: async () => [

@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import { DocsContextProvider } from "layouts/DocsPage/context";
 import { GTMPageView } from "utils/gtm";
 
-import "styles/varaibles.css";
 import "styles/fonts-ubuntu.css";
 import "styles/fonts-lato.css";
 import "styles/global.css";
