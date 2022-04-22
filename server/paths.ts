@@ -108,6 +108,24 @@ export const getRedirects = () => {
   return result;
 };
 
+//The file has the following structure
+/*[
+  ...,
+  "6.2": [
+    {
+      path: string;
+      foundedConfigRedirect?: string
+    }, ...
+  ],
+  "7.0": [
+    {
+      path: string;
+      foundedConfigRedirect?: string
+    }, ...
+  ],
+  ...
+]
+*/
 export const generateArticleLinks = () => {
   const map = {};
 
