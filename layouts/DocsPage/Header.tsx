@@ -8,14 +8,13 @@ import { VersionsInfo } from "./types";
 import { DocsContext } from "./context";
 import styles from "./Header.module.css";
 import forkmeUrl from "./assets/forkme.webp";
-import type { LinkWithRedirectList } from "./types";
 
 interface DocHeaderProps {
   title: string;
   icon?: IconName;
   versions: VersionsInfo;
   githubUrl: string;
-  articleList?: LinkWithRedirectList;
+  getNewVersionPath?: (ver: string) => string;
 }
 
 const GITHUB_DOCS = process.env.NEXT_PUBLIC_GITHUB_DOCS;
@@ -25,7 +24,7 @@ const DocHeader = ({
   icon = "book",
   versions,
   githubUrl,
-  articleList,
+  getNewVersionPath,
 }: DocHeaderProps) => {
   const { scope } = useContext(DocsContext);
 
@@ -47,7 +46,7 @@ const DocHeader = ({
           <Scopes className={styles.scopes} />
           <Versions
             {...versions}
-            articleList={articleList}
+            getNewVersionPath={getNewVersionPath}
             disabled={scope === "cloud"}
           />
           {!!githubUrl && (

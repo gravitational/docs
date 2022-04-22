@@ -1,7 +1,12 @@
-import { useEffect, useState } from "react";
-import type { LinkWithRedirectList } from "layouts/DocsPage/types";
+import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { getCurrentPageWithScope } from "utils/url";
+import type {
+  LinkWithRedirectList,
+  VersionsInfo,
+} from "layouts/DocsPage/types";
 
-export function useRedirectMap() {
+function useRedirectMap() {
   const [articleList, setArticleList] = useState<LinkWithRedirectList>({});
 
   useEffect(() => {
@@ -22,17 +27,17 @@ export function useRedirectMap() {
 interface Props {
   articleList: LinkWithRedirectList;
   version: string;
-  currentPageWithVersion: string;
+  targetPageWithVersion: string;
   initialVersion: string;
   initialPage: string;
   versions: string[];
   latestVersion: string;
 }
 
-export const findExistingPage = ({
+const findExistingPage = ({
   articleList,
   version,
-  currentPageWithVersion,
+  targetPageWithVersion,
   initialVersion,
   initialPage,
   versions,
@@ -41,12 +46,9 @@ export const findExistingPage = ({
   let destinationPage = "/";
 
   if (version === latestVersion && initialVersion !== latestVersion) {
-    destinationPage = `/${currentPageWithVersion
-      .split("/")
-      .slice(3)
-      .join("/")}`;
+    destinationPage = `/${targetPageWithVersion.split("/").slice(3).join("/")}`;
   } else {
-    destinationPage = currentPageWithVersion;
+    destinationPage = targetPageWithVersion;
   }
 
   let foundElement = articleList[version].find(
@@ -155,3 +157,34 @@ export const findExistingPage = ({
 
   return foundElement ? foundElement.path : `/ver/${version}/`;
 };
+
+export function useFindDestinationPath(versions: VersionsInfo) {
+  const { current, latest, available } = versions;
+  const router = useRouter();
+
+  const articleList = useRedirectMap();
+
+  return useCallback(
+    (versDestination) => {
+      const targetPageWithVersion = `/ver/${versDestination}/${getCurrentPageWithScope(
+        router.asPath
+      )}`;
+      let path = "/";
+
+      if (Object.keys(articleList).length) {
+        path = findExistingPage({
+          articleList,
+          version: versDestination,
+          targetPageWithVersion,
+          initialVersion: current,
+          initialPage: router.asPath,
+          versions: available,
+          latestVersion: latest,
+        });
+      }
+
+      return path;
+    },
+    [articleList, available, current, latest, router.asPath]
+  );
+}

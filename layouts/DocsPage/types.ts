@@ -36,7 +36,7 @@ export interface VersionsInfo {
   available: string[];
   disabled?: boolean;
   className?: string;
-  articleList: LinkWithRedirectList;
+  getNewVersionPath?: (ver: string) => string;
 }
 
 export type LayoutName = "doc" | "section" | "tocless-doc";

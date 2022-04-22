@@ -1,7 +1,6 @@
 import cn from "classnames";
 import { MDXProvider } from "@mdx-js/react";
-import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import AnchorNavigation, { HeaderMeta } from "components/AnchorNavigation";
 import Button from "components/Button";
 import Head from "components/Head";
@@ -9,14 +8,13 @@ import SiteHeader from "components/Header";
 import Link, { useCurrentHref } from "components/Link";
 import Notice from "components/Notice";
 import VideoBar from "components/VideoBar";
-import { getCurrentPageWithScope } from "utils/url";
 import { components } from "./components";
 import { DocsContext } from "./context";
 import Header from "./Header";
 import Footer from "./Footer";
 import Navigation, { getCurrentCategoryIndex } from "./Navigation";
-import { PageMeta, LinkWithRedirectList } from "./types";
-import { useRedirectMap, findExistingPage } from "utils/findExistingPage";
+import { PageMeta } from "./types";
+import { useFindDestinationPath } from "utils/useFindDestinationPath";
 
 import styles from "./DocsPage.module.css";
 
@@ -40,12 +38,11 @@ const DocsPage = ({
   tableOfConents,
   children,
 }: DocsPageProps) => {
-  const router = useRouter();
   const route = useCurrentHref();
   const { setVersions } = useContext(DocsContext);
-  const articleList = useRedirectMap();
 
   const { current, latest, available } = versions;
+  const getPath = useFindDestinationPath(versions);
 
   useEffect(() => {
     setVersions(versions);
@@ -60,18 +57,7 @@ const DocsPage = ({
   const isOldVersion = available.indexOf(current) < available.indexOf(latest);
   const isBetaVersion = available.indexOf(current) > available.indexOf(latest);
 
-  let path = "/";
-  if (Object.keys(articleList).length) {
-    path = findExistingPage({
-      articleList,
-      version: latest,
-      currentPageWithVersion: route,
-      initialVersion: current,
-      initialPage: router.asPath,
-      versions: available,
-      latestVersion: latest,
-    });
-  }
+  let path = getPath(latest);
 
   return (
     <>
@@ -86,7 +72,7 @@ const DocsPage = ({
           <Navigation
             data={navigation}
             section={isSectionLayout}
-            currentVersion={versions.current}
+            currentVersion={current}
           />
         </div>
         <div className={styles.body}>
@@ -95,7 +81,7 @@ const DocsPage = ({
             versions={versions}
             githubUrl={githubUrl}
             icon={icon}
-            articleList={articleList}
+            getNewVersionPath={getPath}
           />
           {videoBanner && (
             <VideoBar className={styles.video} {...videoBanner} />
@@ -106,16 +92,16 @@ const DocsPage = ({
                 <Notice type="danger" className={styles.notice}>
                   {isOldVersion && (
                     <>
-                      This chapter covers a past release: {versions.current}. We
+                      This chapter covers a past release: {current}. We
                       recommend the <Link href={`/docs${path}`}>latest</Link>{" "}
                       version instead.
                     </>
                   )}
                   {isBetaVersion && (
                     <>
-                      This chapter covers an upcoming release:{" "}
-                      {versions.current}. We recommend the{" "}
-                      <Link href={`${path}`}>latest</Link> version instead.
+                      This chapter covers an upcoming release: {current}. We
+                      recommend the <Link href={`${path}`}>latest</Link> version
+                      instead.
                     </>
                   )}
                 </Notice>
