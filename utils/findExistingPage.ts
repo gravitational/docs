@@ -1,4 +1,23 @@
+import { useEffect, useState } from "react";
 import type { LinkWithRedirectList } from "layouts/DocsPage/types";
+
+export function useRedirectMap() {
+  const [articleList, setArticleList] = useState<LinkWithRedirectList>({});
+
+  useEffect(() => {
+    if (Object.keys(articleList).length) {
+      return;
+    }
+    async function getRedirectsMap() {
+      const res = await require("./articleLinks.json");
+      setArticleList(res);
+    }
+
+    getRedirectsMap();
+  }, [articleList]);
+
+  return articleList;
+}
 
 interface Props {
   articleList: LinkWithRedirectList;
@@ -7,6 +26,7 @@ interface Props {
   initialVersion: string;
   initialPage: string;
   versions: string[];
+  latestVersion: string;
 }
 
 export const findExistingPage = ({
@@ -16,11 +36,23 @@ export const findExistingPage = ({
   initialVersion,
   initialPage,
   versions,
+  latestVersion,
 }: Props) => {
+  let destinationPage = "/";
+
+  if (version === latestVersion && initialVersion !== latestVersion) {
+    destinationPage = `/${currentPageWithVersion
+      .split("/")
+      .slice(3)
+      .join("/")}`;
+  } else {
+    destinationPage = currentPageWithVersion;
+  }
+
   let foundElement = articleList[version].find(
     (elem) =>
-      elem.path === currentPageWithVersion ||
-      elem.foundedConfigRedirect === currentPageWithVersion
+      elem.path === destinationPage ||
+      elem.foundedConfigRedirect === destinationPage
   );
 
   const sortVersions = versions.sort((a, b) => Number(a) - Number(b));
@@ -47,7 +79,7 @@ export const findExistingPage = ({
         initialVersion,
         elemVers
       );
-      if (initialVersion === "9.0") {
+      if (initialVersion === latestVersion) {
         initialPageWithNewVersion = `/ver/${elemVers}${initialPage}`;
       }
 
@@ -71,7 +103,6 @@ export const findExistingPage = ({
 
       if (Number(initialVersion) > Number(version)) {
         const prevVers = versions[sortVersions.indexOf(elemVers) - 1];
-        console.log(foundElement);
 
         if (foundElement) {
           const pathInPreviewVers = foundElement.path.replace(
@@ -114,10 +145,7 @@ export const findExistingPage = ({
   //if the page is not found and a redirect for it is not found,
   //then try to find the page to the node above
   if (!foundElement) {
-    let cutPath = `${currentPageWithVersion
-      .split("/")
-      .slice(0, -2)
-      .join("/")}/`;
+    let cutPath = `${destinationPage.split("/").slice(0, -2).join("/")}/`;
 
     while (!foundElement) {
       foundElement = articleList[version].find((elem) => elem.path === cutPath);

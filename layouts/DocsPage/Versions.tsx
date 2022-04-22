@@ -15,40 +15,25 @@ const Versions = ({
   available,
   disabled,
   className,
+  articleList,
 }: VersionsInfo) => {
   const router = useRouter();
   const [currentItem, setCurrentItem] = useState<string>(current);
-  const [articleList, setArticleList] = useState<LinkWithRedirectList>({});
   const currentPage = getCurrentPageWithScope(router.asPath);
   const versions = useMemo(() => [...available].reverse(), [available]);
 
-  useEffect(() => {
-    async function getRedirectsMap() {
-      const res = await require("../../utils/articleLinks.json");
-      setArticleList(res);
-    }
-
-    getRedirectsMap();
-  }, []);
-
   const navigateToVersion = useCallback(
     (version: string) => {
-      const isLatest = version === latest;
       const currentPageWithVersion = `/ver/${version}/${currentPage}`;
-      let href = "";
-
-      if (isLatest) {
-        href = `/${currentPage}`;
-      } else {
-        href = findExistingPage({
-          articleList,
-          version,
-          currentPageWithVersion,
-          initialVersion: current,
-          initialPage: router.asPath,
-          versions,
-        });
-      }
+      const href = findExistingPage({
+        articleList,
+        version,
+        currentPageWithVersion,
+        initialVersion: current,
+        initialPage: router.asPath,
+        versions,
+        latestVersion: latest,
+      });
 
       setCurrentItem(version);
       router.push(href);
