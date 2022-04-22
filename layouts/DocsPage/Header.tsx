@@ -14,6 +14,7 @@ interface DocHeaderProps {
   icon?: IconName;
   versions: VersionsInfo;
   githubUrl: string;
+  getNewVersionPath?: (ver: string) => string;
 }
 
 const GITHUB_DOCS = process.env.NEXT_PUBLIC_GITHUB_DOCS;
@@ -23,6 +24,7 @@ const DocHeader = ({
   icon = "book",
   versions,
   githubUrl,
+  getNewVersionPath,
 }: DocHeaderProps) => {
   const { scope } = useContext(DocsContext);
 
@@ -42,7 +44,11 @@ const DocHeader = ({
         <h1 className={styles.title}>{title}</h1>
         <div className={styles.dropdowns}>
           <Scopes className={styles.scopes} />
-          <Versions {...versions} disabled={scope === "cloud"} />
+          <Versions
+            {...versions}
+            getNewVersionPath={getNewVersionPath}
+            disabled={scope === "cloud"}
+          />
           {!!githubUrl && (
             <Button
               as="link"

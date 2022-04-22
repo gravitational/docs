@@ -1,6 +1,5 @@
 import cn from "classnames";
 import { MDXProvider } from "@mdx-js/react";
-import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
 import AnchorNavigation, { HeaderMeta } from "components/AnchorNavigation";
 import Button from "components/Button";
@@ -15,6 +14,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Navigation, { getCurrentCategoryIndex } from "./Navigation";
 import { PageMeta } from "./types";
+import { useFindDestinationPath } from "utils/useFindDestinationPath";
 
 import styles from "./DocsPage.module.css";
 
@@ -42,6 +42,7 @@ const DocsPage = ({
   const { setVersions } = useContext(DocsContext);
 
   const { current, latest, available } = versions;
+  const getPath = useFindDestinationPath(versions);
 
   useEffect(() => {
     setVersions(versions);
@@ -56,6 +57,8 @@ const DocsPage = ({
   const isOldVersion = available.indexOf(current) < available.indexOf(latest);
   const isBetaVersion = available.indexOf(current) > available.indexOf(latest);
 
+  let path = getPath(latest);
+
   return (
     <>
       <Head
@@ -69,7 +72,7 @@ const DocsPage = ({
           <Navigation
             data={navigation}
             section={isSectionLayout}
-            currentVersion={versions.current}
+            currentVersion={current}
           />
         </div>
         <div className={styles.body}>
@@ -78,6 +81,7 @@ const DocsPage = ({
             versions={versions}
             githubUrl={githubUrl}
             icon={icon}
+            getNewVersionPath={getPath}
           />
           {videoBanner && (
             <VideoBar className={styles.video} {...videoBanner} />
@@ -88,16 +92,16 @@ const DocsPage = ({
                 <Notice type="danger" className={styles.notice}>
                   {isOldVersion && (
                     <>
-                      This chapter covers a past release: {versions.current}. We
-                      recommend the <Link href="/docs/">latest</Link> version
-                      instead.
+                      This chapter covers a past release: {current}. We
+                      recommend the <Link href={`/docs${path}`}>latest</Link>{" "}
+                      version instead.
                     </>
                   )}
                   {isBetaVersion && (
                     <>
-                      This chapter covers an upcoming release:{" "}
-                      {versions.current}. We recommend the{" "}
-                      <Link href="/">latest</Link> version instead.
+                      This chapter covers an upcoming release: {current}. We
+                      recommend the <Link href={`${path}`}>latest</Link> version
+                      instead.
                     </>
                   )}
                 </Notice>

@@ -21,12 +21,22 @@ export interface NavigationCategory {
   entries: NavigationItem[];
 }
 
+interface LinkWithRedirect {
+  path: string;
+  foundedConfigRedirect?: string;
+}
+
+export interface LinkWithRedirectList {
+  [key: string]: LinkWithRedirect[];
+}
+
 export interface VersionsInfo {
   current: string;
   latest: string;
   available: string[];
   disabled?: boolean;
   className?: string;
+  getNewVersionPath?: (ver: string) => string;
 }
 
 export type LayoutName = "doc" | "section" | "tocless-doc";

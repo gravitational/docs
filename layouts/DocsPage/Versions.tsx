@@ -9,25 +9,23 @@ const renderVersion = (version: string) => `Version ${version}`;
 
 const Versions = ({
   current,
-  latest,
   available,
   disabled,
   className,
+  getNewVersionPath,
 }: VersionsInfo) => {
   const router = useRouter();
   const [currentItem, setCurrentItem] = useState<string>(current);
-
   const versions = useMemo(() => [...available].reverse(), [available]);
 
   const navigateToVersion = useCallback(
     (version: string) => {
-      const isLatest = version === latest;
-      const href = `${isLatest ? "/" : `/ver/${version}`}`;
+      const href = getNewVersionPath(version);
 
       setCurrentItem(version);
       router.push(href);
     },
-    [latest, router]
+    [getNewVersionPath, router]
   );
 
   useEffect(() => {

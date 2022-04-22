@@ -1,5 +1,6 @@
 import glob from "glob";
 import { resolve, join } from "path";
+import { writeFileSync } from "fs";
 import { loadConfig as loadDocsConfig } from "./config-docs";
 import { loadConfig as loadSiteConfig } from "./config-site";
 import { generateSitemap as sitemapGenerator } from "./sitemap";
@@ -105,4 +106,47 @@ export const getRedirects = () => {
   });
 
   return result;
+};
+
+//The file has the following structure
+/*[
+  ...,
+  "6.2": [
+    {
+      path: string;
+      foundedConfigRedirect?: string
+    }, ...
+  ],
+  "7.0": [
+    {
+      path: string;
+      foundedConfigRedirect?: string
+    }, ...
+  ],
+  ...
+]
+*/
+export const generateArticleLinks = () => {
+  const map = {};
+
+  versions.forEach((ver) => {
+    map[ver] = [
+      ...getSlugsForVersion(ver).map((slug) => {
+        const configRedirects = loadDocsConfig(ver).redirects;
+        const docSlug = normalizeDocSlug(slug, ver);
+        let foundedConfigRedirect = "";
+
+        foundedConfigRedirect = configRedirects?.find(
+          (elem) => elem.destination === docSlug
+        )?.source;
+
+        return {
+          path: docSlug,
+          ...(foundedConfigRedirect && { foundedConfigRedirect }),
+        };
+      }),
+    ];
+  });
+
+  writeFileSync(resolve("utils", "articleLinks.json"), JSON.stringify(map));
 };

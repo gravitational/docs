@@ -121,3 +121,9 @@ export const isLocalAssetFile = (
     (extWhiteList.length ? extWhiteList.includes(ext) : true)
   );
 };
+
+export const getCurrentPageWithScope = (route: string) => {
+  return route.startsWith("/ver/")
+    ? route.split("/").slice(3).join("/")
+    : route.slice(1);
+};
