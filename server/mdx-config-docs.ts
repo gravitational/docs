@@ -88,7 +88,7 @@ const config: MdxConfig = {
         },
       },
     ],
-    remarkCodeSnippet, // Plugin for custom code snippets with multiple copy buttons
+    [remarkCodeSnippet, { langs: ["code", "bash"] }], // Plugin for custom code snippets with multiple copy buttons
     remarkGFM, // Adds tables
     remarkImportFiles, // Replaces paths to files with imports
     remarkLinks, // Make links in docs absolute with /ver/X.X included
