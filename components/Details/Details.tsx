@@ -40,6 +40,12 @@ export const Details = ({
   const isCloudAndNotCurrent = scopes.includes("cloud") && current !== latest;
   const isHiddenInCurrentScope = scopeOnly && !isInCurrentScope;
   const isHidden = isCloudAndNotCurrent || isHiddenInCurrentScope;
+  const detailsId = title
+    .replace(/[&\/\\#,+()$~%.'":*?<>{};]/g, "")
+    .replace(/[0-9]/g, "")
+    .replaceAll(" ", "-")
+    .toLowerCase();
+  console.log(detailsId);
 
   return (
     <div
@@ -48,6 +54,7 @@ export const Details = ({
         isHidden && styles.hidden,
         isOpened && styles.opened
       )}
+      id={detailsId}
     >
       <HeadlessButton
         onClick={() => setIsOpened((value) => !value)}
