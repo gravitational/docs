@@ -92,7 +92,7 @@ Suite("Work with mdx components", () => {
     path: "/docs/enterprize/index.mdx",
   });
 
-  assert.equal(result, '<Component href="../workflow/"/>\n');
+  assert.equal(result, '<Component href="../workflow/" />\n');
 });
 
 Suite.run();
