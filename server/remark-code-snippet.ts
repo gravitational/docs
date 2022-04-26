@@ -35,8 +35,10 @@ import { visit } from "unist-util-visit";
 
 const RULE_ID = "code-snippet";
 
-const isCode = (node: MdxastNode): node is MdastCode =>
-  node.type === "code" && node.lang === "code";
+const isCode =
+  (langs: string[]) =>
+  (node: MdxastNode): node is MdastCode =>
+    node.type === "code" && langs.includes(node.lang);
 
 const getCommandNode = (content: string, prefix = "$"): MdxJsxFlowElement => ({
   type: "mdxJsxFlowElement",
@@ -91,15 +93,16 @@ const getCommentNode = (
 });
 
 export interface RemarkCodeSnippetOptions {
+  langs: string[];
   lint?: boolean;
   resolve?: boolean;
 }
 
 export default function remarkCodeSnippet(
-  { lint }: RemarkCodeSnippetOptions = { resolve: true }
+  { langs, lint }: RemarkCodeSnippetOptions = { resolve: true, langs: ["code"] }
 ): Transformer {
   return (root, vfile) => {
-    visit(root, isCode, (node: MdastCode, index, parent) => {
+    visit(root, isCode(langs), (node: MdastCode, index, parent) => {
       const content: string = node.value;
       const codeLines = content.split("\n");
       const children = [];

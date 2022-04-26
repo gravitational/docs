@@ -12,7 +12,10 @@ import remarkCodeSnippet, {
 
 const transformer = (
   options: VFileOptions,
-  pluginOptions: RemarkCodeSnippetOptions = { resolve: true }
+  pluginOptions: RemarkCodeSnippetOptions = {
+    resolve: true,
+    langs: ["code", "bash"],
+  }
 ) =>
   remark()
     .use(mdx)
@@ -137,7 +140,7 @@ Suite("Returns correct error message on heredoc format lint", () => {
           value,
           path: "/docs/index.mdx",
         },
-        { lint: true, resolve: false }
+        { lint: true, resolve: false, langs: ["code", "bash"] }
       ),
     "No closing line for heredoc format"
   );
@@ -158,7 +161,7 @@ Suite("Returns correct error message on multiline command lint", () => {
           value,
           path: "/docs/index.mdx",
         },
-        { lint: true, resolve: false }
+        { lint: true, resolve: false, langs: ["code", "bash"] }
       ),
     "The last string in the multiline command has to be without symbol \\"
   );
