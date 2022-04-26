@@ -17,7 +17,7 @@
 
   &.warning {
     border-color: var(--color-warning);
-    background-color: rgba(255 180 0 12%);
+    background-color: rgba(255 180 0 / 12%);
 
     & .icon {
       color: var(--color-warning);
@@ -26,7 +26,7 @@
 
   &.tip {
     border-color: var(--color-tip);
-    background-color: rgba(0 199 174 6%);
+    background-color: rgba(0 199 174 / 6%);
 
     & .icon {
       color: var(--color-tip);
@@ -35,7 +35,7 @@
 
   &.note {
     border-color: var(--color-note);
-    background-color: rgba(0 156 241 12%);
+    background-color: rgba(0 156 241 / 12%);
 
     & .icon {
       color: var(--color-note);
@@ -44,7 +44,7 @@
 
   &.danger {
     border-color: var(--color-danger);
-    background-color: rgba(rgba(248 0 97 6%));
+    background-color: rgba(rgba(248 0 97 / 6%));
 
     & .icon {
       color: var(--color-danger);
