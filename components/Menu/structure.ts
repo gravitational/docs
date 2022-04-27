@@ -101,7 +101,7 @@ const menu: MenuCategoryProps[] = [
         href: "/use-cases/machine-to-machine-access/",
       },
       {
-        icon: "chip",
+        icon: "connect",
         title: "Developer-friendly browser",
         description:
           "Teleport Connect improves UX and identity-based access for the cloud",
