@@ -1,9 +1,11 @@
 import cn from "classnames";
 import { useContext, useEffect, useState, useMemo } from "react";
+import { useRouter } from "next/router";
 import HeadlessButton from "components/HeadlessButton";
 import Icon from "components/Icon";
 import { DocsContext, getScopes } from "layouts/DocsPage/context";
 import { ScopesType } from "layouts/DocsPage/types";
+import { getAnchor } from "utils/url";
 import styles from "./Details.module.css";
 
 export interface DetailsProps {
@@ -30,16 +32,7 @@ export const Details = ({
   const scopes = useMemo(() => getScopes(scope), [scope]);
   const [isOpened, setIsOpened] = useState<boolean>(Boolean(opened));
   const isInCurrentScope = scopes.includes(currentScope);
-
-  useEffect(() => {
-    if (scopes.length) {
-      setIsOpened(isInCurrentScope);
-    }
-  }, [scopes, isInCurrentScope]);
-
-  const isCloudAndNotCurrent = scopes.includes("cloud") && current !== latest;
-  const isHiddenInCurrentScope = scopeOnly && !isInCurrentScope;
-  const isHidden = isCloudAndNotCurrent || isHiddenInCurrentScope;
+  const router = useRouter();
   const detailsId = title
     ? title
         .replace(/[&\/\\#,+()$~%.'":*?<>{};]/g, "")
@@ -47,6 +40,20 @@ export const Details = ({
         .replace(/\s/g, "-")
         .toLowerCase()
     : "title";
+  const anchorInPath = getAnchor(router.asPath);
+
+  useEffect(() => {
+    if (scopes.length) {
+      setIsOpened(isInCurrentScope);
+    }
+    if (anchorInPath === detailsId) {
+      setIsOpened(true);
+    }
+  }, [scopes, isInCurrentScope, anchorInPath, detailsId]);
+
+  const isCloudAndNotCurrent = scopes.includes("cloud") && current !== latest;
+  const isHiddenInCurrentScope = scopeOnly && !isInCurrentScope;
+  const isHidden = isCloudAndNotCurrent || isHiddenInCurrentScope;
 
   return (
     <div
