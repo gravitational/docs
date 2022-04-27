@@ -127,3 +127,7 @@ export const getCurrentPageWithScope = (route: string) => {
     ? route.split("/").slice(3).join("/")
     : route.slice(1);
 };
+
+export const getAnchor = (route: string): string => {
+  return route.split("#")[1] || "";
+};
