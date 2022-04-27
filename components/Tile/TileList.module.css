@@ -58,7 +58,7 @@
   overflow: hidden;
   flex-grow: 1;
   font-size: var(--fs-text-xl);
-  line-height: vr(--lh-md);
+  line-height: var(--lh-md);
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -68,14 +68,14 @@
   margin-left: var(--m-1);
   border-radius: var(--r-default);
   border: 1px solid var(--color-light-gray);
-  font-size: var(var-fs-text-xs);
+  font-size: var(--fs-text-xs);
   line-height: var(--lh-md);
   color: var(--color-gray);
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: border-color var(---interaction), color var(---interaction);
+  transition: border-color var(--t-interaction), color var(--t-interaction);
 
   &:hover,
   &:active,

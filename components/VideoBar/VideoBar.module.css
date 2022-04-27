@@ -47,7 +47,7 @@
   justify-content: space-between;
 
   @media (--sm-scr) {
-    margin-left: var(--m--5);
+    margin-left: var(--m-5);
   }
 
   @media (--md-scr) {

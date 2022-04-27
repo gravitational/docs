@@ -12,7 +12,7 @@
   position: relative;
   background-color: var(--color-code);
   border-radius: var(--r-default);
-  margin-top: calc(9 - var(---m-0-5));
+  margin-top: calc(9 - var(--m-0-5));
   margin-bottom: var(--m-3);
   box-shadow: 0 1px 4px rgba(0 0 0 / 24%);
 
