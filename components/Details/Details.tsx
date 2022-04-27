@@ -41,11 +41,12 @@ export const Details = ({
   const isHiddenInCurrentScope = scopeOnly && !isInCurrentScope;
   const isHidden = isCloudAndNotCurrent || isHiddenInCurrentScope;
   const detailsId = title
-    .replace(/[&\/\\#,+()$~%.'":*?<>{};]/g, "")
-    .replace(/[0-9]/g, "")
-    .replaceAll(" ", "-")
-    .toLowerCase();
-  console.log(detailsId);
+    ? title
+        .replace(/[&\/\\#,+()$~%.'":*?<>{};]/g, "")
+        .replace(/[0-9]/g, "")
+        .replaceAll(" ", "-")
+        .toLowerCase()
+    : "title";
 
   return (
     <div
@@ -54,7 +55,7 @@ export const Details = ({
         isHidden && styles.hidden,
         isOpened && styles.opened
       )}
-      id={detailsId}
+      id={!isHidden && detailsId}
     >
       <HeadlessButton
         onClick={() => setIsOpened((value) => !value)}
@@ -78,6 +79,7 @@ export const Details = ({
             </div>
           )}
         </div>
+        <a className={styles.anchor} href={`#${detailsId}`} />
       </HeadlessButton>
       <div className={styles.body}>{children}</div>
     </div>

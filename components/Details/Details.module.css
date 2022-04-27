@@ -1,17 +1,17 @@
 .header {
   display: flex;
-  width: 100%;
   align-items: center;
+  width: 100%;
   padding: var(--m-1) 0;
+  font-size: var(--fs-text-md);
+  line-height: var(--lh-sm);
+  font-weight: var(--fw-bold);
+  text-align: left;
+  color: var(--color-darkest);
+  transition: background-color var(--t-interaction);
   border-top-left-radius: var(--r-default);
   border-top-right-radius: var(--r-default);
-  text-align: left;
-  font-size: var(--fs-text-md);
-  font-weight: var(--fw-bold);
-  line-height: var(--lh-sm);
-  color: var(--color-darkest);
   cursor: pointer;
-  transition: background-color var(--t-interaction);
 
   &:hover,
   &:active,
@@ -19,13 +19,34 @@
     color: var(--color-light-purple);
     outline: none;
   }
+
+  &:hover .anchor {
+    display: inline;
+  }
+}
+
+.anchor {
+  display: none;
+  padding-right: var(--m-1);
+  padding-left: var(--m-1);
+  font-weight: var(--fw-regular);
+  text-decoration: none;
+  color: var(--color-light-gray);
+
+  &:hover {
+    color: var(--color-gray);
+  }
+
+  &::before {
+    content: " ¶";
+  }
 }
 
 .icon {
   flex-shrink: 0;
   margin: 0 var(--m-1);
-  transition: transform var(--t-fast);
   transform: rotate(0deg);
+  transition: transform var(--t-fast);
 
   @media (--sm-scr) {
     width: 24px;
@@ -58,8 +79,8 @@
 
 .meta {
   display: flex;
-  flex-shrink: 0;
   align-items: center;
+  flex-shrink: 0;
   margin-right: var(--m-1);
 
   @media (--sm-scr) {
@@ -78,12 +99,12 @@
 .scope {
   margin-right: var(--m-1);
   padding: 0 var(--m-1);
-  border-radius: var(--r-sm);
   font-size: var(--fs-text-xs);
   line-height: 20px;
-  color: var(--color-gray);
   text-transform: uppercase;
+  color: var(--color-gray);
   background-color: var(--color-lightest-gray);
+  border-radius: var(--r-sm);
 
   .wrapper.opened & {
     color: var(--color-white);
@@ -92,9 +113,9 @@
 }
 
 .min {
-  font-weight: regular;
   font-size: var(--fs-text-xs);
   line-height: 20px;
+  font-weight: regular;
   color: var(--color-gray);
 }
 
@@ -113,8 +134,8 @@
 
 .wrapper {
   margin-bottom: var(--m-2);
-  border-radius: var(--r-default);
   background-color: var(--color-white);
+  border-radius: var(--r-default);
 
   &:last-child {
     margin-bottom: 0;
