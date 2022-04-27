@@ -44,7 +44,7 @@ export const Details = ({
     ? title
         .replace(/[&\/\\#,+()$~%.'":*?<>{};]/g, "")
         .replace(/[0-9]/g, "")
-        .replaceAll(" ", "-")
+        .replace(/\s/g, "-")
         .toLowerCase()
     : "title";
 
