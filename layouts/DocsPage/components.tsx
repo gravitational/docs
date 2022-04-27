@@ -40,7 +40,8 @@ export const components = {
   a: Link,
   code: Code,
   inlineCode: Code,
-  img: Image,
+  // eslint-disable-next-line jsx-a11y/alt-text
+  img: (props) => <Image {...props} />,
   iframe: IFrame,
   h1: H1,
   h2: H2,
