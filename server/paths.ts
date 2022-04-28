@@ -27,30 +27,38 @@ const filterNoIndexPage = (path: string) => {
 };
 
 /*
- * Returns all slugs for one docs version with normalized paths.
- */
-
-const getSlugsForVersion = (version: string) => {
-  const root = join("/ver", version);
-  const path = resolve("content", version, "docs/pages");
-
-  return glob
-    .sync(join(path, "**/*.mdx"))
-    .filter(filterNoIndexPage)
-    .filter((path) => !path.includes("/includes/"))
-    .map((filename) =>
-      filename.replace(/\/?(index)?.mdx?$/, "/").replace(path, root)
-    );
-};
-
-/*
  * Converts paths to absolute from relative (we need sitemaps to have absolute paths).
  */
 
 const normalizeDocSlug = (slug: string, version: string) => {
+  const root = join("/ver", version);
+  const path = resolve("content", version, "docs/pages");
   const isLatest = version === latest;
+  const baseSlug = slug.replace(/\/?(index)?.mdx?$/, "/").replace(path, root);
 
-  return isLatest ? slug.replace(`/ver/${latest}`, "") : slug;
+  return isLatest ? baseSlug.replace(`/ver/${latest}`, "") : baseSlug;
+};
+
+const getFilePathsForVersion = (
+  version: string,
+  withNoIndex: boolean = false
+) => {
+  const path = resolve("content", version, "docs/pages");
+
+  return glob
+    .sync(join(path, "**/*.mdx"))
+    .filter((path) => (withNoIndex ? true : filterNoIndexPage(path)))
+    .filter((path) => !path.includes("/includes/"));
+};
+
+/*
+ * Returns all slugs for one docs version with normalized paths.
+ */
+
+const getSlugsForVersion = (version: string, withNoIndex: boolean = false) => {
+  return getFilePathsForVersion(version, withNoIndex).map((slug) =>
+    normalizeDocSlug(slug, version)
+  );
 };
 
 /*
@@ -60,7 +68,7 @@ const normalizeDocSlug = (slug: string, version: string) => {
 
 export const generateSitemap = (root: string) => {
   const currentDocPages = getSlugsForVersion(latest).map((slug) => ({
-    loc: normalizeDocSlug(slug, latest),
+    loc: slug,
   }));
 
   sitemapGenerator({
@@ -81,7 +89,7 @@ export const generateFullSitemap = (root: string) => {
   versions.forEach((version) => {
     docPages.push(
       ...getSlugsForVersion(version).map((slug) => ({
-        loc: normalizeDocSlug(slug, version),
+        loc: slug,
       }))
     );
   });
@@ -91,6 +99,42 @@ export const generateFullSitemap = (root: string) => {
     path: resolve("public", "algolia_sitemap.xml"),
     root,
   });
+};
+
+/*
+ * Get params for the getStaticPaths in Next.js
+ */
+
+export const getStaticPathsForDocs = () => {
+  const result = [];
+
+  versions.forEach((version) => {
+    result.push(
+      ...getSlugsForVersion(version).map((path) => {
+        const slug = path.split("/").filter((part) => part);
+
+        return {
+          params: slug.length ? { slug } : { slug: undefined },
+        };
+      })
+    );
+  });
+
+  return result;
+};
+
+export const getDocsPagesMap = () => {
+  const result = {};
+
+  versions.forEach((version) => {
+    const paths = getFilePathsForVersion(version, true);
+
+    paths.forEach((path) => {
+      result[normalizeDocSlug(path, version)] = path;
+    });
+  });
+
+  return result;
 };
 
 /*
@@ -126,6 +170,7 @@ export const getRedirects = () => {
   ...
 ]
 */
+
 export const generateArticleLinks = () => {
   const map = {};
 
@@ -133,15 +178,14 @@ export const generateArticleLinks = () => {
     map[ver] = [
       ...getSlugsForVersion(ver).map((slug) => {
         const configRedirects = loadDocsConfig(ver).redirects;
-        const docSlug = normalizeDocSlug(slug, ver);
         let foundedConfigRedirect = "";
 
         foundedConfigRedirect = configRedirects?.find(
-          (elem) => elem.destination === docSlug
+          (elem) => elem.destination === slug
         )?.source;
 
         return {
-          path: docSlug,
+          path: slug,
           ...(foundedConfigRedirect && { foundedConfigRedirect }),
         };
       }),
