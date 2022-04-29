@@ -62,7 +62,7 @@ export const Details = ({
         isHidden && styles.hidden,
         isOpened && styles.opened
       )}
-      id={!isHidden && detailsId}
+      id={isHidden ? undefined : detailsId}
     >
       <HeadlessButton
         onClick={() => setIsOpened((value) => !value)}
