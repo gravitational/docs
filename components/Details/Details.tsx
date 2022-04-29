@@ -35,9 +35,9 @@ export const Details = ({
   const isInCurrentScope = scopes.includes(currentScope);
   const detailsId = title
     ? title
-        .replace(/[&\/\\#,+()$~%.'":*?<>{};]/g, "")
-        .replace(/[0-9]/g, "")
+        .replace(/[&\/\\#,+()$~%.'":*?<>{}^;\d]/g, "")
         .replace(/\s/g, "-")
+        .replace(/-$/, "")
         .toLowerCase()
     : "title";
   const anchorInPath = getAnchor(router.asPath);
