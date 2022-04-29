@@ -8,6 +8,14 @@ import { ScopesType } from "layouts/DocsPage/types";
 import { getAnchor } from "utils/url";
 import styles from "./Details.module.css";
 
+const transformTitleToAnchor = (title: string): string => {
+  return title
+    .replace(/[&\/\\#,+()$~%.'":*?<>{}^;\d]/g, "")
+    .replace(/\s/g, "-")
+    .replace(/-$/, "")
+    .toLowerCase();
+};
+
 export interface DetailsProps {
   scope?: ScopesType;
   title: string;
@@ -33,23 +41,20 @@ export const Details = ({
   const scopes = useMemo(() => getScopes(scope), [scope]);
   const [isOpened, setIsOpened] = useState<boolean>(Boolean(opened));
   const isInCurrentScope = scopes.includes(currentScope);
-  const detailsId = title
-    ? title
-        .replace(/[&\/\\#,+()$~%.'":*?<>{}^;\d]/g, "")
-        .replace(/\s/g, "-")
-        .replace(/-$/, "")
-        .toLowerCase()
-    : "title";
+  const detailsId = title ? transformTitleToAnchor(title) : "title";
   const anchorInPath = getAnchor(router.asPath);
 
   useEffect(() => {
     if (scopes.length) {
       setIsOpened(isInCurrentScope);
     }
+  }, [scopes, isInCurrentScope]);
+
+  useEffect(() => {
     if (anchorInPath === detailsId) {
       setIsOpened(true);
     }
-  }, [scopes, isInCurrentScope, anchorInPath, detailsId]);
+  }, [anchorInPath, detailsId]);
 
   const isCloudAndNotCurrent = scopes.includes("cloud") && current !== latest;
   const isHiddenInCurrentScope = scopeOnly && !isInCurrentScope;
