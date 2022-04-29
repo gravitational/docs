@@ -29,10 +29,10 @@ export const Details = ({
     scope: currentScope,
     versions: { current, latest },
   } = useContext(DocsContext);
+  const router = useRouter();
   const scopes = useMemo(() => getScopes(scope), [scope]);
   const [isOpened, setIsOpened] = useState<boolean>(Boolean(opened));
   const isInCurrentScope = scopes.includes(currentScope);
-  const router = useRouter();
   const detailsId = title
     ? title
         .replace(/[&\/\\#,+()$~%.'":*?<>{};]/g, "")

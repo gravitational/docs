@@ -19,6 +19,7 @@ import remarkVariables from "./remark-variables";
 import remarkMdxDisableExplicitJsx from "remark-mdx-disable-explicit-jsx";
 import remarkCodeSnippet from "./remark-code-snippet";
 import remarkImportFiles from "./remark-import-files";
+import remarkLintDetails from "./remark-lint-details";
 import { getVersion, getVersionRootPath } from "./docs-helpers";
 import { loadConfig } from "./config-docs";
 import { fetchVideoMeta } from "./youtube-meta";
@@ -92,6 +93,7 @@ const config: MdxConfig = {
     remarkGFM, // Adds tables
     remarkImportFiles, // Replaces paths to files with imports
     remarkLinks, // Make links in docs absolute with /ver/X.X included
+    remarkLintDetails,
   ],
   rehypePlugins: [
     rehypeSlug, // Adds ids to headers to use in anchors
