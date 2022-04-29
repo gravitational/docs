@@ -93,6 +93,20 @@ const menu: MenuCategoryProps[] = [
           "Secure your critical infrastructure without slowing developers down",
         href: "/use-cases/privileged-access-management/",
       },
+      {
+        icon: "chip",
+        title: "Machine-to-Machine Access",
+        description:
+          "Machine ID delivers automated, identity-based access for your services",
+        href: "/use-cases/machine-to-machine-access/",
+      },
+      {
+        icon: "connect",
+        title: "Developer-friendly browser",
+        description:
+          "Teleport Connect improves UX and identity-based access for the cloud",
+        href: "/connect/",
+      },
     ],
   },
   {
