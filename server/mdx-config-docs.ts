@@ -93,7 +93,6 @@ const config: MdxConfig = {
     remarkGFM, // Adds tables
     remarkImportFiles, // Replaces paths to files with imports
     remarkLinks, // Make links in docs absolute with /ver/X.X included
-    remarkLintDetails,
   ],
   rehypePlugins: [
     rehypeSlug, // Adds ids to headers to use in anchors

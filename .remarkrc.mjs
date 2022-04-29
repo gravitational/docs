@@ -1,6 +1,7 @@
 import remarkVariables from "./.build/server/remark-variables.mjs";
 import remarkIncludes from "./.build/server/remark-includes.mjs";
 import remarkCodeSnippet from "./.build/server/remark-code-snippet.mjs";
+import remarkLintDetails from "./.build/server/remark-lint-details.mjs";
 import {
   getVersion,
   getVersionRootPath,
@@ -60,6 +61,7 @@ const configLint = {
       },
     ],
     [remarkCodeSnippet, { lint: true, langs: ["code", "bash"] }],
+    [remarkLintDetails, ["error"]],
   ],
 };
 
