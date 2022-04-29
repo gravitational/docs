@@ -100,9 +100,11 @@ export interface RemarkCodeSnippetOptions {
   resolve?: boolean;
 }
 
-export default function remarkCodeSnippet(
-  { langs, lint }: RemarkCodeSnippetOptions = { resolve: true, langs: ["code"] }
-): Transformer {
+export default function remarkCodeSnippet({
+  langs = ["code"],
+  lint = false,
+  resolve = false,
+}: RemarkCodeSnippetOptions): Transformer {
   return (root, vfile) => {
     visit(
       root,

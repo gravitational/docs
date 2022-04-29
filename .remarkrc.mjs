@@ -59,7 +59,7 @@ const configLint = {
         },
       },
     ],
-    [remarkCodeSnippet, { lint: true }],
+    [remarkCodeSnippet, { lint: true, langs: ["code", "bash"] }],
   ],
 };
 
