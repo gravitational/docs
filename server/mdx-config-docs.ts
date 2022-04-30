@@ -19,6 +19,7 @@ import remarkVariables from "./remark-variables";
 import remarkMdxDisableExplicitJsx from "remark-mdx-disable-explicit-jsx";
 import remarkCodeSnippet from "./remark-code-snippet";
 import remarkImportFiles from "./remark-import-files";
+import remarkLintDetails from "./remark-lint-details";
 import { getVersion, getVersionRootPath } from "./docs-helpers";
 import { loadConfig } from "./config-docs";
 import { fetchVideoMeta } from "./youtube-meta";
@@ -88,7 +89,7 @@ const config: MdxConfig = {
         },
       },
     ],
-    [remarkCodeSnippet, { langs: ["code", "bash"] }], // Plugin for custom code snippets with multiple copy buttons
+    [remarkCodeSnippet, { langs: ["code", "bash"], resolve: true }], // Plugin for custom code snippets with multiple copy buttons
     remarkGFM, // Adds tables
     remarkImportFiles, // Replaces paths to files with imports
     remarkLinks, // Make links in docs absolute with /ver/X.X included

@@ -1,10 +1,20 @@
 import cn from "classnames";
 import { useContext, useEffect, useState, useMemo } from "react";
+import { useRouter } from "next/router";
 import HeadlessButton from "components/HeadlessButton";
 import Icon from "components/Icon";
 import { DocsContext, getScopes } from "layouts/DocsPage/context";
 import { ScopesType } from "layouts/DocsPage/types";
+import { getAnchor } from "utils/url";
 import styles from "./Details.module.css";
+
+const transformTitleToAnchor = (title: string): string => {
+  return title
+    .replace(/[&\/\\#,+()$~%.'":*?<>{}^;\d]/g, "")
+    .replace(/\s/g, "-")
+    .replace(/-$/, "")
+    .toLowerCase();
+};
 
 export interface DetailsProps {
   scope?: ScopesType;
@@ -27,15 +37,24 @@ export const Details = ({
     scope: currentScope,
     versions: { current, latest },
   } = useContext(DocsContext);
+  const router = useRouter();
   const scopes = useMemo(() => getScopes(scope), [scope]);
   const [isOpened, setIsOpened] = useState<boolean>(Boolean(opened));
   const isInCurrentScope = scopes.includes(currentScope);
+  const detailsId = title ? transformTitleToAnchor(title) : "title";
+  const anchorInPath = getAnchor(router.asPath);
 
   useEffect(() => {
     if (scopes.length) {
       setIsOpened(isInCurrentScope);
     }
   }, [scopes, isInCurrentScope]);
+
+  useEffect(() => {
+    if (anchorInPath === detailsId) {
+      setIsOpened(true);
+    }
+  }, [anchorInPath, detailsId]);
 
   const isCloudAndNotCurrent = scopes.includes("cloud") && current !== latest;
   const isHiddenInCurrentScope = scopeOnly && !isInCurrentScope;
@@ -48,6 +67,7 @@ export const Details = ({
         isHidden && styles.hidden,
         isOpened && styles.opened
       )}
+      id={isHidden ? undefined : detailsId}
     >
       <HeadlessButton
         onClick={() => setIsOpened((value) => !value)}
@@ -71,6 +91,7 @@ export const Details = ({
             </div>
           )}
         </div>
+        <a className={styles.anchor} href={`#${detailsId}`} />
       </HeadlessButton>
       <div className={styles.body}>{children}</div>
     </div>
