@@ -76,7 +76,7 @@ export const Details = ({
         <Icon name="arrow" className={styles.icon} />
         <div className={styles.description}>
           <div className={styles.title}>{title}</div>
-          {(scopes || min) && (
+          {(scope || min) && (
             <div className={styles.meta}>
               {scopes && (
                 <div className={styles.scopes}>
