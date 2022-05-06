@@ -13,7 +13,6 @@ import type {
 } from "./types-unist";
 
 import { createEstree } from "./estree-helpers";
-import stringifyObject from "stringify-object";
 
 export const createMdxjsEsmNode = (value: string): EsmNode => {
   return {

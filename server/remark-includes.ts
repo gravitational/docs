@@ -26,6 +26,7 @@ import { mdxFromMarkdown } from "mdast-util-mdx";
 import { gfmFromMarkdown } from "mdast-util-gfm";
 import { frontmatterFromMarkdown } from "mdast-util-frontmatter";
 
+import { updateOrCreateAttribute } from "./mdx-helpers";
 import updateMessages from "./update-vfile-messages";
 
 const includeRegexpBase = "\\(!([^!]+)!\\)`?";
@@ -65,6 +66,15 @@ const numIncludes = (value: string) => value.match(globalIncludeRegexp).length;
 
 const isInclude = (node: Code | Text): node is Code | Text =>
   typeof node.value === "string" && includeRegexp.test(node.value);
+
+const addDataToLinks = (node, path: string) => {
+  if (node.type === "link") {
+    if (!node.data) {
+      node.data = { partialPath: path };
+    }
+  }
+  node.children?.forEach((child) => addDataToLinks(child, path));
+};
 
 export interface RemarkIncludesOptions {
   rootDir?: string | ((vfile: VFile) => string);
@@ -131,12 +141,15 @@ export default function remarkIncludes({
                     ],
                   });
 
+                  addDataToLinks(tree, path);
+
                   const grandParent = ancestors[ancestors.length - 2] as Parent;
                   const parentIndex = grandParent.children.indexOf(parent);
 
                   grandParent.children.splice(parentIndex, 1, ...tree.children);
                 } else {
                   node.value = result;
+                  console.log("node-value", result);
                 }
               }
 
