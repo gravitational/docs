@@ -49,8 +49,9 @@
   transition: transform var(--t-fast);
 
   @media (--sm-scr) {
-    width: 24px;
-    height: 24px;
+    width: 18px;
+    height: 18px;
+    margin: 0 var(--m-1-5) 0 var(--m-1);
   }
 
   @media (--md-scr) {
@@ -75,6 +76,12 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+
+  @media (--sm-scr) {
+    overflow: initial;
+    line-height: 20px;
+    white-space: initial;
+  }
 }
 
 .meta {
