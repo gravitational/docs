@@ -2,6 +2,7 @@ import bundleAnalyzer from "@next/bundle-analyzer";
 import { loadConfig } from "./.build/server/config-site.mjs";
 import { getRedirects } from "./.build/server/paths.mjs";
 import mdxDocsOptions from "./.build/server/mdx-config-docs.mjs";
+import { securityHeaders } from "./server/headers.mjs";
 
 const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
@@ -21,6 +22,12 @@ export default withBundleAnalyzer({
     },
   ],
   redirects: async () => getRedirects(),
+  headers: async () => [
+    {
+      source: "/:path*",
+      headers: securityHeaders,
+    }
+  ],
   images: {
     path: "/docs/_next/image",
     disableStaticImages: true,
