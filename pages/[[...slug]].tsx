@@ -40,7 +40,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     props: {
       meta: { ...page.data.frontmatter, ...pageMeta },
-      AST: transformToAST(page.data.content),
+      AST: transformToAST(page.data.content, page),
       tableOfConents: [],
     },
   };

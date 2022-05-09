@@ -59,7 +59,7 @@ export const components = {
   th: TH,
   td: TD,
   video: Video,
-  Admonition,
+  admonition: Admonition,
   command: Command,
   "command-line": CommandLine,
   "command-comment": CommandComment,

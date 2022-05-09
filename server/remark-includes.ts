@@ -8,24 +8,16 @@
  * See tests and fixtures for more examples.
  */
 
+import type { Transformer } from "unified";
 import type { Parent } from "unist";
 import type { Content, Code, Text } from "mdast";
 import type { VFile } from "vfile";
-
 import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 import { visitParents } from "unist-util-visit-parents";
-
 import { fromMarkdown } from "mdast-util-from-markdown";
-
-import { mdxjs } from "micromark-extension-mdxjs";
 import { gfm } from "micromark-extension-gfm";
-import { frontmatter } from "micromark-extension-frontmatter";
-
-import { mdxFromMarkdown } from "mdast-util-mdx";
 import { gfmFromMarkdown } from "mdast-util-gfm";
-import { frontmatterFromMarkdown } from "mdast-util-frontmatter";
-
 import updateMessages from "./update-vfile-messages";
 
 const includeRegexpBase = "\\(!([^!]+)!\\)`?";
@@ -76,7 +68,7 @@ export default function remarkIncludes({
   rootDir = "",
   lint,
   resolve = true,
-}: RemarkIncludesOptions = {}) {
+}: RemarkIncludesOptions = {}): Transformer {
   return (root: Content, vfile: VFile) => {
     let resolvedRootDir: string;
 
@@ -123,12 +115,8 @@ export default function remarkIncludes({
               if (resolve) {
                 if (path.match(/\.mdx?$/)) {
                   const tree = fromMarkdown(result, {
-                    extensions: [mdxjs(), gfm(), frontmatter()],
-                    mdastExtensions: [
-                      mdxFromMarkdown(),
-                      gfmFromMarkdown(),
-                      frontmatterFromMarkdown(["yaml"]),
-                    ],
+                    extensions: [gfm()],
+                    mdastExtensions: [gfmFromMarkdown()],
                   });
 
                   const grandParent = ancestors[ancestors.length - 2] as Parent;
