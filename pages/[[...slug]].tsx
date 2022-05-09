@@ -47,3 +47,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export default DocsPage;
+
+export const config = {
+  unstable_excludeFiles: ["**/*"],
+};
