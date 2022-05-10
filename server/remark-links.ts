@@ -15,6 +15,7 @@ import type { Link as MdastLink } from "mdast";
 import type { EsmNode, MdxAnyElement, MdxastNode } from "./types-unist";
 
 import { visit } from "unist-util-visit";
+import { dirname, join, relative } from "path";
 import { isExternalLink, isHash, isPage } from "../utils/url";
 
 interface ObjectHref {
@@ -73,13 +74,35 @@ const isRemarkLinkWilthLocalHref = (node: MdxastNode): node is MdastLink => {
   return node.type === "link" && isLocalHref(node.url);
 };
 
+const getRelativePath = (
+  href: string,
+  basefilePath: string,
+  partialPath: string
+) => {
+  const path = dirname("docs/pages" + basefilePath.split("docs/pages")[1]);
+  const pathFromPartial = join(dirname(partialPath), href);
+  const relativePath = relative(path, pathFromPartial);
+
+  return relativePath;
+};
+
 export default function remarkLinks(): Transformer {
   return (root, vfile) => {
     const basename = vfile?.basename || "";
 
     visit(root, (node: MdxastNode) => {
       if (isRemarkLinkWilthLocalHref(node)) {
-        node.url = updateHref(basename, node.url) as string;
+        let url = node.url;
+
+        if (node.data?.partialPath) {
+          url = getRelativePath(
+            url,
+            vfile.path,
+            node.data?.partialPath as string
+          );
+        }
+
+        node.url = updateHref(basename, url) as string;
       } else if (isMdxComponentWithLocalHref(node)) {
         const hrefAttribute = node.attributes.find(
           ({ name }) => name === "href"

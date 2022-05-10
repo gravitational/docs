@@ -69,9 +69,7 @@ const isInclude = (node: Code | Text): node is Code | Text =>
 
 const addDataToLinks = (node, path: string) => {
   if (node.type === "link") {
-    if (!node.data) {
-      node.data = { partialPath: path };
-    }
+    node.data = { partialPath: path };
   }
   node.children?.forEach((child) => addDataToLinks(child, path));
 };
