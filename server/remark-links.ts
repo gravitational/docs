@@ -74,21 +74,25 @@ const isRemarkLinkWilthLocalHref = (node: MdxastNode): node is MdastLink => {
   return node.type === "link" && isLocalHref(node.url);
 };
 
-const getRelativePath = (
-  href: Href,
-  basefilePath: string,
-  partialPath: string
-) => {
-  if (!isPlainString(href)) {
+function handlePartialLink<T>(
+  href: T,
+  node: MdxastNode,
+  mdxPath: string
+): T | string {
+  if (
+    typeof href !== "string" ||
+    href.at(0) === "/" ||
+    !node.data?.partialPath
+  ) {
     return href;
   }
 
-  const path = dirname("docs/pages" + basefilePath.split("docs/pages")[1]);
-  const pathFromPartial = join(dirname(partialPath), href);
-  const relativePath = relative(path, pathFromPartial);
+  const absStart = "docs/pages";
+  const absMdxPath = dirname(absStart + mdxPath.split(absStart).pop());
+  const absTargetPath = join(dirname(node.data.partialPath as string), href);
 
-  return relativePath;
-};
+  return relative(absMdxPath, absTargetPath);
+}
 
 export default function remarkLinks(): Transformer {
   return (root, vfile) => {
@@ -96,35 +100,13 @@ export default function remarkLinks(): Transformer {
 
     visit(root, (node: MdxastNode) => {
       if (isRemarkLinkWilthLocalHref(node)) {
-        let url = node.url;
-
-        if (node.data?.partialPath && !/^\//.test(url)) {
-          url = getRelativePath(
-            url,
-            vfile.path,
-            node.data?.partialPath as string
-          ) as string;
-        }
-
+        const url = handlePartialLink(node.url, node, vfile.path);
         node.url = updateHref(basename, url) as string;
       } else if (isMdxComponentWithLocalHref(node)) {
         const hrefAttribute = node.attributes.find(
           ({ name }) => name === "href"
         );
-        let href = hrefAttribute.value;
-
-        if (
-          node.data?.partialPath &&
-          typeof href === "string" &&
-          !/^\//.test(href)
-        ) {
-          href = getRelativePath(
-            href as Href,
-            vfile.path,
-            node.data?.partialPath as string
-          ) as string;
-        }
-
+        const href = handlePartialLink(hrefAttribute.value, node, vfile.path);
         hrefAttribute.value = updateHref(basename, href as Href) as string;
       }
     });

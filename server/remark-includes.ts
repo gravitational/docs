@@ -26,7 +26,6 @@ import { mdxFromMarkdown } from "mdast-util-mdx";
 import { gfmFromMarkdown } from "mdast-util-gfm";
 import { frontmatterFromMarkdown } from "mdast-util-frontmatter";
 
-import { updateOrCreateAttribute } from "./mdx-helpers";
 import updateMessages from "./update-vfile-messages";
 
 const includeRegexpBase = "\\(!([^!]+)!\\)`?";
@@ -147,7 +146,6 @@ export default function remarkIncludes({
                   grandParent.children.splice(parentIndex, 1, ...tree.children);
                 } else {
                   node.value = result;
-                  console.log("node-value", result);
                 }
               }
 
