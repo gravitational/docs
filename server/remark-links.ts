@@ -75,10 +75,14 @@ const isRemarkLinkWilthLocalHref = (node: MdxastNode): node is MdastLink => {
 };
 
 const getRelativePath = (
-  href: string,
+  href: Href,
   basefilePath: string,
   partialPath: string
 ) => {
+  if (!isPlainString(href)) {
+    return href;
+  }
+
   const path = dirname("docs/pages" + basefilePath.split("docs/pages")[1]);
   const pathFromPartial = join(dirname(partialPath), href);
   const relativePath = relative(path, pathFromPartial);
@@ -94,12 +98,12 @@ export default function remarkLinks(): Transformer {
       if (isRemarkLinkWilthLocalHref(node)) {
         let url = node.url;
 
-        if (node.data?.partialPath) {
+        if (node.data?.partialPath && !/^\//.test(url)) {
           url = getRelativePath(
             url,
             vfile.path,
             node.data?.partialPath as string
-          );
+          ) as string;
         }
 
         node.url = updateHref(basename, url) as string;
@@ -107,11 +111,21 @@ export default function remarkLinks(): Transformer {
         const hrefAttribute = node.attributes.find(
           ({ name }) => name === "href"
         );
+        let href = hrefAttribute.value;
 
-        hrefAttribute.value = updateHref(
-          basename,
-          hrefAttribute.value as Href
-        ) as string;
+        if (
+          node.data?.partialPath &&
+          typeof href === "string" &&
+          !/^\//.test(href)
+        ) {
+          href = getRelativePath(
+            href as Href,
+            vfile.path,
+            node.data?.partialPath as string
+          ) as string;
+        }
+
+        hrefAttribute.value = updateHref(basename, href as Href) as string;
       }
     });
   };
