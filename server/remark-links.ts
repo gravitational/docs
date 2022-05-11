@@ -79,11 +79,7 @@ function handlePartialLink<T>(
   node: MdxastNode,
   mdxPath: string
 ): T | string {
-  if (
-    typeof href !== "string" ||
-    href.at(0) === "/" ||
-    !node.data?.partialPath
-  ) {
+  if (typeof href !== "string" || href[0] === "/" || !node.data?.partialPath) {
     return href;
   }
 
