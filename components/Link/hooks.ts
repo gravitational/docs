@@ -1,6 +1,7 @@
 import { resolve } from "url";
 import { useRouter } from "next/router";
 import { useContext } from "react";
+import { ScopeType, scopeValues } from "layouts/DocsPage/types";
 import {
   normalizePath,
   splitPath,
@@ -31,7 +32,18 @@ export const useNormalizedHref = (href: string) => {
     ? href.substring(basePath.length)
     : href;
 
-  const { scope } = useContext(DocsContext);
+  let scope: ScopeType = useContext(DocsContext).scope;
+
+  const { query } = splitPath(href);
+
+  // If a valid scope is provided via query parameter, adjust the
+  // link to navigate to that scope.
+  if (
+    query.hasOwnProperty("scope") &&
+    scopeValues.includes(query.scope as ScopeType)
+  ) {
+    scope = query["scope"] as ScopeType;
+  }
 
   if (
     isHash(noBaseHref) ||
