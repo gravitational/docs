@@ -15,7 +15,6 @@ import type { Link as MdastLink } from "mdast";
 import type { EsmNode, MdxAnyElement, MdxastNode } from "./types-unist";
 
 import { visit } from "unist-util-visit";
-import { dirname, join, relative } from "path";
 import { isExternalLink, isHash, isPage } from "../utils/url";
 
 interface ObjectHref {
@@ -74,36 +73,21 @@ const isRemarkLinkWilthLocalHref = (node: MdxastNode): node is MdastLink => {
   return node.type === "link" && isLocalHref(node.url);
 };
 
-function handlePartialLink<T>(
-  href: T,
-  node: MdxastNode,
-  mdxPath: string
-): T | string {
-  if (typeof href !== "string" || href[0] === "/" || !node.data?.partialPath) {
-    return href;
-  }
-
-  const absStart = "docs/pages";
-  const absMdxPath = dirname(absStart + mdxPath.split(absStart).pop());
-  const absTargetPath = join(dirname(node.data.partialPath as string), href);
-
-  return relative(absMdxPath, absTargetPath);
-}
-
 export default function remarkLinks(): Transformer {
   return (root, vfile) => {
     const basename = vfile?.basename || "";
 
     visit(root, (node: MdxastNode) => {
       if (isRemarkLinkWilthLocalHref(node)) {
-        const url = handlePartialLink(node.url, node, vfile.path);
-        node.url = updateHref(basename, url) as string;
+        node.url = updateHref(basename, node.url) as string;
       } else if (isMdxComponentWithLocalHref(node)) {
         const hrefAttribute = node.attributes.find(
           ({ name }) => name === "href"
         );
-        const href = handlePartialLink(hrefAttribute.value, node, vfile.path);
-        hrefAttribute.value = updateHref(basename, href as Href) as string;
+        hrefAttribute.value = updateHref(
+          basename,
+          hrefAttribute.value as Href
+        ) as string;
       }
     });
   };

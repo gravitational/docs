@@ -11,11 +11,10 @@
 import type { Parent } from "unist";
 import type { Content, Code, Text } from "mdast";
 import type { VFile } from "vfile";
+import { dirname, join, relative } from "path";
 
 import { existsSync, readFileSync } from "fs";
-import { join } from "path";
 import { visitParents } from "unist-util-visit-parents";
-
 import { fromMarkdown } from "mdast-util-from-markdown";
 
 import { mdxjs } from "micromark-extension-mdxjs";
@@ -66,11 +65,21 @@ const numIncludes = (value: string) => value.match(globalIncludeRegexp).length;
 const isInclude = (node: Code | Text): node is Code | Text =>
   typeof node.value === "string" && includeRegexp.test(node.value);
 
-const addDataToLinks = (node, path: string) => {
+const handlePartialLink = (node, path: string, mdxPath: string) => {
   if (node.type === "link") {
-    node.data = { partialPath: path };
+    const href = node.url;
+
+    if (typeof href !== "string" || href[0] === "/" || /^http/.test(href)) {
+      return href;
+    }
+
+    const absStart = "docs/pages";
+    const absMdxPath = dirname(absStart + mdxPath.split(absStart).pop());
+    const absTargetPath = join(dirname(path), href);
+
+    node.url = relative(absMdxPath, absTargetPath);
   }
-  node.children?.forEach((child) => addDataToLinks(child, path));
+  node.children?.forEach((child) => handlePartialLink(child, path, mdxPath));
 };
 
 export interface RemarkIncludesOptions {
@@ -138,7 +147,7 @@ export default function remarkIncludes({
                     ],
                   });
 
-                  addDataToLinks(tree, path);
+                  handlePartialLink(tree, path, vfile.path);
 
                   const grandParent = ancestors[ancestors.length - 2] as Parent;
                   const parentIndex = grandParent.children.indexOf(parent);
