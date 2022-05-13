@@ -10,7 +10,6 @@ import {
 import HeadlessButton from "components/HeadlessButton";
 import { VersionWarning } from "layouts/DocsPage";
 import { DocsContext, getScopes } from "layouts/DocsPage/context";
-import { ScopesType } from "layouts/DocsPage/types";
 import styles from "./Tabs.module.css";
 
 const getSelectedLabel = (
@@ -23,7 +22,7 @@ const getSelectedLabel = (
 
 export interface TabItemProps {
   selected?: boolean;
-  scope?: ScopesType;
+  scope?: string | string[];
   label: string;
   children: React.ReactNode;
 }

@@ -1,7 +1,6 @@
 import cn from "classnames";
 import { useContext, useMemo } from "react";
 import { DocsContext, getScopes } from "layouts/DocsPage/context";
-import { ScopesType } from "layouts/DocsPage/types";
 import styles from "./Admonition.module.css";
 
 const capitalize = (text: string): string =>
@@ -14,7 +13,7 @@ export interface AdmonitionProps {
   title: string;
   children: React.ReactNode;
   scopeOnly: boolean;
-  scope?: ScopesType;
+  scope?: string | string[];
 }
 
 const Admonition = ({
