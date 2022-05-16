@@ -8,6 +8,7 @@ import {
   useState,
 } from "react";
 import HeadlessButton from "components/HeadlessButton";
+import { Dropdown } from "components/Dropdown";
 import { VersionWarning } from "layouts/DocsPage";
 import { DocsContext, getScopes } from "layouts/DocsPage/context";
 import styles from "./Tabs.module.css";
@@ -21,10 +22,11 @@ const getSelectedLabel = (
 };
 
 export interface TabItemProps {
-  selected?: boolean;
-  scope?: string | string[];
   label: string;
   children: React.ReactNode;
+  selected?: boolean;
+  scope?: string | string[];
+  inDropdown?: string;
 }
 
 export const TabItem = ({ children }: TabItemProps) => {
@@ -68,6 +70,14 @@ export const Tabs = ({ children }: TabsProps) => {
   );
 
   const labels = childTabs.map(({ props: { label } }) => label);
+  const dropdownVars: Set<string> = new Set();
+
+  childTabs.forEach(({ props: { inDropdown } }) => {
+    if (inDropdown) {
+      const dropdownFromItem = inDropdown.split(",");
+      dropdownFromItem.forEach((item) => dropdownVars.add(item.trim()));
+    }
+  });
 
   const [currentLabel, setCurrentLabel] = useState(getSelectedLabel(childTabs));
 
@@ -83,6 +93,14 @@ export const Tabs = ({ children }: TabsProps) => {
 
   return (
     <div className={styles.wrapper}>
+      <div>
+        <p>In this place will be your text</p>
+        <Dropdown
+          value={Array.from(dropdownVars)[0]}
+          options={Array.from(dropdownVars)}
+          onChange={() => {}}
+        />
+      </div>
       <div className={styles.header}>
         {labels.map((label) => (
           <TabLabel
