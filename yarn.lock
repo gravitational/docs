@@ -8606,7 +8606,7 @@ unified-lint-rule@^1.0.4:
   dependencies:
     wrapped "^1.0.1"
 
-unified-lint-rule@^2.0.0:
+unified-lint-rule@^2.0.0, unified-lint-rule@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/unified-lint-rule/-/unified-lint-rule-2.1.1.tgz#2363f27064f0b44675d11119bb573a738e346f24"
   integrity sha512-vsLHyLZFstqtGse2gvrGwasOmH8M2y+r2kQMoDSWzSqUkQx2MjHjvZuGSv5FUaiv4RQO1bHRajy7lSGp7XWq5A==
