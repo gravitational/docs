@@ -39,6 +39,11 @@ export interface VersionsInfo {
   getNewVersionPath?: (ver: string) => string;
 }
 
+export interface VersionsDropdown {
+  value: string;
+  deprecated: boolean;
+}
+
 export type LayoutName = "doc" | "section" | "tocless-doc";
 
 export interface PageMeta {

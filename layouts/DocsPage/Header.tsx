@@ -14,6 +14,7 @@ interface DocHeaderProps {
   icon?: IconName;
   versions: VersionsInfo;
   githubUrl: string;
+  latest: string;
   getNewVersionPath?: (ver: string) => string;
 }
 
@@ -25,6 +26,7 @@ const DocHeader = ({
   versions,
   githubUrl,
   getNewVersionPath,
+  latest,
 }: DocHeaderProps) => {
   const { scope } = useContext(DocsContext);
 
@@ -48,6 +50,7 @@ const DocHeader = ({
             {...versions}
             getNewVersionPath={getNewVersionPath}
             disabled={scope === "cloud"}
+            latest={latest}
           />
           {!!githubUrl && (
             <Button

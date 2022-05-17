@@ -10,6 +10,7 @@ import {
 import "@reach/listbox/styles.css";
 import Icon from "components/Icon";
 import styles from "./Dropdown.module.css";
+import { VersionsDropdown } from "layouts/DocsPage/types";
 
 export type DropdownProps<T> = {
   options: T[];
@@ -18,7 +19,7 @@ export type DropdownProps<T> = {
   pickOption?: (options: T[], id: string) => T;
   renderOption?: (option: T) => ReactNode;
   pickId?: (item: T) => string;
-  onChange: (selected: string) => void;
+  onChange: (selected: string | VersionsDropdown) => void;
   icon?: ReactNode;
   disabled?: boolean;
   className?: string;
