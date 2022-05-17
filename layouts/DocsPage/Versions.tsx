@@ -5,7 +5,6 @@ import { Dropdown } from "components/Dropdown";
 import type { VersionsInfo, VersionsDropdown } from "./types";
 import styles from "./Versions.module.css";
 
-// const renderVersion = (version: string) => `Version ${version}`;
 const RenderVersion = (version: VersionsDropdown) => {
   if (version.deprecated) return <strike>Version {version.value}</strike>;
 
@@ -26,7 +25,6 @@ const Versions = ({
 }: VersionsInfo) => {
   const router = useRouter();
   const [currentItem, setCurrentItem] = useState<string>(current);
-  // const versions = useMemo(() => [...available].reverse(), [available]);
 
   const latestNumber: number = Math.floor(+latest);
   const validVersion = useCallback(
@@ -56,12 +54,6 @@ const Versions = ({
   }, [available, validVersion]);
 
   const navigateToVersion = useCallback(
-    // (version: string) => {
-    //   const href = getNewVersionPath(version);
-
-    //   setCurrentItem(version);
-    //   router.push(href);
-    // },
     (version: VersionsDropdown) => {
       if (version.deprecated) router.push("/older-versions");
       else if (version.value === "Older Versions")
@@ -88,7 +80,6 @@ const Versions = ({
       options={versions}
       disabled={disabled}
       onChange={navigateToVersion}
-      // renderOption={renderVersion}
       renderOption={RenderVersion}
       pickOption={pickOption}
     />
