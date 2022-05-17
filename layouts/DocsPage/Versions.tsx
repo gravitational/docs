@@ -6,7 +6,7 @@ import type { VersionsInfo, VersionsDropdown } from "./types";
 import styles from "./Versions.module.css";
 
 const RenderVersion = (version: VersionsDropdown) => {
-  if (version.deprecated) return <strike>Version {version.value}</strike>;
+  if (version.deprecated) return <s>Version {version.value}</s>;
 
   if (version.value === "Older Versions") return version.value;
   else return `Version ${version.value}`;
@@ -14,6 +14,8 @@ const RenderVersion = (version: VersionsDropdown) => {
 
 const pickOption = (options: VersionsDropdown[], id: string) =>
   options.find(({ value }) => value === id);
+
+const pickId = ({ value }: VersionsDropdown) => value;
 
 const Versions = ({
   current,
@@ -82,6 +84,7 @@ const Versions = ({
       onChange={navigateToVersion}
       renderOption={RenderVersion}
       pickOption={pickOption}
+      // pickId={pickId}
     />
   );
 };
