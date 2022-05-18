@@ -17,7 +17,7 @@ const RenderVersion = (version: VersionsDropdown) => {
 const pickOption = (options: VersionsDropdown[], id: string) =>
   options.find(({ value }) => value === id);
 
-// assigns keys and values based on the value prop
+// assigns component key and id props based on the value string
 const pickId = ({ value }: VersionsDropdown) => value;
 
 const Versions = ({
