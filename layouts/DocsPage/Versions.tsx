@@ -62,16 +62,18 @@ const Versions = ({
     return versionsList;
   }, [available, validVersion]);
 
+  // only fires when dropdown selection is changed
   const navigateToVersion = useCallback(
     (option: string) => {
       // if version is deprecated or Older Versions is selected, redirect to /older-versions
       if (!validVersion(+option)) {
-        setCurrentItem(latest);
+        setCurrentItem(option);
         router.push("/older-versions");
         return;
       }
+
       if (option === "Older Versions") {
-        setCurrentItem(latest);
+        setCurrentItem(option);
         router.push("/older-versions");
         return;
       }
@@ -83,7 +85,7 @@ const Versions = ({
         router.push(href);
       }
     },
-    [getNewVersionPath, latest, router, validVersion]
+    [getNewVersionPath, router, validVersion]
   );
 
   useEffect(() => {
