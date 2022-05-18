@@ -19,7 +19,6 @@ import remarkVariables from "./remark-variables";
 import remarkMdxDisableExplicitJsx from "remark-mdx-disable-explicit-jsx";
 import remarkCodeSnippet from "./remark-code-snippet";
 import remarkImportFiles from "./remark-import-files";
-import remarkLintDetails from "./remark-lint-details";
 import { getVersion, getVersionRootPath } from "./docs-helpers";
 import { loadConfig } from "./config-docs";
 import { fetchVideoMeta } from "./youtube-meta";

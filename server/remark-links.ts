@@ -84,7 +84,6 @@ export default function remarkLinks(): Transformer {
         const hrefAttribute = node.attributes.find(
           ({ name }) => name === "href"
         );
-
         hrefAttribute.value = updateHref(
           basename,
           hrefAttribute.value as Href
