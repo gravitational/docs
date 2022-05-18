@@ -11,6 +11,7 @@
 import type { Parent } from "unist";
 import type { Content, Code, Text } from "mdast";
 import type { VFile } from "vfile";
+import type { Node } from "mdast-util-from-markdown/lib";
 import { dirname, join, relative } from "path";
 
 import { existsSync, readFileSync } from "fs";
@@ -65,21 +66,41 @@ const numIncludes = (value: string) => value.match(globalIncludeRegexp).length;
 const isInclude = (node: Code | Text): node is Code | Text =>
   typeof node.value === "string" && includeRegexp.test(node.value);
 
-const handlePartialLink = (node, path: string, mdxPath: string) => {
+/**
+ * correct relative paths resolving in partial docs
+ * i.e. start realtive paths from the partial file directory, not from place where it is being inserted
+ * example:
+ * main file: docs/page/1.mdx
+ * partial:   docs/partials/headers/1.mdx
+ *
+ * With this utility path like that
+ * ../image.jpg
+ * in partial will be pointing to
+ * docs/partials/image.jpg
+ * and without:
+ * docs/image.jpg
+ */
+const handlePartialLink = (node: Node, path: string, mdxPath: string) => {
   if (node.type === "link") {
     const href = node.url;
 
     if (typeof href !== "string" || href[0] === "/" || /^http/.test(href)) {
       return href;
     }
-
+    // root where all documentation pages store
     const absStart = "docs/pages";
+    // find an "abs" (starting with root) directory path of the file in which the partial doc was inserted
     const absMdxPath = dirname(absStart + mdxPath.split(absStart).pop());
     const absTargetPath = join(dirname(path), href);
-
+    // make the reference path relative to the place where the partial doc was inserted
     node.url = relative(absMdxPath, absTargetPath);
   }
-  node.children?.forEach((child) => handlePartialLink(child, path, mdxPath));
+
+  if ("children" in node) {
+    node.children?.forEach?.((child) =>
+      handlePartialLink(child, path, mdxPath)
+    );
+  }
 };
 
 export interface RemarkIncludesOptions {
