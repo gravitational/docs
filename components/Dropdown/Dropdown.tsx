@@ -19,7 +19,7 @@ export type DropdownProps<T> = {
   pickOption?: (options: T[], id: string) => T;
   renderOption?: (option: T) => ReactNode;
   pickId?: (item: T) => string;
-  onChange: (selected: string | VersionsDropdown) => void;
+  onChange: (selected: string) => void;
   icon?: ReactNode;
   disabled?: boolean;
   className?: string;
