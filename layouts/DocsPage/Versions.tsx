@@ -79,8 +79,13 @@ const Versions = ({
 
       //otherwise, load selected version
       else {
-        const href = getNewVersionPath(option);
+        let href = getNewVersionPath(option);
         setCurrentItem(option);
+
+        // prevents redirection to different versions of /older-versions/
+        if (href.includes("older-versions"))
+          href = href.replace("older-versions", "");
+
         router.push(href);
       }
     },
