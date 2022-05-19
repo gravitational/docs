@@ -61,6 +61,7 @@ export type MDXPageFrontmatter = Record<string, unknown>;
 export interface MDXPageData<T = MDXPageFrontmatter> extends VFileData {
   uri: string;
   frontmatter: T;
+  content: string;
 }
 
 export interface MDXPage<T = MDXPageFrontmatter> extends VFile {
