@@ -68,8 +68,6 @@ export const Tabs = ({ children }: TabsProps) => {
       ) as React.ReactComponentElement<typeof TabItem>[],
     [children]
   );
-
-  const labels = childTabs.map(({ props: { label } }) => label);
   const dropdownVars: Set<string> = new Set();
 
   childTabs.forEach(({ props: { inDropdown } }) => {
@@ -79,7 +77,29 @@ export const Tabs = ({ children }: TabsProps) => {
     }
   });
 
+  const dropdownVarsArr = Array.from(dropdownVars).sort();
   const [currentLabel, setCurrentLabel] = useState(getSelectedLabel(childTabs));
+  const [selected, setSelected] = useState(dropdownVarsArr[0]);
+
+  const labels = childTabs
+    .map(({ props: { label, inDropdown } }) => {
+      if (inDropdown) {
+        const dropdownFromItem = inDropdown.split(",");
+
+        for (const elem of dropdownFromItem) {
+          if (elem.trim() === selected) {
+            return label;
+          }
+        }
+      } else {
+        return label;
+      }
+    })
+    .filter(Boolean);
+
+  useEffect(() => {
+    setCurrentLabel(labels[0]);
+  }, [selected]);
 
   useEffect(() => {
     const scopedTab = childTabs.find(({ props }) =>
@@ -93,15 +113,25 @@ export const Tabs = ({ children }: TabsProps) => {
 
   return (
     <div className={styles.wrapper}>
-      <div>
-        <p>In this place will be your text</p>
-        <Dropdown
-          value={Array.from(dropdownVars)[0]}
-          options={Array.from(dropdownVars)}
-          onChange={() => {}}
-        />
-      </div>
-      <div className={styles.header}>
+      {dropdownVarsArr.length ? (
+        <div className={styles["drop-wrapper"]}>
+          <p className={styles["drop-title"]}>
+            In this place will be your text
+          </p>
+          <Dropdown
+            className={styles.dropdown}
+            value={selected}
+            options={dropdownVarsArr}
+            onChange={setSelected}
+          />
+        </div>
+      ) : null}
+      <div
+        className={cn(
+          styles.header,
+          dropdownVarsArr.length ? styles["header-shadow"] : null
+        )}
+      >
         {labels.map((label) => (
           <TabLabel
             key={label}
