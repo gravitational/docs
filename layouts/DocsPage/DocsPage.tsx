@@ -82,6 +82,7 @@ const DocsPage = ({
             githubUrl={githubUrl}
             icon={icon}
             getNewVersionPath={getPath}
+            latest={latest}
           />
           {videoBanner && (
             <VideoBar className={styles.video} {...videoBanner} />

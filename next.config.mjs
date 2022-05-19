@@ -3,6 +3,7 @@ import { loadConfig } from "./.build/server/config-site.mjs";
 import { getRedirects } from "./.build/server/paths.mjs";
 import mdxDocsOptions from "./.build/server/mdx-config-docs.mjs";
 import { securityHeaders } from "./server/headers.mjs";
+import { deprecatedVersionRedirects } from "./server/redirects/redirects.mjs";
 
 const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
@@ -21,7 +22,9 @@ export default withBundleAnalyzer({
       destination: `/ver/${latest}/:path*`,
     },
   ],
-  redirects: async () => getRedirects(),
+  redirects: async () => [
+    ...deprecatedVersionRedirects,
+    ...getRedirects()],
   headers: async () => [
     {
       source: "/:path*",
