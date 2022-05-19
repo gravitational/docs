@@ -6,11 +6,11 @@ import type { VersionsInfo, VersionsDropdown } from "./types";
 import styles from "./Versions.module.css";
 
 // renders strikethrough for deprecated versions
-const RenderVersion = (version: VersionsDropdown) => {
+const renderVersion = (version: VersionsDropdown) => {
   if (version.deprecated) return <s>Version {version.value}</s>;
 
   if (version.value === "Older Versions") return version.value;
-  else return `Version ${version.value}`;
+  return `Version ${version.value}`;
 };
 
 // renders the default box selection
@@ -19,6 +19,10 @@ const pickOption = (options: VersionsDropdown[], id: string) =>
 
 // assigns component key and id props based on the value string
 const pickId = ({ value }: VersionsDropdown) => value;
+
+const validVersion = (thisVersion: number, latestVersion: number) => {
+  return thisVersion >= latestVersion - 2 ? true : false;
+};
 
 const Versions = ({
   current,
@@ -31,13 +35,7 @@ const Versions = ({
   const router = useRouter();
   const [currentItem, setCurrentItem] = useState<string>(current);
 
-  const latestNumber: number = Math.floor(+latest);
-  const validVersion = useCallback(
-    (num: number) => {
-      return num >= latestNumber - 2 ? true : false;
-    },
-    [latestNumber]
-  );
+  const latestNumber = Math.floor(Number(latest));
 
   const versions = useMemo(() => {
     //creates list of versions ultimately from config.json
@@ -45,11 +43,11 @@ const Versions = ({
 
     //assigns versions a deprecated status: boolean
     const versionsList = versionNames.map((version) => {
-      const versionNumber: number = +version;
+      const versionNumber = Number(version);
 
       const versionInfo: VersionsDropdown = {
         value: version,
-        deprecated: !validVersion(versionNumber),
+        deprecated: !validVersion(versionNumber, latestNumber),
       };
       return versionInfo;
     });
@@ -59,14 +57,15 @@ const Versions = ({
       value: "Older Versions",
       deprecated: false,
     });
+
     return versionsList;
-  }, [available, validVersion]);
+  }, [available, latestNumber]);
 
   // only fires when dropdown selection is changed
   const navigateToVersion = useCallback(
     (option: string) => {
       // if version is deprecated or Older Versions is selected, redirect to /older-versions
-      if (!validVersion(+option)) {
+      if (!validVersion(Number(option), latestNumber)) {
         setCurrentItem(option);
         router.push("/older-versions");
         return;
@@ -85,7 +84,7 @@ const Versions = ({
         router.push(href);
       }
     },
-    [getNewVersionPath, router, validVersion]
+    [getNewVersionPath, router, latestNumber]
   );
 
   useEffect(() => {
@@ -99,7 +98,7 @@ const Versions = ({
       options={versions}
       disabled={disabled}
       onChange={navigateToVersion}
-      renderOption={RenderVersion}
+      renderOption={renderVersion}
       pickOption={pickOption}
       pickId={pickId}
     />
