@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import HeadlessButton from "components/HeadlessButton";
 import Icon from "components/Icon";
 import { DocsContext, getScopes } from "layouts/DocsPage/context";
-import { ScopesType } from "layouts/DocsPage/types";
 import { getAnchor } from "utils/url";
 import styles from "./Details.module.css";
 
@@ -17,7 +16,7 @@ const transformTitleToAnchor = (title: string): string => {
 };
 
 export interface DetailsProps {
-  scope?: ScopesType;
+  scope?: string | string[];
   title: string;
   opened?: boolean;
   scopeOnly: boolean;

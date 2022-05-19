@@ -3,13 +3,20 @@ import { createContext, useState, useEffect } from "react";
 import { splitPath, buildPath } from "utils/url";
 import { VersionsInfo, scopeValues, ScopeType } from "./types";
 
-export const getScopes = (scope?: ScopeType | ScopeType[]) => {
-  if (!scope) {
-    return [];
-  } else if (Array.isArray(scope)) {
-    return scope;
+export const getScopes = (scopes?: string | string[]): ScopeType[] => {
+  if (typeof scopes === "string") {
+    return scopes
+      .split(",")
+      .map((scope) => scope.trim())
+      .filter((scope) =>
+        scopeValues.includes(scope as ScopeType)
+      ) as ScopeType[];
+  } else if (Array.isArray(scopes)) {
+    return scopes.filter((scope) =>
+      scopeValues.includes(scope as ScopeType)
+    ) as ScopeType[];
   } else {
-    return [scope];
+    return [];
   }
 };
 
