@@ -1,5 +1,5 @@
+import { createElement } from "react";
 import cn from "classnames";
-import { MDXProvider } from "@mdx-js/react";
 import { useContext, useEffect } from "react";
 import AnchorNavigation, { HeaderMeta } from "components/AnchorNavigation";
 import Button from "components/Button";
@@ -15,13 +15,19 @@ import Footer from "./Footer";
 import Navigation, { getCurrentCategoryIndex } from "./Navigation";
 import { PageMeta } from "./types";
 import { useFindDestinationPath } from "utils/useFindDestinationPath";
+import rehypeReact from "rehype-react";
 
 import styles from "./DocsPage.module.css";
+
+const renderAst = new rehypeReact({
+  createElement,
+  components,
+}).Compiler;
 
 interface DocsPageProps {
   meta: PageMeta;
   tableOfConents: HeaderMeta[];
-  children: React.ReactNode;
+  AST: any;
 }
 
 const DocsPage = ({
@@ -36,9 +42,10 @@ const DocsPage = ({
     githubUrl,
   },
   tableOfConents,
-  children,
+  AST,
 }: DocsPageProps) => {
   const route = useCurrentHref();
+
   const { setVersions } = useContext(DocsContext);
 
   const { current, latest, available } = versions;
@@ -107,7 +114,7 @@ const DocsPage = ({
                 </Notice>
               )}
               <div className={cn(styles.text, styles[layout])}>
-                <MDXProvider components={components}>{children}</MDXProvider>
+                {renderAst(AST)}
               </div>
             </div>
             {isTocVisible && (

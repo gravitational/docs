@@ -50,11 +50,11 @@ export const getGithubURL = (filepath: string) => {
  * Generates props for docs page, based on the page location in the FS.
  */
 
-export const getPageMeta = (vfile: VFile) => {
-  const current = getVersion(vfile.path);
+export const getPageMeta = (path: string) => {
+  const current = getVersion(path);
   const { navigation } = loadDocsConfig(current);
 
-  const githubUrl = getGithubURL(vfile.path);
+  const githubUrl = getGithubURL(path);
 
   return {
     navigation,
