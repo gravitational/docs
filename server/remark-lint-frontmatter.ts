@@ -1,3 +1,8 @@
+/*
+ * remark-lint plugin to check uniqueness of title and description in frontmatter.
+ * Using simple in-memory cache for previous results.
+ */
+
 import type { Node as UnistNode, Parent as UnistParent } from "unist";
 import type { VFile } from "vfile";
 
@@ -5,40 +10,44 @@ import { lintRule } from "unified-lint-rule";
 import find from "unist-util-find";
 import yaml from "js-yaml";
 
-interface Meta {
+interface Frontmatter {
   title?: string;
   description?: string;
 }
 
-let cache: Record<string, Meta> = {};
+interface Entry {
+  path: string;
+  frontmatter: Frontmatter;
+}
 
-const hasMatchingFieldValue = (field: string) => (value: string) => {
-  if (!value) {
-    return null;
-  }
+let cache: Entry[] = [];
 
-  const entry = Object.entries(cache).find(
-    ([_, meta]) => meta[field] && meta[field].trim() === value.trim()
+const hasMatchingFieldValueInCache = (field: string) => (value: string) => {
+  // value may be optional or missing
+  if (!value) return null;
+
+  const entry = cache.find(
+    ({ frontmatter }) =>
+      frontmatter[field] && frontmatter[field].trim() === value.trim()
   );
 
-  return entry ? entry[0] : null;
+  return entry ? entry.path : null;
 };
 
-const hasMatchingTitle = hasMatchingFieldValue("title");
-const hasMatchingDescription = hasMatchingFieldValue("description");
+const hasMatchingTitle = hasMatchingFieldValueInCache("title");
+const hasMatchingDescription = hasMatchingFieldValueInCache("description");
 
 const remarkLintFrontmatter = lintRule(
   "remark-lint:frontmatter",
   (root: UnistParent, file: VFile) => {
+    // This is a type of the node created by remark-frontmatter plugin in remark-lint
     const node = find(root, (node: UnistNode) => node.type === "yaml");
 
-    if (!node) {
-      return;
-    }
+    if (!node) return;
 
-    const meta = yaml.load(node.value as string) as Meta;
+    const frontmatter = yaml.load(node.value as string) as Frontmatter;
 
-    const { title, description } = meta;
+    const { title, description } = frontmatter;
 
     const pathWithTitle = hasMatchingTitle(title);
 
@@ -54,12 +63,13 @@ const remarkLintFrontmatter = lintRule(
       );
     }
 
-    cache[file.path] = meta;
+    cache.push({ path: file.path, frontmatter });
   }
 );
 
 export default remarkLintFrontmatter;
 
-export const cleanCache = () => {
-  cache = {};
+// Method to reset or set inital cache values, mostly for tests
+export const resetCacheValue = (value = []) => {
+  cache = value;
 };

@@ -18,7 +18,7 @@ const transformer = (path: string) => {
     .processSync(file);
 };
 
-const getErorrs = (result: VFile) =>
+const getErrors = (result: VFile) =>
   result.messages.map(({ message }) => message);
 
 const base = transformer("server/fixtures/lint-frontmatter/base.md"); // Will add baseline to cache
@@ -30,7 +30,7 @@ Suite("Detects error in title", () => {
 
   const expectedErrors = [`Title "Title 1" is already used in "${base.path}"`];
 
-  assert.equal(getErorrs(result), expectedErrors);
+  assert.equal(getErrors(result), expectedErrors);
 });
 
 Suite("Detects error in description", () => {
@@ -40,13 +40,13 @@ Suite("Detects error in description", () => {
     `Description "Description 1" is already used in "${base.path}"`,
   ];
 
-  assert.equal(getErorrs(result), expectedErrors);
+  assert.equal(getErrors(result), expectedErrors);
 });
 
 Suite("Does not fire if no matches", () => {
   const result = transformer("server/fixtures/lint-frontmatter/new.md");
 
-  assert.equal(getErorrs(result), []);
+  assert.equal(getErrors(result), []);
 });
 
 Suite.run();
