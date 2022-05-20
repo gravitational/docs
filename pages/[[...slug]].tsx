@@ -1,10 +1,22 @@
+import { createElement } from "react";
 import { GetStaticProps } from "next";
+import rehypeReact from "rehype-react";
 import { getDocsPaths, getDocsPageProps } from "server/docs-helpers";
+import { components } from "layouts/DocsPage/components";
+
+const renderAst = new rehypeReact({
+  createElement,
+  components,
+}).Compiler;
 
 import Layout from "layouts/DocsPage";
 
 const DocsPage = ({ meta, AST, tableOfConents }) => {
-  return <Layout meta={meta} tableOfConents={tableOfConents} AST={AST} />;
+  return (
+    <Layout meta={meta} tableOfConents={tableOfConents}>
+      {renderAst(AST)}
+    </Layout>
+  );
 };
 
 export async function getStaticPaths() {

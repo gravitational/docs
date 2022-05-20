@@ -1,5 +1,5 @@
-import { createElement } from "react";
 import cn from "classnames";
+import { ReactNode } from "react";
 import { useContext, useEffect } from "react";
 import AnchorNavigation, { HeaderMeta } from "components/AnchorNavigation";
 import Button from "components/Button";
@@ -8,26 +8,19 @@ import SiteHeader from "components/Header";
 import Link, { useCurrentHref } from "components/Link";
 import Notice from "components/Notice";
 import VideoBar from "components/VideoBar";
-import { components } from "./components";
 import { DocsContext } from "./context";
 import Header from "./Header";
 import Footer from "./Footer";
 import Navigation, { getCurrentCategoryIndex } from "./Navigation";
 import { PageMeta } from "./types";
 import { useFindDestinationPath } from "utils/useFindDestinationPath";
-import rehypeReact from "rehype-react";
 
 import styles from "./DocsPage.module.css";
-
-const renderAst = new rehypeReact({
-  createElement,
-  components,
-}).Compiler;
 
 interface DocsPageProps {
   meta: PageMeta;
   tableOfConents: HeaderMeta[];
-  AST: any;
+  children: ReactNode;
 }
 
 const DocsPage = ({
@@ -42,7 +35,7 @@ const DocsPage = ({
     githubUrl,
   },
   tableOfConents,
-  AST,
+  children,
 }: DocsPageProps) => {
   const route = useCurrentHref();
 
@@ -113,9 +106,7 @@ const DocsPage = ({
                   )}
                 </Notice>
               )}
-              <div className={cn(styles.text, styles[layout])}>
-                {renderAst(AST)}
-              </div>
+              <div className={cn(styles.text, styles[layout])}>{children}</div>
             </div>
             {isTocVisible && (
               <AnchorNavigation
