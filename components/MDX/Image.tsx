@@ -39,7 +39,11 @@ export type FigureProps = ImageProps & {
 };
 
 export const Figure = ({ children, ...rest }: FigureProps) => {
-  const image = Children.only<ImageComponent>(children);
+  if (Children.count(children)) {
+    const image = Children.toArray(children)[0] as ImageComponent;
 
-  return cloneElement(image, rest);
+    return cloneElement(image, rest);
+  }
+
+  return null;
 };

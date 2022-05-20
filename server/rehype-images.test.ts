@@ -34,7 +34,7 @@ Suite("Add actual sizes to image without suffix", () => {
 
   assert.equal(
     result,
-    '<p><img src="/images/image.png" alt="Alt text" width="300" height="300"></p>'
+    '<img src="/images/image.png" alt="Alt text" width="300" height="300">'
   );
 });
 
@@ -46,7 +46,7 @@ Suite("Reduces sizes by 1/3 if path ends with @1.5x", () => {
 
   assert.equal(
     result,
-    '<p><img src="/images/image@1.5x.png" alt="Alt text" width="200" height="200"></p>'
+    '<img src="/images/image@1.5x.png" alt="Alt text" width="200" height="200">'
   );
 });
 
@@ -58,7 +58,7 @@ Suite("Reduces sizes by 1/2 if path ends with @2x", () => {
 
   assert.equal(
     result,
-    '<p><img src="/images/image@2x.png" alt="Alt text" width="150" height="150"></p>'
+    '<img src="/images/image@2x.png" alt="Alt text" width="150" height="150">'
   );
 });
 
@@ -70,7 +70,7 @@ Suite("Reduces sizes by 2/3 if path ends with @3x", () => {
 
   assert.equal(
     result,
-    '<p><img src="/images/image@3x.png" alt="Alt text" width="100" height="100"></p>'
+    '<img src="/images/image@3x.png" alt="Alt text" width="100" height="100">'
   );
 });
 

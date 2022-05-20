@@ -24,8 +24,8 @@ import rehypeImages from "./rehype-images";
 import { getVersion, getVersionRootPath } from "./docs-helpers";
 import { loadConfig } from "./config-docs";
 
-const staticPath = "/docs/static/assets/";
-const destinationDir = resolve(`public/${staticPath}`);
+const staticPath = "/docs/_next/static/assets/";
+const destinationDir = resolve(`.next/static/assets`);
 
 export const transformToAST = async (value: string, vfile: VFile) => {
   const ast = unified()
