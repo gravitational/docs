@@ -1,10 +1,5 @@
 import { GetStaticProps } from "next";
-import { getStaticPathsForDocs, getDocsPagesMap } from "server/paths";
-import { getPageInfo } from "server/pages-helpers";
-import { fetchVideoMeta } from "server/youtube-meta";
-import { getPageMeta } from "server/docs-helpers";
-import getHeaders from "server/get-headers";
-import { transformToAST } from "server/markdown-config";
+import { getDocsPaths, getDocsPageProps } from "server/docs-helpers";
 
 import Layout from "layouts/DocsPage";
 
@@ -14,42 +9,29 @@ const DocsPage = ({ meta, AST, tableOfConents }) => {
 
 export async function getStaticPaths() {
   return {
-    paths: getStaticPathsForDocs(),
+    paths: getDocsPaths(),
     fallback: false,
   };
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const pagesMap = getDocsPagesMap();
   const slug =
     params && Array.isArray(params.slug) ? `/${params.slug.join("/")}/` : "/";
 
-  const filepath = pagesMap[slug];
-
-  const page = getPageInfo(filepath);
-
-  // Adds versions, navigation, githubUrl, etc.
-  const pageMeta = getPageMeta(filepath);
-
-  // If we have videoBanner file in config, we load this vide data through YouTube API.
-  const { videoBanner } = page.data.frontmatter;
-
-  if (typeof videoBanner === "string") {
-    page.data.frontmatter.videoBanner = await fetchVideoMeta(videoBanner);
-  }
-
-  const AST = await transformToAST(page.data.content, page);
-
   return {
-    props: {
-      meta: { ...page.data.frontmatter, ...pageMeta },
-      AST,
-      tableOfConents: getHeaders(AST),
-    },
+    props: await getDocsPageProps(slug),
   };
 };
 
 export default DocsPage;
+
+// This line will remove docs pages and images from @vercel/nft results.
+// Without it docs will not build because of serverless function size errors.
+// Right now it disables everything, but if we want to enable incremental builds
+// we may want to remove mdx pages and code examples from the flag.
+// It will also require manually moving image files to public folder before next build,
+// becase if we move them as a part of build size of image folder will also cause
+// serverless function limit problem.
 
 export const config = {
   unstable_excludeFiles: ["**/*"],
