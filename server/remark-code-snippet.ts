@@ -33,7 +33,6 @@ import type {
 } from "./types-unist";
 
 import { visit } from "unist-util-visit";
-import { Parent } from "hast";
 
 const RULE_ID = "code-snippet";
 

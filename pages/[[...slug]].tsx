@@ -3,6 +3,7 @@ import { getStaticPathsForDocs, getDocsPagesMap } from "server/paths";
 import { getPageInfo } from "server/pages-helpers";
 import { fetchVideoMeta } from "server/youtube-meta";
 import { getPageMeta } from "server/docs-helpers";
+import getHeaders from "server/get-headers";
 import { transformToAST } from "server/markdown-config";
 
 import Layout from "layouts/DocsPage";
@@ -37,11 +38,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     page.data.frontmatter.videoBanner = await fetchVideoMeta(videoBanner);
   }
 
+  const AST = await transformToAST(page.data.content, page);
+
   return {
     props: {
       meta: { ...page.data.frontmatter, ...pageMeta },
-      AST: transformToAST(page.data.content, page),
-      tableOfConents: [],
+      AST,
+      tableOfConents: getHeaders(AST),
     },
   };
 };
