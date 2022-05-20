@@ -1,7 +1,5 @@
 /*
- * List of plugins used on the docs pages. Not merged with main config
- * because we have some plugins that only work with
- * content of `/content/X.X/docs/` folders.
+ * List of plugins and settings for them used on the docs pages.
  */
 
 import type { VFile } from "vfile";
@@ -24,19 +22,23 @@ import rehypeImages from "./rehype-images";
 import { getVersion, getVersionRootPath } from "./docs-helpers";
 import { loadConfig } from "./config-docs";
 
-const staticPath = "/docs/_next/static/assets/";
+// We move images to `.next/static` because this folder is preserved
+// in the cache on rebuilds. If we place them in `public` folder, they will
+// be lost on subsequent builds.
 const destinationDir = resolve(`.next/static/assets`);
+const staticPath = "/docs/_next/static/assets/";
 
 export const transformToAST = async (value: string, vfile: VFile) => {
+  // parse() will parse original file, but not apply plugins. But because
+  // MDX and GFM are extending parser we need to add them here.
   const ast = unified()
     .use(remarkParse)
-    .use(remarkMDX)
-    .use(remarkGFM)
+    .use(remarkMDX) // Will add mdx parser
+    .use(remarkGFM) // Will add tables parser
     .parse(value);
 
+  // run() will apply plugins and return modified AST
   const AST = await unified()
-    .use(remarkMDX)
-    .use(remarkGFM)
     .use(remarkIncludes, {
       rootDir: getVersionRootPath(vfile.path),
     }) // Resolves (!include.ext!) syntax
@@ -45,35 +47,34 @@ export const transformToAST = async (value: string, vfile: VFile) => {
     }) // Resolves (=variable=) syntax
     .use(remarkCodeSnippet, {
       langs: ["code"],
-    })
-    .use(remarkLinks)
+    }) // Adds custom code snippets
+    .use(remarkLinks) // Makes links absolute and removes mdx extension
     .use(remarkCopyLinkedFiles, {
       destinationDir,
       staticPath,
       ignoreFileExtensions: [".md", ".mdx"],
-    })
+    }) // Copies images and files to public folder and updates links
     .use(remarkRehype, {
-      allowDangerousHtml: true,
       passThrough: [
         "mdxFlowExpression",
         "mdxJsxFlowElement",
         "mdxJsxTextElement",
         "mdxTextExpression",
         "mdxjsEsm",
-      ],
-    })
-    .use(rehypeSlug)
+      ], // passThrough options says transformer which nodes to leave as is
+    }) // Transforms remark to rehype
+    .use(rehypeSlug) // Add IDs to headers
     .use(rehypeHighlight, {
       aliases: {
         bash: ["bsh", "systemd", "code", "powershell"],
         yaml: ["conf", "toml"],
       },
-    })
+    }) // Adds syntax highlighting
     .use(rehypeMdxToHast)
     .use(rehypeImages, {
       destinationDir,
       staticPath,
-    })
+    }) // Adds sizes to the images
     .run(ast, vfile);
 
   return AST;

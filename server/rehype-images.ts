@@ -1,3 +1,10 @@
+/*
+ * this plugin will do two things:
+ * - Add width and height for each image it can parse.
+ * - Remove wrapping <p> tag around the img elements so we can use
+ *   them inside the <figure> tags.
+ */
+
 import { existsSync, readFileSync } from "fs";
 import probe from "probe-image-size";
 import { Transformer } from "unified";
@@ -64,8 +71,7 @@ export default function rehypeImages({
     });
 
     /*
-      We will use next/image on the client that will wrap image inside <div>,
-      and placing <div> inside <p> will cause css bugs, so we remove this <p> here
+      Passing images wrapper in `<p>` inside <Figure> can break it, so we unwrap them here.
     */
 
     visitParents(
@@ -75,8 +81,11 @@ export default function rehypeImages({
         const parent = ancestors[ancestors.length - 1] as Element;
         const paragraphIndex = parent.children.indexOf(paragraphNode);
 
+        // If paragraph has only one child and it is image - just unwrap it
         if (paragraphNode.children.length === 1) {
           parent.children[paragraphIndex] = paragraphNode.children[0];
+          // If the image in not the only child - unwrap images while leaving
+          // content before and after each image inside the <p> tags.
         } else {
           const newNodes = [];
           let currentParagraph: Element | undefined;

@@ -39,6 +39,10 @@ const normalizeDocSlug = (slug: string, version: string) => {
   return isLatest ? baseSlug.replace(`/ver/${latest}`, "") : baseSlug;
 };
 
+/*
+ * return an array of mdx file paths for docs a version without includes.
+ */
+
 const getFilePathsForVersion = (
   version: string,
   withNoIndex: boolean = false
@@ -102,7 +106,11 @@ export const generateFullSitemap = (root: string) => {
 };
 
 /*
- * Get params for the getStaticPaths in Next.js
+ * Generates an array of params for each docs page to use
+ * in the getStaticPaths for the docs.
+ *
+ * For url `/docs/one/two/`
+ * It will return: { params: { slug: ["one", "two"] } }
  */
 
 export const getStaticPathsForDocs = () => {
@@ -122,6 +130,12 @@ export const getStaticPathsForDocs = () => {
 
   return result;
 };
+
+/*
+ * Maps slugs to files in file system.
+ *
+ * Returns object { "/getting-started/": "/path/to/file/getting-started.mdx" }
+ */
 
 export const getDocsPagesMap = () => {
   const result = {};
