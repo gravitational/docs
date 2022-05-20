@@ -44,7 +44,7 @@ export const components = {
   code: Code,
   inlineCode: Code,
   // eslint-disable-next-line jsx-a11y/alt-text
-  //img: (props) => <Image {...props} />,
+  img: (props) => <Image {...props} />,
   iframe: IFrame,
   h1: H1,
   h2: H2,
@@ -76,7 +76,7 @@ export const components = {
   tilelist: TileList,
   tilelistitem: TileListItem,
   tileimage: TileImage,
-  //figure: Figure,
+  figure: Figure,
   notice: Notice,
   snippet: Snippet,
   details: Details,

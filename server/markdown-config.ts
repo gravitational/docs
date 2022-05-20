@@ -6,7 +6,8 @@
 
 import type { VFile } from "vfile";
 
-import rehypeHeaders from "./rehype-headers";
+import { resolve } from "path";
+import { unified } from "unified";
 import rehypeMdxToHast from "./rehype-mdx-to-hast";
 import remarkMDX from "remark-mdx";
 import rehypeHighlight from "rehype-highlight";
@@ -16,20 +17,24 @@ import remarkIncludes from "./remark-includes";
 import remarkLinks from "./remark-links";
 import remarkVariables from "./remark-variables";
 import remarkCodeSnippet from "./remark-code-snippet";
-import { getVersion, getVersionRootPath } from "./docs-helpers";
-import { loadConfig } from "./config-docs";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
-import { unified } from "unified";
+import remarkCopyLinkedFiles from "remark-copy-linked-files";
+import rehypeImages from "./rehype-images";
+import { getVersion, getVersionRootPath } from "./docs-helpers";
+import { loadConfig } from "./config-docs";
 
-export const transformToAST = (value: string, vfile: VFile) => {
+const staticPath = "/docs/static/assets/";
+const destinationDir = resolve(`public/${staticPath}`);
+
+export const transformToAST = async (value: string, vfile: VFile) => {
   const ast = unified()
     .use(remarkParse)
     .use(remarkMDX)
     .use(remarkGFM)
     .parse(value);
 
-  const AST = unified()
+  const AST = await unified()
     .use(remarkMDX)
     .use(remarkGFM)
     .use(remarkIncludes, {
@@ -42,6 +47,11 @@ export const transformToAST = (value: string, vfile: VFile) => {
       langs: ["code"],
     })
     .use(remarkLinks)
+    .use(remarkCopyLinkedFiles, {
+      destinationDir,
+      staticPath,
+      ignoreFileExtensions: [".md", ".mdx"],
+    })
     .use(remarkRehype, {
       allowDangerousHtml: true,
       passThrough: [
@@ -53,7 +63,6 @@ export const transformToAST = (value: string, vfile: VFile) => {
       ],
     })
     .use(rehypeSlug)
-    .use(rehypeHeaders, { maxLevel: 2 })
     .use(rehypeHighlight, {
       aliases: {
         bash: ["bsh", "systemd", "code", "powershell"],
@@ -61,7 +70,11 @@ export const transformToAST = (value: string, vfile: VFile) => {
       },
     })
     .use(rehypeMdxToHast)
-    .runSync(ast, vfile);
+    .use(rehypeImages, {
+      destinationDir,
+      staticPath,
+    })
+    .run(ast, vfile);
 
   return AST;
 };
