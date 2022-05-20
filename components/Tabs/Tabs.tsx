@@ -13,12 +13,29 @@ import { VersionWarning } from "layouts/DocsPage";
 import { DocsContext, getScopes } from "layouts/DocsPage/context";
 import styles from "./Tabs.module.css";
 
-const getSelectedLabel = (
-  tabs: React.ReactComponentElement<typeof TabItem>[]
-): string => {
-  const selectedTab = tabs.find(({ props: { selected } }) => selected);
+const getDropdownFromItem = (inDropdown: string = ""): string[] => {
+  return inDropdown.split(",").map((item) => item.trim());
+};
 
-  return selectedTab ? selectedTab.props.label : tabs[0]?.props.label;
+const isInDropdown = (
+  inDropdown: string,
+  dropdownSelected: string
+): boolean => {
+  return getDropdownFromItem(inDropdown).includes(dropdownSelected);
+};
+
+interface DataTab {
+  label: string;
+  isPreSelected: boolean;
+}
+
+interface TabsInDropdowns {
+  [key: string]: DataTab[];
+}
+
+const getSelectedTab = (tabsMeta: DataTab[]) => {
+  const selected = tabsMeta.find((t) => t.isPreSelected);
+  return selected ? selected.label : tabsMeta[0].label;
 };
 
 export interface TabItemProps {
@@ -53,9 +70,17 @@ const TabLabel = ({ selected, label, onClick }: TabsLabel) => {
 
 export interface TabsProps {
   children: React.ReactNode;
+  dropdownCaption?: string;
+  dropdownSelected?: string;
 }
 
-export const Tabs = ({ children }: TabsProps) => {
+const FAKE_DROPDOWN = "$all";
+
+export const Tabs = ({
+  children,
+  dropdownCaption,
+  dropdownSelected,
+}: TabsProps) => {
   const {
     scope,
     versions: { latest, current },
@@ -68,38 +93,52 @@ export const Tabs = ({ children }: TabsProps) => {
       ) as React.ReactComponentElement<typeof TabItem>[],
     [children]
   );
-  const dropdownVars: Set<string> = new Set();
 
-  childTabs.forEach(({ props: { inDropdown } }) => {
-    if (inDropdown) {
-      const dropdownFromItem = inDropdown.split(",");
-      dropdownFromItem.forEach((item) => dropdownVars.add(item.trim()));
-    }
-  });
+  const dropdownVarsArr = useMemo(() => {
+    const dropdownVars: Set<string> = new Set();
 
-  const dropdownVarsArr = Array.from(dropdownVars).sort();
-  const [currentLabel, setCurrentLabel] = useState(getSelectedLabel(childTabs));
-  const [selected, setSelected] = useState(dropdownVarsArr[0]);
-
-  const labels = childTabs
-    .map(({ props: { label, inDropdown } }) => {
+    childTabs.forEach(({ props: { inDropdown } }) => {
       if (inDropdown) {
-        const dropdownFromItem = inDropdown.split(",");
-
-        for (const elem of dropdownFromItem) {
-          if (elem.trim() === selected) {
-            return label;
-          }
-        }
-      } else {
-        return label;
+        const dropdownFromItem = getDropdownFromItem(inDropdown);
+        dropdownFromItem.forEach((item) => dropdownVars.add(item));
       }
-    })
-    .filter(Boolean);
+    });
+
+    return Array.from(dropdownVars).sort().concat(FAKE_DROPDOWN);
+  }, [childTabs]);
+
+  const tabsInDropdown: TabsInDropdowns = useMemo(() => {
+    const data: TabsInDropdowns = {};
+
+    for (const option of dropdownVarsArr) {
+      data[option] = [];
+      childTabs.forEach(({ props: { label, selected, inDropdown } }) => {
+        let dataTab: DataTab;
+        if (inDropdown && option !== FAKE_DROPDOWN) {
+          if (isInDropdown(inDropdown, option)) {
+            dataTab = { label, isPreSelected: Boolean(selected) };
+          }
+        } else {
+          dataTab = { label, isPreSelected: Boolean(selected) };
+        }
+        if (dataTab) {
+          data[option].push(dataTab);
+        }
+      });
+    }
+
+    return data;
+  }, [childTabs, dropdownVarsArr]);
+
+  const [selectedDropdownOption, setSelectedDropdownOpt] = useState(
+    dropdownSelected ? dropdownSelected : dropdownVarsArr[0]
+  );
+  const tabsMeta = tabsInDropdown[selectedDropdownOption];
+  const [currentTab, setCurrentTab] = useState(getSelectedTab(tabsMeta));
 
   useEffect(() => {
-    setCurrentLabel(labels[0]);
-  }, [selected]);
+    setCurrentTab(getSelectedTab(tabsMeta));
+  }, [tabsMeta, selectedDropdownOption]);
 
   useEffect(() => {
     const scopedTab = childTabs.find(({ props }) =>
@@ -107,37 +146,39 @@ export const Tabs = ({ children }: TabsProps) => {
     );
 
     if (scopedTab) {
-      setCurrentLabel(scopedTab.props.label);
+      setCurrentTab(scopedTab.props.label);
     }
   }, [scope, childTabs]);
 
+  const visibleTabs = dropdownVarsArr.filter((t) => t !== FAKE_DROPDOWN);
+
   return (
     <div className={styles.wrapper}>
-      {dropdownVarsArr.length ? (
+      {visibleTabs.length ? (
         <div className={styles["drop-wrapper"]}>
           <p className={styles["drop-title"]}>
-            In this place will be your text
+            {dropdownCaption ? dropdownCaption : "Choose one of the options"}
           </p>
           <Dropdown
             className={styles.dropdown}
-            value={selected}
-            options={dropdownVarsArr}
-            onChange={setSelected}
+            value={selectedDropdownOption}
+            options={visibleTabs}
+            onChange={setSelectedDropdownOpt}
           />
         </div>
       ) : null}
       <div
         className={cn(
           styles.header,
-          dropdownVarsArr.length ? styles["header-shadow"] : null
+          visibleTabs.length ? styles["header-shadow"] : null
         )}
       >
-        {labels.map((label) => (
+        {tabsMeta.map((t) => (
           <TabLabel
-            key={label}
-            label={label}
-            onClick={setCurrentLabel}
-            selected={label === currentLabel}
+            key={t.label}
+            label={t.label}
+            onClick={setCurrentTab}
+            selected={t.label === currentTab}
           />
         ))}
       </div>
@@ -145,7 +186,7 @@ export const Tabs = ({ children }: TabsProps) => {
         return (
           <div
             key={tab.props.label}
-            className={tab.props.label !== currentLabel ? styles.hidden : null}
+            className={tab.props.label !== currentTab ? styles.hidden : null}
           >
             {tab.props.scope === "cloud" && latest !== current ? (
               <TabItem label={tab.props.label}>
