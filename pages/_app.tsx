@@ -12,7 +12,6 @@ import "styles/global.css";
 import "styles/algolia-search.css";
 
 const { NEXT_PUBLIC_GTM_ID } = process.env;
-const { NEXT_PUBLIC_GTAG_ID } = process.env;
 
 const Analytics = () => {
   return (
@@ -36,22 +35,6 @@ const Analytics = () => {
             }}
           />
           {/* End Google Tag Manager (noscript) */}
-        </>
-      )}
-      {NEXT_PUBLIC_GTAG_ID && (
-        <>
-          {/* GTag */}
-          <Script
-            async
-            src={`https://www.googletagmanager.com/gtag/js?id=${NEXT_PUBLIC_GTAG_ID}`}
-          />
-          <Script id="script_gtag">
-            {`window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                  gtag('config', "${NEXT_PUBLIC_GTAG_ID}");`}
-          </Script>
-          {/* End GTag */}
         </>
       )}
     </>
