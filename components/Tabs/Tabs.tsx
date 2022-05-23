@@ -13,6 +13,49 @@ import { VersionWarning } from "layouts/DocsPage";
 import { DocsContext, getScopes } from "layouts/DocsPage/context";
 import styles from "./Tabs.module.css";
 
+/**
+ * An example of using this component.
+ * 
+ * - If at least one TabsItem has an inDropdown prop,
+ * then TabsItems without an inDropdown prop will be displayed in all Dropdown options.
+ * 
+ * <Tabs dropdownCaption="Installing Teleport" dropdownSelected="gatsby">
+    <TabItem label="Download" inDropdown="gatsby, js">
+      [Download MacOS .pkg installer](https://goteleport.com/teleport/download?os=mac) (tsh client only, signed) file, double-click to run the Installer.
+    </TabItem>
+
+    <TabItem label="Homebrew" inDropdown="js, kotlin, python" selected>
+      ```code
+      $ brew install teleport
+      ```
+    </TabItem>
+
+    <TabItem label="Terminal" inDropdown="gatsby, python, java">
+      ```code
+      $ curl -O https://get.gravitational.com/teleport-(=teleport.version=).pkg
+      $ sudo installer -pkg teleport-(=teleport.version=).pkg -target / # Installs on Macintosh HD
+      # Password:
+      # installer: Package name is teleport-(=teleport.version=)
+      # installer: Upgrading at base path /
+      # installer: The upgrade was successful.
+      $ which teleport
+      # /usr/local/bin/teleport
+      ```
+    </TabItem>
+
+    <TabItem scope={["oss", "enterprise"]} label="From Source">
+      ```code
+        # Checkout teleport-plugins
+        $ git clone https://github.com/gravitational/teleport-plugins.git
+        $ cd teleport-plugins/access/mattermost
+        $ make
+      ```
+    </TabItem>
+  </Tabs>
+ */
+
+// getting dropdown options from an individual TabItem
+// we analize all TabItems to gather all available Dropdown options
 const getDropdownFromItem = (inDropdown: string = ""): string[] => {
   return inDropdown.split(",").map((item) => item.trim());
 };
@@ -74,6 +117,8 @@ export interface TabsProps {
   dropdownSelected?: string;
 }
 
+// this option is added to unify the code.
+// It is needed to display tabs correctly if there is no dropdown
 const FAKE_DROPDOWN = "$all";
 
 export const Tabs = ({
@@ -107,6 +152,8 @@ export const Tabs = ({
     return Array.from(dropdownVars).sort().concat(FAKE_DROPDOWN);
   }, [childTabs]);
 
+  // making data which tabs to display in which dropdown options
+  // and which tabs should be selected in every dropdown
   const tabsInDropdown: TabsInDropdowns = useMemo(() => {
     const data: TabsInDropdowns = {};
 
