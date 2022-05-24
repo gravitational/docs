@@ -20,17 +20,17 @@ import styles from "./Tabs.module.css";
  * then TabsItems without an inDropdown prop will be displayed in all Dropdown options.
  * 
  * <Tabs dropdownCaption="Installing Teleport" dropdownSelected="gatsby">
-    <TabItem label="Download" inDropdown="gatsby, js">
+    <TabItem label="Download" options="gatsby, js">
       [Download MacOS .pkg installer](https://goteleport.com/teleport/download?os=mac) (tsh client only, signed) file, double-click to run the Installer.
     </TabItem>
 
-    <TabItem label="Homebrew" inDropdown="js, kotlin, python" selected>
+    <TabItem label="Homebrew" options="js, kotlin, python" selected>
       ```code
       $ brew install teleport
       ```
     </TabItem>
 
-    <TabItem label="Terminal" inDropdown="gatsby, python, java">
+    <TabItem label="Terminal" options="gatsby, python, java">
       ```code
       $ curl -O https://get.gravitational.com/teleport-(=teleport.version=).pkg
       $ sudo installer -pkg teleport-(=teleport.version=).pkg -target / # Installs on Macintosh HD
@@ -56,15 +56,12 @@ import styles from "./Tabs.module.css";
 
 // getting dropdown options from an individual TabItem
 // we analize all TabItems to gather all available Dropdown options
-const getDropdownFromItem = (inDropdown: string = ""): string[] => {
-  return inDropdown.split(",").map((item) => item.trim());
+const getDropdownFromItem = (options: string = ""): string[] => {
+  return options.split(",").map((item) => item.trim());
 };
 
-const isInDropdown = (
-  inDropdown: string,
-  dropdownSelected: string
-): boolean => {
-  return getDropdownFromItem(inDropdown).includes(dropdownSelected);
+const isInDropdown = (options: string, dropdownSelected: string): boolean => {
+  return getDropdownFromItem(options).includes(dropdownSelected);
 };
 
 interface DataTab {
@@ -86,7 +83,7 @@ export interface TabItemProps {
   children: React.ReactNode;
   selected?: boolean;
   scope?: string | string[];
-  inDropdown?: string;
+  options?: string;
 }
 
 export const TabItem = ({ children }: TabItemProps) => {
@@ -119,7 +116,7 @@ export interface TabsProps {
 
 // this option is added to unify the code.
 // It is needed to display tabs correctly if there is no dropdown
-const FAKE_DROPDOWN = "$all";
+const DEFAULT_DROPDOWN = "$all";
 
 export const Tabs = ({
   children,
@@ -142,14 +139,14 @@ export const Tabs = ({
   const dropdownVarsArr = useMemo(() => {
     const dropdownVars: Set<string> = new Set();
 
-    childTabs.forEach(({ props: { inDropdown } }) => {
-      if (inDropdown) {
-        const dropdownFromItem = getDropdownFromItem(inDropdown);
+    childTabs.forEach(({ props: { options } }) => {
+      if (options) {
+        const dropdownFromItem = getDropdownFromItem(options);
         dropdownFromItem.forEach((item) => dropdownVars.add(item));
       }
     });
 
-    return Array.from(dropdownVars).sort().concat(FAKE_DROPDOWN);
+    return Array.from(dropdownVars).sort().concat(DEFAULT_DROPDOWN);
   }, [childTabs]);
 
   // making data which tabs to display in which dropdown options
@@ -157,19 +154,19 @@ export const Tabs = ({
   const tabsInDropdown: TabsInDropdowns = useMemo(() => {
     const data: TabsInDropdowns = {};
 
-    for (const option of dropdownVarsArr) {
-      data[option] = [];
-      childTabs.forEach(({ props: { label, selected, inDropdown } }) => {
+    for (const dropOption of dropdownVarsArr) {
+      data[dropOption] = [];
+      childTabs.forEach(({ props: { label, selected, options } }) => {
         let dataTab: DataTab;
-        if (inDropdown && option !== FAKE_DROPDOWN) {
-          if (isInDropdown(inDropdown, option)) {
+        if (options && dropOption !== DEFAULT_DROPDOWN) {
+          if (isInDropdown(options, dropOption)) {
             dataTab = { label, isPreSelected: Boolean(selected) };
           }
         } else {
           dataTab = { label, isPreSelected: Boolean(selected) };
         }
         if (dataTab) {
-          data[option].push(dataTab);
+          data[dropOption].push(dataTab);
         }
       });
     }
@@ -183,6 +180,11 @@ export const Tabs = ({
   const tabsMeta = tabsInDropdown[selectedDropdownOption];
   const [currentTab, setCurrentTab] = useState(getSelectedTab(tabsMeta));
 
+  /* selectedDropdownOption is needed here.
+   * We have to change the selected tab when we change a dropdown option
+   * getSelectedTab and setCurrentTab we should not specify in the dependency array
+   * because these are constants, they do not change
+   **/
   useEffect(() => {
     setCurrentTab(getSelectedTab(tabsMeta));
   }, [tabsMeta, selectedDropdownOption]);
@@ -197,14 +199,14 @@ export const Tabs = ({
     }
   }, [scope, childTabs]);
 
-  const visibleTabs = dropdownVarsArr.filter((t) => t !== FAKE_DROPDOWN);
+  const visibleTabs = dropdownVarsArr.filter((t) => t !== DEFAULT_DROPDOWN);
 
   return (
     <div className={styles.wrapper}>
-      {visibleTabs.length ? (
+      {Boolean(visibleTabs.length) && (
         <div className={styles["drop-wrapper"]}>
           <p className={styles["drop-title"]}>
-            {dropdownCaption ? dropdownCaption : "Choose one of the options"}
+            {dropdownCaption || "Choose one of the options"}
           </p>
           <Dropdown
             className={styles.dropdown}
@@ -213,28 +215,26 @@ export const Tabs = ({
             onChange={setSelectedDropdownOpt}
           />
         </div>
-      ) : null}
+      )}
       <div
         className={cn(
           styles.header,
           visibleTabs.length ? styles["header-shadow"] : null
         )}
       >
-        {tabsMeta.map((t) => (
+        {tabsMeta.map(({ label }) => (
           <TabLabel
-            key={t.label}
-            label={t.label}
+            key={label}
+            label={label}
             onClick={setCurrentTab}
-            selected={t.label === currentTab}
+            selected={label === currentTab}
           />
         ))}
       </div>
       {childTabs.map((tab) => {
+        const labeClassName = tab.props.label !== currentTab && styles.hidden;
         return (
-          <div
-            key={tab.props.label}
-            className={tab.props.label !== currentTab ? styles.hidden : null}
-          >
+          <div key={tab.props.label} className={labeClassName}>
             {tab.props.scope === "cloud" && latest !== current ? (
               <TabItem label={tab.props.label}>
                 <VersionWarning />
