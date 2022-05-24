@@ -1,4 +1,3 @@
-import cn from "classnames";
 import {
   isValidElement,
   Children,
@@ -7,10 +6,11 @@ import {
   useMemo,
   useState,
 } from "react";
-import HeadlessButton from "components/HeadlessButton";
 import { Dropdown } from "components/Dropdown";
-import { VersionWarning } from "layouts/DocsPage";
 import { DocsContext, getScopes } from "layouts/DocsPage/context";
+import { TabLabelsList } from "./TabLabel";
+import { TabItemsList } from "./TabItem";
+import { DataTab, TabsInDropdowns, TabItemProps, TabsProps } from "./types";
 import styles from "./Tabs.module.css";
 
 /**
@@ -64,55 +64,10 @@ const isInDropdown = (options: string, dropdownSelected: string): boolean => {
   return getDropdownFromItem(options).includes(dropdownSelected);
 };
 
-interface DataTab {
-  label: string;
-  isPreSelected: boolean;
-}
-
-interface TabsInDropdowns {
-  [key: string]: DataTab[];
-}
-
 const getSelectedTab = (tabsMeta: DataTab[]) => {
   const selected = tabsMeta.find((t) => t.isPreSelected);
   return selected ? selected.label : tabsMeta[0].label;
 };
-
-export interface TabItemProps {
-  label: string;
-  children: React.ReactNode;
-  selected?: boolean;
-  scope?: string | string[];
-  options?: string;
-}
-
-export const TabItem = ({ children }: TabItemProps) => {
-  return <div className={styles.item}>{children}</div>;
-};
-
-interface TabsLabel {
-  selected: boolean;
-  label: string;
-  onClick: (label: string) => void;
-}
-
-const TabLabel = ({ selected, label, onClick }: TabsLabel) => {
-  return (
-    <HeadlessButton
-      disabled={selected}
-      onClick={() => onClick(label)}
-      className={cn(styles.label, selected ? styles.selected : styles.default)}
-    >
-      {label}
-    </HeadlessButton>
-  );
-};
-
-export interface TabsProps {
-  children: React.ReactNode;
-  dropdownCaption?: string;
-  dropdownSelected?: string;
-}
 
 // this option is added to unify the code.
 // It is needed to display tabs correctly if there is no dropdown
@@ -132,7 +87,7 @@ export const Tabs = ({
     () =>
       Children.toArray(children).filter(
         (c) => isValidElement(c) && c.props.label && c.props.children
-      ) as React.ReactComponentElement<typeof TabItem>[],
+      ) as React.ReactComponentElement<React.FC<TabItemProps>>[],
     [children]
   );
 
@@ -216,37 +171,18 @@ export const Tabs = ({
           />
         </div>
       )}
-      <div
-        className={cn(
-          styles.header,
-          visibleTabs.length ? styles["header-shadow"] : null
-        )}
-      >
-        {tabsMeta.map(({ label }) => (
-          <TabLabel
-            key={label}
-            label={label}
-            onClick={setCurrentTab}
-            selected={label === currentTab}
-          />
-        ))}
-      </div>
-      {childTabs.map((tab) => {
-        const labeClassName = tab.props.label !== currentTab && styles.hidden;
-        return (
-          <div key={tab.props.label} className={labeClassName}>
-            {tab.props.scope === "cloud" && latest !== current ? (
-              <TabItem label={tab.props.label}>
-                <VersionWarning />
-              </TabItem>
-            ) : (
-              tab
-            )}
-          </div>
-        );
-      })}
+      <TabLabelsList
+        visibleTabs={visibleTabs}
+        tabsMeta={tabsMeta}
+        currentTab={currentTab}
+        onClick={setCurrentTab}
+      />
+      <TabItemsList
+        childTabs={childTabs}
+        currentTab={currentTab}
+        latestDocVers={latest}
+        currentDocVers={current}
+      />
     </div>
   );
 };
-
-Tabs.Item = TabItem;
