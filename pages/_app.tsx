@@ -13,9 +13,21 @@ import "styles/algolia-search.css";
 
 const { NEXT_PUBLIC_GTM_ID } = process.env;
 
+interface dataLayerItem {
+  [key: string]: unknown;
+  event?: string;
+}
+
+declare global {
+  var dataLayer: dataLayerItem[]; // eslint-disable-line no-var
+}
+
 const Analytics = () => {
   return (
     <>
+      <Script id="dataLayer">
+        {`window.dataLayer = window.dataLayer || []`}
+      </Script>
       {NEXT_PUBLIC_GTM_ID && (
         <>
           {/* Google Tag Manager */}

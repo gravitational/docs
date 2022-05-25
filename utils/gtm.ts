@@ -2,15 +2,6 @@
  * Wrapper around GTM calls to prevent erros then used locally with disabled GTM.
  */
 
-interface Event {
-  [key: string]: unknown;
-  event: string;
-}
-
-declare global {
-  var dataLayer: Event[]; // eslint-disable-line no-var
-}
-
 const isGTMEnabled = () => typeof window !== "undefined" && !!window.dataLayer;
 
 export const GTMEvent = (
