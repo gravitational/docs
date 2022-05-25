@@ -8,8 +8,8 @@ import {
 } from "react";
 import { Dropdown } from "components/Dropdown";
 import { DocsContext, getScopes } from "layouts/DocsPage/context";
-import { TabLabelsList } from "./TabLabel";
-import { TabItemsList } from "./TabItem";
+import { TabLabelList } from "./TabLabel";
+import { TabItemList } from "./TabItem";
 import { DataTab, TabsInDropdowns, TabItemProps, TabsProps } from "./types";
 import styles from "./Tabs.module.css";
 
@@ -171,13 +171,13 @@ export const Tabs = ({
           />
         </div>
       )}
-      <TabLabelsList
+      <TabLabelList
         visibleTabs={visibleTabs}
         tabsMeta={tabsMeta}
         currentTab={currentTab}
         onClick={setCurrentTab}
       />
-      <TabItemsList
+      <TabItemList
         childTabs={childTabs}
         currentTab={currentTab}
         latestDocVers={latest}

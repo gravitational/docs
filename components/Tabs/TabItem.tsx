@@ -6,7 +6,7 @@ export const TabItem = ({ children }: TabItemProps) => {
   return <div className={styles.item}>{children}</div>;
 };
 
-export const TabItemsList = ({
+export const TabItemList = ({
   childTabs,
   currentTab,
   latestDocVers,

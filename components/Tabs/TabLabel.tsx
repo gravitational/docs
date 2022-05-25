@@ -15,7 +15,7 @@ const TabLabel = ({ selected, label, onClick }: TabsLabel) => {
   );
 };
 
-export const TabLabelsList = ({
+export const TabLabelList = ({
   visibleTabs,
   tabsMeta,
   currentTab,
@@ -23,10 +23,9 @@ export const TabLabelsList = ({
 }: TabLabelsListProps) => {
   return (
     <ul
-      className={cn(
-        styles.header,
-        visibleTabs.length ? styles["header-shadow"] : null
-      )}
+      className={cn(styles.header, {
+        [styles["header-shadow"]]: visibleTabs.length,
+      })}
     >
       {tabsMeta.map(({ label }) => (
         <li key={label}>
