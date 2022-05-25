@@ -1,0 +1,15 @@
+.item {
+  overflow-x: auto;
+
+  @media (--sm-scr) {
+    padding: var(--m-1);
+  }
+
+  @media (--md-scr) {
+    padding: var(--m-2);
+  }
+}
+
+.hidden {
+  display: none;
+}
