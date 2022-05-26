@@ -15,7 +15,7 @@ export const getValidAssetPath = (
   if (existsSync(src)) {
     return src;
   } else {
-    throw new Error(`The file not found ${src}`);
+    throw new Error(`File ${src} was not found`);
   }
 };
 
