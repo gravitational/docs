@@ -12,7 +12,11 @@ export const getValidAssetPath = (
 ): string | undefined => {
   const src = resolve(dirname(source), path);
 
-  return existsSync(src) ? src : undefined;
+  if (existsSync(src)) {
+    return src;
+  } else {
+    throw new Error(`The file not found ${src}`);
+  }
 };
 
 /*
