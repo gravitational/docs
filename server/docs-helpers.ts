@@ -9,7 +9,7 @@ import { loadConfig as loadDocsConfig } from "./config-docs";
 import { loadConfig as loadSiteConfig } from "./config-site";
 
 const { branches, versions, latest } = loadSiteConfig();
-const { NEXT_PUBLIC_GITHUB_DOCS } = process.env;
+const NEXT_PUBLIC_GITHUB_DOCS = process.env.NEXT_PUBLIC_GITHUB_DOCS;
 
 export const getVersion = (filepath: string) => {
   const result = /content\/([^/]+)\/docs\//.exec(filepath);

@@ -4,7 +4,7 @@
 
 import got from "got";
 
-const { YOUTUBE_API_KEY } = process.env;
+const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
 
 const REQUEST_PATH = "videos";
 const YOUTUBE_URL = "https://www.youtube.com/watch";
