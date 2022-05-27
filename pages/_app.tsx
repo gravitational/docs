@@ -11,7 +11,7 @@ import "styles/fonts-lato.css";
 import "styles/global.css";
 import "styles/algolia-search.css";
 
-const { NEXT_PUBLIC_GTM_ID } = process.env;
+const NEXT_PUBLIC_GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
 interface dataLayerItem {
   [key: string]: unknown;
@@ -25,7 +25,7 @@ declare global {
 const Analytics = () => {
   return (
     <>
-      <Script id="dataLayer">
+      <Script id="add_dataLayer">
         {`window.dataLayer = window.dataLayer || []`}
       </Script>
       {NEXT_PUBLIC_GTM_ID && (
