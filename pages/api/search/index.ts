@@ -32,7 +32,7 @@ export default async function handler(
     rawResults = hits;
 
     const finishResult = rawResults.map((hit) => {
-      const title = hit.title.includes("|")
+      const title = hit.title?.includes("|")
         ? hit.title.split("|")[0].trim()
         : hit.title;
       return { ...hit, title };
