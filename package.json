@@ -100,7 +100,7 @@
     "remark-mdx-disable-explicit-jsx": "^0.1.0",
     "remark-preset-lint-markdown-style-guide": "^5.1.2",
     "remark-validate-links": "^11.0.2",
-    "sharp": "^0.30.4",
+    "sharp": "^0.30.5",
     "simple-git-hooks": "^2.7.0",
     "stringify-object": "^4.0.1",
     "stylelint": "^14.8.0",
