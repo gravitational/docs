@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { getCurrentPageWithoutVers } from "utils/url";
+import { getPathWithoutVersion } from "utils/url";
 import type {
   LinkWithRedirectList,
   VersionsInfo,
@@ -155,12 +155,12 @@ const findExistingPage = ({
     }
   }
 
-  if (foundElement) {
-    if (foundElement.path.startsWith("/ver/")) {
-      return foundElement.path;
-    }
+  if (foundElement?.path.startsWith("/ver/")) {
+    return foundElement.path;
+  } else if (foundElement) {
     return `/ver/${version}${foundElement.path}`;
   }
+
   return `/ver/${version}/`;
 };
 
@@ -172,7 +172,7 @@ export function useFindDestinationPath(versions: VersionsInfo) {
 
   return useCallback(
     (versDestination) => {
-      const targetPageWithVersion = `/ver/${versDestination}/${getCurrentPageWithoutVers(
+      const targetPageWithVersion = `/ver/${versDestination}/${getPathWithoutVersion(
         router.asPath
       )}`;
       let path = "/";

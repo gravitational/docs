@@ -122,11 +122,11 @@ export const isLocalAssetFile = (
   );
 };
 
-export const getCurrentPageWithoutVers = (route: string) => {
-  const currentPath = splitPath(route).path;
-  return currentPath.startsWith("/ver/")
-    ? currentPath.split("/").slice(3).join("/")
-    : currentPath.slice(1);
+export const getPathWithoutVersion = (route: string) => {
+  const path = splitPath(route).path;
+  return path.startsWith("/ver/")
+    ? path.split("/").slice(3).join("/")
+    : path.slice(1);
 };
 
 export const getAnchor = (route: string): string => {
