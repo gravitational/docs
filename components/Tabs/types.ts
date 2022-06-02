@@ -25,6 +25,7 @@ export interface TabsProps {
   children: React.ReactNode;
   dropdownCaption?: string;
   dropdownSelected?: string;
+  dropdownView?: boolean;
 }
 
 export interface TabItemsListProps {
