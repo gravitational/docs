@@ -122,10 +122,11 @@ export const isLocalAssetFile = (
   );
 };
 
-export const getCurrentPageWithScope = (route: string) => {
-  return route.startsWith("/ver/")
-    ? route.split("/").slice(3).join("/")
-    : route.slice(1);
+export const getPathWithoutVersion = (route: string) => {
+  const path = splitPath(route).path;
+  return path.startsWith("/ver/")
+    ? path.split("/").slice(3).join("/")
+    : path.slice(1);
 };
 
 export const getAnchor = (route: string): string => {
