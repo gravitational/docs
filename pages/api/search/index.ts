@@ -1,11 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import algoliasearch from "algoliasearch";
-import { getSearchQueries } from "server/search-api-helpers";
 
 const APP_ID = process.env.ALGOLIA_APP_ID;
 const API_KEY = process.env.ALGOLIA_API_KEY;
+const DOCS_INDEX = process.env.ALGOLIA_DOCS_INDEX_NAME;
 
 const client = algoliasearch(APP_ID, API_KEY);
+const index = client.initIndex(DOCS_INDEX);
 
 export default async function handler(
   req: NextApiRequest,
@@ -17,23 +18,25 @@ export default async function handler(
     : "current";
 
   try {
-    const { results } = await client.multipleQueries(
-      getSearchQueries(req.query.query as string, docsVer),
-      {
-        strategy: "stopIfEnoughMatches",
-      }
-    );
-    rawResults = results;
+    const { hits } = await index.search(req.query.query as string, {
+      hitsPerPage: 50,
+      filters: `docs_ver:${docsVer}`,
+      restrictHighlightAndSnippetArrays: true,
+      attributesToHighlight: ["content", "headers"],
+      attributesToSnippet: ["content:30", "headers"],
+      snippetEllipsisText: "…",
+      highlightPreTag: "<b class='found-part'>",
+      highlightPostTag: "</b>",
+    });
 
-    const finishResult = rawResults.reduce((total, res) => {
-      total.push(...res.hits);
-      total.map((hit) => {
-        hit.title = hit.title.includes("|")
-          ? hit.title.split("|")[0]
-          : hit.title;
-      });
-      return total;
-    }, []);
+    rawResults = hits;
+
+    const finishResult = rawResults.map((hit) => {
+      const title = hit.title?.includes("|")
+        ? hit.title.split("|")[0].trim()
+        : hit.title;
+      return { ...hit, title };
+    });
     res.status(200).json(finishResult);
   } catch (e) {
     res.status(500).json({ error: e.message });
