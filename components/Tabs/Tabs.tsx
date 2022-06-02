@@ -18,6 +18,9 @@ import styles from "./Tabs.module.css";
  * 
  * - If at least one TabsItem has an inDropdown prop,
  * then TabsItems without an inDropdown prop will be displayed in all Dropdown options.
+ * - You can replace the Tab Labels with a dropdown list. To do this, add the prop 
+ * `dropdownView` to the Tabs component. 
+ * <Tabs dropdownView> ... </Tabs>
  * 
  * <Tabs dropdownCaption="Installing Teleport" dropdownSelected="gatsby">
     <TabItem label="Download" options="gatsby, js">
@@ -77,6 +80,7 @@ export const Tabs = ({
   children,
   dropdownCaption,
   dropdownSelected,
+  dropdownView,
 }: TabsProps) => {
   const {
     scope,
@@ -155,10 +159,32 @@ export const Tabs = ({
   }, [scope, childTabs]);
 
   const visibleTabs = dropdownVarsArr.filter((t) => t !== DEFAULT_DROPDOWN);
+  const dropOptions = tabsMeta.map((item) => item.label);
+
+  const labels = dropdownView ? (
+    <div className={styles["drop-wrapper"]}>
+      <p className={styles["drop-title"]}>
+        {dropdownCaption || "Choose one of the options"}
+      </p>
+      <Dropdown
+        className={styles.dropdown}
+        value={currentTab}
+        options={dropOptions}
+        onChange={setCurrentTab}
+      />
+    </div>
+  ) : (
+    <TabLabelList
+      visibleTabs={visibleTabs}
+      tabsMeta={tabsMeta}
+      currentTab={currentTab}
+      onClick={setCurrentTab}
+    />
+  );
 
   return (
     <div className={styles.wrapper}>
-      {Boolean(visibleTabs.length) && (
+      {Boolean(visibleTabs.length) && !dropdownView && (
         <div className={styles["drop-wrapper"]}>
           <p className={styles["drop-title"]}>
             {dropdownCaption || "Choose one of the options"}
@@ -171,12 +197,8 @@ export const Tabs = ({
           />
         </div>
       )}
-      <TabLabelList
-        visibleTabs={visibleTabs}
-        tabsMeta={tabsMeta}
-        currentTab={currentTab}
-        onClick={setCurrentTab}
-      />
+      {labels}
+
       <TabItemList
         childTabs={childTabs}
         currentTab={currentTab}
