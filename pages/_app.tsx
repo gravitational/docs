@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { DocsContextProvider } from "layouts/DocsPage/context";
-import { GTMPageView } from "utils/gtm";
+// import { GTMPageView } from "utils/gtm";
 
 import "styles/varaibles.css";
 import "styles/fonts-ubuntu.css";
@@ -76,14 +76,14 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
     if (process.env.NODE_ENV !== "production") return;
 
-    const onRouteChangeComplete = (url: string) => GTMPageView(url);
+    // const onRouteChangeComplete = (url: string) => GTMPageView(url);
 
-    router.events.on("routeChangeComplete", onRouteChangeComplete);
+    // router.events.on("routeChangeComplete", onRouteChangeComplete);
 
-    const cleanup = () =>
-      router.events.off("routeChangeComplete", onRouteChangeComplete);
+    // const cleanup = () =>
+    //   router.events.off("routeChangeComplete", onRouteChangeComplete);
 
-    return cleanup;
+    // return cleanup;
   }, [router.events, router.query]);
 
   return (
