@@ -1,9 +1,6 @@
 import Script from "next/script";
-import { useEffect } from "react";
 import type { AppProps } from "next/app";
-import { useRouter } from "next/router";
 import { DocsContextProvider } from "layouts/DocsPage/context";
-import { GTMPageView } from "utils/gtm";
 
 import "styles/varaibles.css";
 import "styles/fonts-ubuntu.css";
@@ -54,21 +51,6 @@ const Analytics = () => {
 };
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  const router = useRouter();
-
-  useEffect(() => {
-    if (process.env.NODE_ENV !== "production") return;
-
-    const onRouteChangeComplete = (url: string) => GTMPageView(url);
-
-    router.events.on("routeChangeComplete", onRouteChangeComplete);
-
-    const cleanup = () =>
-      router.events.off("routeChangeComplete", onRouteChangeComplete);
-
-    return cleanup;
-  }, [router.events, router.query]);
-
   return (
     <>
       <Analytics />
