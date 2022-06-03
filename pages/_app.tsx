@@ -1,8 +1,6 @@
 import Script from "next/script";
-import { useEffect } from "react";
 import type { AppProps } from "next/app";
 import { DocsContextProvider } from "layouts/DocsPage/context";
-import { GTMPageView } from "utils/gtm";
 
 import "styles/varaibles.css";
 import "styles/fonts-ubuntu.css";
