@@ -1,0 +1,34 @@
+.field {
+  position: relative;
+  margin-left: var(--m-1);
+  padding: var(--m-0-5) var(--m-3) var(--m-0-5) var(--m-0-5);
+  font-family: var(--font-monospace);
+  font-size: var(--fs-text-lg);
+  color: var(--color-light-purple);
+  border: 1px solid transparent;
+  cursor: pointer;
+
+  &:focus {
+    border-color: var(--color-light-gray);
+    outline: none;
+  }
+}
+
+.wrapper,
+.label {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 18px;
+  height: 18px;
+  background-image: url("assets/edit.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: translateY(-50%);
+}

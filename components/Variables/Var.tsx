@@ -1,5 +1,6 @@
 import { useCallback, useContext, useEffect } from "react";
 import { VarsContext } from "./context";
+import styles from "./Var.module.css";
 
 interface VarProps {
   name: string;
@@ -19,22 +20,26 @@ export const Var = ({ name, needLabel }: VarProps) => {
   useEffect(() => {}, [fields]);
 
   const input = (
-    <input
-      type="text"
-      name={name}
-      placeholder={name}
-      onChange={onChange}
-      value={fields[name] || ""}
-    />
+    <>
+      <input
+        className={styles.field}
+        type="text"
+        name={name}
+        placeholder={name}
+        onChange={onChange}
+        value={fields[name] || ""}
+      />
+      <span className={styles.icon}></span>
+    </>
   );
 
   if (needLabel) {
     return (
-      <label>
+      <label className={styles.label}>
         {name}:{input}
       </label>
     );
   }
 
-  return <>{input}</>;
+  return <div className={styles.wrapper}>{input}</div>;
 };
