@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Var } from "./Var";
 import { VarsContext } from "./context";
 
@@ -10,20 +10,34 @@ interface VarsProps {
 export const Vars = ({ globalVars, pageVars }: VarsProps) => {
   const { addField } = useContext(VarsContext);
 
+  useEffect(() => {
+    if (Boolean(globalVars)) {
+      for (const globalVar of globalVars) {
+        addField(globalVar);
+      }
+    }
+  }, [addField, globalVars]);
+
+  useEffect(() => {
+    if (Boolean(pageVars)) {
+      for (const pageVar of pageVars) {
+        addField(pageVar);
+      }
+    }
+  }, [addField, pageVars]);
+
   const globalFields = globalVars?.map((item, iter) => {
-    addField(item);
     return (
       <li key={iter}>
-        <Var name={item} />
+        <Var name={item} needLabel />
       </li>
     );
   });
 
   const pageFields = pageVars?.map((item, iter) => {
-    addField(item);
     return (
       <li key={iter}>
-        <Var name={item} />
+        <Var name={item} needLabel />
       </li>
     );
   });

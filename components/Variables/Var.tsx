@@ -1,20 +1,40 @@
-import { useState, useCallback } from "react";
+import { useCallback, useContext, useEffect } from "react";
+import { VarsContext } from "./context";
 
 interface VarProps {
   name: string;
+  needLabel?: boolean;
 }
 
-export const Var = ({ name }: VarProps) => {
-  const [value, setValue] = useState<string>(name);
+export const Var = ({ name, needLabel }: VarProps) => {
+  const { fields, setField } = useContext(VarsContext);
 
-  const onChange = useCallback((event) => {
-    setValue(event.target.value);
-  }, []);
-
-  return (
-    <label>
-      {name}:
-      <input type="text" name={name} placeholder={name} onChange={onChange} />
-    </label>
+  const onChange = useCallback(
+    (event) => {
+      setField(name, event.target.value);
+    },
+    [name, setField]
   );
+
+  useEffect(() => {}, [fields]);
+
+  const input = (
+    <input
+      type="text"
+      name={name}
+      placeholder={name}
+      onChange={onChange}
+      value={fields[name] || ""}
+    />
+  );
+
+  if (needLabel) {
+    return (
+      <label>
+        {name}:{input}
+      </label>
+    );
+  }
+
+  return <>{input}</>;
 };
