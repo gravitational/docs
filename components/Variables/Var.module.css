@@ -1,11 +1,18 @@
-.field {
-  position: relative;
+.field,
+.fake-field {
+  box-sizing: border-box;
+  width: 100%;
   margin-left: var(--m-1);
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+.field {
   padding: var(--m-0-5) var(--m-3) var(--m-0-5) var(--m-0-5);
   font-family: var(--font-monospace);
   font-size: var(--fs-text-lg);
   color: var(--color-light-purple);
   border: 1px solid transparent;
+  border-radius: var(--r-default);
   cursor: pointer;
 
   &:focus {
@@ -14,19 +21,32 @@
   }
 }
 
+.fake-field {
+  padding-right: var(--m-3);
+  padding-left: var(--m-0-5);
+  border-right: 1px solid transparent;
+  border-left: 1px solid transparent;
+  visibility: hidden;
+}
+
 .wrapper,
 .label {
   position: relative;
-  display: inline-flex;
+  display: inline-grid;
   align-items: baseline;
+}
+
+.label .field,
+.label .fake-field {
+  grid-area: 1 / 2 / 1 / 3;
 }
 
 .icon {
   position: absolute;
   top: 50%;
-  right: 0;
-  width: 18px;
-  height: 18px;
+  right: -3px;
+  width: 16px;
+  height: 16px;
   background-image: url("assets/edit.svg");
   background-repeat: no-repeat;
   background-size: cover;

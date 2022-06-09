@@ -24,11 +24,13 @@ export const Var = ({ name, needLabel }: VarProps) => {
       <input
         className={styles.field}
         type="text"
+        size={name.length}
         name={name}
         placeholder={name}
         onChange={onChange}
         value={fields[name] || ""}
       />
+      <span className={styles["fake-field"]}>{fields[name] || ""}</span>
       <span className={styles.icon}></span>
     </>
   );
