@@ -33,7 +33,6 @@ import type {
 } from "./types-unist";
 
 import { visit } from "unist-util-visit";
-import { Parent } from "hast";
 
 const RULE_ID = "code-snippet";
 
@@ -42,42 +41,79 @@ const isCode =
   (node: MdxastNode): node is MdastCode =>
     node.type === "code" && langs.includes(node.lang);
 
-const getCommandNode = (content: string, prefix = "$"): MdxJsxFlowElement => ({
-  type: "mdxJsxFlowElement",
-  name: "Command",
-  attributes: [],
-  children: [
-    {
-      type: "mdxJsxFlowElement",
-      name: "CommandLine",
-      attributes: [
-        {
-          type: "mdxJsxAttribute",
-          name: "data-content",
-          value: `${prefix} `,
-        },
-      ],
-      children: [
-        {
-          type: "text",
-          value: content,
-        },
-      ],
-    },
-  ],
+const getTextChildren = (contentValue: string) => ({
+  type: "text",
+  value: contentValue,
 });
 
-const getLineNode = (content: string, attributes = []): MdxJsxFlowElement => ({
+const getVariableNode = (valueName: string): MdxJsxFlowElement => ({
   type: "mdxJsxFlowElement",
-  name: "CommandLine",
-  attributes,
-  children: [
-    {
-      type: "text",
-      value: content,
-    },
-  ],
+  name: "Var",
+  attributes: [{ type: "mdxJsxAttribute", name: "name", value: valueName }],
+  children: [],
 });
+
+const getCommandNode = (content: string, prefix = "$"): MdxJsxFlowElement => {
+  console.log("content", content);
+  const firstPartLine = content.split("<Var")[0];
+  const nextPartLine = content.split('" />')[1];
+  const hasVariable = content.includes("<Var");
+
+  const nodeChildren = [];
+
+  if (firstPartLine) {
+    nodeChildren.push(getTextChildren(firstPartLine));
+  }
+
+  if (hasVariable) {
+    const varName = content.split("name=")[1].split('"')[1].trim();
+    nodeChildren.push(getVariableNode(varName));
+  }
+
+  if (nextPartLine) {
+    nodeChildren.push(getTextChildren(nextPartLine));
+  }
+
+  if (!hasVariable) {
+    nodeChildren.push(getTextChildren(content));
+  }
+
+  return {
+    type: "mdxJsxFlowElement",
+    name: "Command",
+    attributes: [],
+    children: [
+      {
+        type: "mdxJsxFlowElement",
+        name: "CommandLine",
+        attributes: [
+          {
+            type: "mdxJsxAttribute",
+            name: "data-content",
+            value: `${prefix} `,
+          },
+        ],
+        children: nodeChildren,
+      },
+    ],
+  };
+};
+
+const getLineNode = (content: string, attributes = []): MdxJsxFlowElement => {
+  console.log("content line node", content);
+
+  return {
+    type: "mdxJsxFlowElement",
+    name: "CommandLine",
+    attributes,
+    children: [
+      {
+        type: "text",
+        value: content,
+      },
+    ],
+  };
+};
 
 const getCommentNode = (
   content: string,
