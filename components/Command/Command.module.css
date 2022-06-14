@@ -11,23 +11,23 @@
 }
 
 .button {
-  display: none;
-  align-items: center;
   position: absolute;
   top: 0;
   left: 0;
+  display: none;
+  align-items: center;
   margin: 0;
   padding: var(--m-0-5) 6px;
   color: var(--color-light-gray);
   background-color: var(--color-darkest);
-  cursor: pointer;
   opacity: 0;
+  transform: translateX(3px);
+  transition: color var(--t-interaction);
+  animation-name: shift-button;
   animation-duration: 0.3s;
   animation-fill-mode: forwards;
-  transition: color var(--t-interaction);
-  transform: translateX(3px);
+  cursor: pointer;
   appearance: none;
-  animation-name: shift-button;
 
   &:hover,
   &:focus,
@@ -42,14 +42,14 @@
 }
 
 .command {
-  box-sizing: border-box;
-  flex-direction: column;
   position: relative;
+  flex-direction: column;
+  box-sizing: border-box;
   margin: 0 calc(0px - var(--m-2));
   padding: 0 var(--m-2);
+  line-height: var(--lh-md);
   color: var(--color-white);
   background-color: var(--color-code);
-  line-height: var(--lh-md);
   transition: background-color var(--t-interaction);
 
   @media (--sm-scr) {
@@ -73,6 +73,10 @@
   &:focus .button {
     display: flex;
   }
+}
+
+.command .line div {
+  margin-right: var(--m-1-5);
 }
 
 .comment {

@@ -22,11 +22,13 @@
 }
 
 .fake-field {
+  overflow: hidden;
   padding-right: var(--m-3);
   padding-left: var(--m-0-5);
   border-right: 1px solid transparent;
   border-left: 1px solid transparent;
   visibility: hidden;
+  white-space: nowrap;
 }
 
 .wrapper,
