@@ -41,7 +41,7 @@ const isCode =
   (node: MdxastNode): node is MdastCode =>
     node.type === "code" && langs.includes(node.lang);
 
-const getTextChildren = (contentValue: string) => ({
+const getTextChildren = (contentValue: string): MdxastNode => ({
   type: "text",
   value: contentValue,
 });
@@ -53,9 +53,9 @@ const getVariableNode = (valueName: string): MdxJsxFlowElement => ({
   children: [],
 });
 
-const getCommandNode = (content: string, prefix = "$"): MdxJsxFlowElement => {
+const getChildrenNode = (content: string): MdxastNode[] => {
   const hasVariable = content.includes("<Var");
-  const nodeChildren = [];
+  const nodeChildren: MdxastNode[] = [];
 
   if (hasVariable) {
     const firstPartLine = content.split("<Var")[0];
@@ -68,6 +68,12 @@ const getCommandNode = (content: string, prefix = "$"): MdxJsxFlowElement => {
   } else {
     nodeChildren.push(getTextChildren(content));
   }
+
+  return nodeChildren;
+};
+
+const getCommandNode = (content: string, prefix = "$"): MdxJsxFlowElement => {
+  const children = getChildrenNode(content);
 
   return {
     type: "mdxJsxFlowElement",
@@ -84,7 +90,7 @@ const getCommandNode = (content: string, prefix = "$"): MdxJsxFlowElement => {
             value: `${prefix} `,
           },
         ],
-        children: nodeChildren,
+        children: children,
       },
     ],
   };
@@ -92,17 +98,13 @@ const getCommandNode = (content: string, prefix = "$"): MdxJsxFlowElement => {
 
 const getLineNode = (content: string, attributes = []): MdxJsxFlowElement => {
   console.log("content line node", content);
+  const children = getChildrenNode(content);
 
   return {
     type: "mdxJsxFlowElement",
     name: "CommandLine",
     attributes,
-    children: [
-      {
-        type: "text",
-        value: content,
-      },
-    ],
+    children: children,
   };
 };
 
