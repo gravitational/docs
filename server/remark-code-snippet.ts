@@ -54,7 +54,7 @@ const getVariableNode = (valueName: string): MdxJsxFlowElement => ({
 });
 
 const getChildrenNode = (content: string): MdxastNode[] => {
-  const hasVariable = content.includes("<Var");
+  const hasVariable = content?.includes("<Var");
   const nodeChildren: MdxastNode[] = [];
 
   if (hasVariable) {
@@ -97,7 +97,6 @@ const getCommandNode = (content: string, prefix = "$"): MdxJsxFlowElement => {
 };
 
 const getLineNode = (content: string, attributes = []): MdxJsxFlowElement => {
-  console.log("content line node", content);
   const children = getChildrenNode(content);
 
   return {
