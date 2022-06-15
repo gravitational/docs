@@ -54,27 +54,18 @@ const getVariableNode = (valueName: string): MdxJsxFlowElement => ({
 });
 
 const getCommandNode = (content: string, prefix = "$"): MdxJsxFlowElement => {
-  console.log("content", content);
-  const firstPartLine = content.split("<Var")[0];
-  const nextPartLine = content.split('" />')[1];
   const hasVariable = content.includes("<Var");
-
   const nodeChildren = [];
 
-  if (firstPartLine) {
-    nodeChildren.push(getTextChildren(firstPartLine));
-  }
-
   if (hasVariable) {
+    const firstPartLine = content.split("<Var")[0];
+    const nextPartLine = content.split('" />')[1];
     const varName = content.split("name=")[1].split('"')[1].trim();
+
+    nodeChildren.push(getTextChildren(firstPartLine));
     nodeChildren.push(getVariableNode(varName));
-  }
-
-  if (nextPartLine) {
     nodeChildren.push(getTextChildren(nextPartLine));
-  }
-
-  if (!hasVariable) {
+  } else {
     nodeChildren.push(getTextChildren(content));
   }
 
