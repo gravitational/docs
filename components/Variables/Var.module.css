@@ -27,7 +27,7 @@
   padding-left: var(--m-0-5);
   border-right: 1px solid transparent;
   border-left: 1px solid transparent;
-  visibility: hidden;
+  opacity: 0;
   white-space: nowrap;
 }
 

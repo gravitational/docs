@@ -35,7 +35,23 @@ export default function Command({ children, ...props }: CommandProps) {
     }
 
     if (codeRef.current) {
-      navigator.clipboard.writeText(codeRef.current.innerText);
+      const rowTexts: string[] = [];
+      for (const codeLine of Array.from(codeRef.current.children)) {
+        for (const child of Array.from(codeLine.children)) {
+          if (Array.from(child.classList)?.includes("wrapper-input")) {
+            rowTexts.push(codeLine.innerText);
+          }
+        }
+      }
+
+      let procesedInnerText = codeRef.current.innerText;
+
+      for (const initialText of rowTexts) {
+        const newText = initialText.split("\n").join("");
+        procesedInnerText = procesedInnerText.replace(initialText, newText);
+      }
+
+      navigator.clipboard.writeText(procesedInnerText);
       setIsCopied(true);
 
       setTimeout(() => {

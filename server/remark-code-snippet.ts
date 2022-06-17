@@ -58,13 +58,20 @@ const getChildrenNode = (content: string): MdxastNode[] => {
   const nodeChildren: MdxastNode[] = [];
 
   if (hasVariable) {
+    const countVar = content.match(/(?:\<Var)/g);
     const firstPartLine = content.split("<Var")[0];
-    const nextPartLine = content.split('" />')[1];
-    const varName = content.split("name=")[1].split('"')[1].trim();
-
     nodeChildren.push(getTextChildren(firstPartLine));
-    nodeChildren.push(getVariableNode(varName));
-    nodeChildren.push(getTextChildren(nextPartLine));
+
+    for (let i = 0; i < countVar.length; i++) {
+      let nextPartLine = content.split('" />')[i + 1];
+      if (nextPartLine?.includes("<Var")) {
+        nextPartLine = nextPartLine.split("<Var")[0];
+      }
+      const varName = content.split("name=")[i + 1].split('"')[1].trim();
+
+      nodeChildren.push(getVariableNode(varName));
+      nodeChildren.push(getTextChildren(nextPartLine));
+    }
   } else {
     nodeChildren.push(getTextChildren(content));
   }

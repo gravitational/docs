@@ -1,3 +1,4 @@
+import cn from "classnames";
 import { useCallback, useContext, useEffect } from "react";
 import { VarsContext } from "./context";
 import styles from "./Var.module.css";
@@ -43,5 +44,5 @@ export const Var = ({ name, needLabel }: VarProps) => {
     );
   }
 
-  return <div className={styles.wrapper}>{input}</div>;
+  return <div className={cn("wrapper-input", styles.wrapper)}>{input}</div>;
 };
