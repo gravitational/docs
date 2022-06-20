@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback, ReactNode } from "react";
+import { useRef, useState, useCallback, ReactNode, DOMElement } from "react";
 import Icon from "components/Icon";
 import HeadlessButton from "components/HeadlessButton";
 import styles from "./Command.module.css";
@@ -36,9 +36,10 @@ export default function Command({ children, ...props }: CommandProps) {
 
     if (codeRef.current) {
       const rowTexts: string[] = [];
-      for (const codeLine of Array.from(codeRef.current.children)) {
+      const children = Array.from(codeRef.current.children) as HTMLElement[];
+      for (const codeLine of children) {
         for (const child of Array.from(codeLine.children)) {
-          if (Array.from(child.classList)?.includes("wrapper-input")) {
+          if (child.classList.contains("wrapper-input")) {
             rowTexts.push(codeLine.innerText);
           }
         }
