@@ -44,7 +44,6 @@ const configLint = {
     "lint-ordered-list-marker-value",
     ["lint-maximum-heading-length", false],
     ["lint-no-shortcut-reference-link", false],
-    ["validate-links", { repository: false }],
     [
       remarkIncludes, // Lints (!include.ext!) syntax
       {
@@ -61,6 +60,10 @@ const configLint = {
         },
       },
     ],
+    // validate-links must be run after remarkVariables since some links
+    // include variables in their references, e.g., 
+    // [CM-08 Information System Component Inventory]((=fedramp.control_url=)CM-8)
+    ["validate-links", { repository: false }],
     [remarkCodeSnippet, { lint: true, langs: ["code", "bash"] }],
     [remarkLintDetails, ["error"]],
     [remarkLintFrontmatter, ["error"]],
