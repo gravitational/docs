@@ -46,10 +46,16 @@ const getTextChildren = (contentValue: string): MdxastNode => ({
   value: contentValue,
 });
 
-const getVariableNode = (valueName: string): MdxJsxFlowElement => ({
+const getVariableNode = (
+  valueName: string,
+  isGlobal: boolean
+): MdxJsxFlowElement => ({
   type: "mdxJsxFlowElement",
   name: "Var",
-  attributes: [{ type: "mdxJsxAttribute", name: "name", value: valueName }],
+  attributes: [
+    { type: "mdxJsxAttribute", name: "name", value: valueName },
+    { type: "mdxJsxAttribute", name: "isGlobal", value: isGlobal },
+  ],
   children: [],
 });
 
@@ -58,18 +64,21 @@ const getChildrenNode = (content: string): MdxastNode[] => {
   const nodeChildren: MdxastNode[] = [];
 
   if (hasVariable) {
-    const countVar = content.match(/(?:\<Var)/g);
+    const contentVars = content.match(/(?:\<Var .+?\/\>)/gm);
     const firstPartLine = content.split("<Var")[0];
     nodeChildren.push(getTextChildren(firstPartLine));
+    const newContent = content.replace("isGlobal", "");
 
-    for (let i = 0; i < countVar.length; i++) {
-      let nextPartLine = content.split('" />')[i + 1];
+    for (let i = 0; i < contentVars.length; i++) {
+      let nextPartLine = newContent.split("/>")[i + 1];
       if (nextPartLine?.includes("<Var")) {
         nextPartLine = nextPartLine.split("<Var")[0];
       }
-      const varName = content.split("name=")[i + 1].split('"')[1].trim();
 
-      nodeChildren.push(getVariableNode(varName));
+      const varName = contentVars[i].match(/name="(.*?)"/)[1];
+      const isGlobal = contentVars[i].includes("isGlobal");
+
+      nodeChildren.push(getVariableNode(varName, isGlobal));
       nodeChildren.push(getTextChildren(nextPartLine));
     }
   } else {

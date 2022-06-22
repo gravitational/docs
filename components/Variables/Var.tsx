@@ -6,19 +6,31 @@ import styles from "./Var.module.css";
 interface VarProps {
   name: string;
   needLabel?: boolean;
+  isGlobal?: boolean;
 }
 
-export const Var = ({ name, needLabel }: VarProps) => {
+export const Var = ({ name, needLabel, isGlobal }: VarProps) => {
   const { fields, setField } = useContext(VarsContext);
+
+  useEffect(() => {
+    if (isGlobal) {
+      const fieldValue = sessionStorage.getItem(`global_var_${name}`);
+      if (fieldValue) {
+        setField(name, fieldValue);
+      }
+    }
+  }, [name, setField, isGlobal]);
 
   const onChange = useCallback(
     (event) => {
       setField(name, event.target.value);
-    },
-    [name, setField]
-  );
 
-  useEffect(() => {}, [fields]);
+      if (isGlobal) {
+        sessionStorage.setItem(`global_var_${name}`, event.target.value);
+      }
+    },
+    [name, setField, isGlobal]
+  );
 
   const input = (
     <>
