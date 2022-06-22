@@ -3,6 +3,7 @@ import { useRef, useState, useCallback, ReactNode } from "react";
 import Code from "components/Code";
 import Icon from "components/Icon";
 import HeadlessButton from "components/HeadlessButton";
+import { returnCopiedCommand } from "utils/general";
 import styles from "./Pre.module.css";
 
 const TIMEOUT = 1000;
@@ -34,29 +35,8 @@ const Pre = ({ children, className }: CodeProps) => {
 
       document.body.appendChild(copyText);
 
-      const rowTexts: string[] = [];
-      const code = Array.from(copyText.children)[0];
-      const snippet = Array.from(code.children)[0];
+      const procesedInnerText = returnCopiedCommand(copyText, true);
 
-      for (const command of Array.from(snippet.children)) {
-        for (const commandLine of Array.from(command.children)) {
-          for (const child of Array.from(commandLine.children)) {
-            if (child.classList.contains("wrapper-input")) {
-              rowTexts.push(commandLine.innerText);
-            }
-          }
-        }
-      }
-
-      let procesedInnerText = copyText.innerText;
-
-      for (const initialText of rowTexts) {
-        console.log("замена");
-        const newText = initialText.split("\n").join("");
-        procesedInnerText = procesedInnerText.replace(initialText, newText);
-      }
-
-      // navigator.clipboard.writeText(copyText.innerText);
       navigator.clipboard.writeText(procesedInnerText);
       document.body.removeChild(copyText);
       setIsCopied(true);

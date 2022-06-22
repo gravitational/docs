@@ -1,6 +1,7 @@
 import { useRef, useState, useCallback, ReactNode, DOMElement } from "react";
 import Icon from "components/Icon";
 import HeadlessButton from "components/HeadlessButton";
+import { returnCopiedCommand } from "utils/general";
 import styles from "./Command.module.css";
 
 const TIMEOUT = 1000;
@@ -35,22 +36,7 @@ export default function Command({ children, ...props }: CommandProps) {
     }
 
     if (codeRef.current) {
-      const rowTexts: string[] = [];
-      const children = Array.from(codeRef.current.children) as HTMLElement[];
-      for (const codeLine of children) {
-        for (const child of Array.from(codeLine.children)) {
-          if (child.classList.contains("wrapper-input")) {
-            rowTexts.push(codeLine.innerText);
-          }
-        }
-      }
-
-      let procesedInnerText = codeRef.current.innerText;
-
-      for (const initialText of rowTexts) {
-        const newText = initialText.split("\n").join("");
-        procesedInnerText = procesedInnerText.replace(initialText, newText);
-      }
+      const procesedInnerText = returnCopiedCommand(codeRef.current);
 
       navigator.clipboard.writeText(procesedInnerText);
       setIsCopied(true);
