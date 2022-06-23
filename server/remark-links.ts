@@ -35,7 +35,7 @@ const updateHref = (basename: string, href: Href) => {
   }
   const isIndex = basename.match(/^index.mdx?$/);
   const prefix = isIndex ? "./" : "../";
-  const newHref = href.replace(/(\/)?(index)?\.mdx\/?/, "/");
+  const newHref = href.replace(/(\/)?(index)?\.mdx?\/?/, "/");
   const startsWithDot = /^\./.test(newHref);
   const startsWithSlash = /^\//.test(newHref);
 
