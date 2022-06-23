@@ -31,7 +31,7 @@ import type {
   MdxJsxFlowElement,
   MdxAnyElement,
 } from "./types-unist";
-
+import { createMdxJsxAttributeValueExpression } from "./mdx-helpers";
 import { visit } from "unist-util-visit";
 
 const RULE_ID = "code-snippet";
@@ -54,7 +54,11 @@ const getVariableNode = (
   name: "Var",
   attributes: [
     { type: "mdxJsxAttribute", name: "name", value: valueName },
-    { type: "mdxJsxAttribute", name: "isGlobal", value: isGlobal },
+    {
+      type: "mdxJsxAttribute",
+      name: "isGlobal",
+      value: createMdxJsxAttributeValueExpression(`${isGlobal}`),
+    },
   ],
   children: [],
 });
@@ -77,7 +81,6 @@ const getChildrenNode = (content: string): MdxastNode[] => {
 
       const varName = contentVars[i].match(/name="(.*?)"/)[1];
       const isGlobal = contentVars[i].includes("isGlobal");
-
       nodeChildren.push(getVariableNode(varName, isGlobal));
       nodeChildren.push(getTextChildren(nextPartLine));
     }

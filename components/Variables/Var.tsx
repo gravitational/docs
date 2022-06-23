@@ -10,26 +10,21 @@ interface VarProps {
 }
 
 export const Var = ({ name, needLabel, isGlobal }: VarProps) => {
-  const { fields, setField } = useContext(VarsContext);
+  const { fields, setField, markGlobalField } = useContext(VarsContext);
+  // console.log("name", name);
+  // console.log(isGlobal);
 
   useEffect(() => {
     if (isGlobal) {
-      const fieldValue = sessionStorage.getItem(`global_var_${name}`);
-      if (fieldValue) {
-        setField(name, fieldValue);
-      }
+      markGlobalField(name);
     }
-  }, [name, setField, isGlobal]);
+  }, [isGlobal, name]);
 
   const onChange = useCallback(
     (event) => {
       setField(name, event.target.value);
-
-      if (isGlobal) {
-        sessionStorage.setItem(`global_var_${name}`, event.target.value);
-      }
     },
-    [name, setField, isGlobal]
+    [name, setField]
   );
 
   const input = (
