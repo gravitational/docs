@@ -9,7 +9,7 @@ import SiteHeader from "components/Header";
 import Link, { useCurrentHref } from "components/Link";
 import Notice from "components/Notice";
 import VideoBar from "components/VideoBar";
-import { Vars } from "components/Variables";
+import { VarList } from "components/Variables";
 import { components } from "./components";
 import { DocsContext } from "./context";
 import Header from "./Header";
@@ -36,8 +36,6 @@ const DocsPage = ({
     navigation,
     versions,
     githubUrl,
-    globalVars,
-    pageVars,
   },
   tableOfConents,
   children,
@@ -112,9 +110,7 @@ const DocsPage = ({
                 </Notice>
               )}
               <VarsContextProvider>
-                {(globalVars || pageVars) && (
-                  <Vars globalVars={globalVars} pageVars={pageVars} />
-                )}
+                <VarList />
                 <div className={cn(styles.text, styles[layout])}>
                   <MDXProvider components={components}>{children}</MDXProvider>
                 </div>

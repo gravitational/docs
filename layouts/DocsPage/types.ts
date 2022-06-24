@@ -55,6 +55,4 @@ export interface PageMeta {
   videoBanner?: VideoBarProps;
   navigation: NavigationCategory[];
   versions: VersionsInfo;
-  globalVars?: string[];
-  pageVars?: string[];
 }

@@ -10,13 +10,14 @@ interface VarProps {
 }
 
 export const Var = ({ name, needLabel, isGlobal }: VarProps) => {
-  const { fields, setField, markGlobalField } = useContext(VarsContext);
-  // console.log("name", name);
-  // console.log(isGlobal);
+  const { fields, setField, markGlobalField, addField } =
+    useContext(VarsContext);
 
   useEffect(() => {
     if (isGlobal) {
       markGlobalField(name);
+    } else {
+      addField(name);
     }
   }, [isGlobal, name]);
 

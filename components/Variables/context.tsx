@@ -4,6 +4,9 @@ export interface VarsContextProps {
   fields: {
     [name: string]: string;
   };
+  globalFields: {
+    [name: string]: boolean;
+  };
   setField: (name: string, value: string) => void;
   addField: (name: string) => void;
   markGlobalField: (name: string) => void;
@@ -11,6 +14,7 @@ export interface VarsContextProps {
 
 export const VarsContext = createContext<VarsContextProps>({
   fields: {},
+  globalFields: {},
   setField: () => undefined,
   addField: () => undefined,
   markGlobalField: () => undefined,
@@ -50,11 +54,12 @@ export const VarsContextProvider = ({ children }: VarsContextProviderProps) => {
   const value = useMemo(
     () => ({
       fields,
+      globalFields,
       setField,
       addField: setField,
       markGlobalField,
     }),
-    [fields, setField, markGlobalField]
+    [fields, globalFields, setField, markGlobalField]
   );
 
   return <VarsContext.Provider value={value}>{children}</VarsContext.Provider>;
