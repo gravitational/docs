@@ -42,13 +42,17 @@ export const VarList = () => {
           You can fill in the variables for more comfortable use of the
           documentation
         </p>
-        <h2 className={styles.title}>Documentation wide variables</h2>
         {Object.keys(globalFields).length > 0 && (
-          <ul className={styles.list}>{globalFieldsList}</ul>
+          <>
+            <h2 className={styles.title}>Documentation wide variables</h2>
+            <ul className={styles.list}>{globalFieldsList}</ul>
+          </>
         )}
-        <h2 className={styles.title}>Page wide variables</h2>
         {pageFields.length > 0 && (
-          <ul className={styles.list}>{pageFieldsList}</ul>
+          <>
+            <h2 className={styles.title}>Page wide variables</h2>
+            <ul className={styles.list}>{pageFieldsList}</ul>
+          </>
         )}
       </section>
     ) : (

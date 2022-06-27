@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback, ReactNode, DOMElement } from "react";
+import { useRef, useState, useCallback, ReactNode } from "react";
 import Icon from "components/Icon";
 import HeadlessButton from "components/HeadlessButton";
 import { returnCopiedCommand } from "utils/general";
