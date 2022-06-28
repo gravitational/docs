@@ -7,24 +7,43 @@ export interface VarsContextProps {
   globalFields: {
     [name: string]: boolean;
   };
-  setField: (name: string, value: string) => void;
-  addField: (name: string) => void;
-  markGlobalField: (name: string) => void;
+  setField(name: string, value: string): void;
+  addField(name: string, isGlobal?: boolean): void;
 }
 
 export const VarsContext = createContext<VarsContextProps>({
   fields: {},
   globalFields: {},
-  setField: () => undefined,
-  addField: () => undefined,
-  markGlobalField: () => undefined,
+  setField: () => {},
+  addField: () => {},
 });
 
-interface VarsContextProviderProps {
+interface VarsProviderProps {
   children: React.ReactNode;
 }
 
-export const VarsContextProvider = ({ children }: VarsContextProviderProps) => {
+const getName = (rawName) => `global_var_${rawName}`;
+
+const saveValue = (raw_name, value): boolean => {
+  const name = getName(raw_name);
+  try {
+    sessionStorage.setItem(name, value);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
+const getValue = (raw_name): string | void => {
+  const name = getName(raw_name);
+  try {
+    return sessionStorage.getItem(name) || "";
+  } catch (e) {
+    return undefined;
+  }
+};
+
+export const VarsProvider = ({ children }: VarsProviderProps) => {
   const [fields, setFields] = useState({});
   const [globalFields, setGlobalFields] = useState({});
 
@@ -33,20 +52,19 @@ export const VarsContextProvider = ({ children }: VarsContextProviderProps) => {
       setFields((f) => ({ ...f, [name]: value }));
 
       if (globalFields[name]) {
-        sessionStorage.setItem(`global_var_${name}`, value);
+        saveValue(name, value);
       }
     },
     [globalFields]
   );
 
-  const markGlobalField = useCallback(
-    (name) => {
-      setGlobalFields((f) => ({ ...f, [name]: true }));
-
-      const fieldValue = sessionStorage.getItem(`global_var_${name}`);
-      if (fieldValue) {
-        setField(name, fieldValue);
+  const addField = useCallback(
+    (name, isGlobal) => {
+      if (isGlobal) {
+        setGlobalFields((f) => ({ ...f, [name]: true }));
       }
+
+      setField(name, isGlobal ? getValue(name) : "");
     },
     [setField]
   );
@@ -56,10 +74,9 @@ export const VarsContextProvider = ({ children }: VarsContextProviderProps) => {
       fields,
       globalFields,
       setField,
-      addField: setField,
-      markGlobalField,
+      addField,
     }),
-    [fields, globalFields, setField, markGlobalField]
+    [fields, globalFields, addField, setField]
   );
 
   return <VarsContext.Provider value={value}>{children}</VarsContext.Provider>;

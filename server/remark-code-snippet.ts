@@ -47,13 +47,13 @@ const getTextChildren = (contentValue: string): MdxastNode => ({
 });
 
 const getVariableNode = (
-  valueName: string,
+  value: string,
   isGlobal: boolean
 ): MdxJsxFlowElement => ({
   type: "mdxJsxFlowElement",
   name: "Var",
   attributes: [
-    { type: "mdxJsxAttribute", name: "name", value: valueName },
+    { type: "mdxJsxAttribute", name: "name", value },
     {
       type: "mdxJsxAttribute",
       name: "isGlobal",

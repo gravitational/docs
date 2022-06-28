@@ -10,15 +10,15 @@ interface VarProps {
 }
 
 export const Var = ({ name, needLabel, isGlobal }: VarProps) => {
-  const { fields, setField, markGlobalField, addField } =
-    useContext(VarsContext);
+  const { fields, setField, addField } = useContext(VarsContext);
+  const val = fields[name] || "";
 
+  /*
+   * we do not add `addField` function
+   * to the dependency array, since it do not change (constant useCallback)
+   */
   useEffect(() => {
-    if (isGlobal) {
-      markGlobalField(name);
-    } else {
-      addField(name);
-    }
+    addField(name, isGlobal);
   }, [isGlobal, name]);
 
   const onChange = useCallback(
@@ -37,9 +37,9 @@ export const Var = ({ name, needLabel, isGlobal }: VarProps) => {
         name={name}
         placeholder={name}
         onChange={onChange}
-        value={fields[name] || ""}
+        value={val}
       />
-      <span className={styles["fake-field"]}>{fields[name] || ""}</span>
+      <span className={styles["fake-field"]}>{val}</span>
       <span className={styles.icon}></span>
     </>
   );

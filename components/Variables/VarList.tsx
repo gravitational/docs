@@ -6,58 +6,44 @@ import styles from "./VarList.module.css";
 export const VarList = () => {
   const { fields, globalFields } = useContext(VarsContext);
 
-  const globalFieldsList = Object.keys(globalFields)?.map((item, iter) => {
-    return (
-      <li className={styles.item} key={iter}>
-        <Var name={item} needLabel isGlobal />
-      </li>
-    );
-  });
+  const globalFieldsList = Object.keys(globalFields).map((item) => (
+    <li className={styles.item} key={item}>
+      <Var name={item} needLabel isGlobal />
+    </li>
+  ));
 
   const pageFields = Object.keys(fields)
-    .map((field) => {
-      if (
-        Object.keys(globalFields).length === 0 ||
-        !Object.keys(globalFields)?.includes(field)
-      ) {
-        return field;
-      }
-
-      return;
-    })
+    .map((field) => (field in globalFields ? undefined : field))
     .filter(Boolean);
 
-  const pageFieldsList = pageFields?.map((item, iter) => {
-    return (
-      <li className={styles.item} key={iter}>
-        <Var name={item} needLabel />
-      </li>
-    );
-  });
+  const pageFieldList = pageFields.map((item) => (
+    <li className={styles.item} key={item}>
+      <Var name={item} needLabel />
+    </li>
+  ));
 
-  const html =
-    Object.keys(fields).length > 0 ? (
-      <section>
-        <p className={styles.text}>
-          You can fill in the variables for more comfortable use of the
-          documentation
-        </p>
-        {Object.keys(globalFields).length > 0 && (
-          <>
-            <h2 className={styles.title}>Documentation wide variables</h2>
-            <ul className={styles.list}>{globalFieldsList}</ul>
-          </>
-        )}
-        {pageFields.length > 0 && (
-          <>
-            <h2 className={styles.title}>Page wide variables</h2>
-            <ul className={styles.list}>{pageFieldsList}</ul>
-          </>
-        )}
-      </section>
-    ) : (
-      <></>
-    );
+  if (!globalFieldsList.length && !pageFieldList.length) {
+    return <></>;
+  }
 
-  return html;
+  return (
+    <section>
+      <p className={styles.text}>
+        You can fill in the variables for more comfortable use of the
+        documentation
+      </p>
+      {globalFieldsList.length && (
+        <>
+          <h2 className={styles.title}>Documentation-wide variables</h2>
+          <ul className={styles.list}>{globalFieldsList}</ul>
+        </>
+      )}
+      {pageFieldList.length && (
+        <>
+          <h2 className={styles.title}>Page-wide variables</h2>
+          <ul className={styles.list}>{pageFieldList}</ul>
+        </>
+      )}
+    </section>
+  );
 };

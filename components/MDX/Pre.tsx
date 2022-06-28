@@ -35,9 +35,9 @@ const Pre = ({ children, className }: CodeProps) => {
 
       document.body.appendChild(copyText);
 
-      const procesedInnerText = returnCopiedCommand(copyText, true);
+      const processedInnerText = returnCopiedCommand(copyText, true);
 
-      navigator.clipboard.writeText(procesedInnerText);
+      navigator.clipboard.writeText(processedInnerText);
       document.body.removeChild(copyText);
       setIsCopied(true);
 

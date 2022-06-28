@@ -37,6 +37,7 @@
   position: relative;
   display: inline-grid;
   align-items: baseline;
+  margin-right: var(--m-1-5);
 }
 
 .label .field,

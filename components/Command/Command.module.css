@@ -75,10 +75,6 @@
   }
 }
 
-.command .line div {
-  margin-right: var(--m-1-5);
-}
-
 .comment {
   margin: 0;
   font-size: var(--fs-text-md);

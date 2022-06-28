@@ -1,7 +1,7 @@
 import cn from "classnames";
 import { MDXProvider } from "@mdx-js/react";
 import { useContext, useEffect } from "react";
-import { VarsContextProvider } from "components/Variables";
+import { VarsProvider } from "components/Variables";
 import AnchorNavigation, { HeaderMeta } from "components/AnchorNavigation";
 import Button from "components/Button";
 import Head from "components/Head";
@@ -109,12 +109,12 @@ const DocsPage = ({
                   )}
                 </Notice>
               )}
-              <VarsContextProvider>
+              <VarsProvider>
                 <VarList />
                 <div className={cn(styles.text, styles[layout])}>
                   <MDXProvider components={components}>{children}</MDXProvider>
                 </div>
-              </VarsContextProvider>
+              </VarsProvider>
             </div>
             {isTocVisible && (
               <AnchorNavigation
