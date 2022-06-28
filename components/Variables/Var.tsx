@@ -13,13 +13,9 @@ export const Var = ({ name, needLabel, isGlobal }: VarProps) => {
   const { fields, setField, addField } = useContext(VarsContext);
   const val = fields[name] || "";
 
-  /*
-   * we do not add `addField` function
-   * to the dependency array, since it do not change (constant useCallback)
-   */
   useEffect(() => {
     addField(name, isGlobal);
-  }, [isGlobal, name]);
+  }, [isGlobal, name, addField]);
 
   const onChange = useCallback(
     (event) => {

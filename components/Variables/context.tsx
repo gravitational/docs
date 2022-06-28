@@ -60,13 +60,17 @@ export const VarsProvider = ({ children }: VarsProviderProps) => {
 
   const addField = useCallback(
     (name, isGlobal) => {
+      if ((isGlobal && name in globalFields) || name in fields) {
+        return;
+      }
+
       if (isGlobal) {
         setGlobalFields((f) => ({ ...f, [name]: true }));
       }
 
       setField(name, isGlobal ? getValue(name) : "");
     },
-    [setField]
+    [setField, fields, globalFields]
   );
 
   const value = useMemo(
