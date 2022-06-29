@@ -52,8 +52,16 @@ const SearchAutocomplete = (props) => {
 function ProductItem({ hit }) {
   let foundHeader = "";
   let foundContent = "";
+  console.log(hit);
 
-  if (hit._snippetResult.headers?.length) {
+  if (
+    hit._snippetResult.content?.matchLevel === "full" ||
+    hit._snippetResult.headers?.matchLevel === "full"
+  ) {
+    hit._snippetResult.headers?.matchLevel
+      ? (foundHeader = hit._snippetResult.headers[0].value)
+      : (foundContent = hit._snippetResult.content.value);
+  } else if (hit._snippetResult.headers?.length) {
     foundHeader = hit._snippetResult.headers[0].value;
   } else if (hit._snippetResult.content) {
     foundContent = hit._snippetResult.content.value;
