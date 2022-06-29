@@ -14,16 +14,16 @@ const pushVars = (rowTexts: string[], command: HTMLElement[]) => {
  * Includes both individual command and whole snippet copying handling.
  * There are newlines due to MDX rendering specifics
  * @param commandNode
- * @param isGeneralCopying
+ * @param copyWholeSnippit
  * @returns handled text with no extra new lines
  */
 export const toCopyContent = (
   commandNode: HTMLElement,
-  isGeneralCopying?: boolean
+  copyWholeSnippit?: boolean
 ): string => {
   const rowTexts: string[] = [];
 
-  if (isGeneralCopying) {
+  if (copyWholeSnippit) {
     const code = commandNode.children[0];
     const snippet = code.children[0];
     for (const command of Array.from(snippet.children)) {
