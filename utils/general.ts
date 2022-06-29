@@ -8,25 +8,34 @@ const pushVars = (rowTexts: string[], command: HTMLElement[]) => {
   }
 };
 
-export const returnCopiedCommand = (
-  currentRef: HTMLElement,
+/**
+ * Handles command content to avoid newlines between dynamic
+ * documentation variables while copying a command.
+ * Includes both individual command and whole snippet copying handling.
+ * There are newlines due to MDX rendering specifics
+ * @param commandNode
+ * @param isGeneralCopying
+ * @returns handled text with no extra new lines
+ */
+export const toCopyContent = (
+  commandNode: HTMLElement,
   isGeneralCopying?: boolean
-) => {
+): string => {
   const rowTexts: string[] = [];
 
   if (isGeneralCopying) {
-    const code = currentRef.children[0];
+    const code = commandNode.children[0];
     const snippet = code.children[0];
     for (const command of Array.from(snippet.children)) {
       const commandChildren = Array.from(command.children) as HTMLElement[];
       pushVars(rowTexts, commandChildren);
     }
   } else {
-    const children = Array.from(currentRef.children) as HTMLElement[];
+    const children = Array.from(commandNode.children) as HTMLElement[];
     pushVars(rowTexts, children);
   }
 
-  let procesedInnerText = currentRef.innerText;
+  let procesedInnerText = commandNode.innerText;
 
   for (const initialText of rowTexts) {
     const newText = initialText.split("\n").join("");

@@ -3,7 +3,7 @@ import { useRef, useState, useCallback, ReactNode } from "react";
 import Code from "components/Code";
 import Icon from "components/Icon";
 import HeadlessButton from "components/HeadlessButton";
-import { returnCopiedCommand } from "utils/general";
+import { toCopyContent } from "utils/general";
 import styles from "./Pre.module.css";
 
 const TIMEOUT = 1000;
@@ -35,7 +35,7 @@ const Pre = ({ children, className }: CodeProps) => {
 
       document.body.appendChild(copyText);
 
-      const processedInnerText = returnCopiedCommand(copyText, true);
+      const processedInnerText = toCopyContent(copyText, true);
 
       navigator.clipboard.writeText(processedInnerText);
       document.body.removeChild(copyText);
