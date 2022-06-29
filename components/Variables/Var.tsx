@@ -9,7 +9,11 @@ interface VarProps {
   isGlobal?: boolean;
 }
 
-export const Var = ({ name, needLabel, isGlobal }: VarProps) => {
+export const Var = ({
+  name,
+  needLabel = false,
+  isGlobal = false,
+}: VarProps) => {
   const { fields, setField, addField } = useContext(VarsContext);
   const val = fields[name] || "";
 
