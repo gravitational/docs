@@ -52,18 +52,20 @@ const SearchAutocomplete = (props) => {
 function ProductItem({ hit }) {
   let foundHeader = "";
   let foundContent = "";
-  console.log(hit);
+  const exactHeaderMatch = hit._snippetResult.headers?.find(
+    (header) => header.matchLevel === "full"
+  );
 
-  if (
-    hit._snippetResult.content?.matchLevel === "full" ||
-    hit._snippetResult.headers?.matchLevel === "full"
-  ) {
-    hit._snippetResult.headers?.matchLevel
-      ? (foundHeader = hit._snippetResult.headers[0].value)
+  if (hit._snippetResult.content?.matchLevel === "full" || exactHeaderMatch) {
+    exactHeaderMatch
+      ? (foundHeader = exactHeaderMatch.value)
       : (foundContent = hit._snippetResult.content.value);
-  } else if (hit._snippetResult.headers?.length) {
+  } else if (
+    hit._highlightResult.headers?.matchedWords?.length >
+    hit._highlightResult.content?.matchedWords?.length
+  ) {
     foundHeader = hit._snippetResult.headers[0].value;
-  } else if (hit._snippetResult.content) {
+  } else {
     foundContent = hit._snippetResult.content.value;
   }
 

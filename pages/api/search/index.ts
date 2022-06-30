@@ -23,7 +23,7 @@ export default async function handler(
       filters: `docs_ver:${docsVer}`,
       restrictHighlightAndSnippetArrays: true,
       attributesToHighlight: ["content", "headers"],
-      attributesToSnippet: ["content:30", "headers"],
+      attributesToSnippet: ["content:20", "headers"],
       snippetEllipsisText: "…",
       highlightPreTag: "<b class='found-part'>",
       highlightPostTag: "</b>",
@@ -35,6 +35,9 @@ export default async function handler(
       const title = hit.title?.includes("|")
         ? hit.title.split("|")[0].trim()
         : hit.title;
+      hit._highlightResult.headers?.sort(
+        (a, b) => b.matchedWords.length - a.matchedWords.length
+      );
       return { ...hit, title };
     });
     res.status(200).json(finishResult);
