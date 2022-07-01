@@ -57,11 +57,13 @@ function ProductItem({ hit }) {
   );
 
   if (hit._snippetResult.content?.matchLevel === "full" || exactHeaderMatch) {
-    exactHeaderMatch
-      ? (foundHeader = exactHeaderMatch.value)
-      : (foundContent = hit._snippetResult.content.value);
+    if (exactHeaderMatch) {
+      foundHeader = exactHeaderMatch.value;
+    } else {
+      foundContent = hit._snippetResult.content.value;
+    }
   } else if (
-    hit._highlightResult.headers?.matchedWords?.length >
+    hit._highlightResult.headers[0]?.matchedWords?.length >
     hit._highlightResult.content?.matchedWords?.length
   ) {
     foundHeader = hit._snippetResult.headers[0].value;
