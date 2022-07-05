@@ -1,20 +1,20 @@
 {
   "versions": [
     {
-      "name": "7.0",
-      "branch": "branch/v7"
-    },
-    {
       "name": "8.0",
       "branch": "branch/v8"
     },
     {
       "name": "9.0",
-      "branch": "branch/v9",
-      "latest": true
+      "branch": "branch/v9"
     },
     {
       "name": "10.0",
+      "branch": "branch/v10",
+      "latest": true
+    },
+    {
+      "name": "11.0",
       "branch": "master"
     }
   ]
