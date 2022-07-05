@@ -8,6 +8,29 @@ const formatTitle = (suffix: string, title?: string) => {
 
   return base + suffix;
 };
+
+const getURLVariants = (url: string, firstLvlNav: string): JSX.Element => {
+  const rels = ["alternate", "alternate", "alternate"];
+
+  switch (firstLvlNav) {
+    case "cloud":
+      rels[2] = "canonical";
+      break;
+    case "enterprise":
+      rels[1] = "canonical";
+      break;
+    default:
+      rels[0] = "canonical";
+  }
+
+  return (
+    <>
+      <link rel={rels[0]} href={url} />
+      <link rel={rels[1]} href={`${url}?scope=enterprise`} />
+      <link rel={rels[2]} href={`${url}?scope=cloud`} />
+    </>
+  );
+};
 export interface HeadProps {
   title: string;
   description?: string;
@@ -27,6 +50,7 @@ const Head = ({
   const url = buildCanonicalUrl(router.basePath, propsUrl || router.asPath);
   const title = formatTitle(titleSuffix, propsTitle);
   const description = propsDescription || "";
+  const firstLvlNav = router.asPath.split("/")[1];
 
   return (
     <NextHead>
@@ -35,7 +59,7 @@ const Head = ({
       <link rel="icon" href="/docs/favicon.svg" type="image/svg+xml" />
       <link rel="apple-touch-icon" href="/docs/apple.png" />
       <link rel="manifest" href="/docs/manifest.webmanifest" />
-      <link rel="canonical" href={url} />
+      {getURLVariants(url, firstLvlNav)}
       <meta name="description" content={description} />
       <meta name="author" content="Teleport" />
       {noIndex && <meta name="robots" content="noindex" />}
