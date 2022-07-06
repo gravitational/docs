@@ -167,4 +167,42 @@ Suite("Returns correct error message on multiline command lint", () => {
   );
 });
 
+Suite("Variables in command support", () => {
+  const value = readFileSync(
+    resolve("server/fixtures/includes/includes-var-in-command.mdx"),
+    "utf-8"
+  );
+
+  const result = transformer({
+    value,
+    path: "/docs/index.mdx",
+  }).toString();
+
+  const expected = readFileSync(
+    resolve("server/fixtures/result/var-in-command.mdx"),
+    "utf-8"
+  );
+
+  assert.equal(result, expected);
+});
+
+Suite("Variables in multiline command support", () => {
+  const value = readFileSync(
+    resolve("server/fixtures/includes/includes-var-in-multiline-command.mdx"),
+    "utf-8"
+  );
+
+  const result = transformer({
+    value,
+    path: "/docs/index.mdx",
+  }).toString();
+
+  const expected = readFileSync(
+    resolve("server/fixtures/result/var-in-multiline-command.mdx"),
+    "utf-8"
+  );
+
+  assert.equal(result, expected);
+});
+
 Suite.run();

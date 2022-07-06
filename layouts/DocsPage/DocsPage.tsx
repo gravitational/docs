@@ -1,6 +1,7 @@
 import cn from "classnames";
 import { MDXProvider } from "@mdx-js/react";
 import { useContext, useEffect } from "react";
+import { VarsProvider } from "components/Variables";
 import AnchorNavigation, { HeaderMeta } from "components/AnchorNavigation";
 import Button from "components/Button";
 import Head from "components/Head";
@@ -8,6 +9,7 @@ import SiteHeader from "components/Header";
 import Link, { useCurrentHref } from "components/Link";
 import Notice from "components/Notice";
 import VideoBar from "components/VideoBar";
+import { VarList } from "components/Variables";
 import { components } from "./components";
 import { DocsContext } from "./context";
 import Header from "./Header";
@@ -107,9 +109,12 @@ const DocsPage = ({
                   )}
                 </Notice>
               )}
-              <div className={cn(styles.text, styles[layout])}>
-                <MDXProvider components={components}>{children}</MDXProvider>
-              </div>
+              <VarsProvider>
+                <VarList />
+                <div className={cn(styles.text, styles[layout])}>
+                  <MDXProvider components={components}>{children}</MDXProvider>
+                </div>
+              </VarsProvider>
             </div>
             {isTocVisible && (
               <AnchorNavigation

@@ -1,6 +1,7 @@
 import { useRef, useState, useCallback, ReactNode } from "react";
 import Icon from "components/Icon";
 import HeadlessButton from "components/HeadlessButton";
+import { toCopyContent } from "utils/general";
 import styles from "./Command.module.css";
 
 const TIMEOUT = 1000;
@@ -35,7 +36,9 @@ export default function Command({ children, ...props }: CommandProps) {
     }
 
     if (codeRef.current) {
-      navigator.clipboard.writeText(codeRef.current.innerText);
+      const procesedInnerText = toCopyContent(codeRef.current);
+
+      navigator.clipboard.writeText(procesedInnerText);
       setIsCopied(true);
 
       setTimeout(() => {

@@ -31,9 +31,8 @@ import type {
   MdxJsxFlowElement,
   MdxAnyElement,
 } from "./types-unist";
-
+import { createMdxJsxAttributeValueExpression } from "./mdx-helpers";
 import { visit } from "unist-util-visit";
-import { Parent } from "hast";
 
 const RULE_ID = "code-snippet";
 
@@ -42,42 +41,90 @@ const isCode =
   (node: MdxastNode): node is MdastCode =>
     node.type === "code" && langs.includes(node.lang);
 
-const getCommandNode = (content: string, prefix = "$"): MdxJsxFlowElement => ({
-  type: "mdxJsxFlowElement",
-  name: "Command",
-  attributes: [],
-  children: [
-    {
-      type: "mdxJsxFlowElement",
-      name: "CommandLine",
-      attributes: [
-        {
-          type: "mdxJsxAttribute",
-          name: "data-content",
-          value: `${prefix} `,
-        },
-      ],
-      children: [
-        {
-          type: "text",
-          value: content,
-        },
-      ],
-    },
-  ],
+const getTextChildren = (contentValue: string): MdxastNode => ({
+  type: "text",
+  value: contentValue,
 });
 
-const getLineNode = (content: string, attributes = []): MdxJsxFlowElement => ({
+const getVariableNode = (
+  value: string,
+  isGlobal: boolean
+): MdxJsxFlowElement => ({
   type: "mdxJsxFlowElement",
-  name: "CommandLine",
-  attributes,
-  children: [
+  name: "Var",
+  attributes: [
+    { type: "mdxJsxAttribute", name: "name", value },
     {
-      type: "text",
-      value: content,
+      type: "mdxJsxAttribute",
+      name: "isGlobal",
+      value: createMdxJsxAttributeValueExpression(`${isGlobal}`),
     },
   ],
+  children: [],
 });
+
+const getChildrenNode = (content: string): MdxastNode[] => {
+  const hasVariable = content?.includes("<Var");
+  const nodeChildren: MdxastNode[] = [];
+
+  if (hasVariable) {
+    const contentVars = content.match(/(?:\<Var .+?\/\>)/gm);
+    const firstPartLine = content.split("<Var")[0];
+    nodeChildren.push(getTextChildren(firstPartLine));
+    const newContent = content.replace("isGlobal", "");
+
+    for (let i = 0; i < contentVars.length; i++) {
+      let nextPartLine = newContent.split("/>")[i + 1];
+      if (nextPartLine?.includes("<Var")) {
+        nextPartLine = nextPartLine.split("<Var")[0];
+      }
+
+      const varName = contentVars[i].match(/name="(.*?)"/)[1];
+      const isGlobal = contentVars[i].includes("isGlobal");
+      nodeChildren.push(getVariableNode(varName, isGlobal));
+      nodeChildren.push(getTextChildren(nextPartLine));
+    }
+  } else {
+    nodeChildren.push(getTextChildren(content));
+  }
+
+  return nodeChildren;
+};
+
+const getCommandNode = (content: string, prefix = "$"): MdxJsxFlowElement => {
+  const children = getChildrenNode(content);
+
+  return {
+    type: "mdxJsxFlowElement",
+    name: "Command",
+    attributes: [],
+    children: [
+      {
+        type: "mdxJsxFlowElement",
+        name: "CommandLine",
+        attributes: [
+          {
+            type: "mdxJsxAttribute",
+            name: "data-content",
+            value: `${prefix} `,
+          },
+        ],
+        children: children,
+      },
+    ],
+  };
+};
+
+const getLineNode = (content: string, attributes = []): MdxJsxFlowElement => {
+  const children = getChildrenNode(content);
+
+  return {
+    type: "mdxJsxFlowElement",
+    name: "CommandLine",
+    attributes,
+    children: children,
+  };
+};
 
 const getCommentNode = (
   content: string,

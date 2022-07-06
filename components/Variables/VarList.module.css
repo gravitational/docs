@@ -1,0 +1,18 @@
+.list {
+  padding-left: var(--m-1-5);
+  list-style: none;
+}
+
+.item {
+  &::before {
+    content: "-- ";
+  }
+}
+
+.title {
+  font-size: var(--fs-text-lg);
+}
+
+.text {
+  margin: 0;
+}

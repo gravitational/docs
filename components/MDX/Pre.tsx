@@ -3,7 +3,10 @@ import { useRef, useState, useCallback, ReactNode } from "react";
 import Code from "components/Code";
 import Icon from "components/Icon";
 import HeadlessButton from "components/HeadlessButton";
+import { toCopyContent } from "utils/general";
 import styles from "./Pre.module.css";
+
+const TIMEOUT = 1000;
 
 interface CodeProps {
   children: ReactNode;
@@ -31,14 +34,17 @@ const Pre = ({ children, className }: CodeProps) => {
       }
 
       document.body.appendChild(copyText);
-      navigator.clipboard.writeText(copyText.innerText);
+
+      const processedInnerText = toCopyContent(copyText, true);
+
+      navigator.clipboard.writeText(processedInnerText);
       document.body.removeChild(copyText);
       setIsCopied(true);
 
       setTimeout(() => {
         setIsCopied(false);
         buttonRef.current?.blur();
-      }, 1000);
+      }, TIMEOUT);
     }
   }, []);
 
