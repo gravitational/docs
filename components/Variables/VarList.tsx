@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Var } from "./Var";
-import { VarsContext, VarsContextProps } from "./context";
+import { VarsContext } from "./context";
+import type { VarsContextProps } from "./context";
 import styles from "./VarList.module.css";
 
 export const VarList = () => {

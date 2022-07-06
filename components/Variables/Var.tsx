@@ -1,6 +1,7 @@
 import cn from "classnames";
 import { useCallback, useContext, useEffect } from "react";
 import { VarsContext } from "./context";
+import type { VarsContextProps } from "./context";
 import styles from "./Var.module.css";
 
 interface VarProps {
@@ -14,7 +15,8 @@ export const Var = ({
   needLabel = false,
   isGlobal = false,
 }: VarProps) => {
-  const { fields, setField, addField } = useContext(VarsContext);
+  const { fields, setField, addField } =
+    useContext<VarsContextProps>(VarsContext);
   const val = fields[name] || "";
 
   useEffect(() => {
