@@ -75,6 +75,12 @@ const validator = ajv.compile({
                     type: "string",
                   },
                 },
+                forScopes: {
+                  type: ["string", "array"],
+                  items: {
+                    type: "string",
+                  },
+                },
                 entries: {
                   type: "array",
                   items: { $ref: "navigation-item" },

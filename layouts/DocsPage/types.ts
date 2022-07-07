@@ -13,6 +13,7 @@ export interface NavigationItem {
   slug: string;
   hideInScopes?: ScopesType;
   entries?: NavigationItem[];
+  forScopes?: string | string[];
 }
 
 export interface NavigationCategory {
@@ -55,4 +56,5 @@ export interface PageMeta {
   videoBanner?: VideoBarProps;
   navigation: NavigationCategory[];
   versions: VersionsInfo;
+  scopes: ScopesType;
 }
