@@ -50,7 +50,11 @@ const Head = ({
   const url = buildCanonicalUrl(router.basePath, propsUrl || router.asPath);
   const title = formatTitle(titleSuffix, propsTitle);
   const description = propsDescription || "";
-  const firstLvlNav = router.asPath.split("/")[1];
+  let firstLvlNav = router.asPath.split("/")[1];
+
+  if (router.asPath.split("/")[1] === "ver") {
+    firstLvlNav = router.asPath.split("/")[3];
+  }
 
   return (
     <NextHead>
