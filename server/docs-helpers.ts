@@ -78,7 +78,7 @@ export const getPageMeta = (vfile: VFile) => {
   const { navigation } = loadDocsConfig(current);
   const githubUrl = getGithubURL(vfile.path);
   let pagePath = vfile.path.split("pages")[1];
-  let scopes: string | string[] = "all";
+  let scopes: string | string[] = "";
 
   if (pagePath.includes(".mdx")) {
     pagePath = pagePath.replace(".mdx", "/");
@@ -86,15 +86,23 @@ export const getPageMeta = (vfile: VFile) => {
 
   const navigationItem = findNavItem(navigation, pagePath);
 
-  if (navigationItem && navigationItem.forScopes) {
-    if (
-      typeof navigationItem.forScopes === "string" &&
-      navigationItem.forScopes.includes(",")
-    ) {
-      scopes = navigationItem.forScopes.split(",").map((scope) => scope.trim());
+  if (navigationItem) {
+    if (navigationItem.forScopes) {
+      if (
+        typeof navigationItem.forScopes === "string" &&
+        navigationItem.forScopes.includes(",")
+      ) {
+        scopes = navigationItem.forScopes
+          .split(",")
+          .map((scope) => scope.trim());
+      }
+
+      scopes = navigationItem.forScopes;
     }
 
-    scopes = navigationItem.forScopes;
+    if (navigationItem.entries && !navigationItem.forScopes) {
+      scopes = "noScope";
+    }
   }
 
   return {

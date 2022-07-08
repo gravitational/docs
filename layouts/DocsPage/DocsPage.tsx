@@ -36,6 +36,7 @@ const DocsPage = ({
     navigation,
     versions,
     githubUrl,
+    scopes,
   },
   tableOfConents,
   children,
@@ -85,6 +86,7 @@ const DocsPage = ({
             icon={icon}
             getNewVersionPath={getPath}
             latest={latest}
+            scopes={scopes}
           />
           {videoBanner && (
             <VideoBar className={styles.video} {...videoBanner} />
