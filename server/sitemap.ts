@@ -27,7 +27,7 @@ const generateSitemapPage = (
   { loc, lastmod = defaultLastmod, changefreq = "daily", priority }: SitemapPage
 ) => {
   const firstLvlNav = findFirstLvlNav(loc);
-  let updateLoc = "";
+  let updateLoc = loc;
 
   switch (firstLvlNav) {
     case "cloud":
