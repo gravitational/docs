@@ -44,3 +44,13 @@ export const toCopyContent = (
 
   return procesedInnerText;
 };
+
+export const findFirstLvlNav = (locPath: string): string => {
+  let firstLvlNav = locPath.split("/")[1];
+
+  if (locPath.split("/")[1] === "ver") {
+    firstLvlNav = locPath.split("/")[3];
+  }
+
+  return firstLvlNav;
+};
