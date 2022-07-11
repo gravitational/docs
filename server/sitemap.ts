@@ -4,7 +4,7 @@
 
 import { writeFileSync } from "fs";
 import { format } from "date-fns";
-import { findFirstLvlNav } from "utils/general";
+import { findFirstLvlNav } from "../utils/general";
 
 const defaultLastmod = format(new Date(), "yyyy-MM-dd");
 

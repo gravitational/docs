@@ -48,7 +48,7 @@ export const toCopyContent = (
 export const findFirstLvlNav = (locPath: string): string => {
   let firstLvlNav = locPath.split("/")[1];
 
-  if (locPath.split("/")[1] === "ver") {
+  if (firstLvlNav === "ver") {
     firstLvlNav = locPath.split("/")[3];
   }
 
