@@ -11,47 +11,24 @@ import styles from "./Navigation.module.css";
 
 const SCOPELESS_HREF_REGEX = /\?|\#/;
 
-const scopeIconsValue = [
-  {
-    openSource: "code",
-  },
-  {
-    enterprise: "building",
-  },
-  {
-    cloud: "clouds",
-  },
-];
-
-const entriesScopeToArray = (entries: NavigationItem[]): NavigationItem[] => {
-  for (let i = 0; i < entries.length; i++) {
-    if (typeof entries[i].forScopes === "string") {
-      let scopeIsArray = [];
-      const itemScopes = entries[i].forScopes as string;
-
-      if (itemScopes === "all") {
-        scopeIsArray = ["openSource", "enterprise", "cloud"];
-      } else if (itemScopes.includes(",")) {
-        scopeIsArray = itemScopes.split(",").map((scope) => scope.trim());
-      } else if (itemScopes !== "noScope") {
-        scopeIsArray = [itemScopes];
-      }
-
-      entries[i] = { ...entries[i], forScopes: scopeIsArray };
-    }
-  }
-
-  return entries;
+const scopeIconsValue = {
+  openSource: "code",
+  enterprise: "building",
+  cloud: "clouds",
 };
 
 const getScopeIcons = (scopes: string[]) => {
+  if (scopes[0] === "noScope") {
+    return;
+  }
+
   const scopeIcons = scopes.map((scope) => (
-    <li key={scope}>
-      <Icon name={scopeIconsValue[scope]} />
+    <li className={styles["scope-item"]} key={scope}>
+      <Icon name={scopeIconsValue[scope]} size="xxs" />
     </li>
   ));
 
-  return <ul>{scopeIcons}</ul>;
+  return <ul className={styles["scope-list"]}>{scopeIcons}</ul>;
 };
 
 interface DocsNavigationItemsProps {
@@ -66,12 +43,11 @@ const DocsNavigationItems = ({
   const router = useRouter();
   const docPath = useCurrentHref().split(SCOPELESS_HREF_REGEX)[0];
   const urlScope = getScopeFromUrl(router.asPath);
-  const transformedEntries = entriesScopeToArray(entries);
 
   return (
     <>
-      {!!transformedEntries.length &&
-        transformedEntries.map((entry) => {
+      {!!entries.length &&
+        entries.map((entry) => {
           const selected = entry.slug === docPath;
           const active =
             selected || entry.entries?.some((entry) => entry.slug === docPath);
@@ -92,7 +68,7 @@ const DocsNavigationItems = ({
                   onClick={onClick}
                 >
                   {entry.title}
-                  {!!entry.forScopes.length &&
+                  {!!entry.forScopes?.length &&
                     getScopeIcons(entry.forScopes as string[])}
                   {!!entry.entries?.length && (
                     <Icon

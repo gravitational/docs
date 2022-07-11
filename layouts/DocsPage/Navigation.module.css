@@ -67,11 +67,12 @@
 
 .link {
   position: relative;
-  display: block;
+  display: flex;
+  align-items: baseline;
   width: 100%;
-  padding: 0 var(--m-2);
+  padding: var(--m-0-5) var(--m-2);
   font-size: 13px;
-  line-height: var(--lh-lg);
+  line-height: var(--lh-md);
   text-decoration: none;
   color: var(--color-gray);
 
@@ -108,11 +109,26 @@
   & .link {
     padding-left: var(--m-4);
     font-size: var(--fs-text-sm);
-    line-height: var(--lh-lg);
+    line-height: var(--lh-md);
   }
 
   .link.active + & {
     display: block;
+  }
+}
+
+.scope-list {
+  display: flex;
+  align-items: baseline;
+  padding-left: 0;
+  list-style: none;
+}
+
+.scope-item {
+  margin-left: var(--m-0-5);
+
+  &:first-child {
+    margin-left: var(--m-1);
   }
 }
 

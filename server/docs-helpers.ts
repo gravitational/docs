@@ -40,6 +40,42 @@ const findNavItem = (
 };
 
 /*
+ */
+
+const addScopesToNavigation = (
+  nav: (NavigationCategory | NavigationItem)[]
+): (NavigationCategory | NavigationItem)[] => {
+  const transformedNav = [...nav];
+
+  for (let i = 0; i < transformedNav.length; i++) {
+    let scopes: string[] = ["openSource", "enterprise", "cloud"];
+    const item = Object.assign({}, transformedNav[i]);
+
+    if ("forScopes" in item) {
+      if (typeof item.forScopes === "string") {
+        const itemScopes = item.forScopes as string;
+
+        if (itemScopes.includes(",")) {
+          scopes = itemScopes.split(",").map((scope) => scope.trim());
+        } else {
+          scopes = [itemScopes];
+        }
+      } else {
+        scopes = item.forScopes;
+      }
+    } else if (item.entries) {
+      scopes = ["noScope"];
+
+      item.entries = addScopesToNavigation(item.entries) as NavigationItem[];
+    }
+
+    transformedNav[i] = { ...item, forScopes: scopes };
+  }
+
+  return transformedNav;
+};
+
+/*
  * Used by some remark plugins to resolve paths to assets based on the
  * current docs folders. E. g. remark-includes.
  */
@@ -77,6 +113,7 @@ export const getPageMeta = (vfile: VFile) => {
   const current = getVersion(vfile.path);
   const { navigation } = loadDocsConfig(current);
   const githubUrl = getGithubURL(vfile.path);
+  const navigationWithScopes = addScopesToNavigation(navigation);
   let pagePath = vfile.path.split("pages")[1];
   let scopes: string | string[] = "";
 
@@ -106,7 +143,7 @@ export const getPageMeta = (vfile: VFile) => {
   }
 
   return {
-    navigation,
+    navigation: navigationWithScopes,
     githubUrl,
     versions: {
       current,
