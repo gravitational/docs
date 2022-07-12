@@ -2,7 +2,7 @@ import NextHead from "next/head";
 import { useRouter } from "next/router";
 
 import { buildCanonicalUrl, host } from "utils/url";
-import { findFirstLvlNav } from "utils/general";
+import { getFirstLvlNav } from "utils/general";
 
 const formatTitle = (suffix: string, title?: string) => {
   const base = title ? `${title} | ` : "";
@@ -51,7 +51,7 @@ const Head = ({
   const url = buildCanonicalUrl(router.basePath, propsUrl || router.asPath);
   const title = formatTitle(titleSuffix, propsTitle);
   const description = propsDescription || "";
-  const firstLvlNav = findFirstLvlNav(router.asPath);
+  const firstLvlNav = getFirstLvlNav(router.asPath);
 
   return (
     <NextHead>
