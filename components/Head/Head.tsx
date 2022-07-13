@@ -2,6 +2,7 @@ import NextHead from "next/head";
 import { useRouter } from "next/router";
 
 import { buildCanonicalUrl, host } from "utils/url";
+import { getFirstLvlNav } from "utils/general";
 
 const formatTitle = (suffix: string, title?: string) => {
   const base = title ? `${title} | ` : "";
@@ -50,11 +51,7 @@ const Head = ({
   const url = buildCanonicalUrl(router.basePath, propsUrl || router.asPath);
   const title = formatTitle(titleSuffix, propsTitle);
   const description = propsDescription || "";
-  let firstLvlNav = router.asPath.split("/")[1];
-
-  if (router.asPath.split("/")[1] === "ver") {
-    firstLvlNav = router.asPath.split("/")[3];
-  }
+  const firstLvlNav = getFirstLvlNav(router.asPath);
 
   return (
     <NextHead>

@@ -4,6 +4,7 @@
 
 import { writeFileSync } from "fs";
 import { format } from "date-fns";
+import { getFirstLvlNav } from "../utils/general";
 
 const defaultLastmod = format(new Date(), "yyyy-MM-dd");
 
@@ -25,9 +26,23 @@ const generateSitemapPage = (
   root: string,
   { loc, lastmod = defaultLastmod, changefreq = "daily", priority }: SitemapPage
 ) => {
+  const firstLvlNav = getFirstLvlNav(loc);
+  let canonicalLoc = loc;
+
+  switch (firstLvlNav) {
+    case "cloud":
+      canonicalLoc = `${canonicalLoc}?scope=cloud`;
+      break;
+    case "enterprise":
+      canonicalLoc = `${canonicalLoc}?scope=enterprise`;
+      break;
+    default:
+      canonicalLoc = loc;
+  }
+
   return (
     "  <url>\n" +
-    `    <loc>${root}${loc}</loc>\n` +
+    `    <loc>${root}${canonicalLoc}</loc>\n` +
     `    <lastmod>${lastmod}</lastmod>\n` +
     `    <changefreq>${changefreq}</changefreq>\n` +
     (priority ? `    <priority>${priority}</priority>\n` : "") +
