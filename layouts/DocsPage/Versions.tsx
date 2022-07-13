@@ -106,6 +106,7 @@ const Versions = ({
       renderOption={renderVersion}
       pickOption={pickOption}
       pickId={pickId}
+      bgColor="purple"
     />
   );
 };

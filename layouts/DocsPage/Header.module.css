@@ -97,13 +97,14 @@
   }
 }
 
-.violet {
+/* .violet {
   color: var(--color-dark-purple);
 
   & span {
-    border-color: var(--color-dark-purple);
+    background-color: var(--color-dark-purple-10);
+    border-color: transparent;
   }
-}
+} */
 
 .button {
   margin-left: auto;

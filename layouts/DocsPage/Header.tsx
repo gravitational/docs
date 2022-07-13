@@ -33,29 +33,29 @@ const DocHeader = ({
   scopes,
 }: DocHeaderProps) => {
   const { scope } = useContext(DocsContext);
-  let singular = false;
-  let textScope = "all";
+  // let singular = false;
+  // let textScope = "all";
 
-  if (typeof scopes === "string" && Boolean(scopes)) {
-    if (!scopes.includes(",")) {
-      singular = true;
-    }
+  // if (typeof scopes === "string" && Boolean(scopes)) {
+  //   if (!scopes.includes(",")) {
+  //     singular = true;
+  //   }
 
-    textScope = scopes;
-  } else if (Array.isArray(scopes)) {
-    if (scopes.length > 1) {
-      textScope = scopes.join(", ");
-    } else {
-      singular = true;
-      textScope = scopes[0];
-    }
-  }
+  //   textScope = scopes;
+  // } else if (Array.isArray(scopes)) {
+  //   if (scopes.length > 1) {
+  //     textScope = scopes.join(", ");
+  //   } else {
+  //     singular = true;
+  //     textScope = scopes[0];
+  //   }
+  // }
 
-  const justTextForScopeInfo = `is ${
-    Boolean(scopes) ? "only" : ""
-  } available in ${singular ? "the" : ""}`;
+  // const justTextForScopeInfo = `is ${
+  //   Boolean(scopes) ? "only" : ""
+  // } available in ${singular ? "the" : ""}`;
 
-  const textScopeEdition = `${textScope} edition${singular ? "" : "s"}`;
+  // const textScopeEdition = `${textScope} edition${singular ? "" : "s"}`;
 
   return (
     <section className={styles.wrapper}>
@@ -71,20 +71,19 @@ const DocHeader = ({
       <div className={styles.description}>
         <p className={styles.subtitle}>Teleport</p>
         <h1 className={styles.title}>{title}</h1>
-        {scopes !== "noScope" && (
+        {/* {scopes !== "noScope" && (
           <p className={styles.scopeInfo}>
             {`This feature ${justTextForScopeInfo}`} <b>{textScopeEdition}</b>
           </p>
-        )}
+        )} */}
         <div className={styles.dropdowns}>
-          <Scopes className={cn(styles.scopes, styles.violet)} />
           <Versions
             {...versions}
-            className={styles.violet}
             getNewVersionPath={getNewVersionPath}
             disabled={scope === "cloud"}
             latest={latest}
           />
+          <Scopes />
           {!!githubUrl && (
             <Button
               as="link"
