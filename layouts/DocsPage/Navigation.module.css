@@ -120,6 +120,8 @@
 .scope-list {
   display: flex;
   align-items: baseline;
+  width: 38px;
+  margin-left: auto;
   padding-left: 0;
   list-style: none;
 }
@@ -128,7 +130,11 @@
   margin-left: var(--m-0-5);
 
   &:first-child {
-    margin-left: var(--m-1);
+    margin-left: 0;
+  }
+
+  &.non-visible {
+    visibility: hidden;
   }
 }
 

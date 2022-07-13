@@ -11,10 +11,10 @@ import styles from "./Navigation.module.css";
 
 const SCOPELESS_HREF_REGEX = /\?|\#/;
 
-const scopeIconsValue = {
-  openSource: "code",
-  enterprise: "building",
-  cloud: "clouds",
+const SCOPE_DICTIONARY = {
+  code3: "openSource",
+  building2: "enterprise",
+  cloud2: "cloud",
 };
 
 const getScopeIcons = (scopes: string[]) => {
@@ -22,11 +22,26 @@ const getScopeIcons = (scopes: string[]) => {
     return;
   }
 
-  const scopeIcons = scopes.map((scope) => (
-    <li className={styles["scope-item"]} key={scope}>
-      <Icon name={scopeIconsValue[scope]} size="xxs" />
-    </li>
-  ));
+  const scopeIcons = Object.keys(SCOPE_DICTIONARY).map(
+    (scope: "code3" | "building2" | "cloud2") => {
+      const hideScope = !scopes.includes(SCOPE_DICTIONARY[scope]);
+      const ariaLabel = hideScope ? "" : SCOPE_DICTIONARY[scope];
+
+      return (
+        <li
+          className={cn(
+            styles["scope-item"],
+            hideScope && styles["non-visible"]
+          )}
+          key={scope}
+          aria-label={ariaLabel}
+          aria-hidden={hideScope}
+        >
+          <Icon name={scope} size="xxs" />
+        </li>
+      );
+    }
+  );
 
   return <ul className={styles["scope-list"]}>{scopeIcons}</ul>;
 };
