@@ -5,6 +5,7 @@
 import type { VFile } from "vfile";
 
 import { resolve } from "path";
+import { getPathWithoutVersion } from "../utils/url";
 import { loadConfig as loadDocsConfig } from "./config-docs";
 import { loadConfig as loadSiteConfig } from "./config-site";
 import type {
@@ -21,12 +22,19 @@ export const getVersion = (filepath: string) => {
 };
 
 const findNavItem = (
-  nav: NavigationCategory[] | NavigationItem[],
+  nav: (NavigationCategory | NavigationItem)[],
   pagePath: string
 ): NavigationItem | void => {
   for (const navCategory of nav) {
-    if ("slug" in navCategory && navCategory.slug === pagePath) {
-      return navCategory;
+    if ("slug" in navCategory) {
+      const slugNoVers = `/${getPathWithoutVersion(navCategory.slug)}`;
+
+      if (
+        slugNoVers === pagePath ||
+        (slugNoVers === "/" && pagePath === "/index/")
+      ) {
+        return navCategory;
+      }
     }
 
     if (navCategory.entries) {
@@ -115,32 +123,19 @@ export const getPageMeta = (vfile: VFile) => {
   const githubUrl = getGithubURL(vfile.path);
   const navigationWithScopes = addScopesToNavigation(navigation);
   let pagePath = vfile.path.split("pages")[1];
-  let scopes: string | string[] = "";
+  let scopes: string[] = [""];
 
   if (pagePath.includes(".mdx")) {
     pagePath = pagePath.replace(".mdx", "/");
   }
 
-  const navigationItem = findNavItem(navigation, pagePath);
+  const navigationItem = findNavItem(navigationWithScopes, pagePath);
 
-  if (navigationItem) {
-    if (navigationItem.forScopes) {
-      if (
-        typeof navigationItem.forScopes === "string" &&
-        navigationItem.forScopes.includes(",")
-      ) {
-        scopes = navigationItem.forScopes
-          .split(",")
-          .map((scope) => scope.trim());
-      }
-
-      scopes = navigationItem.forScopes;
-    }
-
-    if (navigationItem.entries && !navigationItem.forScopes) {
-      scopes = "noScope";
-    }
+  if (navigationItem && navigationItem.forScopes) {
+    scopes = navigationItem.forScopes as string[];
   }
+
+  console.log(scopes);
 
   return {
     navigation: navigationWithScopes,

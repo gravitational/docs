@@ -38,16 +38,42 @@
     color: var(--color-gray);
     background-color: var(--color-white);
   }
+
+  &.variant-green {
+    color: var(--color-green);
+    background-color: var(--color-white);
+  }
+
+  &.variant-blue {
+    color: var(--color-light-blue);
+    background-color: var(--color-white);
+  }
 }
 
 .input:hover + .label {
   &.variant-gray {
     background-color: #667c891a;
   }
+
+  &.variant-green {
+    background-color: #00bfa51a;
+  }
+
+  &.variant-blue {
+    background-color: #0091ea1a;
+  }
 }
 
 .input:checked + .label {
   &.variant-gray {
     background-color: #667c891a;
+  }
+
+  &.variant-green {
+    background-color: #00bfa51a;
+  }
+
+  &.variant-blue {
+    background-color: #0091ea1a;
   }
 }
