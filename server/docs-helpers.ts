@@ -9,8 +9,11 @@ import { getPathWithoutVersion } from "../utils/url";
 import { loadConfig as loadDocsConfig } from "./config-docs";
 import { loadConfig as loadSiteConfig } from "./config-site";
 import type {
+  RawNavigationItem,
   NavigationItem,
   NavigationCategory,
+  ScopesInMeta,
+  ComplexScopesConfig,
 } from "layouts/DocsPage/types";
 
 const { branches, versions, latest } = loadSiteConfig();
@@ -47,24 +50,35 @@ const findNavItem = (
   return undefined;
 };
 
+function isComplexScopesConfig(smth: string): smth is ComplexScopesConfig {
+  return smth.includes(",");
+}
+
 /*
  */
 
-const addScopesToNavigation = (
-  nav: (NavigationCategory | NavigationItem)[]
-): (NavigationCategory | NavigationItem)[] => {
-  const transformedNav = [...nav];
+type AnyNavItem = RawNavigationItem | NavigationItem;
+type AnyNav = NavigationCategory | AnyNavItem;
+type CookedNav = NavigationCategory | NavigationItem;
 
-  for (let i = 0; i < transformedNav.length; i++) {
-    let scopes: string[] = ["openSource", "enterprise", "cloud"];
-    const item = Object.assign({}, transformedNav[i]);
+function addScopesToNavigation(nav: AnyNavItem[]): NavigationItem[];
+function addScopesToNavigation(nav: AnyNav[]): CookedNav[];
+function addScopesToNavigation(nav: AnyNav[]) {
+  const transformedNav: CookedNav[] = [];
+
+  for (let i = 0; i < nav.length; i++) {
+    let scopes: ScopesInMeta = ["oss", "enterprise", "cloud"];
+    const item = Object.assign({}, nav[i]);
 
     if ("forScopes" in item) {
       if (typeof item.forScopes === "string") {
-        const itemScopes = item.forScopes as string;
+        const itemScopes = item.forScopes;
 
-        if (itemScopes.includes(",")) {
-          scopes = itemScopes.split(",").map((scope) => scope.trim());
+        if (isComplexScopesConfig(itemScopes)) {
+          const parsedScopes = itemScopes
+            .split(",")
+            .map((scope) => scope.trim()) as ScopesInMeta;
+          scopes = parsedScopes;
         } else {
           scopes = [itemScopes];
         }
@@ -74,14 +88,14 @@ const addScopesToNavigation = (
     } else if (item.entries) {
       scopes = ["noScope"];
 
-      item.entries = addScopesToNavigation(item.entries) as NavigationItem[];
+      item.entries = addScopesToNavigation(item.entries);
     }
 
-    transformedNav[i] = { ...item, forScopes: scopes };
+    transformedNav.push({ ...item, forScopes: scopes });
   }
 
   return transformedNav;
-};
+}
 
 /*
  * Used by some remark plugins to resolve paths to assets based on the
@@ -123,7 +137,7 @@ export const getPageMeta = (vfile: VFile) => {
   const githubUrl = getGithubURL(vfile.path);
   const navigationWithScopes = addScopesToNavigation(navigation);
   let pagePath = vfile.path.split("pages")[1];
-  let scopes: string[] = [""];
+  let scopes: ScopesInMeta = [""];
 
   if (pagePath.includes(".mdx")) {
     pagePath = pagePath.replace(".mdx", "/");
@@ -132,10 +146,8 @@ export const getPageMeta = (vfile: VFile) => {
   const navigationItem = findNavItem(navigationWithScopes, pagePath);
 
   if (navigationItem && navigationItem.forScopes) {
-    scopes = navigationItem.forScopes as string[];
+    scopes = navigationItem.forScopes;
   }
-
-  console.log(scopes);
 
   return {
     navigation: navigationWithScopes,

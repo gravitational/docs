@@ -12,7 +12,7 @@ import styles from "./Navigation.module.css";
 const SCOPELESS_HREF_REGEX = /\?|\#/;
 
 const SCOPE_DICTIONARY = {
-  code3: "openSource",
+  code3: "oss",
   building2: "enterprise",
   cloud2: "cloud",
 };

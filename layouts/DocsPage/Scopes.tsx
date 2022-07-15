@@ -14,10 +14,10 @@ interface ScopeDescription {
 }
 
 const SCOPE_DESCRIPTIONS: Record<
-  "openSource" | "enterprise" | "cloud",
+  "oss" | "enterprise" | "cloud",
   ScopeDescription
 > = {
-  openSource: {
+  oss: {
     icon: "code3",
     value: "oss",
     title: "OpenSource",
