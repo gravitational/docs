@@ -70,17 +70,10 @@ const validator = ajv.compile({
                 title: { type: "string" },
                 slug: { type: "string" },
                 hideInScopes: {
-                  anyOf: [
-                    {
-                      type: "string",
-                    },
-                    {
-                      type: "array",
-                      items: {
-                        type: "string",
-                      },
-                    },
-                  ],
+                  type: ["string", "array"],
+                  items: {
+                    type: "string",
+                  },
                 },
                 forScopes: {
                   anyOf: [

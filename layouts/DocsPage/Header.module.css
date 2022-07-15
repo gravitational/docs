@@ -51,13 +51,11 @@
 .title {
   margin-top: 0;
   font-weight: var(--fw-regular);
-  /* color: var(--color-white); */
   color: var(--color-dark-purple);
 
   @media (--sm-scr) {
     margin-bottom: var(--m-6);
     padding-right: 120px;
-    /* padding-left: var(--m-2); */
     font-size: var(--fs-header-2);
   }
 
@@ -96,15 +94,6 @@
     margin-right: var(--m-2);
   }
 }
-
-/* .violet {
-  color: var(--color-dark-purple);
-
-  & span {
-    background-color: var(--color-dark-purple-10);
-    border-color: transparent;
-  }
-} */
 
 .button {
   margin-left: auto;

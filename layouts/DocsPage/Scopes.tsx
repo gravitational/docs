@@ -1,7 +1,7 @@
 import { useCallback, useContext } from "react";
 import { RadioButton } from "components/RadioButton";
 import { DocsContext } from "./context";
-import type { ScopeType } from "./types";
+import type { ScopeType, ScopesInMeta } from "./types";
 import type { IconName } from "components/Icon";
 import type { RadioButtonVariant } from "components/RadioButton";
 import styles from "./Scopes.module.css";
@@ -60,7 +60,7 @@ const ScopesItem = ({ scopeFeatures, currentScope }: ScopesItemProps) => {
 };
 
 interface ScopesProps {
-  scopes: string[];
+  scopes: ScopesInMeta;
 }
 
 export const Scopes = ({ scopes }: ScopesProps) => {
@@ -73,7 +73,7 @@ export const Scopes = ({ scopes }: ScopesProps) => {
     [setScope]
   );
 
-  if (!scopes || scopes[0] === "noScope" || scopes[0] === "") return <></>;
+  if (scopes[0] === "noScope" || scopes[0] === "") return <></>;
 
   const scopeItems = scopes?.map((item) => (
     <ScopesItem

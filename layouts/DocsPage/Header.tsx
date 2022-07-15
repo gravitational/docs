@@ -6,7 +6,7 @@ import { Scopes } from "./Scopes";
 import Versions from "./Versions";
 import { DocsContext } from "./context";
 import type { IconName } from "components/Icon";
-import type { VersionsInfo } from "./types";
+import type { VersionsInfo, ScopesInMeta } from "./types";
 import styles from "./Header.module.css";
 import forkmeUrl from "./assets/forkme.webp";
 
@@ -16,7 +16,7 @@ interface DocHeaderProps {
   versions: VersionsInfo;
   githubUrl: string;
   latest: string;
-  scopes: string | string[];
+  scopes: ScopesInMeta;
   getNewVersionPath?: (ver: string) => string;
 }
 
@@ -54,7 +54,7 @@ const DocHeader = ({
             disabled={scope === "cloud"}
             latest={latest}
           />
-          <Scopes scopes={scopes as string[]} />
+          <Scopes scopes={scopes} />
           {!!githubUrl && (
             <Button
               as="link"

@@ -24,6 +24,14 @@ export const getVersion = (filepath: string) => {
   return result ? result[1] : "";
 };
 
+/**
+ * The function is needed to find the corresponding object in the navigation
+ * by the passed page path. Since the navigation has a multi-level structure,
+ * the function applies recursion
+ * @param nav
+ * @param pagePath
+ * @returns NavigationItem or void
+ */
 const findNavItem = (
   nav: (NavigationCategory | NavigationItem)[],
   pagePath: string
@@ -54,13 +62,18 @@ function isComplexScopesConfig(smth: string): smth is ComplexScopesConfig {
   return smth.includes(",");
 }
 
-/*
- */
-
 type AnyNavItem = RawNavigationItem | NavigationItem;
 type AnyNav = NavigationCategory | AnyNavItem;
 type CookedNav = NavigationCategory | NavigationItem;
 
+/**
+ * Function to add the field `forScopes` to the navigation.
+ * If the configurator of the navigation does not specify the scopes
+ * in which the current fixture, then all scopes are added.
+ * If this page with additional navigation - `forScopes: ["noScope]`.
+ * If `forScopes` in navigation string, such string is processed into array.
+ *
+ */
 function addScopesToNavigation(nav: AnyNavItem[]): NavigationItem[];
 function addScopesToNavigation(nav: AnyNav[]): CookedNav[];
 function addScopesToNavigation(nav: AnyNav[]) {
@@ -97,11 +110,10 @@ function addScopesToNavigation(nav: AnyNav[]) {
   return transformedNav;
 }
 
-/*
+/**
  * Used by some remark plugins to resolve paths to assets based on the
  * current docs folders. E. g. remark-includes.
  */
-
 export const getVersionRootPath = (filepath: string) => {
   const version = getVersion(filepath);
 
@@ -113,10 +125,9 @@ export const getVersionRootPath = (filepath: string) => {
   }
 };
 
-/*
+/**
  * Generates link to use in "Improve" button on the docs pages.
  */
-
 export const getGithubURL = (filepath: string) => {
   const current = getVersion(filepath);
   const root = getVersionRootPath(filepath);
