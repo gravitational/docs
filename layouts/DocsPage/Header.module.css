@@ -1,14 +1,10 @@
 .wrapper {
-  display: flex;
   position: relative;
-  min-height: 168px;
+  display: flex;
   align-items: stretch;
-  background-image:
-    url("./assets/wave-purple.png"),
-    linear-gradient(125deg, #512fc9, #651fff);
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
+  min-height: 168px;
+  background-color: var(--color-white);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 24%);
 }
 
 .github-link {
@@ -18,9 +14,10 @@
 }
 
 .icon {
-  margin: var(--m-7) var(--m-2) 0 var(--m-7);
   flex-shrink: 0;
-  color: var(--color-white);
+  margin: var(--m-7) var(--m-2) 0 var(--m-7);
+  /* color: var(--color-white); */
+  color: var(--color-dark-purple);
 
   @media (--sm-scr) {
     display: none;
@@ -29,19 +26,22 @@
 
 .description {
   display: flex;
-  flex-grow: 1;
   flex-direction: column;
   padding-top: var(--m-4);
+  flex-grow: 1;
 
   @media (--sm-scr) {
+    margin-right: var(--m-2);
+    margin-left: var(--m-2);
     padding-top: var(--m-2);
   }
 }
 
 .subtitle {
+  margin: 0;
   font-size: var(--fs-text-sm);
   line-height: var(--lh-md);
-  color: var(--color-white);
+  color: var(--color-dark-purple);
 
   @media (--sm-scr) {
     display: none;
@@ -49,32 +49,41 @@
 }
 
 .title {
-  color: var(--color-white);
-  font-weight: var(--fw-regular);
   margin-top: 0;
+  font-weight: var(--fw-regular);
+  color: var(--color-dark-purple);
 
   @media (--sm-scr) {
-    margin-bottom: var(--m-8);
-    padding-left: var(--m-2);
+    margin-bottom: var(--m-6);
     padding-right: 120px;
     font-size: var(--fs-header-2);
   }
 
   @media (--md-scr) {
     margin-bottom: auto;
-    padding-left: 0;
     padding-right: var(--m-5);
+    padding-left: 0;
     font-size: var(--fs-header-1);
   }
 }
 
+.scopeInfo {
+  margin-top: var(--m-1-5);
+  margin-bottom: 0;
+  color: var(--color-dark-purple);
+}
+
 .dropdowns {
   display: flex;
-  margin: var(--m-2);
   align-items: center;
+  margin: var(--m-2);
 
   @media (--md-scr) {
     margin: var(--m-2) var(--m-6) var(--m-2) 0;
+  }
+
+  @media (--sm-scr) {
+    margin: var(--m-2) 0;
   }
 }
 

@@ -1,16 +1,19 @@
-.wrapper {
-  @media (--sm-scr) {
-    width: auto;
-  }
-
-  @media (--md-scr) {
-    width: 150px;
-  }
+.list {
+  display: flex;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: var(--m-4);
+  padding-left: 0;
+  list-style: none;
 }
 
 .item {
   display: flex;
   align-items: center;
+
+  & + .item {
+    margin-left: var(--m-1);
+  }
 }
 
 .icon {

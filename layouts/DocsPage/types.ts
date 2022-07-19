@@ -3,16 +3,41 @@
 import type { IconName } from "components/Icon/types";
 import { VideoBarProps } from "components/VideoBar/types";
 
-export const scopeValues = ["oss", "cloud", "enterprise"] as const;
+export const scopeValues = ["oss", "enterprise", "cloud"] as const;
 
 export type ScopeType = typeof scopeValues[number];
 export type ScopesType = ScopeType | ScopeType[];
 
-export interface NavigationItem {
+export type ComplexScopesConfig =
+  | "oss,cloud"
+  | "oss,enterprise"
+  | "enterprise,oss"
+  | "enterprise,cloud"
+  | "cloud,oss"
+  | "cloud,enterprise"
+  | "oss,enterprise,cloud"
+  | "oss,cloud,enterprise"
+  | "enterprise,oss,cloud"
+  | "enterprise,cloud,oss"
+  | "cloud,enterprise,oss"
+  | "cloud,oss,enterprise";
+
+type ScopesConfig = ScopeType | ComplexScopesConfig;
+
+export type ScopesInMeta = [""] | ["noScope"] | ScopeType[];
+
+interface BaseNavigationItem {
   title: string;
   slug: string;
   hideInScopes?: ScopesType;
   entries?: NavigationItem[];
+}
+export interface RawNavigationItem extends BaseNavigationItem {
+  forScopes?: ScopesConfig | ScopeType[];
+}
+
+export interface NavigationItem extends BaseNavigationItem {
+  forScopes: ScopesInMeta;
 }
 
 export interface NavigationCategory {
@@ -55,4 +80,5 @@ export interface PageMeta {
   videoBanner?: VideoBarProps;
   navigation: NavigationCategory[];
   versions: VersionsInfo;
+  scopes: ScopesInMeta;
 }

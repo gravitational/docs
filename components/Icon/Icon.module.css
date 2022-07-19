@@ -3,6 +3,10 @@
   width: var(--size);
   height: var(--size);
 
+  &.xxs {
+    --size: 10px;
+  }
+
   &.xs {
     --size: 12px;
   }

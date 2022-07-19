@@ -5,7 +5,7 @@ import styles from "./Icon.module.css";
 
 export interface IconProps {
   name: IconName;
-  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  size?: "xxs" | "xs" | "sm" | "md" | "lg" | "xl";
   className?: string;
 }
 

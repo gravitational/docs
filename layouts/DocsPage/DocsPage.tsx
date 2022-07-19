@@ -10,13 +10,13 @@ import Link, { useCurrentHref } from "components/Link";
 import Notice from "components/Notice";
 import VideoBar from "components/VideoBar";
 import { VarList } from "components/Variables";
+import { useFindDestinationPath } from "utils/useFindDestinationPath";
 import { components } from "./components";
 import { DocsContext } from "./context";
 import Header from "./Header";
 import Footer from "./Footer";
 import Navigation, { getCurrentCategoryIndex } from "./Navigation";
-import { PageMeta } from "./types";
-import { useFindDestinationPath } from "utils/useFindDestinationPath";
+import type { PageMeta } from "./types";
 
 import styles from "./DocsPage.module.css";
 
@@ -36,19 +36,28 @@ const DocsPage = ({
     navigation,
     versions,
     githubUrl,
+    scopes,
   },
   tableOfConents,
   children,
 }: DocsPageProps) => {
   const route = useCurrentHref();
-  const { setVersions } = useContext(DocsContext);
+  const { setVersions, scope, setScope } = useContext(DocsContext);
 
   const { current, latest, available } = versions;
   const getPath = useFindDestinationPath(versions);
 
   useEffect(() => {
     setVersions(versions);
-  }, [versions, setVersions]);
+
+    if (
+      scopes[0] !== "" &&
+      scopes[0] !== "noScope" &&
+      !scopes.includes(scope)
+    ) {
+      setScope(scopes[0]);
+    }
+  }, [versions, setVersions, setScope, scopes, scope]);
 
   const isSectionLayout = layout === "section";
   const isTocVisible = (!layout || layout === "doc") && tableOfConents.length;
@@ -85,6 +94,7 @@ const DocsPage = ({
             icon={icon}
             getNewVersionPath={getPath}
             latest={latest}
+            scopes={scopes}
           />
           {videoBanner && (
             <VideoBar className={styles.video} {...videoBanner} />

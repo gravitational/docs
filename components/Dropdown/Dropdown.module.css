@@ -1,21 +1,25 @@
 .input {
   display: inline-flex;
   width: 100%;
-  white-space: nowrap;
   color: var(--color-white);
+  white-space: nowrap;
+
+  &.purple {
+    color: var(--color-dark-purple);
+  }
 }
 
 .button {
   display: flex;
   align-items: center;
-  font-weight: var(--fw-bold);
+  width: 100%;
+  padding: 0 var(--m-1);
   line-height: 30px;
-  cursor: pointer;
+  font-weight: var(--fw-bold);
   border: 1px solid var(--color-white);
   border-radius: var(--r-default);
-  padding: 0 var(--m-1);
-  width: 100%;
   transition: background-color var(--t-interaction);
+  cursor: pointer;
 
   @media (--sm-scr) {
     font-size: var(--fs-text-md);
@@ -28,8 +32,8 @@
   &:active,
   &:focus,
   &:hover {
-    outline: none;
     background-color: rgba(255 255 255 / 12%);
+    outline: none;
   }
 
   &[aria-disabled="true"] {
@@ -40,12 +44,25 @@
     width: 16px;
     height: 16px;
     margin-left: var(--m-2);
-    transition: transform var(--t-interaction);
     transform: rotate(0deg);
+    transition: transform var(--t-interaction);
   }
 
   & [data-reach-listbox-arrow][data-expanded] {
     transform: rotate(180deg);
+  }
+
+  &.purple {
+    background-color: #4d2fc61a;
+    transition: border-color var(--t-interaction);
+    border-color: transparent;
+
+    &:active,
+    &:focus,
+    &:hover {
+      border-color: var(--color-dark-purple);
+      outline: none;
+    }
   }
 }
 
@@ -60,11 +77,11 @@
 }
 
 .option {
-  font-weight: bold;
-  line-height: 30px;
   padding: 0 var(--m-1);
-  cursor: pointer;
+  line-height: 30px;
+  font-weight: bold;
   transition: background var(--t-interaction);
+  cursor: pointer;
 
   @media (--sm-scr) {
     font-size: var(--fs-text-md);

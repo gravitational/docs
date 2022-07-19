@@ -10,7 +10,6 @@ import {
 import "@reach/listbox/styles.css";
 import Icon from "components/Icon";
 import styles from "./Dropdown.module.css";
-import { VersionsDropdown } from "layouts/DocsPage/types";
 
 export type DropdownProps<T> = {
   options: T[];
@@ -23,6 +22,7 @@ export type DropdownProps<T> = {
   icon?: ReactNode;
   disabled?: boolean;
   className?: string;
+  bgColor?: "purple";
 };
 
 const echo = <T,>(thing: T): any => thing;
@@ -40,15 +40,19 @@ export function Dropdown<T>({
   pickOption = echoOption,
   disabled,
   className,
+  bgColor,
 }: DropdownProps<T>) {
   return (
     <ListboxInput
       value={value}
       onChange={onChange}
       disabled={disabled}
-      className={cn(styles.input, className)}
+      className={cn(styles.input, bgColor && styles[bgColor], className)}
     >
-      <ListboxButton arrow={icon} className={styles.button}>
+      <ListboxButton
+        arrow={icon}
+        className={cn(styles.button, bgColor && styles[bgColor])}
+      >
         {renderOption(value ? pickOption(options, value) : options[0])}
       </ListboxButton>
       <ListboxPopover className={styles.popover}>

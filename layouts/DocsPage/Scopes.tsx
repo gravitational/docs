@@ -1,69 +1,91 @@
-import cn from "classnames";
-import { useContext } from "react";
-import Icon, { IconName } from "components/Icon";
-import { Dropdown } from "components/Dropdown";
+import { useCallback, useContext } from "react";
+import { RadioButton } from "components/RadioButton";
 import { DocsContext } from "./context";
-import { ScopeType } from "./types";
+import type { ScopeType, ScopesInMeta } from "./types";
+import type { IconName } from "components/Icon";
+import type { RadioButtonVariant } from "components/RadioButton";
 import styles from "./Scopes.module.css";
 
-interface Option {
+interface ScopeDescription {
   value: ScopeType;
   icon: IconName;
   title: string;
+  color: RadioButtonVariant;
 }
 
-const options: Option[] = [
-  {
-    icon: "code",
+const SCOPE_DESCRIPTIONS: Record<
+  "oss" | "enterprise" | "cloud",
+  ScopeDescription
+> = {
+  oss: {
+    icon: "code3",
     value: "oss",
     title: "OpenSource",
+    color: "gray",
   },
-  {
-    icon: "building",
+  enterprise: {
+    icon: "building2",
     value: "enterprise",
     title: "Enterprise",
+    color: "green",
   },
-  {
-    icon: "clouds",
+  cloud: {
+    icon: "cloud2",
     value: "cloud",
     title: "Cloud",
+    color: "blue",
   },
-];
+};
 
 interface ScopesItemProps {
-  icon: IconName;
-  children: React.ReactNode;
+  scopeFeatures: ScopeDescription;
+  currentScope: ScopeType;
 }
 
-const ScopesItem = ({ icon, children }: ScopesItemProps) => {
+const ScopesItem = ({ scopeFeatures, currentScope }: ScopesItemProps) => {
   return (
-    <div className={styles.item}>
-      <Icon name={icon} className={styles.icon} />
-      {children}
-    </div>
+    <li className={styles.item}>
+      <RadioButton
+        variant={scopeFeatures.color}
+        className={styles.button}
+        name="scope"
+        id={scopeFeatures.value}
+        value={scopeFeatures.value}
+        label={scopeFeatures.title}
+        icon={scopeFeatures.icon}
+        checked={scopeFeatures.value === currentScope}
+      />
+    </li>
   );
 };
 
-const renderScope = (scope: Option) => (
-  <ScopesItem icon={scope.icon}>{scope.title}</ScopesItem>
-);
+interface ScopesProps {
+  scopes: ScopesInMeta;
+}
 
-const pickId = ({ value }: Option) => value;
-const pickOption = (options: Option[], id: string) =>
-  options.find(({ value }) => value === id);
-
-export const Scopes = ({ className }: { className?: string }) => {
+export const Scopes = ({ scopes }: ScopesProps) => {
   const { scope, setScope } = useContext(DocsContext);
 
-  return (
-    <Dropdown
-      className={cn(styles.wrapper, className)}
-      value={scope}
-      options={options}
-      onChange={setScope}
-      renderOption={renderScope}
-      pickId={pickId}
-      pickOption={pickOption}
+  const onChange = useCallback(
+    (event) => {
+      setScope(event.target.value);
+    },
+    [setScope]
+  );
+
+  if (scopes[0] === "noScope" || scopes[0] === "") return <></>;
+
+  const scopeItems = scopes?.map((item) => (
+    <ScopesItem
+      key={SCOPE_DESCRIPTIONS[item].value}
+      scopeFeatures={SCOPE_DESCRIPTIONS[item]}
+      currentScope={scope}
     />
+  ));
+
+  return (
+    <ul className={styles.list} onChange={onChange}>
+      {scopeItems}
+    </ul>
   );
 };

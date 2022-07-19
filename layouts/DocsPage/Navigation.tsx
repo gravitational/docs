@@ -6,10 +6,50 @@ import Search from "components/Search";
 import Icon from "components/Icon";
 import Link, { useCurrentHref } from "components/Link";
 import { getScopeFromUrl } from "./context";
-import { NavigationItem, NavigationCategory } from "./types";
+import {
+  NavigationItem,
+  NavigationCategory,
+  ScopeType,
+  ScopesInMeta,
+} from "./types";
 import styles from "./Navigation.module.css";
 
 const SCOPELESS_HREF_REGEX = /\?|\#/;
+
+const SCOPE_DICTIONARY: Record<string, ScopeType> = {
+  code3: "oss",
+  building2: "enterprise",
+  cloud2: "cloud",
+};
+
+const getScopeIcons = (scopes: ScopesInMeta) => {
+  if (scopes[0] === "noScope" || scopes[0] === "") {
+    return;
+  }
+
+  const scopeIcons = Object.keys(SCOPE_DICTIONARY).map(
+    (scope: "code3" | "building2" | "cloud2") => {
+      const hideScope = !scopes.includes(SCOPE_DICTIONARY[scope]);
+      const ariaLabel = hideScope ? "" : SCOPE_DICTIONARY[scope];
+
+      return (
+        <li
+          className={cn(
+            styles["scope-item"],
+            hideScope && styles["non-visible"]
+          )}
+          key={scope}
+          aria-label={ariaLabel}
+          aria-hidden={hideScope}
+        >
+          <Icon name={scope} size="xxs" />
+        </li>
+      );
+    }
+  );
+
+  return <ul className={styles["scope-list"]}>{scopeIcons}</ul>;
+};
 
 interface DocsNavigationItemsProps {
   entries: NavigationItem[];
@@ -48,6 +88,7 @@ const DocsNavigationItems = ({
                   onClick={onClick}
                 >
                   {entry.title}
+                  {!!entry.forScopes?.length && getScopeIcons(entry.forScopes)}
                   {!!entry.entries?.length && (
                     <Icon
                       size="sm"
