@@ -11,7 +11,7 @@ import {
   TileListItem,
   TileImage,
 } from "components/Tile";
-import { Var } from "components/Variables";
+import { Var, VarList } from "components/Variables";
 import Details from "components/Details";
 import {
   Code,
@@ -77,4 +77,5 @@ export const components = {
   Snippet,
   Details,
   Var,
+  VarList,
 };
