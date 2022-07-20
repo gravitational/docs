@@ -84,7 +84,7 @@ const getChildrenNode = (content: string): MdxastNode[] => {
     let newContent = content.replace("isGlobal", "");
 
     for (let i = 0; i < contentVars.length; i++) {
-      if (newContent.includes("description=")) {
+      if (contentVars[i].includes("description=")) {
         newContent = newContent.replace(
           contentVars[i].match(/description="(.*?)"/)[1],
           ""
