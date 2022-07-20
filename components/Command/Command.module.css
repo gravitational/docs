@@ -64,9 +64,31 @@
     content: attr(data-content);
   }
 
+  & :global {
+    & .wrapper-input input {
+      color: var(--color-warning);
+      background-color: var(--color-code);
+      transition: background-color var(--t-interaction);
+    }
+
+    & .wrapper-input input::placeholder {
+      color: var(--color-light-gray);
+    }
+
+    & .wrapper-input svg {
+      color: var(--color-warning);
+    }
+  }
+
   &:hover,
   &:focus {
     background-color: var(--color-darkest);
+
+    & :global {
+      & .wrapper-input input {
+        background-color: var(--color-darkest);
+      }
+    }
   }
 
   &:hover .button,

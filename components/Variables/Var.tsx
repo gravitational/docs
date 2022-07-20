@@ -1,5 +1,6 @@
 import cn from "classnames";
 import { useCallback, useContext, useEffect } from "react";
+import Icon from "components/Icon";
 import { VarsContext } from "./context";
 import type { VarsContextProps } from "./context";
 import styles from "./Var.module.css";
@@ -46,7 +47,7 @@ export const Var = ({
         value={val}
       />
       <span className={styles["fake-field"]}>{val}</span>
-      <span className={styles.icon}></span>
+      <Icon name="edit" className={styles.icon} />
     </>
   );
 

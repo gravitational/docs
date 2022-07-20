@@ -21,6 +21,7 @@ export { default as database } from "./svg/database.svg?react";
 export { default as desktop } from "./svg/desktop.svg?react";
 export { default as download } from "./svg/download.svg?react";
 export { default as earth } from "./svg/earth.svg?react";
+export { default as edit } from "./svg/edit.svg?react";
 export { default as ellipsis } from "./svg/ellipsis.svg?react";
 export { default as error } from "./svg/error.svg?react";
 export { default as flag } from "./svg/flag.svg?react";

@@ -52,8 +52,6 @@
   z-index: 2;
   width: 16px;
   height: 16px;
-  background-image: url("assets/edit.svg");
-  background-repeat: no-repeat;
-  background-size: cover;
+  color: var(--color-dark-purple);
   transform: translateY(-50%);
 }
