@@ -53,9 +53,8 @@ export const VarsProvider = ({ children }: VarsProviderProps) => {
   const [fieldDescriptions, setFieldDescriptions] = useState({});
 
   const setField = useCallback(
-    (name, value = "", description = "") => {
+    (name, value = "") => {
       setFields((f) => ({ ...f, [name]: value }));
-      setFieldDescriptions((f) => ({ ...f, [name]: description }));
 
       if (globalFields[name]) {
         saveValue(name, value);
@@ -66,6 +65,10 @@ export const VarsProvider = ({ children }: VarsProviderProps) => {
 
   const addField = useCallback(
     (name, isGlobal, description) => {
+      if (description) {
+        setFieldDescriptions((d) => ({ ...d, [name]: description }));
+      }
+
       if ((isGlobal && name in globalFields) || name in fields) {
         return;
       }
@@ -74,11 +77,7 @@ export const VarsProvider = ({ children }: VarsProviderProps) => {
         setGlobalFields((f) => ({ ...f, [name]: true }));
       }
 
-      setField(
-        name,
-        isGlobal ? getValue(name) : "",
-        description ? description : ""
-      );
+      setField(name, isGlobal ? getValue(name) : "");
     },
     [setField, fields, globalFields]
   );
