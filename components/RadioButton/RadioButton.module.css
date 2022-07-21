@@ -48,6 +48,10 @@
     color: var(--color-light-blue);
     background-color: var(--color-white);
   }
+
+  @media (--sm-scr) {
+    font-size: var(--fs-text-md);
+  }
 }
 
 .input:hover + .label {

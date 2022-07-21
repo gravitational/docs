@@ -50,11 +50,12 @@ const DocHeader = ({
         <div className={styles.dropdowns}>
           <Versions
             {...versions}
+            className={styles.versions}
             getNewVersionPath={getNewVersionPath}
             disabled={scope === "cloud"}
             latest={latest}
           />
-          <Scopes scopes={scopes} />
+          <Scopes className={styles.scopes} scopes={scopes} />
           {!!githubUrl && (
             <Button
               as="link"
