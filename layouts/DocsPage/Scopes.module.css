@@ -5,6 +5,10 @@
   margin-left: var(--m-4);
   padding-left: 0;
   list-style: none;
+
+  @media (--sm-scr) {
+    margin-left: 0;
+  }
 }
 
 .item {
@@ -13,16 +17,5 @@
 
   & + .item {
     margin-left: var(--m-1);
-  }
-}
-
-.icon {
-  width: 20px;
-  height: 20px;
-  margin: -2px var(--m-1) 0 0;
-  opacity: 0.56;
-
-  @media (--sm-scr) {
-    display: none;
   }
 }
