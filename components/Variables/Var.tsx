@@ -10,7 +10,6 @@ interface VarProps {
   description?: string;
   needLabel?: boolean;
   isGlobal?: boolean;
-  isDictionary?: boolean;
 }
 
 export const Var = ({
@@ -18,7 +17,6 @@ export const Var = ({
   description = "",
   needLabel = false,
   isGlobal = false,
-  isDictionary = false,
 }: VarProps) => {
   const { fields, setField, addField } =
     useContext<VarsContextProps>(VarsContext);
@@ -52,7 +50,7 @@ export const Var = ({
   );
 
   if (needLabel) {
-    if (isDictionary && description) {
+    if (description) {
       return (
         <label className={styles.label}>
           {description}:{input}

@@ -14,7 +14,6 @@ export const VarList = () => {
         description={fieldDescriptions[item]}
         needLabel
         isGlobal
-        isDictionary
       />
     </li>
   ));
@@ -25,12 +24,7 @@ export const VarList = () => {
 
   const pageFieldList = pageFields.map((item) => (
     <li className={styles.item} key={item}>
-      <Var
-        name={item}
-        description={fieldDescriptions[item]}
-        needLabel
-        isDictionary
-      />
+      <Var name={item} description={fieldDescriptions[item]} needLabel />
     </li>
   ));
 

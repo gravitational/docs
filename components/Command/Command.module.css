@@ -67,8 +67,7 @@
   & :global {
     & .wrapper-input input {
       color: var(--color-warning);
-      background-color: var(--color-code);
-      transition: background-color var(--t-interaction);
+      background-color: transparent;
     }
 
     & .wrapper-input input::placeholder {
@@ -83,12 +82,6 @@
   &:hover,
   &:focus {
     background-color: var(--color-darkest);
-
-    & :global {
-      & .wrapper-input input {
-        background-color: var(--color-darkest);
-      }
-    }
   }
 
   &:hover .button,
