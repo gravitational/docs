@@ -49,18 +49,12 @@ export const Var = ({
     </>
   );
 
-  if (needLabel) {
-    if (description) {
-      return (
-        <label className={styles.label}>
-          {description}:{input}
-        </label>
-      );
-    }
+  const label = description ? `${description}` : `${name}`;
 
+  if (needLabel) {
     return (
       <label className={styles.label}>
-        {name}:{input}
+        {label}:{input}
       </label>
     );
   }
