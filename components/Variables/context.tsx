@@ -7,7 +7,7 @@ export interface VarsContextProps {
   globalFields: {
     [name: string]: boolean;
   };
-  descriptionFields: {
+  fieldDescriptions: {
     [name: string]: string;
   };
   setField(name: string, value: string, description: string): void;
@@ -17,7 +17,7 @@ export interface VarsContextProps {
 export const VarsContext = createContext<VarsContextProps>({
   fields: {},
   globalFields: {},
-  descriptionFields: {},
+  fieldDescriptions: {},
   setField: () => {},
   addField: () => {},
 });
@@ -50,7 +50,7 @@ const getValue = (raw_name): string | void => {
 export const VarsProvider = ({ children }: VarsProviderProps) => {
   const [fields, setFields] = useState({});
   const [globalFields, setGlobalFields] = useState({});
-  const [descriptionFields, setDescriptionFields] = useState({});
+  const [fieldDescriptions, setFieldDescriptions] = useState({});
 
   const setField = useCallback(
     (name, value = "") => {
@@ -66,7 +66,7 @@ export const VarsProvider = ({ children }: VarsProviderProps) => {
   const addField = useCallback(
     (name, isGlobal, description) => {
       if (description) {
-        setDescriptionFields((d) => ({ ...d, [name]: description }));
+        setFieldDescriptions((d) => ({ ...d, [name]: description }));
       }
 
       if ((isGlobal && name in globalFields) || name in fields) {
@@ -86,11 +86,11 @@ export const VarsProvider = ({ children }: VarsProviderProps) => {
     () => ({
       fields,
       globalFields,
-      descriptionFields,
+      fieldDescriptions,
       setField,
       addField,
     }),
-    [fields, globalFields, descriptionFields, addField, setField]
+    [fields, globalFields, fieldDescriptions, addField, setField]
   );
 
   return <VarsContext.Provider value={value}>{children}</VarsContext.Provider>;

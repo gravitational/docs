@@ -49,7 +49,7 @@ export const Var = ({
     </>
   );
 
-  const label = description ? `${description}` : `${name}`;
+  const label = description ? description : name;
 
   if (needLabel) {
     return (

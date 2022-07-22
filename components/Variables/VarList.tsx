@@ -5,13 +5,13 @@ import type { VarsContextProps } from "./context";
 import styles from "./VarList.module.css";
 
 export const VarList = () => {
-  const { fields, globalFields, descriptionFields } =
+  const { fields, globalFields, fieldDescriptions } =
     useContext<VarsContextProps>(VarsContext);
   const globalFieldsList = Object.keys(globalFields).map((item) => (
     <li className={styles.item} key={item}>
       <Var
         name={item}
-        description={descriptionFields[item]}
+        description={fieldDescriptions[item]}
         needLabel
         isGlobal
       />
@@ -24,7 +24,7 @@ export const VarList = () => {
 
   const pageFieldList = pageFields.map((item) => (
     <li className={styles.item} key={item}>
-      <Var name={item} description={descriptionFields[item]} needLabel />
+      <Var name={item} description={fieldDescriptions[item]} needLabel />
     </li>
   ));
 
