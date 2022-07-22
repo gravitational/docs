@@ -10,7 +10,7 @@
     & .wrapper-input input {
       height: 16px;
       font-size: var(--fs-text-md);
-      color: var(--color-red);
+      color: var(--color-note);
       background-color: transparent;
       border: none;
     }
@@ -20,7 +20,7 @@
     }
 
     & .wrapper-input svg {
-      color: var(--color-red);
+      color: var(--color-note);
     }
   }
 }
