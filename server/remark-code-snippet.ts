@@ -48,20 +48,30 @@ const getTextChildren = (contentValue: string): MdxastNode => ({
 
 const getVariableNode = (
   value: string,
-  isGlobal: boolean
-): MdxJsxFlowElement => ({
-  type: "mdxJsxFlowElement",
-  name: "Var",
-  attributes: [
-    { type: "mdxJsxAttribute", name: "name", value },
-    {
-      type: "mdxJsxAttribute",
-      name: "isGlobal",
-      value: createMdxJsxAttributeValueExpression(`${isGlobal}`),
-    },
-  ],
-  children: [],
-});
+  isGlobal: boolean,
+  description: string | boolean
+): MdxJsxFlowElement => {
+  const descriptionValue = description ? description : "";
+
+  return {
+    type: "mdxJsxFlowElement",
+    name: "Var",
+    attributes: [
+      { type: "mdxJsxAttribute", name: "name", value },
+      {
+        type: "mdxJsxAttribute",
+        name: "isGlobal",
+        value: createMdxJsxAttributeValueExpression(`${isGlobal}`),
+      },
+      {
+        type: "mdxJsxAttribute",
+        name: "description",
+        value: `${descriptionValue}`,
+      },
+    ],
+    children: [],
+  };
+};
 
 const getChildrenNode = (content: string): MdxastNode[] => {
   const hasVariable = content?.includes("<Var");
@@ -71,17 +81,28 @@ const getChildrenNode = (content: string): MdxastNode[] => {
     const contentVars = content.match(/(?:\<Var .+?\/\>)/gm);
     const firstPartLine = content.split("<Var")[0];
     nodeChildren.push(getTextChildren(firstPartLine));
-    const newContent = content.replace("isGlobal", "");
+    let newContent = content.replace("isGlobal", "");
 
     for (let i = 0; i < contentVars.length; i++) {
+      if (contentVars[i].includes("description=")) {
+        newContent = newContent.replace(
+          contentVars[i].match(/description="(.*?)"/)[1],
+          ""
+        );
+        newContent = newContent.replace('description=""', "");
+      }
+
       let nextPartLine = newContent.split("/>")[i + 1];
       if (nextPartLine?.includes("<Var")) {
         nextPartLine = nextPartLine.split("<Var")[0];
       }
 
       const varName = contentVars[i].match(/name="(.*?)"/)[1];
+      const description =
+        contentVars[i].includes("description=") &&
+        contentVars[i].match(/description="(.*?)"/)[1];
       const isGlobal = contentVars[i].includes("isGlobal");
-      nodeChildren.push(getVariableNode(varName, isGlobal));
+      nodeChildren.push(getVariableNode(varName, isGlobal, description));
       nodeChildren.push(getTextChildren(nextPartLine));
     }
   } else {
