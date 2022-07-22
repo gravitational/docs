@@ -63,9 +63,8 @@ function ProductItem({ hit }) {
       foundContent = hit._snippetResult.content.value;
     }
   } else if (
-    hit._highlightResult.headers &&
-    hit._highlightResult.headers[0]?.matchedWords?.length >
-      hit._highlightResult.content?.matchedWords?.length
+    hit._highlightResult.headers?.[0].matchedWords?.length >
+    hit._highlightResult.content?.matchedWords?.length
   ) {
     foundHeader = hit._snippetResult.headers[0].value;
   } else {
