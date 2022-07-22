@@ -11,7 +11,7 @@
   padding: var(--m-0-5) var(--m-3) var(--m-0-5) var(--m-0-5);
   font-family: var(--font-monospace);
   font-size: var(--fs-text-lg);
-  color: var(--color-note);
+  color: var(--color-light-blue);
   border: 1px solid transparent;
   border-radius: var(--r-default);
   cursor: pointer;
@@ -52,6 +52,6 @@
   z-index: 2;
   width: 16px;
   height: 16px;
-  color: var(--color-note);
+  color: var(--color-light-blue);
   transform: translateY(-50%);
 }
