@@ -1,3 +1,4 @@
+import cn from "classnames";
 import { useCallback, useContext } from "react";
 import { RadioButton } from "components/RadioButton";
 import { DocsContext } from "./context";
@@ -61,9 +62,10 @@ const ScopesItem = ({ scopeFeatures, currentScope }: ScopesItemProps) => {
 
 interface ScopesProps {
   scopes: ScopesInMeta;
+  className?: string;
 }
 
-export const Scopes = ({ scopes }: ScopesProps) => {
+export const Scopes = ({ scopes, className }: ScopesProps) => {
   const { scope, setScope } = useContext(DocsContext);
 
   const onChange = useCallback(
@@ -84,7 +86,7 @@ export const Scopes = ({ scopes }: ScopesProps) => {
   ));
 
   return (
-    <ul className={styles.list} onChange={onChange}>
+    <ul className={cn(styles.list, className)} onChange={onChange}>
       {scopeItems}
     </ul>
   );
