@@ -1,5 +1,6 @@
 import Admonition from "components/Admonition";
 import Command, { CommandLine, CommandComment } from "components/Command";
+import InlineCode from "components/InlineCode";
 import Notice from "components/Notice";
 import ScopedBlock from "components/ScopedBlock";
 import Snippet from "components/Snippet";
@@ -11,7 +12,7 @@ import {
   TileListItem,
   TileImage,
 } from "components/Tile";
-import { Var } from "components/Variables";
+import { Var, VarList } from "components/Variables";
 import Details from "components/Details";
 import {
   Code,
@@ -64,6 +65,7 @@ export const components = {
   Command,
   CommandLine,
   CommandComment,
+  InlineCode,
   ScopedBlock,
   Tabs,
   TabItem,
@@ -77,4 +79,5 @@ export const components = {
   Snippet,
   Details,
   Var,
+  VarList,
 };

@@ -1,17 +1,20 @@
 import cn from "classnames";
 import { useCallback, useContext, useEffect } from "react";
+import Icon from "components/Icon";
 import { VarsContext } from "./context";
 import type { VarsContextProps } from "./context";
 import styles from "./Var.module.css";
 
 interface VarProps {
   name: string;
+  description?: string;
   needLabel?: boolean;
   isGlobal?: boolean;
 }
 
 export const Var = ({
   name,
+  description = "",
   needLabel = false,
   isGlobal = false,
 }: VarProps) => {
@@ -20,14 +23,14 @@ export const Var = ({
   const val = fields[name] || "";
 
   useEffect(() => {
-    addField(name, isGlobal);
-  }, [isGlobal, name, addField]);
+    addField(name, isGlobal, description);
+  }, [isGlobal, name, addField, description]);
 
   const onChange = useCallback(
     (event) => {
-      setField(name, event.target.value);
+      setField(name, event.target.value, description);
     },
-    [name, setField]
+    [name, setField, description]
   );
 
   const input = (
@@ -42,14 +45,16 @@ export const Var = ({
         value={val}
       />
       <span className={styles["fake-field"]}>{val}</span>
-      <span className={styles.icon}></span>
+      <Icon name="edit" className={styles.icon} />
     </>
   );
+
+  const label = description ? description : name;
 
   if (needLabel) {
     return (
       <label className={styles.label}>
-        {name}:{input}
+        {label}:{input}
       </label>
     );
   }

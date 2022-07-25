@@ -3,12 +3,6 @@
   list-style: none;
 }
 
-.item {
-  &::before {
-    content: "-- ";
-  }
-}
-
 .title {
   font-size: var(--fs-text-lg);
 }

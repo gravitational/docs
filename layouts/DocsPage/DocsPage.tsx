@@ -9,7 +9,6 @@ import SiteHeader from "components/Header";
 import Link, { useCurrentHref } from "components/Link";
 import Notice from "components/Notice";
 import VideoBar from "components/VideoBar";
-import { VarList } from "components/Variables";
 import { useFindDestinationPath } from "utils/useFindDestinationPath";
 import { components } from "./components";
 import { DocsContext } from "./context";
@@ -120,7 +119,6 @@ const DocsPage = ({
                 </Notice>
               )}
               <VarsProvider>
-                <VarList />
                 <div className={cn(styles.text, styles[layout])}>
                   <MDXProvider components={components}>{children}</MDXProvider>
                 </div>
