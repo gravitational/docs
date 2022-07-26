@@ -122,9 +122,13 @@
   display: flex;
   align-items: baseline;
   width: 38px;
-  margin-left: var(--m-1);
-  padding-left: 0;
+  margin-left: auto;
+  padding-left: var(--m-1);
   list-style: none;
+
+  & + .ellipsis {
+    margin-left: var(--m-0-5);
+  }
 }
 
 .scope-item {
@@ -140,15 +144,12 @@
 }
 
 .ellipsis {
-  position: absolute;
-  top: 50%;
-  right: var(--m-2);
+  align-self: center;
   color: var(--color-light-gray);
-  transform: translateY(-50%);
+}
 
-  .item-link.active & {
-    display: none;
-  }
+.link.active .ellipsis {
+  display: none;
 }
 
 .icon-arrow {
