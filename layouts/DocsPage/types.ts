@@ -69,7 +69,7 @@ export interface VersionsDropdown {
   deprecated: boolean;
 }
 
-export type LayoutName = "doc" | "section" | "tocless-doc";
+export type LayoutName = "doc" | "section" | "tocless-doc" | "search-results";
 
 export interface PageMeta {
   title?: string;

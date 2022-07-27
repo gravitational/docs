@@ -78,13 +78,15 @@ const DocsPage = ({
       />
       <SiteHeader />
       <main className={styles.wrapper}>
-        <div className={styles.navigation}>
-          <Navigation
-            data={navigation}
-            section={isSectionLayout}
-            currentVersion={current}
-          />
-        </div>
+        {layout !== "search-results" && (
+          <div className={styles.navigation}>
+            <Navigation
+              data={navigation}
+              section={isSectionLayout}
+              currentVersion={current}
+            />
+          </div>
+        )}
         <div className={styles.body}>
           <Header
             title={h1 || title}

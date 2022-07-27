@@ -237,6 +237,8 @@ export const normalize = (config: Config, version: string): Config => {
 /* Load, validate and normalize config. */
 
 export const loadConfig = (version: string) => {
+  if (!version) return { navigation: [] };
+
   const config = load(version);
 
   validateConfig<Config>(validator, config);

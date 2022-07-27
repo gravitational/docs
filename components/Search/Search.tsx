@@ -18,7 +18,9 @@ export const getSearchResults = async (query: string) => {
     });
 
     const response = await rawResponse.json();
-    return response.map((res) => ({ ...res, label: res.title }));
+    const results = response.map((res) => ({ ...res, label: res.title }));
+    sessionStorage.setItem("search", JSON.stringify({ ...results, query }));
+    return results;
   } catch (e) {
     console.error(e);
   }
