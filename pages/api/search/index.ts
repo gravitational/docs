@@ -27,7 +27,7 @@ export default async function handler(
       filters: `docs_ver:${docsVer}`,
       restrictHighlightAndSnippetArrays: true,
       attributesToHighlight: ["content", "headers"],
-      attributesToSnippet: ["content:20", "headers"],
+      attributesToSnippet: ["content:50", "headers"],
       snippetEllipsisText: "…",
       highlightPreTag: "<b class='found-part'>",
       highlightPostTag: "</b>",

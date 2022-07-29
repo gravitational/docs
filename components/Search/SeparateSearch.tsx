@@ -87,7 +87,7 @@ export default function SeparateSearch() {
         {results.map((r) => {
           return (
             <li key={r.objectID} className={styles["results-row"]}>
-              <ProductItem hit={r} />
+              <ProductItem hit={r} isExtended={true} />
             </li>
           );
         })}

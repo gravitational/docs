@@ -5,9 +5,10 @@ import "@algolia/autocomplete-theme-classic";
 
 interface ProductItemProps {
   hit: SearchResultRecord;
+  isExtended?: boolean;
 }
 
-export function ProductItem({ hit }: ProductItemProps) {
+export function ProductItem({ hit, isExtended }: ProductItemProps) {
   if (hit.objectID === "/docs/search-results/") {
     return (
       <a href={hit.objectID} className="aa-ItemLink">
@@ -25,6 +26,8 @@ export function ProductItem({ hit }: ProductItemProps) {
 
   let foundHeader = "";
   let foundContent = "";
+  let extendFoundContent = "";
+
   const exactHeaderMatch = hit._snippetResult.headers?.find(
     (header) => header.matchLevel === "full"
   );
@@ -32,6 +35,10 @@ export function ProductItem({ hit }: ProductItemProps) {
   if (hit._snippetResult.content?.matchLevel === "full" || exactHeaderMatch) {
     if (exactHeaderMatch) {
       foundHeader = exactHeaderMatch.value;
+
+      if (isExtended && hit._snippetResult.content) {
+        extendFoundContent = hit._snippetResult.content.value;
+      }
     } else {
       foundContent = hit._snippetResult.content.value;
     }
@@ -40,6 +47,10 @@ export function ProductItem({ hit }: ProductItemProps) {
     hit._highlightResult.content?.matchedWords?.length
   ) {
     foundHeader = hit._snippetResult.headers[0].value;
+
+    if (isExtended && hit._snippetResult.content) {
+      extendFoundContent = hit._snippetResult.content.value;
+    }
   } else {
     foundContent = hit._snippetResult.content.value;
   }
@@ -48,7 +59,9 @@ export function ProductItem({ hit }: ProductItemProps) {
     <a href={hit.objectID} className="aa-ItemLink">
       <div className="aa-ItemContent">
         <div className="aa-ItemTitle">
-          <p className={styles.title}>{hit.title}</p>
+          <p className={cn(styles.title, isExtended && styles["title-extend"])}>
+            {hit.title}
+          </p>
           {foundHeader && (
             <h3
               className={styles["found-header"]}
@@ -59,6 +72,12 @@ export function ProductItem({ hit }: ProductItemProps) {
             <p
               className={styles["found-content"]}
               dangerouslySetInnerHTML={{ __html: foundContent }}
+            ></p>
+          )}
+          {isExtended && extendFoundContent && (
+            <p
+              className={styles["found-content"]}
+              dangerouslySetInnerHTML={{ __html: extendFoundContent }}
             ></p>
           )}
         </div>
