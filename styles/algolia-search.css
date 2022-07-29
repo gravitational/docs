@@ -14,4 +14,30 @@
     color: #651fff;
     background-color: #d2dbdf;
   }
+
+  @media (--sm-scr) {
+    width: 100% !important;
+  }
+}
+
+.aa-List {
+  position: relative;
+}
+
+.aa-Item {
+  &:hover,
+  &:focus {
+    background-color: #eceaf9;
+  }
+}
+
+.aa-Item:first-child {
+  position: sticky;
+  top: -9px;
+  background-color: var(--color-white);
+
+  &:hover,
+  &:focus {
+    background-color: #eceaf9;
+  }
 }

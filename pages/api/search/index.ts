@@ -13,9 +13,13 @@ export default async function handler(
   res: NextApiResponse
 ) {
   let rawResults = [];
-  const docsVer = req.headers.referer.includes("ver/")
-    ? req.headers.referer.split("ver/")[1].split("/")[0]
-    : "current";
+  let docsVer = req.query.ver;
+
+  if (!docsVer) {
+    docsVer = req.headers.referer.includes("ver/")
+      ? req.headers.referer.split("ver/")[1].split("/")[0]
+      : "current";
+  }
 
   try {
     const { hits } = await index.search(req.query.query as string, {

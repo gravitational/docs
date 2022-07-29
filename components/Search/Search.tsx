@@ -1,29 +1,30 @@
-import React, { useEffect, useRef, createElement, Fragment } from "react";
-import styles from "./Search.module.css";
+import React, {
+  useEffect,
+  useRef,
+  createElement,
+  Fragment,
+  useContext,
+  useState,
+} from "react";
+import { useRouter } from "next/router";
+import { DocsContext } from "layouts/DocsPage/context";
 import { autocomplete } from "@algolia/autocomplete-js";
 import "@algolia/autocomplete-theme-classic";
 import { render } from "react-dom";
 import { debounced } from "utils/debounced";
+import { ProductItem } from "./ProductItem";
+import { getSearchResults, getEmptyNotice } from "./utils";
+import styles from "./Search.module.css";
 
-export interface SearchProps {
-  id?: string;
-  version?: string;
-  className?: string;
-}
-
-export const getSearchResults = async (query: string) => {
-  try {
-    const rawResponse = await fetch(`/docs/api/search/?query=${query}`, {
-      method: "GET",
-    });
-
-    const response = await rawResponse.json();
-    const results = response.map((res) => ({ ...res, label: res.title }));
-    sessionStorage.setItem("search", JSON.stringify({ ...results, query }));
-    return results;
-  } catch (e) {
-    console.error(e);
-  }
+const ITEM_LINK = {
+  content: "",
+  docs_ver: "",
+  headers: ["Just click here"],
+  label: "",
+  objectID: "/docs/search-results/",
+  title: "You can open the search results on a separate page",
+  _snippetResult: {},
+  _highlightResult: {},
 };
 
 const SearchAutocomplete = (props) => {
@@ -51,52 +52,10 @@ const SearchAutocomplete = (props) => {
   return <div className={styles["wrapper-autocomplete"]} ref={containerRef} />;
 };
 
-function ProductItem({ hit }) {
-  let foundHeader = "";
-  let foundContent = "";
-  const exactHeaderMatch = hit._snippetResult.headers?.find(
-    (header) => header.matchLevel === "full"
-  );
-
-  if (hit._snippetResult.content?.matchLevel === "full" || exactHeaderMatch) {
-    if (exactHeaderMatch) {
-      foundHeader = exactHeaderMatch.value;
-    } else {
-      foundContent = hit._snippetResult.content.value;
-    }
-  } else if (
-    hit._highlightResult.headers?.[0].matchedWords?.length >
-    hit._highlightResult.content?.matchedWords?.length
-  ) {
-    foundHeader = hit._snippetResult.headers[0].value;
-  } else {
-    foundContent = hit._snippetResult.content.value;
-  }
-
-  return (
-    <a href={hit.objectID} className="aa-ItemLink">
-      <div className="aa-ItemContent">
-        <div className="aa-ItemTitle">
-          <p className={styles.title}>{hit.title}</p>
-          {foundHeader && (
-            <h3
-              className={styles["found-header"]}
-              dangerouslySetInnerHTML={{ __html: foundHeader }}
-            ></h3>
-          )}
-          {foundContent && (
-            <p
-              className={styles["found-content"]}
-              dangerouslySetInnerHTML={{ __html: foundContent }}
-            ></p>
-          )}
-        </div>
-      </div>
-    </a>
-  );
-}
-
 export default function Search() {
+  const { versions } = useContext(DocsContext);
+  const router = useRouter();
+
   return (
     <>
       <SearchAutocomplete
@@ -107,15 +66,20 @@ export default function Search() {
             {
               sourceId: "docs_search",
               async getItems() {
-                const result = await getSearchResults(query);
-                return result;
+                const isCurrent = !router.asPath.includes("/ver/");
+                const items = await getSearchResults(
+                  query,
+                  isCurrent ? "current" : versions.current
+                );
+                if (items.length) items.unshift(ITEM_LINK);
+                return items;
               },
               templates: {
                 item({ item }) {
                   return <ProductItem hit={item} />;
                 },
                 noResults() {
-                  return `No results were found for the search '${query}'`;
+                  return getEmptyNotice(query);
                 },
               },
             },

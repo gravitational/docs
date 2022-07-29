@@ -1,0 +1,21 @@
+.title {
+  margin: 0;
+  font-size: var(--fs-text-sm);
+  color: var(--color-light-gray);
+}
+
+.found-header {
+  margin: 0;
+  font-size: var(--fs-text-lg);
+  color: var(--color-dark-purple);
+}
+
+.found-content {
+  margin: 0;
+  font-size: var(--fs-text-md);
+}
+
+.text {
+  margin-left: var(--m-1);
+  color: var(--color-dark-purple);
+}
