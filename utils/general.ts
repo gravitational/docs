@@ -1,5 +1,5 @@
-import { SEACH_RESULTS_KEY } from "components/Search/utils";
-import type { SearchResultMeta } from "components/Search/types";
+import { SEACH_RESULTS_KEY } from "../components/Search/utils";
+import type { SearchResultMeta } from "../components/Search/types";
 
 const pushVars = (rowTexts: string[], command: HTMLElement[]) => {
   for (const commandLine of command) {
