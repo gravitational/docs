@@ -41,5 +41,5 @@ export const getSearchResults = async (
 };
 
 export const getEmptyNotice = (query: string): string => {
-  return `No results were found for the search '${query}'`;
+  return `No results were found for the search: '${query}'`;
 };

@@ -2,13 +2,15 @@ import { useCallback, useEffect, useState } from "react";
 import { unpackSearchResults } from "utils/general";
 import { getEmptyNotice, getSearchResults } from "./utils";
 import { ProductItem } from "./ProductItem";
-import type { SearchResultRecord } from "./types";
+import type { SearchResultRecord, SearchResultMeta } from "./types";
 import styles from "./SeparateSearch.module.css";
 
-const SEARCH_THRESHOLD = 1000;
+const SEARCH_TIMEOUT = 1000;
 
 export default function SeparateSearch() {
-  const [savedSearchResults] = useState(() => unpackSearchResults());
+  const [savedSearchResults] = useState<undefined | SearchResultMeta>(() =>
+    unpackSearchResults()
+  );
   const version = savedSearchResults?.version || "current";
   const [delayed, setDelayed] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -48,7 +50,7 @@ export default function SeparateSearch() {
     const timer = setTimeout(() => {
       setDelayed(false);
       doSearch(value);
-    }, SEARCH_THRESHOLD);
+    }, SEARCH_TIMEOUT);
 
     return () => {
       stopped = true;

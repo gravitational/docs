@@ -14,9 +14,10 @@ import { render } from "react-dom";
 import { debounced } from "utils/debounced";
 import { ProductItem } from "./ProductItem";
 import { getSearchResults, getEmptyNotice } from "./utils";
+import type { SearchResultRecord } from "./types";
 import styles from "./Search.module.css";
 
-const ITEM_LINK = {
+const ITEM_LINK: SearchResultRecord = {
   content: "",
   docs_ver: "",
   headers: ["Just click here"],
@@ -38,6 +39,9 @@ const SearchAutocomplete = (props) => {
     const search = autocomplete({
       container: containerRef.current,
       renderer: { createElement, Fragment },
+      onSubmit() {
+        window.location.href = "/docs/search-results/";
+      },
       render({ children }, root) {
         render(children, root);
       },
