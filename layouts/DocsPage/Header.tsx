@@ -13,10 +13,10 @@ import forkmeUrl from "./assets/forkme.webp";
 interface DocHeaderProps {
   title: string;
   icon?: IconName;
-  versions: VersionsInfo;
-  githubUrl: string;
-  latest: string;
   scopes: ScopesInMeta;
+  githubUrl?: string;
+  latest?: string;
+  versions?: VersionsInfo;
   getNewVersionPath?: (ver: string) => string;
 }
 
@@ -48,13 +48,15 @@ const DocHeader = ({
         <p className={styles.subtitle}>Teleport</p>
         <h1 className={styles.title}>{title}</h1>
         <div className={styles.dropdowns}>
-          <Versions
-            {...versions}
-            className={styles.versions}
-            getNewVersionPath={getNewVersionPath}
-            disabled={scope === "cloud"}
-            latest={latest}
-          />
+          {versions && latest && (
+            <Versions
+              {...versions}
+              className={styles.versions}
+              getNewVersionPath={getNewVersionPath}
+              disabled={scope === "cloud"}
+              latest={latest}
+            />
+          )}
           <Scopes className={styles.scopes} scopes={scopes} />
           {!!githubUrl && (
             <Button

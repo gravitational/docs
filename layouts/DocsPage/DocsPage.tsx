@@ -85,6 +85,7 @@ const DocsPage = ({
             currentVersion={current}
           />
         </div>
+
         <div className={styles.body}>
           <Header
             title={h1 || title}
