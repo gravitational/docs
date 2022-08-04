@@ -8,7 +8,7 @@ import type { Redirect } from "next/dist/lib/load-custom-routes";
 
 import Ajv from "ajv";
 import { validateConfig } from "./config-common";
-import { resolve } from "path";
+import { resolve, join } from "path";
 import { existsSync, readFileSync } from "fs";
 import { isExternalLink, isHash, splitPath } from "../utils/url";
 import { NavigationCategory, NavigationItem } from "../layouts/DocsPage/types";
@@ -150,18 +150,60 @@ const validator = ajv.compile({
  * Also we check that all links ends with "/: for consistency.
  */
 
-const normalizeDocsUrl = (version: string, url: string, raw?: boolean) => {
+/*
+ * normalizeDocsUrl ensures that internal docs URLs include trailing slashes and
+ * adds the docs version to the URL. It also throws an error if the docs page
+ * corresponding to the URL does not exist. The assumption is that docs pages
+ * are stored in content/<version>/docs/pages. Callers can ignore errors for
+ * nonexistent files by setting `checkExistence` to false.
+ *
+ */
+export const normalizeDocsUrl = (
+  version: string,
+  url: string,
+  checkExistence: boolean = true
+) => {
   if (isExternalLink(url) || isHash(url)) {
     return url;
   }
 
-  if (!splitPath(url).path.endsWith("/")) {
-    const configPath = getConfigPath(version);
+  const path = splitPath(url).path;
+  const configPath = getConfigPath(version);
 
+  if (!path.endsWith("/")) {
     throw Error(`File ${configPath} misses trailing slash in '${url}' path.`);
   }
 
-  const addVersion = raw || latest !== version;
+  // Each URL in the docs config begins at docs/pages within a given version's
+  // content directory. Get the MDX file for a given URL and check if it
+  // exists in the filesystem. URL paths must point to (a) an MDX file with
+  // the same name as the final path segment; (b) a file named "index.mdx"; or
+  // (c) a file named "introduction.mdx".
+  const mdxPath = path.replace(/\/$/, ".mdx");
+  const docsPagePath = resolve(
+    join("content", version, "docs", "pages", mdxPath)
+  );
+
+  const indexPath = resolve(
+    join("content", version, "docs", "pages", path + "index.mdx")
+  );
+
+  const introPath = resolve(
+    join("content", version, "docs", "pages", path + "introduction.mdx")
+  );
+
+  if (
+    checkExistence &&
+    [docsPagePath, indexPath, introPath].find((p) => {
+      return existsSync(p);
+    }) == undefined
+  ) {
+    throw Error(
+      `URL ${path} in ${configPath} points to nonexistent file ${docsPagePath}`
+    );
+  }
+
+  const addVersion = latest !== version;
   const prefix = `${addVersion ? `/ver/${version}` : ""}`;
 
   return prefix + url;
@@ -210,7 +252,8 @@ const normalizeRedirects = (
   return redirects.map((redirect) => {
     return {
       ...redirect,
-      source: normalizeDocsUrl(version, redirect.source),
+      // Don't check for the existence of an MDX file for the redirect source
+      source: normalizeDocsUrl(version, redirect.source, false),
       destination: normalizeDocsUrl(version, redirect.destination),
     };
   });
