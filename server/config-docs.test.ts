@@ -35,9 +35,11 @@ Suite("Ensures that URLs correspond to docs pages", () => {
     }
   );
 
-  // This should not throw an error, since there's always going to be a root
+  // This should not throw an exception, since there's always going to be a root
   // path.
   normalizeDocsUrl(vers, "/");
+  // Disabling URL checking should not throw an exception
+  normalizeDocsUrl(vers, fakeURL, false);
 
   contentDir.closeSync();
 });
