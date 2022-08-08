@@ -107,6 +107,13 @@ const menu: MenuCategoryProps[] = [
           "Teleport Connect improves UX and identity-based access for the cloud",
         href: "/connect/",
       },
+      {
+        icon: "lock",
+        title: "Passwordless Infrastructure Access",
+        description:
+          "Instantly login to all your computing infrastructure using Passwordless",
+        href: "/passwordless/",
+      },
     ],
   },
   {
