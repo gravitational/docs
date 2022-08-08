@@ -1,47 +1,115 @@
+import { Redirect } from "next/dist/lib/load-custom-routes";
 import { suite } from "uvu";
 import * as assert from "uvu/assert";
-import { normalizeDocsUrl } from "./config-docs";
+import { Config, checkURLsForCorrespondingFiles } from "./config-docs";
 import { randomUUID } from "crypto";
-import { resolve } from "path";
+import { join } from "path";
 import { opendirSync } from "fs";
 
 const Suite = suite("server/config-docs");
 
 Suite("Ensures that URLs correspond to docs pages", () => {
-  // There's currently no way to pass an arbitrary directory path to
-  // normalizeDocsUrl, which assumes that docs pages are in
-  // "content/<version>/docs/pages. As a result, we define a fake docs page
-  // path by generating a UUID.
-  const fakeURL = "/" + randomUUID() + "/";
+  const conf: Config = {
+    navigation: [
+      {
+        icon: "bolt",
+        title: "Home",
+        entries: [
+          {
+            title: "Welcome",
+            slug: "/",
+            forScopes: ["oss"],
+          },
+        ],
+      },
+      {
+        icon: "bolt",
+        title: "About",
+        entries: [
+          {
+            title: "Introduction",
+            slug: "/about/",
+            forScopes: ["oss"],
+          },
+          {
+            title: "Projects",
+            slug: "/about/projects/",
+            forScopes: ["oss"],
+            entries: [
+              {
+                title: "Project 1",
+                slug: "/about/projects/project1/",
+                forScopes: ["oss"],
+              },
+              {
+                title: "Project 2",
+                slug: "/about/projects/project2/",
+                forScopes: ["oss"],
+              },
+              {
+                title: "Project 3",
+                slug: "/about/projects/project3/",
+                forScopes: ["oss"],
+              },
+            ],
+          },
+          {
+            title: "Team",
+            slug: "/about/team/",
+            forScopes: ["oss"],
+          },
+        ],
+      },
+      {
+        icon: "bolt",
+        title: "Contact",
+        entries: [
+          {
+            title: "Welcome",
+            slug: "/contact/",
+            forScopes: ["oss"],
+          },
+          {
+            title: "Offices",
+            slug: "/contact/offices/",
+            forScopes: ["oss"],
+          },
+        ],
+      },
+    ],
+    redirects: [
+      {
+        source: "/offices/",
+        destination: "/contact/offices/",
+        permanent: true,
+      },
+      {
+        source: "/project4/",
+        destination: "/about/projects/project4/",
+        permanent: true,
+      },
+      {
+        source: "/project3",
+        destination: "/about/projects/project3/",
+        permanent: true,
+      },
+    ],
+  };
 
-  // Use the first directory we find in the content directory to get a
-  // version. We don't care which version it is since we'll be creating a fake
-  // file there anyway, but we do need a real config.json file to load.
-  const contentPath = resolve("content");
-  const contentDir = opendirSync(contentPath);
-  const vers = contentDir.readSync().name;
-
-  // Make sure there aren't any unexpected files in the user's content directory
-  if (vers.match(/^[0-9]+\.[0-9]+$/) == null) {
-    throw Error("unexpected subdirectory in the content directory: " + vers);
-  }
-
-  assert.throws(
-    () => {
-      normalizeDocsUrl(vers, fakeURL);
-    },
-    (err) => {
-      return err.message.includes(fakeURL);
-    }
+  const actual = checkURLsForCorrespondingFiles(
+    join("server", "fixtures", "fake-content"),
+    conf.navigation,
+    conf.redirects
   );
 
-  // This should not throw an exception, since there's always going to be a root
-  // path.
-  normalizeDocsUrl(vers, "/");
-  // Disabling URL checking should not throw an exception
-  normalizeDocsUrl(vers, fakeURL, false);
+  const expected = [
+    "/about/projects/",
+    "/about/projects/project3/",
+    "/contact/",
+    "/about/projects/project4/",
+  ];
 
-  contentDir.closeSync();
+  assert.equal(actual, expected);
 });
 
 Suite.run();
