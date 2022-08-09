@@ -8,7 +8,7 @@ import type { Redirect } from "next/dist/lib/load-custom-routes";
 
 import Ajv from "ajv";
 import { validateConfig } from "./config-common";
-import { resolve } from "path";
+import { resolve, join } from "path";
 import { existsSync, readFileSync } from "fs";
 import { isExternalLink, isHash, splitPath } from "../utils/url";
 import { NavigationCategory, NavigationItem } from "../layouts/DocsPage/types";
@@ -150,21 +150,103 @@ const validator = ajv.compile({
  * Also we check that all links ends with "/: for consistency.
  */
 
-const normalizeDocsUrl = (version: string, url: string, raw?: boolean) => {
+/*
+ * normalizeDocsUrl ensures that internal docs URLs include trailing slashes and
+ * adds the docs version to the URL.*
+ */
+export const normalizeDocsUrl = (version: string, url: string) => {
   if (isExternalLink(url) || isHash(url)) {
     return url;
   }
 
-  if (!splitPath(url).path.endsWith("/")) {
-    const configPath = getConfigPath(version);
+  const path = splitPath(url).path;
+  const configPath = getConfigPath(version);
 
+  if (!path.endsWith("/")) {
     throw Error(`File ${configPath} misses trailing slash in '${url}' path.`);
   }
 
-  const addVersion = raw || latest !== version;
+  const addVersion = latest !== version;
   const prefix = `${addVersion ? `/ver/${version}` : ""}`;
 
   return prefix + url;
+};
+
+const getPathsForNavigationEntries = (entries: NavigationItem[]): string[] => {
+  return entries.reduce((allSlugs, currentEntry) => {
+    let slugs = [currentEntry.slug];
+    if (currentEntry.entries) {
+      const moreSlugs = getPathsForNavigationEntries(currentEntry.entries);
+      slugs.push(...moreSlugs);
+    }
+    allSlugs.push(...slugs);
+    return allSlugs;
+  }, []);
+};
+
+// checkURLsForCorrespondingFiles attempts to open the URL paths provided in the
+// navigation config provided by categories and the destination paths provided
+// in redirects. It converts each URL path into a filename in the content
+// directory rooted at dirRoot. If it fails to open a file corresponding to a
+// URL path, it adds the file to an array of strings. It returns the resulting
+// array.
+export const checkURLsForCorrespondingFiles = (
+  dirRoot: string,
+  categories: NavigationCategory[],
+  redirects: Redirect[]
+): string[] => {
+  let result: string[] = [];
+  categories.forEach((cat) => {
+    let slugs = getPathsForNavigationEntries(cat.entries);
+    result = result.concat(slugs.flat());
+  });
+
+  result = result.concat(
+    redirects.map((r) => {
+      // We only check destinations because there is no expectation that the
+      // source URL corresponds with a file.
+      return r.destination;
+    })
+  );
+
+  // Deduplicate result
+  result = Array.from(new Set(result).values());
+
+  return result.reduce((prev, curr) => {
+    if (correspondingFileExistsForURL(dirRoot, curr)) {
+      return prev;
+    }
+    prev.push(curr);
+    return prev;
+  }, []);
+};
+
+// checkURLForCorrespondingFile determines whether a file exists in the content
+// directory rooted at dirRoot for the file corresponding to the provided URL path.// If a file does not exist, it returns false.
+const correspondingFileExistsForURL = (
+  dirRoot: string,
+  urlpath: string
+): boolean => {
+  // Each URL in the docs config begins at docs/pages within a given version's
+  // content directory. Get the MDX file for a given URL and check if it
+  // exists in the filesystem. URL paths must point to (a) an MDX file with
+  // the same name as the final path segment; (b) a file named "index.mdx"; or
+  // (c) a file named "introduction.mdx".
+  const mdxPath = urlpath.replace(/\/$/, ".mdx");
+  const docsPagePath = resolve(join(dirRoot, mdxPath));
+
+  const indexPath = resolve(join(dirRoot, urlpath + "index.mdx"));
+
+  const introPath = resolve(join(dirRoot, urlpath + "introduction.mdx"));
+
+  if (
+    [docsPagePath, indexPath, introPath].find((p) => {
+      return existsSync(p);
+    }) == undefined
+  ) {
+    return false;
+  }
+  return true;
 };
 
 const normalizeDocsUrls = (
@@ -210,6 +292,7 @@ const normalizeRedirects = (
   return redirects.map((redirect) => {
     return {
       ...redirect,
+      // Don't check for the existence of an MDX file for the redirect source
       source: normalizeDocsUrl(version, redirect.source),
       destination: normalizeDocsUrl(version, redirect.destination),
     };
@@ -238,6 +321,20 @@ export const normalize = (config: Config, version: string): Config => {
 
 export const loadConfig = (version: string) => {
   const config = load(version);
+
+  const badSlugs = checkURLsForCorrespondingFiles(
+    join("content", version, "docs", "pages"),
+    config.navigation,
+    config.redirects
+  );
+
+  if (badSlugs.length > 0) {
+    throw new Error(
+      "The following navigation slugs or redirect destinations do not" +
+        " correspond to an actual MDX file:\n\t- " +
+        badSlugs.join("\n\t- ")
+    );
+  }
 
   validateConfig<Config>(validator, config);
 
