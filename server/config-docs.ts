@@ -330,8 +330,10 @@ export const loadConfig = (version: string) => {
 
   if (badSlugs.length > 0) {
     throw new Error(
-      "The following navigation slugs or redirect destinations do not" +
-        " correspond to an actual MDX file:\n\t- " +
+      "Error parsing docs config file " +
+        join("content", version, "docs", "config.json") +
+        ": The following navigation slugs or redirect destinations do not " +
+        "correspond to actual MDX files:\n\t- " +
         badSlugs.join("\n\t- ")
     );
   }
