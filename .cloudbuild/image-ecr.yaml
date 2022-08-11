@@ -1,0 +1,19 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    secretEnv:
+      - STAGING_DOCS_ECR_KEY
+      - STAGING_DOCS_ECR_SECRET
+      - PRODUCTION_DOCS_ECR_KEY
+      - PRODUCTION_DOCS_ECR_SECRET
+    script: .cloudbuild/publish-image-ecr.sh 
+availableSecrets:
+  secretManager:
+  - versionName: projects/771512790633/secrets/ci_docs_ecr_staging_key/versions/1
+    env: STAGING_DOCS_ECR_KEY
+  - versionName: projects/771512790633/secrets/ci_docs_ecr_staging_secret/versions/1
+    env: STAGING_DOCS_ECR_SECRET
+  - versionName: projects/771512790633/secrets/ci_docs_ecr_production_key/versions/1
+    env: PRODUCTION_DOCS_ECR_KEY
+  - versionName: projects/771512790633/secrets/ci_docs_ecr_production_secret/versions/1
+    env: PRODUCTION_DOCS_ECR_SECRET
+    
