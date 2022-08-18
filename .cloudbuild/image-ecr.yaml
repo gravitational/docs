@@ -1,5 +1,7 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
+    env:
+    - 'COMMIT_SHA=$COMMIT_SHA'
     secretEnv:
       - STAGING_DOCS_ECR_KEY
       - STAGING_DOCS_ECR_SECRET
