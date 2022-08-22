@@ -17,5 +17,3 @@ jobs:
         run: yarn typecheck
       - name: Check .js and .ts code
         run: yarn lint-check
-      - name: Run tests
-        run: yarn test

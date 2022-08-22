@@ -32,27 +32,27 @@ const config: PlaywrightTestConfig = {
       },
       testMatch: [/single-browser/, /all-browsers/, /api-tests/],
     },
-    // {
-    //   name: "webkit",
-    //   use: {
-    //     ...devices["Desktop Safari"],
-    //   },
-    //   testMatch: /all-browsers/,
-    // },
-    // {
-    //   name: "Mobile Chrome",
-    //   use: {
-    //     ...devices["Pixel 5"],
-    //   },
-    //   testMatch: /all-browsers/,
-    // },
-    // {
-    //   name: "Mobile Safari",
-    //   use: {
-    //     ...devices["iPhone 13 Pro"],
-    //   },
-    //   testMatch: /all-browsers/,
-    // },
+    {
+      name: "webkit",
+      use: {
+        ...devices["Desktop Safari"],
+      },
+      testMatch: /all-browsers/,
+    },
+    {
+      name: "Mobile Chrome",
+      use: {
+        ...devices["Pixel 5"],
+      },
+      testMatch: /all-browsers/,
+    },
+    {
+      name: "Mobile Safari",
+      use: {
+        ...devices["iPhone 13 Pro"],
+      },
+      testMatch: /all-browsers/,
+    },
   ],
 };
 
