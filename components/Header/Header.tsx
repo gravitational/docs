@@ -21,7 +21,11 @@ const Header = () => {
       <a href="/" className={styles["logo-link"]}>
         <Logo />
       </a>
-      <HeadlessButton onClick={toggleNavigaton} className={styles.hamburger}>
+      <HeadlessButton
+        onClick={toggleNavigaton}
+        className={styles.hamburger}
+        data-testid="hamburger"
+      >
         <Icon name={isNavigationVisible ? "close" : "hamburger"} size="md" />
       </HeadlessButton>
       <div
