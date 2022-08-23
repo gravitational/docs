@@ -13,7 +13,7 @@ const config: PlaywrightTestConfig = {
   workers: process.env.CI ? 1 : undefined,
   reporter: "html",
   webServer: {
-    command: "yarn dev",
+    command: "yarn playwright-dev",
     url: "http://localhost:3000/docs/",
     timeout: 120 * 1000,
     reuseExistingServer: !process.env.CI,
