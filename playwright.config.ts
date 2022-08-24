@@ -12,18 +12,6 @@ const config: PlaywrightTestConfig = {
   retries: 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: "html",
-  webServer: {
-    command: "yarn playwright-dev",
-    url: "http://localhost:3000/docs/",
-    timeout: 120 * 1000,
-    reuseExistingServer: !process.env.CI,
-  },
-  use: {
-    actionTimeout: 0,
-    trace: "on-first-retry",
-    baseURL: "http://localhost:3000/docs/",
-    viewport: { width: 1280, height: 2000 },
-  },
   projects: [
     {
       name: "chromium",
