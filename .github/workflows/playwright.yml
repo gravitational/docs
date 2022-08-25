@@ -1,13 +1,11 @@
 name: Playwright Tests
+on:
+  deployment_status:
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     if: github.event.deployment_status.state == 'success'
-
-    strategy:
-      matrix:
-        shard: ["1/3", "2/3", "3/3"]
     steps:
     - uses: actions/checkout@v2
     - id: nvm
