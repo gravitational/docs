@@ -1,9 +1,35 @@
 const HOST = "goteleport.com";
 
-export const navigationData = [
+export type LinkData = {
+  title: string;
+  href: string;
+  isExternal?: boolean;
+};
+
+export type MenuButton = {
+  title: string;
+  testId: string;
+};
+
+export type Menu = {
+  title: string;
+  testId: string;
+  children: LinkData[];
+};
+
+export type NavigationItem = {
+  button: MenuButton;
+  menu?: Menu;
+  href?: string;
+  isExternal?: boolean;
+};
+
+export type NavbarData = NavigationItem[];
+
+export const navigationData: NavbarData = [
   {
-    dropdownButton: { title: "Products", testId: "products" },
-    dropdownMenu: {
+    button: { title: "Products", testId: "products" },
+    menu: {
       title: "Teleport Products",
       testId: "products-menu",
       children: [
@@ -41,8 +67,8 @@ export const navigationData = [
     },
   },
   {
-    dropdownButton: { title: "Use Cases", testId: "use-cases" },
-    dropdownMenu: {
+    button: { title: "Use Cases", testId: "use-cases" },
+    menu: {
       title: "Teleport Use Cases",
       testId: "use-cases-menu",
       children: [
@@ -90,8 +116,8 @@ export const navigationData = [
     },
   },
   {
-    dropdownButton: { title: "Documentation", testId: "docs" },
-    dropdownMenu: {
+    button: { title: "Documentation", testId: "docs" },
+    menu: {
       title: "Teleport Documentation",
       testId: "docs-menu",
       children: [
@@ -128,8 +154,8 @@ export const navigationData = [
     },
   },
   {
-    dropdownButton: { title: "Learn", testId: "learn" },
-    dropdownMenu: {
+    button: { title: "Learn", testId: "learn" },
+    menu: {
       title: "Learn More About Teleport",
       testId: "learn-menu",
       children: [
@@ -162,13 +188,13 @@ export const navigationData = [
     },
   },
   {
-    dropdownButton: { title: "Pricing", testId: "pricing" },
+    button: { title: "Pricing", testId: "pricing" },
     href: `https://${HOST}/pricing/`,
     isExternal: true,
   },
   {
-    dropdownButton: { title: "Company", testId: "company" },
-    dropdownMenu: {
+    button: { title: "Company", testId: "company" },
+    menu: {
       title: "Company",
       testId: "company-menu",
       children: [
@@ -191,8 +217,8 @@ export const navigationData = [
     },
   },
   {
-    dropdownButton: { title: "Sign In", testId: "sign-in" },
-    dropdownMenu: {
+    button: { title: "Sign In", testId: "sign-in" },
+    menu: {
       title: "Sign in to Teleport",
       testId: "sign-in-menu",
       children: [
@@ -210,7 +236,7 @@ export const navigationData = [
     },
   },
   {
-    dropdownButton: { title: "Get Started", testId: "get-started" },
+    button: { title: "Get Started", testId: "get-started" },
     href: `https://${HOST}/pricing/`,
     isExternal: true,
   },

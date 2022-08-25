@@ -1,6 +1,8 @@
 import type { PlaywrightTestConfig } from "@playwright/test";
 import { devices } from "@playwright/test";
 
+const URL = "http://localhost:3000/docs";
+
 const config: PlaywrightTestConfig = {
   testDir: "./tests",
   timeout: 30 * 1000,
@@ -11,7 +13,19 @@ const config: PlaywrightTestConfig = {
   forbidOnly: !!process.env.CI,
   retries: 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: "html",
+  reporter: "list",
+  webServer: {
+    command: "yarn dev",
+    url: URL,
+    timeout: 120 * 1000,
+    reuseExistingServer: !process.env.CI,
+  },
+  use: {
+    actionTimeout: 0,
+    trace: "on-first-retry",
+    baseURL: URL,
+    viewport: { width: 1280, height: 7000 },
+  },
   projects: [
     {
       name: "chromium",

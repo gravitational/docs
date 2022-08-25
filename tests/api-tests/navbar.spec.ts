@@ -5,10 +5,10 @@ import { navigationData } from "../data/navbar-data";
 test.describe.configure({ mode: "parallel" });
 
 test("All urls are valid", async ({ request }) => {
-  const allUrls: Array<string> = [];
+  const allUrls: string[] = [];
 
   navigationData.forEach((dropdown) => {
-    const dropdownMenu = dropdown.dropdownMenu;
+    const dropdownMenu = dropdown.menu;
 
     if (!dropdownMenu) {
       return;

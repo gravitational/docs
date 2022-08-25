@@ -17,22 +17,22 @@ test("Sections in navbar contain appropriate titles and hrefs when viewed on des
 
   for (const dropdown of navigationData) {
     const element = await page.locator(
-      `[data-testid="${dropdown.dropdownButton.testId}"]`
+      `[data-testid="${dropdown.button.testId}"]`
     );
 
-    if (dropdown.dropdownMenu) {
+    if (dropdown.menu) {
       await expect(element).toBeVisible();
-      await expect(element).toHaveText(dropdown.dropdownButton.title);
+      await expect(element).toHaveText(dropdown.button.title);
       await element.click();
       const menu = page.locator(
-        `[data-testid="${dropdown?.dropdownMenu?.testId}"]:visible`
+        `[data-testid="${dropdown?.menu?.testId}"]:visible`
       );
 
       await expect(menu).toBeVisible();
 
       if (!isMobile) {
         const menuTitle = menu.locator("h3");
-        await expect(menuTitle).toHaveText(dropdown.dropdownMenu.title);
+        await expect(menuTitle).toHaveText(dropdown.menu.title);
       }
 
       const links = menu.locator("a");
@@ -40,7 +40,7 @@ test("Sections in navbar contain appropriate titles and hrefs when viewed on des
 
       for (let i = 0; i < count; i++) {
         const link = links.nth(i);
-        const expectedLink = dropdown.dropdownMenu.children[i];
+        const expectedLink = dropdown.menu.children[i];
 
         assert(expectedLink);
         await expect(link).toHaveAttribute("href", expectedLink.href);
