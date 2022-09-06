@@ -66,7 +66,12 @@ const HeaderCTA = () => {
             </DropdownMenu>
           </div>
         </div>
-        <Button as="link" href="/pricing/" className={styles.cta}>
+        <Button
+          as="link"
+          href="/pricing/"
+          className={styles.cta}
+          onClick={onClick}
+        >
           Get Started
         </Button>
       </div>
