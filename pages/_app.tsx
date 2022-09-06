@@ -9,6 +9,7 @@ import "styles/global.css";
 import "styles/algolia-search.css";
 
 const NEXT_PUBLIC_GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+const NEXT_PUBLIC_GTAG_ID = process.env.NEXT_PUBLIC_GTAG_ID;
 
 interface dataLayerItem {
   [key: string]: unknown;
@@ -38,6 +39,30 @@ const Analytics = () => {
 
           {/* End Google Tag Manager */}
           {/* Google Tag Manager (noscript) */}
+          <noscript
+            dangerouslySetInnerHTML={{
+              __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=${NEXT_PUBLIC_GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
+            }}
+          />
+          {/* End Google Tag Manager (noscript) */}
+        </>
+      )}
+      {NEXT_PUBLIC_GTAG_ID && (
+        <>
+          {/* GTAG */}
+          <Script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${NEXT_PUBLIC_GTAG_ID}`}
+          />
+          <Script id="script_gtag">
+            {`window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', "${NEXT_PUBLIC_GTAG_ID}", {
+                    send_page_view: false
+                  });`}
+          </Script>
+          {/* End GTag */}
           <noscript
             dangerouslySetInnerHTML={{
               __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=${NEXT_PUBLIC_GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`,

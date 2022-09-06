@@ -15,6 +15,7 @@ export interface MenuCategoryProps {
   description: string;
   href: string;
   children?: MenuItemProps[];
+  onClick?: () => void | undefined;
 }
 
 interface MenuCategoryComponentProps extends MenuCategoryProps {
@@ -31,6 +32,7 @@ const MenuCategory = ({
   children,
   href,
   onToggleOpened,
+  onClick,
 }: MenuCategoryComponentProps) => {
   const ref = useRef(null);
 
@@ -46,9 +48,11 @@ const MenuCategory = ({
         e.preventDefault();
 
         onToggleOpened(opened ? null : id);
+      } else {
+        onClick && onClick();
       }
     },
-    [opened, children, id, onToggleOpened]
+    [opened, children, id, onToggleOpened, onClick]
   );
 
   return (
