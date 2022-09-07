@@ -7,6 +7,14 @@ import DesktopSvgPath from "./assets/desktop.svg";
 import FeaturesSvgPath from "./assets/features.svg";
 
 const HOST = "goteleport.com";
+import { sendAnalyticsEvent } from "utils/tracking";
+
+const onClick = () =>
+  sendAnalyticsEvent({
+    action: "Button Click",
+    category: "Pricing Buttons",
+    label: "Navbar Pricing Button",
+  });
 
 const menu: MenuCategoryProps[] = [
   {

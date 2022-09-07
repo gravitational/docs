@@ -4,7 +4,7 @@
   "license": "Apache-2.0",
   "private": true,
   "scripts": {
-    "git-update": "git submodule update --remote",
+    "git-update": "git submodule update --init --remote",
     "build-node": "rm -rf .build && tsc --build tsconfig.node.json && tsc-esm-fix --target='.build' --ext='.mjs'",
     "add-symlinks": "node ./scripts/add-symlinks.mjs",
     "generate-sitemap": "node ./scripts/generate-sitemap.mjs",
