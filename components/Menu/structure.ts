@@ -20,7 +20,7 @@ const menu: MenuCategoryProps[] = [
   {
     title: "Products",
     description: "Teleport Products",
-    href: `https://${HOST}/`,
+    href: "/teleport/",
     testId: "products",
     children: [
       {
