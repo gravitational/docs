@@ -22,7 +22,9 @@
     "typecheck": "tsc --noEmit --skipLibCheck --incremental --tsBuildInfoFile node_modules/.cache/tsc/tsbuildinfo --project .",
     "markdown-lint": "remark 'content/**/docs/pages/**/*.mdx' --frail",
     "markdown-lint-external-links": "WITH_EXTERNAL_LINKS=true yarn markdown-lint",
-    "markdown-fix": "FIX=true yarn markdown-lint -o"
+    "markdown-fix": "FIX=true yarn markdown-lint -o",
+    "install-playwright-browsers": "playwright install --with-deps",
+    "install-playwright-browser-dependencies": "playwright install-deps"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
