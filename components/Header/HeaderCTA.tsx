@@ -9,7 +9,6 @@ import {
 } from "../DropdownMenu";
 import styles from "./HeaderCTA.module.css";
 import { sendAnalyticsEvent } from "utils/tracking";
-const HOST = "goteleport.com";
 
 const HeaderCTA = () => {
   const onClick = () =>
@@ -71,7 +70,7 @@ const HeaderCTA = () => {
         </div>
         <Button
           as="link"
-          href={`https://${HOST}/pricing/`}
+          href="/pricing/"
           className={styles.cta}
           data-testid="get-started"
           onClick={onClick}

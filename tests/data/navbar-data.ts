@@ -1,5 +1,3 @@
-const HOST = "goteleport.com";
-
 export type LinkData = {
   title: string;
   href: string;
@@ -35,32 +33,32 @@ export const navigationData: NavbarData = [
       children: [
         {
           title: "Server Access",
-          href: `https://${HOST}/ssh-server-access/`,
+          href: "/ssh-server-access/",
           isExternal: true,
         },
         {
           title: "Kubernetes Access",
-          href: `https://${HOST}/kubernetes-access/`,
+          href: "/kubernetes-access/",
           isExternal: true,
         },
         {
           title: "Application Access",
-          href: `https://${HOST}/application-access/`,
+          href: "/application-access/",
           isExternal: true,
         },
         {
           title: "Database Access",
-          href: `https://${HOST}/database-access/`,
+          href: "/database-access/",
           isExternal: true,
         },
         {
           title: "Desktop Access",
-          href: `https://${HOST}/desktop-access/`,
+          href: "/desktop-access/",
           isExternal: true,
         },
         {
           title: "Teleport Features",
-          href: `https://${HOST}/features/`,
+          href: "/features/",
           isExternal: true,
         },
       ],
@@ -74,42 +72,42 @@ export const navigationData: NavbarData = [
       children: [
         {
           title: "Financial Services",
-          href: `https://${HOST}/use-cases/finance/`,
+          href: "/use-cases/finance/",
           isExternal: true,
         },
         {
           title: "Software-as-a-service (SaaS) Providers",
-          href: `https://${HOST}/use-cases/saas/`,
+          href: "/use-cases/saas/",
           isExternal: true,
         },
         {
           title: "E-commerce & Entertainment",
-          href: `https://${HOST}/use-cases/ecommerce-entertainment/`,
+          href: "/use-cases/ecommerce-entertainment/",
           isExternal: true,
         },
         {
           title: "Infrastructure Access for AWS",
-          href: `https://${HOST}/use-cases/aws/`,
+          href: "/use-cases/aws/",
           isExternal: true,
         },
         {
           title: "Privileged Access Management",
-          href: `https://${HOST}/use-cases/privileged-access-management/`,
+          href: "/use-cases/privileged-access-management/",
           isExternal: true,
         },
         {
           title: "Machine-to-Machine Access",
-          href: `https://${HOST}/use-cases/machine-to-machine-access/`,
+          href: "/use-cases/machine-to-machine-access/",
           isExternal: true,
         },
         {
           title: "Developer-friendly browser",
-          href: `https://${HOST}/connect/`,
+          href: "/connect/",
           isExternal: true,
         },
         {
           title: "Passwordless Infrastructure Access",
-          href: `https://${HOST}/passwordless/`,
+          href: "/passwordless/",
           isExternal: true,
         },
       ],
@@ -123,16 +121,16 @@ export const navigationData: NavbarData = [
       children: [
         {
           title: "Documentation",
-          href: `https://${HOST}/docs/`,
+          href: "/docs/",
         },
         {
           title: "How It Works",
-          href: `https://${HOST}/how-it-works/`,
+          href: "/how-it-works/",
           isExternal: true,
         },
         {
           title: "Teleport Labs",
-          href: `https://${HOST}/labs/`,
+          href: "/labs/",
           isExternal: true,
         },
         {
@@ -142,7 +140,7 @@ export const navigationData: NavbarData = [
         },
         {
           title: "Teleport Slack Channel",
-          href: `https://${HOST}/slack/`,
+          href: "/slack/",
           isExternal: true,
         },
         {
@@ -161,27 +159,27 @@ export const navigationData: NavbarData = [
       children: [
         {
           title: "The Blog",
-          href: `https://${HOST}/blog/`,
+          href: "/blog/",
           isExternal: true,
         },
         {
           title: "Our Customers",
-          href: `https://${HOST}/case-study/`,
+          href: "/case-study/",
           isExternal: true,
         },
         {
           title: "Resources",
-          href: `https://${HOST}/resources/`,
+          href: "/resources/",
           isExternal: true,
         },
         {
           title: "Events",
-          href: `https://${HOST}/about/events/`,
+          href: "/about/events/",
           isExternal: true,
         },
         {
           title: "What is SSH?",
-          href: `https://${HOST}/ssh/`,
+          href: "/ssh/",
           isExternal: true,
         },
       ],
@@ -189,7 +187,7 @@ export const navigationData: NavbarData = [
   },
   {
     button: { title: "Pricing", testId: "pricing" },
-    href: `https://${HOST}/pricing/`,
+    href: "/pricing/",
     isExternal: true,
   },
   {
@@ -200,17 +198,17 @@ export const navigationData: NavbarData = [
       children: [
         {
           title: "About Us",
-          href: `https://${HOST}/about/`,
+          href: "/about/",
           isExternal: true,
         },
         {
           title: "Careers",
-          href: `https://${HOST}/careers/`,
+          href: "/careers/",
           isExternal: true,
         },
         {
           title: "News",
-          href: `https://${HOST}/about/press/`,
+          href: "/about/press/",
           isExternal: true,
         },
       ],
@@ -237,7 +235,7 @@ export const navigationData: NavbarData = [
   },
   {
     button: { title: "Get Started", testId: "get-started" },
-    href: `https://${HOST}/pricing/`,
+    href: "/pricing/",
     isExternal: true,
   },
 ];
