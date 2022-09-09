@@ -1,10 +1,11 @@
 import { MenuCategoryProps } from "./Category";
-import databaseSvgPath from "./assets/database.svg";
-import applicationSvgPath from "./assets/application.svg";
-import kubernetesSvgPath from "./assets/kubernetes.svg";
-import serverSvgPath from "./assets/server.svg";
-import desktopSvgPath from "./assets/desktop.svg";
-import featuresSvgPath from "./assets/features.svg";
+import DatabaseSvgPath from "./assets/database.svg";
+import ApplicationSvgPath from "./assets/application.svg";
+import KubernetesSvgPath from "./assets/kubernetes.svg";
+import ServerSvgPath from "./assets/server.svg";
+import DesktopSvgPath from "./assets/desktop.svg";
+import FeaturesSvgPath from "./assets/features.svg";
+
 import { sendAnalyticsEvent } from "utils/tracking";
 
 const onClick = () =>
@@ -19,43 +20,45 @@ const menu: MenuCategoryProps[] = [
     title: "Products",
     description: "Teleport Products",
     href: "/teleport/",
+    testId: "products",
     children: [
       {
-        image: serverSvgPath,
+        image: ServerSvgPath,
         title: "Server Access",
         description:
           "SSH securely into Linux servers and smart devices with a complete audit trail",
         href: "/ssh-server-access/",
       },
       {
-        image: kubernetesSvgPath,
+        image: KubernetesSvgPath,
         title: "Kubernetes Access",
         description:
           "Access Kubernetes clusters securely with complete visibility to access and behavior",
         href: "/kubernetes-access/",
       },
       {
-        image: applicationSvgPath,
+        image: ApplicationSvgPath,
         title: "Application Access",
         description:
           "Access web applications running behind NAT and firewalls with security and compliance",
         href: "/application-access/",
       },
       {
-        image: databaseSvgPath,
+        image: DatabaseSvgPath,
         title: "Database Access",
-        description: "For SQL and NoSQL databases across multi-environments",
+        description:
+          "For PostgreSQL and MySQL databases behind NAT in multiple environments",
         href: "/database-access/",
       },
       {
-        image: desktopSvgPath,
+        image: DesktopSvgPath,
         title: "Desktop Access",
         description:
           "Securely access Windows servers and desktops in multiple environments.",
         href: "/desktop-access/",
       },
       {
-        image: featuresSvgPath,
+        image: FeaturesSvgPath,
         title: "Teleport Features",
         description:
           "An overview of Teleport Access Plane features, capabilities and more...",
@@ -67,6 +70,8 @@ const menu: MenuCategoryProps[] = [
     title: "Use Cases",
     description: "Teleport Use Cases",
     href: "/",
+    testId: "use-cases",
+
     children: [
       {
         icon: "building",
@@ -126,56 +131,64 @@ const menu: MenuCategoryProps[] = [
   },
   {
     title: "Documentation",
-    description: "Teleport documentation",
-    href: "/docs/",
+    description: "Teleport Documentation",
+    href: "/",
+    testId: "docs",
     children: [
       {
         icon: "stack",
         title: "Documentation",
         description: "Installation and Teleport user guides",
-        href: "https://goteleport.com/docs/",
+        href: "docs/",
       },
       {
         icon: "gamepad",
-        title: "How it Works",
+        title: "How It Works",
         description: "Learn the fundamentals of how Teleport works",
-        href: "/teleport/how-it-works/",
+        href: "/how-it-works/",
+      },
+      {
+        icon: "desktop",
+        title: "Teleport Labs",
+        description: "Get hands on experience with Teleport",
+        href: "/labs/",
       },
       {
         icon: "question",
         title: "Community Forum",
         description:
           "Ask us a setup question, post your tutorial, feedback or idea on our forum",
-        href: "https://github.com/gravitational/teleport/discussions",
+        href: "https://github.com/gravitational/teleport/discussions/",
       },
       {
         icon: "window",
         title: "Teleport Slack Channel",
         description: "Need help with set-up? Ping us in Slack channel",
-        href: "/slack",
+        href: "/slack/",
       },
       {
         icon: "code",
-        title: "Github",
+        title: "GitHub",
         description: "View the open source repository on Github",
-        href: "https://github.com/gravitational/teleport",
+        href: "https://github.com/gravitational/teleport/",
       },
     ],
   },
   {
     title: "Learn",
-    description: "Learn more about teleport",
+    description: "Learn More About Teleport",
     href: "/resources/",
+    testId: "learn",
     children: [
       {
         icon: "note",
-        title: "The blog",
+        title: "The Blog",
         description: "Technical articles, news, and product announcements",
         href: "/blog/",
       },
       {
         icon: "building",
-        title: "Our customers",
+        title: "Our Customers",
         description:
           "Learn how companies use Teleport to secure their environments",
         href: "/case-study/",
@@ -206,16 +219,17 @@ const menu: MenuCategoryProps[] = [
     title: "Pricing",
     description: "Pricing",
     href: "/pricing/",
-    onClick,
+    testId: "pricing",
   },
   {
     title: "Company",
     description: "Company",
     href: "/about/",
+    testId: "company",
     children: [
       {
         icon: "building",
-        title: "About us",
+        title: "About Us",
         description: "Our missions and vision for the future",
         href: "/about/",
       },
@@ -223,7 +237,7 @@ const menu: MenuCategoryProps[] = [
         icon: "flag",
         title: "Careers",
         description: "View our available career opportunities",
-        href: "/careers",
+        href: "/careers/",
       },
       {
         icon: "earth",

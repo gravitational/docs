@@ -16,6 +16,7 @@ export interface MenuCategoryProps {
   href: string;
   children?: MenuItemProps[];
   onClick?: () => void | undefined;
+  testId: string;
 }
 
 interface MenuCategoryComponentProps extends MenuCategoryProps {
@@ -33,8 +34,10 @@ const MenuCategory = ({
   href,
   onToggleOpened,
   onClick,
+  testId,
 }: MenuCategoryComponentProps) => {
   const ref = useRef(null);
+  const menuTestId = `${testId}-menu`;
 
   useClickAway(ref, () => {
     if (opened) {
@@ -63,10 +66,14 @@ const MenuCategory = ({
           href={href}
           onClick={toggleOpened}
           className={cn(styles.link, opened && styles.active)}
+          data-testid={testId}
         >
           {title}
         </a>
-        <div className={cn(styles.dropdown, opened && styles.opened)}>
+        <div
+          className={cn(styles.dropdown, opened && styles.opened)}
+          data-testid={menuTestId}
+        >
           {children && (
             <DropdownMenu title={description}>
               {children.map((props) => (

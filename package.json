@@ -14,7 +14,7 @@
     "build": "yarn preflight && next build",
     "update-and-build": "yarn git-update && yarn build && yarn generate-sitemap",
     "start": "next start",
-    "test": "loadr -- uvu",
+    "test": "npx playwright test",
     "base:eslint": "eslint --cache --cache-location node_modules/.cache/eslint '**/*.{js,jsx,ts,tsx}'",
     "base:prettier": "prettier '**/*.{js,jsx,ts,tsx,json}'",
     "lint": "yarn base:eslint --fix && yarn base:prettier --write -l",
@@ -53,6 +53,7 @@
   "devDependencies": {
     "@mdx-js/loader": "^2.1.1",
     "@next/bundle-analyzer": "^12.1.0",
+    "@playwright/test": "^1.25.2",
     "@svgr/webpack": "^6.2.1",
     "@types/estree-jsx": "^0.0.1",
     "@types/glob": "^7.2.0",
