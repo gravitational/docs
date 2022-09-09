@@ -9,7 +9,7 @@ test("Sections in navbar contain appropriate titles and hrefs when viewed on des
   isMobile,
   page,
 }) => {
-  await page.goto("/docs");
+  await page.goto("/docs/");
 
   if (isMobile) {
     await page.locator('[data-testid="hamburger"]').click();
