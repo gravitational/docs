@@ -44,11 +44,13 @@ const HeaderCTA = () => {
             onClick={toggleSignIn}
             variant="secondary"
             className={styles.cta}
+            data-testid="sign-in"
           >
             Sign In
           </Button>
           <div
             className={cn(styles.dropdown, isSignInVisible && styles.visible)}
+            data-testid="sign-in-menu"
           >
             <DropdownMenu title="Sign in to Teleport">
               <DropdownMenuItem
@@ -58,7 +60,7 @@ const HeaderCTA = () => {
                 description="Login to your Teleport Account"
               />
               <DropdownMenuItem
-                href="https://dashboard.gravitational.com/web/login"
+                href="https://dashboard.gravitational.com/web/login/"
                 icon="download"
                 title="Dashboard Login"
                 description="Legacy Login &amp; Teleport Enterprise Downloads"
@@ -70,6 +72,7 @@ const HeaderCTA = () => {
           as="link"
           href="/pricing/"
           className={styles.cta}
+          data-testid="get-started"
           onClick={onClick}
         >
           Get Started
