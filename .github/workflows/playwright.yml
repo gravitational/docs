@@ -45,9 +45,9 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: yarn test
       env:
         PLAYWRIGHT_TEST_BASE_URL: ${{ github.event.deployment_status.target_url }}
+      run: yarn playwright test --shard=${{ matrix.shard }}
     - uses: actions/upload-artifact@v2
       if: always()
       with:
