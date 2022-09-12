@@ -181,6 +181,13 @@ const menu: MenuCategoryProps[] = [
     testId: "learn",
     children: [
       {
+        icon: "connect",
+        title: "Teleport Connect 2022",
+        description:
+          "Attend our inaugural single-day dual-track user conference",
+        href: "/teleport-connect-2022/?utm_campaign=eg&utm_medium=web&utm_source=navbar",
+      },
+      {
         icon: "note",
         title: "The Blog",
         description: "Technical articles, news, and product announcements",
