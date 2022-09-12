@@ -158,6 +158,11 @@ export const navigationData: NavbarData = [
       testId: "learn-menu",
       children: [
         {
+          title: "Teleport Connect 2022",
+          href: "/teleport-connect-2022/?utm_campaign=eg&utm_medium=web&utm_source=navbar",
+          isExternal: true,
+        },
+        {
           title: "The Blog",
           href: "/blog/",
           isExternal: true,
