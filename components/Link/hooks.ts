@@ -42,7 +42,7 @@ export const useNormalizedHref = (href: string) => {
   // This needs to be added because all strings of "/docs/" are being stripped down to
   // "/" in noBaseHref. This is called below useContext because of the rule of hooks
   // in which hooks are not able to be called conditionally
-  if (href === `${basePath}/`) {
+  if (href.startsWith(`${basePath}/`)) {
     return href;
   }
 
