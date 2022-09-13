@@ -18,7 +18,6 @@ const DropdownMenuItem = ({
   description,
   href,
 }: MenuItemProps) => {
-  // console.log("??", href);
   return (
     <Link href={href} passthrough className={styles.wrapper}>
       {image && (

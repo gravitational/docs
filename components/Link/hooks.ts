@@ -26,10 +26,11 @@ export const useCurrentHref = () => {
  */
 
 export const useNormalizedHref = (href: string) => {
+  // basePath is "/docs"
   const { asPath, basePath } = useRouter();
 
-  // console.log("BASEPATH", basePath);
-
+  // this strips the prefix of "/docs" from all string hrefs if the beginning of
+  // the href is "/docs"
   const noBaseHref = href.startsWith(basePath)
     ? href.substring(basePath.length)
     : href;
@@ -37,6 +38,10 @@ export const useNormalizedHref = (href: string) => {
   let scope: ScopeType = useContext(DocsContext).scope;
 
   const { query } = splitPath(href);
+
+  if (href === "/docs/") {
+    return href;
+  }
 
   // If a valid scope is provided via query parameter, adjust the
   // link to navigate to that scope.
@@ -55,15 +60,9 @@ export const useNormalizedHref = (href: string) => {
     return noBaseHref;
   }
 
-  // console.log("??????", href, asPath);
-
   const currentHref = normalizePath(asPath);
 
-  // console.log("!!!", currentHref, href);
-
   let fullHref = resolve(splitPath(currentHref).path, noBaseHref);
-
-  console.log("***", href, noBaseHref, splitPath(currentHref).path);
 
   return updateScopeInUrl(fullHref, scope);
 };
