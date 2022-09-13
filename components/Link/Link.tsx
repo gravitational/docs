@@ -29,6 +29,10 @@ const Link = ({
 }: LinkProps) => {
   const normalizedHref = useNormalizedHref(href);
 
+  // console.log("Initial href:", href);
+  // console.log("Normalized:", normalizedHref);
+  // console.log("=============================");
+
   if (
     passthrough ||
     isHash(normalizedHref) ||
@@ -66,6 +70,8 @@ const Link = ({
     prefetch,
     locale,
   };
+
+  // console.log(href, "is next link");
 
   return (
     <NextLink {...nextProps} prefetch={false}>

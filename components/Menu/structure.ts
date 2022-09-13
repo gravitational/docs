@@ -132,7 +132,7 @@ const menu: MenuCategoryProps[] = [
   {
     title: "Documentation",
     description: "Teleport Documentation",
-    href: "/",
+    href: "/docs/",
     testId: "docs",
     children: [
       {

@@ -28,6 +28,8 @@ export const useCurrentHref = () => {
 export const useNormalizedHref = (href: string) => {
   const { asPath, basePath } = useRouter();
 
+  // console.log("BASEPATH", basePath);
+
   const noBaseHref = href.startsWith(basePath)
     ? href.substring(basePath.length)
     : href;
@@ -53,8 +55,15 @@ export const useNormalizedHref = (href: string) => {
     return noBaseHref;
   }
 
+  // console.log("??????", href, asPath);
+
   const currentHref = normalizePath(asPath);
+
+  // console.log("!!!", currentHref, href);
+
   let fullHref = resolve(splitPath(currentHref).path, noBaseHref);
+
+  console.log("***", href, noBaseHref, splitPath(currentHref).path);
 
   return updateScopeInUrl(fullHref, scope);
 };
