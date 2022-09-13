@@ -26,10 +26,10 @@ export const useCurrentHref = () => {
  */
 
 export const useNormalizedHref = (href: string) => {
-  // basePath is "/docs"
+  // BasePath is "/docs"
   const { asPath, basePath } = useRouter();
 
-  // this strips the prefix of "/docs" from all string hrefs if the beginning of
+  // This strips the prefix of "/docs" from all string hrefs if the beginning of
   // the href is "/docs"
   const noBaseHref = href.startsWith(basePath)
     ? href.substring(basePath.length)
@@ -39,6 +39,9 @@ export const useNormalizedHref = (href: string) => {
 
   const { query } = splitPath(href);
 
+  // This needs to be added because all strings of "/docs/" are being stripped down to
+  // "/" in noBaseHref. This is called below useContext because of the rule of hooks
+  // in which hooks are not able to be called conditionally
   if (href === "/docs/") {
     return href;
   }
