@@ -1,10 +1,10 @@
-import { MenuCategoryProps } from "./Category";
-import DatabaseSvgPath from "./assets/database.svg";
 import ApplicationSvgPath from "./assets/application.svg";
-import KubernetesSvgPath from "./assets/kubernetes.svg";
-import ServerSvgPath from "./assets/server.svg";
+import DatabaseSvgPath from "./assets/database.svg";
 import DesktopSvgPath from "./assets/desktop.svg";
 import FeaturesSvgPath from "./assets/features.svg";
+import KubernetesSvgPath from "./assets/kubernetes.svg";
+import ServerSvgPath from "./assets/server.svg";
+import { MenuCategoryProps } from "./Category";
 
 import { sendAnalyticsEvent } from "utils/tracking";
 
@@ -155,10 +155,10 @@ const menu: MenuCategoryProps[] = [
       },
       {
         icon: "question",
-        title: "Community Forum",
+        title: "Teleport Community",
         description:
           "Ask us a setup question, post your tutorial, feedback or idea on our forum",
-        href: "https://github.com/gravitational/teleport/discussions/",
+        href: "/community/",
       },
       {
         icon: "window",

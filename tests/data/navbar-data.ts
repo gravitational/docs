@@ -134,8 +134,8 @@ export const navigationData: NavbarData = [
           isExternal: true,
         },
         {
-          title: "Community Forum",
-          href: "https://github.com/gravitational/teleport/discussions/",
+          title: "Teleport Community",
+          href: "/community/",
           isExternal: true,
         },
         {
