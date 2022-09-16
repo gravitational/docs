@@ -14,6 +14,7 @@
     "build": "yarn preflight && next build",
     "update-and-build": "yarn git-update && yarn build && yarn generate-sitemap",
     "start": "next start",
+    "uvu-test": "loadr -- uvu",
     "test": "playwright test",
     "base:eslint": "eslint --cache --cache-location node_modules/.cache/eslint '**/*.{js,jsx,ts,tsx}'",
     "base:prettier": "prettier '**/*.{js,jsx,ts,tsx,json}'",
