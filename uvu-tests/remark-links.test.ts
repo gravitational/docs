@@ -4,7 +4,7 @@ import * as assert from "uvu/assert";
 import { VFile, VFileOptions } from "vfile";
 import { remark } from "remark";
 import mdx from "remark-mdx";
-import remarkLinks from "./remark-links";
+import remarkLinks from "../server/remark-links";
 
 const transformer = (options: VFileOptions) => {
   const file = new VFile(options);

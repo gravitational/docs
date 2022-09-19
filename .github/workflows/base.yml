@@ -42,3 +42,5 @@ jobs:
         run: yarn typecheck
       - name: Check .js and .ts code
         run: yarn lint-check
+      - name: Run uvu tests
+        run: yarn uvu-test
