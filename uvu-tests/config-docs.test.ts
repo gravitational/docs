@@ -1,7 +1,7 @@
 import { Redirect } from "next/dist/lib/load-custom-routes";
 import { suite } from "uvu";
 import * as assert from "uvu/assert";
-import { Config, checkURLsForCorrespondingFiles } from "./config-docs";
+import { Config, checkURLsForCorrespondingFiles } from "../server/config-docs";
 import { randomUUID } from "crypto";
 import { join } from "path";
 import { opendirSync } from "fs";

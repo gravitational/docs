@@ -8,7 +8,7 @@ import { resolve } from "path";
 import mdx from "remark-mdx";
 import remarkCodeSnippet, {
   RemarkCodeSnippetOptions,
-} from "./remark-code-snippet";
+} from "../server/remark-code-snippet";
 
 const transformer = (
   options: VFileOptions,

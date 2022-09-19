@@ -7,7 +7,9 @@ import { resolve } from "path";
 import { remark } from "remark";
 import remarkMdx from "remark-mdx";
 import remarkGFM from "remark-gfm";
-import remarkIncludes, { RemarkIncludesOptions } from "./remark-includes";
+import remarkIncludes, {
+  RemarkIncludesOptions,
+} from "../server/remark-includes";
 
 const transformer = (
   vfileOptions: VFileOptions,

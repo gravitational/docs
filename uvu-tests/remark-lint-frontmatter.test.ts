@@ -7,7 +7,7 @@ import { readSync } from "to-vfile";
 import { resolve } from "path";
 import { remark } from "remark";
 import remarkFrontmatter from "remark-frontmatter";
-import remarkLintFrontmatter from "./remark-lint-frontmatter";
+import remarkLintFrontmatter from "../server/remark-lint-frontmatter";
 
 const transformer = (path: string) => {
   const file = readSync(resolve(path));

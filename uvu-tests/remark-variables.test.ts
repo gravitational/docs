@@ -6,7 +6,9 @@ import { readFileSync } from "fs";
 import { resolve } from "path";
 import { remark } from "remark";
 import mdx from "remark-mdx";
-import remarkVariables, { RemarkVariablesOptions } from "./remark-variables";
+import remarkVariables, {
+  RemarkVariablesOptions,
+} from "../server/remark-variables";
 
 const variables: Record<string, unknown> = {
   version: "1.0",
