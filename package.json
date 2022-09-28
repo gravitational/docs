@@ -82,7 +82,7 @@
     "gray-matter": "^4.0.3",
     "hast-util-heading-rank": "^2.1.0",
     "hast-util-to-string": "^2.0.0",
-    "jest": "^29.0.3",
+    "jest": "^29.1.1",
     "jest-environment-jsdom": "^29.0.3",
     "js-yaml": "^4.1.0",
     "jsdom": "^20.0.0",
