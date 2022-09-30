@@ -2,14 +2,14 @@ const path = require('path');
 
 module.exports = {
   modulePaths: [
-    '<rootDir>/components',
+    '<rootDir>'
   ],
 
   // TODO: We'll need to look in to how to change this if we want to use this
   // config file for server-side tests.
   testEnvironment: "jsdom",
   transform: {
-    "\\.tsx$": [
+    "\\.tsx?$": [
     	"babel-jest",
 	{
 	    // Specifying the Babel config file explicitly so we can use
