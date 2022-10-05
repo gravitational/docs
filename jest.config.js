@@ -10,21 +10,15 @@ const createJestConfig = nextJest({
 const customJestConfig = {
   moduleDirectories: ["node_modules", "<rootDir>/"],
   testEnvironment: "jest-environment-jsdom",
-  // Ignore resource queries in Webpack module rules. For context:
-  // https://webpack.js.org/configuration/module/#ruleresourcequery
+  // Ignore SVG resource queries in Webpack module rules. For context on
+  // resource queries:
+  // https://webpack.js.org/configuration/module/#ruleresourcequery This is a
+  // bit of a hack. next/jest defines a moduleNameMapper that maps SVG files
+  // to fileMock.js, and this applies the same mapper to SVG files with
+  // resource query parameters.
   moduleNameMapper: {
-    "(^.*\\.\\w{3})\\?\\w+$": "$1",
-  },
-  transform: {
-    "\\.svg$": [
-      "babel-jest",
-      {
-        presets: [
-          "@svgr/babel-preset",
-          "next/babel"
-        ]
-      },
-    ],
+    "^.*\\.svg\\?\\w+$":
+      "<rootDir>/node_modules/next/dist/build/jest/__mocks__/fileMock.js",
   },
 };
 
