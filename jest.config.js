@@ -1,23 +1,16 @@
-const path = require('path');
+// Following the example here:
+// https://nextjs.org/docs/testing#setting-up-jest-with-the-rust-compiler
+const nextJest = require('next/jest')
 
-module.exports = {
-  modulePaths: [
-    '<rootDir>'
-  ],
+const createJestConfig = nextJest({
+  // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
+  dir: './',
+})
 
-  // TODO: We'll need to look in to how to change this if we want to use this
-  // config file for server-side tests.
-  testEnvironment: "jsdom",
-  transform: {
-    "\\.tsx?$": [
-    	"babel-jest",
-	{
-	    // Specifying the Babel config file explicitly so we can use
-	    // different config files for different extensions. The TSX
-	    // config file processes all extensions, so we can't share this file
-	    // for TS code that doesn't use TSX.
-	    configFile: path.resolve("babel.tsx.config.js")
-	}
-    ]
-  },
-};
+const customJestConfig = {
+  moduleDirectories: ['node_modules', '<rootDir>/'],
+  testEnvironment: 'jest-environment-jsdom',
+}
+
+// createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
+module.exports = createJestConfig(customJestConfig)
