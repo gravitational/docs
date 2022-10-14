@@ -1,26 +1,35 @@
 // Following the example here:
 // https://nextjs.org/docs/testing#setting-up-jest-with-the-rust-compiler
 const nextJest = require("next/jest");
+let mdxDocsOptions = {};
+import(".build/server/mdx-config-docs").then((mdxConfig) => {
+  const createJestConfig = nextJest({
+    // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
+    dir: "./",
+  });
 
-const createJestConfig = nextJest({
-  // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
-  dir: "./",
-});
-
-const customJestConfig = {
-  moduleDirectories: ["node_modules", "<rootDir>/"],
-  testEnvironment: "jest-environment-jsdom",
-  // Ignore SVG resource queries in Webpack module rules. For context on
-  // resource queries:
-  // https://webpack.js.org/configuration/module/#ruleresourcequery This is a
-  // bit of a hack. next/jest defines a moduleNameMapper that maps SVG files
-  // to fileMock.js, and this applies the same mapper to SVG files with
-  // resource query parameters.
-  moduleNameMapper: {
-    "^.*\\.svg\\?\\w+$":
-      "<rootDir>/node_modules/next/dist/build/jest/__mocks__/fileMock.js",
-  },
-};
+  const customJestConfig = {
+    moduleDirectories: ["node_modules", "<rootDir>/"],
+    testEnvironment: "jest-environment-jsdom",
+    // Ignore SVG resource queries in Webpack module rules. For context on
+    // resource queries:
+    // https://webpack.js.org/configuration/module/#ruleresourcequery This is a
+    // bit of a hack. next/jest defines a moduleNameMapper that maps SVG files
+    // to fileMock.js, and this applies the same mapper to SVG files with
+    // resource query parameters.
+    moduleNameMapper: {
+      "^.*\\.svg\\?\\w+$":
+        "<rootDir>/node_modules/next/dist/build/jest/__mocks__/fileMock.js",
+    },
+    transform: {
+      "^.+\\.(md|mdx)$": [
+        "jest-transformer-mdx/mdx-options",
+        {
+          mdxOptions: mdxConfig,
+        },
+      ],
+    },
+  };
 
 // Generate an async function that Jest will call when loading its config. This
 // mimics the function signature of the default export of 'next/jest'. See:
@@ -45,3 +54,4 @@ function modifyJestConfig() {
   };
 }
 module.exports = modifyJestConfig();
+});
