@@ -28,7 +28,7 @@ async function createJestConfig() {
     },
     transform: {
       "^.+\\.(md|mdx)$": [
-        "jest-transformer-mdx",
+        "./jest-tests/mdx-transformer.js",
         {
           mdxOptions: mdxConfig,
         },
