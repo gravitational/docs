@@ -11,7 +11,7 @@
     "generate-article-links": "node ./scripts/generate-article-links.mjs",
     "preflight": "yarn build-node && yarn add-symlinks && yarn generate-article-links",
     "dev": "yarn preflight && next dev",
-    "build": "yarn preflight && next build",
+    "build": "NODE_OPTIONS=\"--max_old_space_size=4096\" yarn preflight && next build",
     "update-and-build": "yarn git-update && yarn build && yarn generate-sitemap",
     "start": "next start",
     "uvu-test": "loadr -- uvu uvu-tests",
