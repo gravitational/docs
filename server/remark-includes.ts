@@ -32,7 +32,6 @@ const includeRegexpBase = "\\(!(.*)!\\)`?";
 const includeRegexp = new RegExp(includeRegexpBase);
 const exactIncludeRegexp = new RegExp(`^${includeRegexpBase}$`);
 const globalIncludeRegexp = new RegExp(includeRegexpBase, "g");
-const varDefaultValueRegexp = new RegExp(`{{ ?.+=["']([^"']+)["'] ?}}`, "g");
 
 interface ResolveIncludesProps {
   value: string;
@@ -42,6 +41,56 @@ interface ResolveIncludesProps {
 
 export interface ParameterAssignments {
   [index: string]: string;
+}
+
+// parseAssignments takes a string containing parameter assignments and parses
+// them into a ParameterAssignments map, making it possible to use these
+// assignments in various operations.
+//
+// It expects the input expression to have a format similar to the following:
+//
+// myvar="myval" myvar2="myval" myvar3="myval"
+//
+// Values must be wrapped in double quotes. Assignments must be separated by
+// single spaces. An equals sign must separate each parameter and its value.
+export function parseAssignments(
+  assignmentSection: string
+): ParameterAssignments {
+  // no parameter assignments to parse
+  if (assignmentSection.length == 0) {
+    return {};
+  }
+
+  if (assignmentSection[assignmentSection.length - 1] !== `"`) {
+    return {};
+  }
+
+  let assignments: ParameterAssignments = {};
+
+  // Since every assignment must end with a double quote and a space, split
+  // assignments on spaces that follow a non-escaped double quote.
+  const rawAssignments = assignmentSection.split(
+    new RegExp('(?<=[^\\\\]") ', "g")
+  );
+
+  const assignmentRegExp = new RegExp('([^ "]+)=(".*")', "g");
+
+  rawAssignments.forEach((rawAssignment) => {
+    const assignmentParts = Array.from(
+      rawAssignment.matchAll(assignmentRegExp)
+    )[0];
+    // I.e., there's not a main match and two group matches
+    if (assignmentParts.length !== 3) {
+      throw new Error(
+        `Could not parse expression ${rawAssignment} as a partial assignment. ` +
+          `Partial assignments must be wrapped in double quotes and separated by spaces.`
+      );
+    }
+
+    assignments[assignmentParts[1]] = assignmentParts[2];
+  });
+
+  return assignments;
 }
 
 // parsePartialParams takes a partial inclusion expression and parses the
@@ -54,9 +103,6 @@ export interface ParameterAssignments {
 // This function is intended to separate different parameter assignments for
 // processing downstream.
 //
-// TODO(ptgott): I wasn't able to use regular expressions for this, and the
-// current approach is pretty ugly. There's got to be a cleaner, more efficient
-// way.
 export function parsePartialParams(expr: string): ParameterAssignments {
   if (!expr) {
     return {};
@@ -66,68 +112,60 @@ export function parsePartialParams(expr: string): ParameterAssignments {
     throw new Error("the expression does not include a partial");
   }
 
-  // extract everything after the filepath and before the "!)"
-  const val = expr.slice(expr.indexOf(" "), expr.length - 2);
+  // Extract everything after the filepath and before the "!)"
+  const assignmentSection = expr
+    .slice(expr.indexOf(" "), expr.length - 2)
+    .trim();
 
-  const keyRegexp = new RegExp(`[^= "']`);
-  let assignments: ParameterAssignments = {};
-  let inQuotedString: boolean = false;
-  let currentQuoteStyle: string = "";
-  let inKey: boolean = false;
-  let currentKey: string = "";
-  let currentVal: string = "";
-  for (let c = 0; c < val.length; c++) {
-    // We find a quote that's not escaped
-    if ((val[c] == `"` || val[c] == "'") && (c == 0 || val[c - 1] !== "\\")) {
-      inKey = false;
-      // This is the beginning of a quoted string
-      if (!inQuotedString) {
-        inQuotedString = true;
-        currentQuoteStyle = val[c];
-        currentVal += val[c];
-        continue;
-        // We have reached the end of a parameter value, so store it in the map
-        // map of parameter assignments along with its corresponding parameter
-        // name.
-        // If there's an unescaped quote of a different style than the current
-        // quote, ignore it for now.
-      } else if (currentQuoteStyle == val[c]) {
-        currentVal += val[c];
-        currentQuoteStyle = "";
-        inQuotedString = false;
-        assignments[currentKey] = currentVal;
-        currentKey = "";
-        currentVal = "";
-        continue;
-      }
-    }
+  // Well-formed partial inclusion expression with no assignments
+  if (assignmentSection === "") {
+    return {};
+  }
 
-    // We're in a quoted string but the quotation hasn't been terminated
-    if (!!inQuotedString) {
-      currentVal += val[c];
-    }
+  const assignments = parseAssignments(assignmentSection);
 
-    // We find the start of a parameter name
-    if (keyRegexp.test(val[c]) && !inQuotedString && !inKey) {
-      inKey = true;
-      currentKey += val[c];
-      continue;
-    }
-
-    // We find part of a parameter name
-    if (!!inKey && keyRegexp.test(val[c])) {
-      currentKey += val[c];
-      continue;
-    }
-
-    // We find something that's not a quote or a parameter name, e.g., a space
-    // or "!" near the end of input.
-    if (!!inKey && !keyRegexp.test(val[c])) {
-      inKey = false;
-      continue;
-    }
+  // Partial inclusion expression with malformed assignments
+  if (Object.keys(assignments).length === 0) {
+    throw new Error(
+      "When including a partial, any parameter assignments must" +
+        " be separated by single spaces with the values wrapped in double quotes" +
+        ' e.g., (!mypartial.mdx var="val" var2="val"!)'
+    );
   }
   return assignments;
+}
+
+// parseParamDefaults parses the expression at the top of a partial that
+// declares the partial's default parameter values, taking the partial's content
+// as a string and returning a ParameterAssignments mapping each parameter to
+// its default value.
+//
+// Here is an example of a default assignment expression:
+//
+// {{ myvar="myval" myvar2="myval" }}
+//
+// The default assignments expression must be on the first line of a partial.
+// Values must be wrapped in double quotes and separated by single spaces.
+export function parseParamDefaults(expr: string): ParameterAssignments {
+  const defaultAssignmentRegexp = new RegExp("{{ (.*) }}", "g");
+
+  // Callers should handle empty values before they get here.
+  // parseParamDefaults has no idea whether this case is acceptable or not.
+  if (expr === "") {
+    throw new Error("unexpected empty string in parseParamDefaults");
+  }
+
+  if (expr.length < "{{ }}".length) {
+    return {};
+  }
+
+  const firstLine = expr.split("\n", 1)[0];
+  const matches = defaultAssignmentRegexp.exec(firstLine);
+
+  if (!matches) {
+    return {};
+  }
+  return parseAssignments(matches[1]);
 }
 
 // resolveParamValue takes the quoted value of a template variable within a
@@ -141,9 +179,9 @@ export function resolveParamValue(val: string): string {
   if (val == "") {
     throw new Error("the value of a parameter in a partial cannot be empty");
   }
-  if (val[0] !== `"` && val[0] !== `'`) {
+  if (val[0] !== `"`) {
     throw new Error(
-      `parameter values in partials must be wrapped in strings, but this value is not: ${val}`
+      `parameter values in partials must be wrapped in double-quoted strings, but this value is not: ${val}`
     );
   }
   if (val[0] !== val[val.length - 1]) {
@@ -170,33 +208,31 @@ const resolveIncludes = ({
   // values.
   let vars = {};
 
-  const result = value.replace(includeRegexp, (_, includePath) => {
-    includePath = includePath.split(" ")[0];
+  const result = value.replace(includeRegexp, (fullInclude, includeExpr) => {
+    const includePath = includeExpr.split(" ")[0];
     const fullImportPath = join(rootDir, includePath);
 
     if (existsSync(fullImportPath)) {
       let content = readFileSync(fullImportPath, "utf-8");
+      let paramAssignments = parseParamDefaults(content);
 
-      const inclusions = value.matchAll(globalIncludeRegexp);
-      for (const inclusion of Array.from(inclusions)) {
-        const varAssignments = parsePartialParams(inclusion[0]);
+      // The partial includes defaults, so remove the first line
+      if (Object.keys(paramAssignments).length > 0) {
+        const lines = content.split("\n");
+        content = lines.slice(1, content.length).join("\n");
+      }
 
-        // Replace variables in the partial with their values
-        Object.keys(varAssignments).forEach((param) => {
-          const val = resolveParamValue(varAssignments[param]);
-          const varRegexp = new RegExp(
-            `{{ ?${param}(=["'][^"']+["'])? ?}}`,
-            "g"
-          );
-          content = content.replaceAll(varRegexp, val);
-        });
+      // Add user-provided parameter assignments, replacing any defaults
+      const userAssignments = parsePartialParams(fullInclude);
+      Object.keys(userAssignments).forEach((param) => {
+        paramAssignments[param] = userAssignments[param];
+      });
 
-        // At this point, we have replaced template variables that were supplied
-        // values, so the remainder either have default values or were
-        // incorrectly given no value.
-        content = content.replace(varDefaultValueRegexp, (_, val) => {
-          return val;
-        });
+      // Replace variables in the partial with their values
+      for (const param in paramAssignments) {
+        const finalVal = resolveParamValue(paramAssignments[param]);
+        const varRegexp = new RegExp(`{{ ?${param} ?}}`, "g");
+        content = content.replaceAll(varRegexp, finalVal);
       }
 
       return content;
