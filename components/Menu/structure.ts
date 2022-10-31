@@ -226,6 +226,7 @@ const menu: MenuCategoryProps[] = [
     description: "Pricing",
     href: "/pricing/",
     testId: "pricing",
+    onClick,
   },
   {
     title: "Company",
