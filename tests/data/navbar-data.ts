@@ -26,33 +26,33 @@ export type NavbarData = NavigationItem[];
 
 export const navigationData: NavbarData = [
   {
-    button: { title: "Products", testId: "products" },
+    button: { title: "Protocols", testId: "products" },
     menu: {
-      title: "Teleport Products",
+      title: "Teleport Access Platform protocols",
       testId: "products-menu",
       children: [
         {
-          title: "Server Access",
+          title: "SSH",
           href: "/ssh-server-access/",
           isExternal: true,
         },
         {
-          title: "Kubernetes Access",
+          title: "Kubernetes",
           href: "/kubernetes-access/",
           isExternal: true,
         },
         {
-          title: "Application Access",
-          href: "/application-access/",
           isExternal: true,
-        },
-        {
-          title: "Database Access",
+          title: "Databases",
           href: "/database-access/",
-          isExternal: true,
         },
         {
-          title: "Desktop Access",
+          isExternal: true,
+          title: "Applications",
+          href: "/application-access/",
+        },
+        {
+          title: "Windows",
           href: "/desktop-access/",
           isExternal: true,
         },

@@ -17,42 +17,41 @@ const onClick = () =>
 
 const menu: MenuCategoryProps[] = [
   {
-    title: "Products",
-    description: "Teleport Products",
+    title: "Protocols",
+    description: "Teleport Access Platform protocols",
     href: "/teleport/",
     testId: "products",
     children: [
       {
         image: ServerSvgPath,
-        title: "Server Access",
+        title: "SSH",
         description:
           "SSH securely into Linux servers and smart devices with a complete audit trail",
         href: "/ssh-server-access/",
       },
       {
         image: KubernetesSvgPath,
-        title: "Kubernetes Access",
+        title: "Kubernetes",
         description:
           "Access Kubernetes clusters securely with complete visibility to access and behavior",
         href: "/kubernetes-access/",
       },
       {
         image: ApplicationSvgPath,
-        title: "Application Access",
+        title: "Databases",
+        description: "For SQL and NoSQL databases across multi-environments",
+        href: "/database-access/",
+      },
+      {
+        image: DatabaseSvgPath,
+        title: "Applications",
         description:
           "Access web applications running behind NAT and firewalls with security and compliance",
         href: "/application-access/",
       },
       {
-        image: DatabaseSvgPath,
-        title: "Database Access",
-        description:
-          "For PostgreSQL and MySQL databases behind NAT in multiple environments",
-        href: "/database-access/",
-      },
-      {
         image: DesktopSvgPath,
-        title: "Desktop Access",
+        title: "Windows",
         description:
           "Securely access Windows servers and desktops in multiple environments.",
         href: "/desktop-access/",
