@@ -12,7 +12,7 @@ import type { Parent } from "unist";
 import type { Content, Code, Text } from "mdast";
 import type { VFile } from "vfile";
 import type { Node } from "mdast-util-from-markdown/lib";
-import { dirname, join, relative } from "path";
+import { basename, dirname, join, relative, resolve } from "path";
 
 import { existsSync, readFileSync } from "fs";
 import { visitParents } from "unist-util-visit-parents";
@@ -273,25 +273,46 @@ const isInclude = (node: Code | Text): node is Code | Text =>
  * and without:
  * docs/image.jpg
  */
-const handlePartialLink = (node: Node, path: string, mdxPath: string) => {
-  if (node.type === "link") {
+const handleURLPath = (
+  node: Node,
+  rootDir: string,
+  path: string,
+  mdxPath: string
+) => {
+  if (
+    node.type === "image" ||
+    node.type === "link" ||
+    node.type === "definition"
+  ) {
     const href = node.url;
 
+    // Ignore non-strings, absolute paths, or web URLs
     if (typeof href !== "string" || href[0] === "/" || /^http/.test(href)) {
       return href;
     }
-    // root where all documentation pages store
-    const absStart = "docs/pages";
-    // find an "abs" (starting with root) directory path of the file in which the partial doc was inserted
-    const absMdxPath = dirname(absStart + mdxPath.split(absStart).pop());
-    const absTargetPath = join(dirname(path), href);
-    // make the reference path relative to the place where the partial doc was inserted
-    node.url = relative(absMdxPath, absTargetPath);
+
+    // Find the absolute path of the file that includes the partial
+    const absMdxPath = resolve(mdxPath);
+    // Construct an absolute path out of the root directory for all partials,
+    // the directory containing the partial (within the root directory for all
+    // partials) and the relative path to the target asset, e.g.,
+    // "docs/pages/includes", "kubernetes", and
+    // "../../target.png".
+    const absTargetPath = resolve(rootDir, dirname(path), href);
+    // Make the reference path relative to the place where the partial doc was
+    // inserted.
+    node.url = relative(
+      // relative() counts all path segments, even the file itself, when
+      // comparing path segments between the "from" and "to" paths, so we
+      // start from the directory containing the file that includes the partial.
+      dirname(absMdxPath),
+      absTargetPath
+    );
   }
 
   if ("children" in node) {
     node.children?.forEach?.((child) =>
-      handlePartialLink(child, path, mdxPath)
+      handleURLPath(child, rootDir, path, mdxPath)
     );
   }
 };
@@ -361,7 +382,7 @@ export default function remarkIncludes({
                     ],
                   });
 
-                  handlePartialLink(tree, path, vfile.path);
+                  handleURLPath(tree, resolvedRootDir, path, vfile.path);
 
                   const grandParent = ancestors[ancestors.length - 2] as Parent;
                   const parentIndex = grandParent.children.indexOf(parent);

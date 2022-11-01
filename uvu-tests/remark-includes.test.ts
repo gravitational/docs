@@ -483,4 +483,111 @@ Suite("Resolves template variables in includes", () => {
   assert.equal(result, expected);
 });
 
+Suite(
+  "Resolves relative links in partials based on the path of the partial",
+  () => {
+    const includingRelativeLink = `Here are instructions on installing the software:
+
+(!include-relative-link.mdx!)
+`;
+    interface testCase {
+      includingPage: string;
+      description: string;
+      path: string;
+      expected: string;
+    }
+    const testCases: testCase[] = [
+      {
+        includingPage: includingRelativeLink,
+        description: "including file is on the same dir level as the partial",
+        path: "server/fixtures/dir/samelevel.mdx",
+        expected: `Here are instructions on installing the software:
+
+Check out our [instructions](../installation.mdx).
+
+Here is an image showing a successful installation:
+
+[Successful installation](../installation.png)
+`,
+      },
+      {
+        includingPage: includingRelativeLink,
+        description: "including file is below the dir level of the partial",
+        path: "server/fixtures/dir/dir2/below.mdx",
+        expected: `Here are instructions on installing the software:
+
+Check out our [instructions](../../installation.mdx).
+
+Here is an image showing a successful installation:
+
+[Successful installation](../../installation.png)
+`,
+      },
+      {
+        includingPage: includingRelativeLink,
+        description: "including file is above the dir level of the partial",
+        path: "server/fixtures/above.mdx",
+        expected: `Here are instructions on installing the software:
+
+Check out our [instructions](installation.mdx).
+
+Here is an image showing a successful installation:
+
+[Successful installation](installation.png)
+`,
+      },
+      {
+        includingPage: `Here's how to attach an IAM policy for DB Access:
+
+(!database-access/attach-iam-policies.mdx!)
+`,
+        description: "relative image path",
+        path: "server/fixtures/includes/db-policy.mdx",
+        expected: `Here's how to attach an IAM policy for DB Access:
+
+Attach the policy and permission boundary you created earlier to the IAM
+identity your Teleport Database Service will be using.
+
+For example, if the Database Service runs as an IAM user, go to the page of the IAM user
+in the AWS Management Console, attach the created policy in the "Permissions
+policies" section, and set the created boundary policy in the "Permissions
+boundary" section.
+
+<Figure>
+  ![IAM user](../../img/database-access/iam@2x.png)
+</Figure>
+`,
+      },
+      {
+        includingPage: "(!includes-relative-link-def.mdx!)",
+        description: "relative definition path",
+        path: "server/fixtures/definition.mdx",
+        expected: `This partial has a relative link [definition].
+
+[definition]: ../installation.mdx
+`,
+      },
+    ];
+
+    for (const testCase of testCases) {
+      const actual = transformer({
+        value: testCase.includingPage,
+        path: testCase.path,
+      }).toString();
+
+      assert.equal(
+        actual,
+        testCase.expected,
+        new Error(
+          `${testCase.description}: expected the output:\n` +
+            testCase.expected +
+            "\n\n" +
+            "but got:\n" +
+            actual
+        )
+      );
+    }
+  }
+);
+
 Suite.run();
