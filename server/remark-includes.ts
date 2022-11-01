@@ -73,6 +73,13 @@ export function parseAssignments(
     new RegExp('(?<=[^\\\\]") ', "g")
   );
 
+  // Matches an assignment within the assignmentSection string, e.g.:
+  //
+  // mykey="this is a value"
+  //
+  // Assumes equals signs separate assignment keys and values and that values
+  // are surrounded by double quotes. Includes capturing groups for the key and
+  // the value.
   const assignmentRegExp = new RegExp('([^ "]+)=(".*")', "g");
 
   rawAssignments.forEach((rawAssignment) => {
