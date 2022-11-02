@@ -197,8 +197,9 @@ export function resolveParamValue(val: string): string {
     );
   }
   let newVal = val.slice(1, val.length - 1);
+  const escapedQuoteRegexp = new RegExp('\\\\"', "g");
   if (val[0] == '"') {
-    newVal = newVal.replaceAll('\\"', '"');
+    newVal = newVal.replace(escapedQuoteRegexp, '"');
   }
 
   return newVal;
@@ -239,7 +240,7 @@ const resolveIncludes = ({
       for (const param in paramAssignments) {
         const finalVal = resolveParamValue(paramAssignments[param]);
         const varRegexp = new RegExp(`{{ ?${param} ?}}`, "g");
-        content = content.replaceAll(varRegexp, finalVal);
+        content = content.replace(varRegexp, finalVal);
       }
 
       return content;
