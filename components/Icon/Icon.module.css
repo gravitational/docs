@@ -27,3 +27,33 @@
     --size: 40px;
   }
 }
+
+.inline {
+  display: inline;
+  width: var(--size);
+  height: var(--size);
+
+  &.xxs {
+    --size: 10px;
+  }
+
+  &.xs {
+    --size: 12px;
+  }
+
+  &.sm {
+    --size: 16px;
+  }
+
+  &.md {
+    --size: 24px;
+  }
+
+  &.lg {
+    --size: 32px;
+  }
+
+  &.xl {
+    --size: 40px;
+  }
+}

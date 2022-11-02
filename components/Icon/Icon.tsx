@@ -7,16 +7,25 @@ export interface IconProps {
   name: IconName;
   size?: "xxs" | "xs" | "sm" | "md" | "lg" | "xl";
   className?: string;
+  inline?: boolean;
 }
 
-const Icon = ({ name, size = "md", className }: IconProps) => {
+const Icon = ({ name, size = "md", className, inline = false }: IconProps) => {
   const IconSVG = icons[name];
 
   if (!IconSVG) {
     return <span className={cn(styles.wrapper, styles[size], className)} />;
   }
 
-  return <IconSVG className={cn(styles.wrapper, styles[size], className)} />;
+  return (
+    <IconSVG
+      className={cn(
+        inline ? styles.inline : styles.wrapper,
+        styles[size],
+        className
+      )}
+    />
+  );
 };
 
 export default Icon;
