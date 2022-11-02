@@ -9,6 +9,7 @@ export interface MenuItemProps {
   href: string;
   icon?: IconName;
   image?: string;
+  skipNormalize?: boolean;
 }
 
 const DropdownMenuItem = ({
@@ -17,9 +18,15 @@ const DropdownMenuItem = ({
   title,
   description,
   href,
+  skipNormalize,
 }: MenuItemProps) => {
   return (
-    <Link href={href} passthrough className={styles.wrapper}>
+    <Link
+      href={href}
+      passthrough
+      className={styles.wrapper}
+      skipNormalize={skipNormalize}
+    >
       {image && (
         <div className={styles["image-wrapper"]}>
           <NextImage

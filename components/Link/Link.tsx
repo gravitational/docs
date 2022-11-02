@@ -11,6 +11,7 @@ export interface LinkProps extends Omit<NextLinkProps, "href"> {
   href: string;
   onClick?: () => void;
   children: React.ReactNode;
+  skipNormalize?: boolean;
 }
 
 const Link = ({
@@ -25,11 +26,21 @@ const Link = ({
   prefetch,
   locale,
   scheme,
+  skipNormalize,
   ...linkProps
 }: LinkProps) => {
   const normalizedHref = useNormalizedHref(href);
-
-  if (
+  if (skipNormalize) {
+    return (
+      <a
+        href={href}
+        {...linkProps}
+        className={cn(styles.wrapper, styles[scheme], className)}
+      >
+        {children}
+      </a>
+    );
+  } else if (
     passthrough ||
     isHash(normalizedHref) ||
     isLocalAssetFile(normalizedHref)
