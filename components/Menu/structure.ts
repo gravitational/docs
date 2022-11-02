@@ -141,6 +141,12 @@ const menu: MenuCategoryProps[] = [
         href: "/docs/",
       },
       {
+        icon: "book",
+        title: "User Guides",
+        description: "Documentation for end users",
+        href: "/docs/user-guides/",
+      },
+      {
         icon: "gamepad",
         title: "How It Works",
         description: "Learn the fundamentals of how Teleport works",
