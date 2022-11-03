@@ -145,7 +145,7 @@ const menu: MenuCategoryProps[] = [
         title: "User Guides",
         description: "Documentation for end users",
         href: "/docs/user-guides/",
-        skipNormalize: true,
+        passthrough: false,
       },
       {
         icon: "gamepad",

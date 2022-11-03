@@ -30,17 +30,7 @@ const Link = ({
   ...linkProps
 }: LinkProps) => {
   const normalizedHref = useNormalizedHref(href);
-  if (skipNormalize) {
-    return (
-      <a
-        href={href}
-        {...linkProps}
-        className={cn(styles.wrapper, styles[scheme], className)}
-      >
-        {children}
-      </a>
-    );
-  } else if (
+  if (
     passthrough ||
     isHash(normalizedHref) ||
     isLocalAssetFile(normalizedHref)
@@ -54,7 +44,9 @@ const Link = ({
         {children}
       </a>
     );
-  } else if (isExternalLink(normalizedHref)) {
+  }
+
+  if (isExternalLink(normalizedHref)) {
     return (
       <a
         href={normalizedHref}
@@ -68,6 +60,7 @@ const Link = ({
     );
   }
 
+  // At this point, we return Link from the next/link package
   const nextProps: NextLinkProps = {
     href: normalizedHref,
     as,
