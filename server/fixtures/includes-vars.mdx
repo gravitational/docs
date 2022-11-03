@@ -1,0 +1,38 @@
+## Installation
+
+Here is a test for including variables in an MDX file.
+
+(!install-version.mdx version="10" unsupported="9" !)
+
+If installation fails, you will see the following error message:
+
+(!error-message.mdx message="Installation has failed!"!)
+
+If installation succeeds, you will see this message:
+
+(!error-message.mdx message="Installation==successful! Type \\"Continue\\" to proceed."!)
+
+After you type "Continue", you will see this message:
+
+(!error-message.mdx message="Type 'next' to see the next screen."!)
+
+After that, you will see this message:
+
+(!error-message.mdx message="Type \\"final\\" to see the final screen."!)
+
+## Supported platforms
+
+### Open Source
+
+(!supported-systems.mdx clouds="AWS and GCP"!)
+
+### Enterprise
+
+(!supported-systems.mdx systems="macOS and Windows"!)
+
+## What about partials where there are no required variables supplied?
+
+We'll show the template variable in case the partial intended to include the `{{
+variable }}` string.
+
+(!error-message.mdx!)

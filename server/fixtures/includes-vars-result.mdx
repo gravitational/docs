@@ -1,0 +1,59 @@
+## Installation
+
+Here is a test for including variables in an MDX file.
+
+Here are instructions for installing version 10:
+
+```code
+$ curl -OL https://example.com/downloads/mysoftware-v10.tar
+$ tar -xvf mysoftware-v10.tar
+```
+
+We no longer support version 9.
+
+If installation fails, you will see the following error message:
+
+```text
+Installation has failed!
+```
+
+If installation succeeds, you will see this message:
+
+```text
+Installation==successful! Type "Continue" to proceed.
+```
+
+After you type "Continue", you will see this message:
+
+```text
+Type 'next' to see the next screen.
+```
+
+After that, you will see this message:
+
+```text
+Type "final" to see the final screen.
+```
+
+## Supported platforms
+
+### Open Source
+
+The operating systems we support include macOS, Windows Server, and Linux.
+
+We also support Kubernetes environments on AWS and GCP.
+
+### Enterprise
+
+The operating systems we support include macOS and Windows.
+
+We also support Kubernetes environments on AWS, Azure, and Google Cloud.
+
+## What about partials where there are no required variables supplied?
+
+We'll show the template variable in case the partial intended to include the `{{
+variable }}` string.
+
+```text
+{{ message }}
+```

@@ -8,7 +8,11 @@ import { remark } from "remark";
 import remarkMdx from "remark-mdx";
 import remarkGFM from "remark-gfm";
 import remarkIncludes, {
+  ParameterAssignments,
   RemarkIncludesOptions,
+  parsePartialParams,
+  parseParamDefaults,
+  resolveParamValue,
 } from "../server/remark-includes";
 
 const transformer = (
@@ -104,6 +108,377 @@ Suite("Multiple includes resolve in code block", () => {
     resolve("server/fixtures/includes-multiple-result.mdx"),
     "utf-8"
   );
+
+  assert.equal(result, expected);
+});
+
+Suite("resolveParamValue handles quotes correctly in parameter values", () => {
+  interface testCase {
+    description: string;
+    input: string;
+    shouldThrow: boolean;
+    expected?: string;
+  }
+  const cases: testCase[] = [
+    {
+      description: "mismatched quotes",
+      input: `"This is a string'`,
+      shouldThrow: true,
+    },
+    {
+      description: "double quotes containing single quotes",
+      input: `"This is a 'string'"`,
+      shouldThrow: false,
+      expected: `This is a 'string'`,
+    },
+    {
+      description: "single quotes containing double quotes",
+      input: `'This is a "string"'`,
+      shouldThrow: true,
+    },
+    {
+      description: "single quotes containing escaped single quotes",
+      input: `'This is a \\'string\\''`,
+      shouldThrow: true,
+    },
+    {
+      description: "double quotes containing escaped double quotes",
+      input: `"This is a \\"string\\""`,
+      shouldThrow: false,
+      expected: `This is a "string"`,
+    },
+    {
+      description: "input not wrapped in quotes",
+      input: `This is a string`,
+      shouldThrow: true,
+    },
+    {
+      description: "empty input",
+      input: ``,
+      shouldThrow: true,
+    },
+    {
+      description: "single quotes",
+      input: `'This is a string'`,
+      shouldThrow: true,
+    },
+  ];
+
+  cases.forEach((c) => {
+    if (c.shouldThrow == true) {
+      let val: string;
+      try {
+        val = resolveParamValue(c.input);
+        assert.unreachable(
+          `${c.description}: should have thrown but returned value ${val}`
+        );
+      } catch (err) {
+        assert.not.instance(
+          err,
+          assert.Assertion,
+          `${c.description}: should have thrown, but got: ${val}`
+        );
+      }
+      return;
+    }
+    if (!c.expected) {
+      return;
+    }
+
+    let val: string;
+    try {
+      val = resolveParamValue(c.input);
+    } catch (err) {
+      assert.instance(
+        err,
+        assert.Assertion,
+        `${c.description}: should not have thrown, but got error: ${err}`
+      );
+    }
+    assert.equal(
+      c.expected,
+      val,
+      new Error(
+        `${c.description}: expected a resolved parameter value of:\n${c.expected}\n...but got:\n${val}`
+      )
+    );
+  });
+});
+
+Suite("parsePartialParams correctly parses parameter assignments", () => {
+  interface testCase {
+    description: string;
+    shouldThrow: boolean;
+    input: string;
+    expected?: ParameterAssignments;
+  }
+
+  const cases: testCase[] = [
+    {
+      description: "straightforward case",
+      shouldThrow: false,
+      input: `(!includes/example.mdx var1="this is a value" var2="this is also a value"!)`,
+      expected: {
+        var1: `"this is a value"`,
+        var2: `"this is also a value"`,
+      },
+    },
+    {
+      description: "no parameters",
+      shouldThrow: false,
+      input: "(!includes/example.mdx!)",
+      expected: {},
+    },
+    {
+      description: "mismatched quotes within matching quotes",
+      shouldThrow: false,
+      input: `(!includes/example.mdx var1="this is a value' var2='this is also a value"!)`,
+      expected: {
+        var1: `"this is a value' var2='this is also a value"`,
+      },
+    },
+    {
+      description: "mismatched quotes, alternating",
+      input: `(!includes/example.mdx var1="this is a value' var2="this is also a value'!)`,
+      shouldThrow: true,
+    },
+    {
+      description: "escaped quotes",
+      shouldThrow: false,
+      input: `(!includes/example.mdx var1="this is a \\"quote\\"" var2="this is a \\"quote\\""!)`,
+      expected: {
+        var1: `"this is a \\"quote\\""`,
+        var2: `"this is a \\"quote\\""`,
+      },
+    },
+    {
+      description: "end of input before second quote",
+      shouldThrow: true,
+      input: `(!includes/example.mdx var1="this is a value" var2="this is also a value!)`,
+    },
+    {
+      description: "quoted value with no key",
+      shouldThrow: true,
+      input: `(!includes/example.mdx "this is a value" "this is also a value" var1="another value"!)`,
+    },
+    {
+      description: "not an inclusion expression",
+      shouldThrow: true,
+      input: "example.mdx",
+    },
+    {
+      description: "exclamation point",
+      shouldThrow: false,
+      input: `(!error-message.mdx message="Installation has failed!"!)`,
+      expected: {
+        message: `"Installation has failed!"`,
+      },
+    },
+    {
+      description: "escaped quotes",
+      shouldThrow: false,
+      input: `(!error-message.mdx message="Type \\"final\\" to see the final screen."!)`,
+      expected: {
+        message: `"Type \\"final\\" to see the final screen."`,
+      },
+    },
+    {
+      description: "single quotes",
+      shouldThrow: true,
+      input: `(!error-message.mdx message='Type "Hello"'!)`,
+    },
+    {
+      description: "superfluous spaces around an equals sign",
+      shouldThrow: true,
+      input: `(!includes/example.mdx var1 = "this is a value" var2="this is also a value"!)`,
+    },
+  ];
+
+  cases.forEach((c) => {
+    if (c.shouldThrow == true) {
+      let val: ParameterAssignments;
+      try {
+        val = parsePartialParams(c.input);
+        assert.unreachable(
+          `${
+            c.description
+          }: should have thrown but returned value ${JSON.stringify(val)}`
+        );
+      } catch (err) {
+        assert.not.instance(
+          err,
+          assert.Assertion,
+          `${c.description}: should have thrown, but got: ${JSON.stringify(
+            val
+          )}`
+        );
+      }
+      return;
+    }
+    if (!c.expected) {
+      return;
+    }
+    let val: ParameterAssignments;
+    try {
+      val = parsePartialParams(c.input);
+    } catch (err) {
+      assert.instance(
+        err,
+        assert.Assertion,
+        `${c.description}: should not have thrown, but got error: ${err}`
+      );
+    }
+    assert.equal(
+      c.expected,
+      val,
+      new Error(
+        `${c.description}: expected parsed partial params:\n${JSON.stringify(
+          c.expected
+        )}\n...but got:\n${JSON.stringify(val)}`
+      )
+    );
+  });
+});
+
+Suite(
+  "parseParamDefaults correctly parses default parameter assignments",
+  () => {
+    interface testCase {
+      description: string;
+      shouldThrow: boolean;
+      input: string;
+      expected?: ParameterAssignments;
+    }
+
+    const cases: testCase[] = [
+      {
+        description: "straightforward case",
+        shouldThrow: false,
+        input: `{{ var1="this is a value" var2="this is also a value" }}`,
+        expected: {
+          var1: `"this is a value"`,
+          var2: `"this is also a value"`,
+        },
+      },
+      {
+        description: "not wrapped in double-curly braces",
+        shouldThrow: false,
+        input: `var1="this is a value" var2="this is also a value"`,
+        expected: {},
+      },
+      {
+        description: "only one side includes a double curly brace",
+        shouldThrow: false,
+        input: `var="this is a value" var2="this is also a value" }}`,
+        expected: {},
+      },
+      {
+        description: "not on the first line of the partial",
+        shouldThrow: false,
+        input: `This is a partial.
+{{ var="this is a value" }}
+`,
+        expected: {},
+      },
+      {
+        description: "multiple default values expressions",
+        shouldThrow: false,
+        input: `{{ var1="this is a value" var2="this is also a value" }}
+This is a partial.
+{{ var3="this is another value" var4="this is yet another value" }}
+`,
+        expected: {
+          var1: `"this is a value"`,
+          var2: `"this is also a value"`,
+        },
+      },
+      {
+        description: "empty input",
+        shouldThrow: true,
+        input: "",
+      },
+      {
+        description: "short partial",
+        shouldThrow: false,
+        input: "one",
+        expected: {},
+      },
+      {
+        description: "short partial with no defaults and one param",
+        shouldThrow: false,
+        input: `This is partial with a {{ param }}`,
+        expected: {},
+      },
+      {
+        description: "double curly braces and an equals",
+        shouldThrow: false,
+        input: `{{ = }}`,
+        expected: {},
+      },
+    ];
+
+    cases.forEach((c) => {
+      if (c.shouldThrow == true) {
+        let val: ParameterAssignments;
+        try {
+          val = parseParamDefaults(c.input);
+          assert.unreachable(
+            `${
+              c.description
+            }: should have thrown but returned value ${JSON.stringify(val)}`
+          );
+        } catch (err) {
+          assert.not.instance(
+            err,
+            assert.Assertion,
+            `${c.description}: should have thrown, but got: ${JSON.stringify(
+              val
+            )}`
+          );
+        }
+        return;
+      }
+      if (!c.expected) {
+        return;
+      }
+      let val: ParameterAssignments;
+      try {
+        val = parseParamDefaults(c.input);
+      } catch (err) {
+        assert.instance(
+          err,
+          assert.Assertion,
+          `${c.description}: should not have thrown, but got error: ${err}`
+        );
+      }
+      assert.equal(
+        c.expected,
+        val,
+        new Error(
+          `${c.description}: expected parsed partial params:\n${JSON.stringify(
+            c.expected
+          )}\n...but got:\n${JSON.stringify(val)}`
+        )
+      );
+    });
+  }
+);
+
+Suite("Resolves template variables in includes", () => {
+  const value = readFileSync(
+    resolve("server/fixtures/includes-vars.mdx"),
+    "utf-8"
+  );
+
+  const expected = readFileSync(
+    resolve("server/fixtures/includes-vars-result.mdx"),
+    "utf-8"
+  );
+
+  const result = transformer({
+    value,
+    path: "/content/4.0/docs/pages/filename.mdx",
+  }).toString();
 
   assert.equal(result, expected);
 });
