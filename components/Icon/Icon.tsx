@@ -19,11 +19,9 @@ const Icon = ({ name, size = "md", className, inline = false }: IconProps) => {
 
   return (
     <IconSVG
-      className={cn(
-        inline ? styles.inline : styles.wrapper,
-        styles[size],
-        className
-      )}
+      className={cn(styles.wrapper, styles[size], className, {
+        [styles.inline]: inline,
+      })}
     />
   );
 };
