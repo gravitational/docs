@@ -18,7 +18,7 @@ const DropdownMenuItem = ({
   title,
   description,
   href,
-  passthrough = true,
+  passthrough = true, // If no value is sent, default to true
 }: MenuItemProps) => {
   return (
     <Link href={href} passthrough={passthrough} className={styles.wrapper}>
