@@ -1,5 +1,6 @@
 import Admonition from "components/Admonition";
 import Command, { CommandLine, CommandComment } from "components/Command";
+import Icon from "components/Icon";
 import InlineCode from "components/InlineCode";
 import Notice from "components/Notice";
 import ScopedBlock from "components/ScopedBlock";
@@ -65,6 +66,7 @@ export const components = {
   Command,
   CommandLine,
   CommandComment,
+  Icon,
   InlineCode,
   ScopedBlock,
   Tabs,

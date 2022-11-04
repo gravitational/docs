@@ -27,3 +27,8 @@
     --size: 40px;
   }
 }
+
+.inline {
+  display: inline;
+  margin-left: 4px;
+}
