@@ -34,10 +34,6 @@ export const VarList = () => {
 
   return (
     <section>
-      <p className={styles.text}>
-        You can fill in the variables for more comfortable use of the
-        documentation
-      </p>
       {!!globalFieldsList.length && (
         <>
           <h2 className={styles.title}>Documentation-wide variables</h2>
