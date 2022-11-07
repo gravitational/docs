@@ -4,26 +4,32 @@
 const path = require("path");
 const babelJest = require("babel-jest");
 
-// we support either a path to a file, or the options itself
-// see: https://github.com/bitttttten/jest-transformer-mdx/pull/20
+// resolveMdxOptions either imports config file named in src or, if the config
+// is an object, return it unchanged.
 async function resolveMdxOptions(src) {
-  if (typeof src === "string") {
-    return await import(path.resolve(process.cwd(), src));
+  switch (typeof src) {
+    case "string":
+      return await import(path.resolve(process.cwd(), src));
+    case "object":
+      return src;
+    default:
+      throw new Error("unexpected MDX config type: ", typeof src);
   }
-  return src;
 }
 
 async function process(src, filepath, config) {
   const mdx = await import("@mdx-js/mdx");
-  const options = resolveOptions(config);
-  const mdxOptions = resolveMdxOptions(options.mdxOptions);
+  if (typeof config === "object" && config.hasOwnProperty("mdxOptions")) {
+    const mdxOptions = resolveMdxOptions(options.mdxOptions);
+  }
 
   const jsx = mdx.sync(withFrontMatter, { ...mdxOptions, filepath });
 
-  return `import {mdx} from '@mdx-js/react';${jsx}`;
-
-  // TODO: Look into transforming the resulting JSX with Babel per the original
-  // example.
+  return babelJest.process(
+    `import {mdx} from '@mdx-js/react';${jsx}`,
+    filepath,
+    config
+  ).code;
 }
 
 module.exports.process = process;
