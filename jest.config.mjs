@@ -1,12 +1,12 @@
 // Following the example here:
 // https://nextjs.org/docs/testing#setting-up-jest-with-the-rust-compiler
-const nextJest = require("next/jest");
+import { default as nextJest } from 'next/jest.js';
 let mdxDocsOptions = {};
 
 // Generate an async function that Jest will call when loading its config. This
 // mimics the function signature of the default export of 'next/jest'. See:
 // https://github.com/vercel/next.js/blob/35308c668ee63d8cea5a2c12713d7c761f259764/packages/next/build/jest/jest.ts#L59-L61
-async function createJestConfig() {
+export default async function createJestConfig() {
   const mdxConfig = await import("./.build/server/mdx-config-docs.mjs");
   const createJestConfig = nextJest({
     // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
@@ -28,7 +28,7 @@ async function createJestConfig() {
     },
     transform: {
       "^.+\\.(md|mdx)$": [
-        "./jest-tests/mdx-transformer.js",
+        "./jest-tests/mdx-transformer.mjs",
         {
           mdxOptions: mdxConfig,
         },
@@ -51,4 +51,3 @@ async function createJestConfig() {
   ];
   return loadedConf;
 }
-module.exports = createJestConfig;
