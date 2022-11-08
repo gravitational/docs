@@ -25,13 +25,17 @@ function process(src, filepath, config) {
   const mdxOptions = resolveMdxOptions(config.transformerConfig.mdxOptions);
 
   const jsx = compileMDXSync(filepath, { ...mdxOptions });
-  return nextJest
+  const transformed = nextJest
     .createTransformer(config.transformerConfig)
     .process(
       `import {mdx} from '@mdx-js/react';${jsx}`,
       filepath,
       {config: {}}
     );
+
+    console.log("transformed code:", transformed);
+
+  return transformed;
 }
 
 // Jest expects transformers that use ECMASCript modules to export an object
