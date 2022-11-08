@@ -3,7 +3,7 @@
 
 import "path";
 import { default as babelJest } from "babel-jest";
-import "@mdx-js/mdx"
+import { compileSync } from "@mdx-js/mdx";
 
 // resolveMdxOptions either imports config file named in src or, if the config
 // is an object, return it unchanged.
@@ -13,19 +13,24 @@ async function resolveMdxOptions(src) {
       return await import(path.resolve(process.cwd(), src));
     case "object":
       return src;
+    case "undefined":
+      // We haven't passed any options, so use the defaults
+      return {};
     default:
       throw new Error("unexpected MDX config type: ", typeof src);
   }
 }
 
-export async function processAsync(src, filepath, config) {
-  if (typeof config === "object" && config.hasOwnProperty("mdxOptions")) {
-    const mdxOptions = resolveMdxOptions(options.mdxOptions);
-  }
+function process(src, filepath, config) {
+  const mdxOptions = resolveMdxOptions(config.mdxOptions);
 
-  const jsx = mdx.sync(withFrontMatter, { ...mdxOptions, filepath });
+  const jsx = compileSync(filepath, { ...mdxOptions });
 
   return babelJest
     .createTransformer({})
     .process(`import {mdx} from '@mdx-js/react';${jsx}`, filepath, config);
 }
+
+export default {
+  process: process,
+};
