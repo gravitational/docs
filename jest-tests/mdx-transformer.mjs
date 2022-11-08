@@ -31,6 +31,9 @@ function process(src, filepath, config) {
     .process(`import {mdx} from '@mdx-js/react';${jsx}`, filepath, config);
 }
 
+// Jest expects transformers that use ECMASCript modules to export an object
+// called "default" for compatibility with CommonJS. See:
+// https://github.com/facebook/jest/blob/dfc87111e708b9294dc54ab0c17712972d042c1c/packages/jest-util/src/requireOrImportModule.ts#L45
 export default {
   process: process,
 };
