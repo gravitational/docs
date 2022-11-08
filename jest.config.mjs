@@ -1,6 +1,6 @@
 // Following the example here:
 // https://nextjs.org/docs/testing#setting-up-jest-with-the-rust-compiler
-import { default as nextJest } from 'next/jest.js';
+import { default as nextJest } from "next/jest.js";
 let mdxDocsOptions = {};
 
 // Generate an async function that Jest will call when loading its config. This
@@ -26,17 +26,11 @@ export default async function createJestConfig() {
       "^.*\\.svg\\?\\w+$":
         "<rootDir>/node_modules/next/dist/build/jest/__mocks__/fileMock.js",
     },
-    transform: {
-      "^.+\\.(md|mdx)$": [
-        "./jest-tests/mdx-transformer.mjs",
-        {
-          mdxOptions: mdxConfig,
-        },
-      ],
-    },
   };
+
   const loadConf = await createJestConfig(customJestConfig);
   const loadedConf = await loadConf();
+
   loadedConf.transformIgnorePatterns = [
     // MDX-JS uses ECMAScript modules, so we need to ensure that we can
     // transform the source. The default next/jest config ignores all
@@ -49,5 +43,23 @@ export default async function createJestConfig() {
     // transformIgnorePatterns value.
     "^.+\\.module\\.(css|sass|scss)$",
   ];
+
+  // Get the transformer config the next/jest-generated Jest config uses for
+  // JavaScript files so we can pass it to our custom MDX transformer.
+  // next/jest generates this from our NextJS config, so we need to generate
+  // the config before we can pass it to the transformer.
+  for (const value of Object.values(loadedConf.transform)) {
+    if (value.length == 2 && value[0].includes("jest-transformer.js")) {
+      loadedConf.transform["^.+\\.(md|mdx)$"] = [
+        "./jest-tests/mdx-transformer.mjs",
+        {
+          mdxOptions: mdxConfig,
+          nextConfig: value[1].nextConfig,
+        },
+      ];
+      break;
+    }
+  }
+
   return loadedConf;
 }

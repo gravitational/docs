@@ -2,8 +2,8 @@
 // https://github.com/bitttttten/jest-transformer-mdx/issues/25#issuecomment-1041767325
 
 import "path";
-import { default as babelJest } from "babel-jest";
-import { compileSync } from "@mdx-js/mdx";
+import { compileSync as compileMDXSync } from "@mdx-js/mdx";
+import { default as nextJest } from "next/dist/build/swc/jest-transformer.js";
 
 // resolveMdxOptions either imports config file named in src or, if the config
 // is an object, return it unchanged.
@@ -22,13 +22,16 @@ async function resolveMdxOptions(src) {
 }
 
 function process(src, filepath, config) {
-  const mdxOptions = resolveMdxOptions(config.mdxOptions);
+  const mdxOptions = resolveMdxOptions(config.transformerConfig.mdxOptions);
 
-  const jsx = compileSync(filepath, { ...mdxOptions });
-
-  return babelJest
-    .createTransformer({})
-    .process(`import {mdx} from '@mdx-js/react';${jsx}`, filepath, config);
+  const jsx = compileMDXSync(filepath, { ...mdxOptions });
+  return nextJest
+    .createTransformer(config.transformerConfig)
+    .process(
+      `import {mdx} from '@mdx-js/react';${jsx}`,
+      filepath,
+      {config: {}}
+    );
 }
 
 // Jest expects transformers that use ECMASCript modules to export an object
