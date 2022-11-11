@@ -7,7 +7,7 @@ export default function FourOhFour() {
       We&apos;re very sorry - we could not find the page you were looking for.
       Please navigate to the Teleport{" "}
       <a href="/docs/">Documentation</a> or the{" "}
-      <a href="https://goteleport.com">Home Page</a> to find what you&apos;re
+      <a href="/">Home Page</a> to find what you&apos;re
       looking for.
     </>
   );
