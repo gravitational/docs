@@ -5,31 +5,13 @@ import Header from "layouts/DocsPage/Header";
 import Footer from "layouts/DocsPage/Footer";
 import styles from "./OldVersions.module.css";
 
-const oldVersions = [
-  {
-    label: "Teleport v8",
-    href: "https://github.com/gravitational/teleport/tree/branch/v8",
-  },
-  {
-    label: "Teleport v7",
-    href: "https://github.com/gravitational/teleport/tree/branch/v7",
-  },
-  {
-    label: "Teleport v6",
-    href: "https://github.com/gravitational/teleport/tree/branch/v6",
-  },
-  {
-    label: "Teleport v5",
-    href: "https://github.com/gravitational/teleport/tree/branch/v5",
-  },
-  {
-    label: "Teleport v4",
-    href: "https://github.com/gravitational/teleport/tree/branch/v4",
-  },
-];
+import config from "../../config.json";
+
+const githubUrl = "https://github.com/gravitational/teleport/tree";
 
 const OldVersions = () => {
   let title = `Older Versions`;
+  const deprecated = config.versions.filter((ver) => ver.deprecated);
 
   return (
     <>
@@ -43,11 +25,16 @@ const OldVersions = () => {
               Deprecated versions of the Teleport docs can be found at the
               GitHub links below:
             </p>
-            {oldVersions.map((ver) => (
-              <div key={ver.label} className={styles.link}>
-                <a href={ver.href}>{ver.label}</a>
-              </div>
-            ))}
+            {deprecated
+              .reverse()
+              .filter((ver) => ver.deprecated)
+              .map((ver) => (
+                <div key={ver.branch} className={styles.link}>
+                  <a
+                    href={`${githubUrl}/${ver.branch}`}
+                  >{`Teleport ${ver.name}`}</a>
+                </div>
+              ))}
             <div>
               You can also{" "}
               <Link href="/">return to the main documentation site.</Link>
