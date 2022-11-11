@@ -205,4 +205,23 @@ Suite("Variables in multiline command support", () => {
   assert.equal(result, expected);
 });
 
+Suite("Variables in non-code snippets", () => {
+  const value = readFileSync(
+    resolve("server/fixtures/includes/includes-var-in-yaml.mdx"),
+    "utf-8"
+  );
+
+  const result = transformer({
+    value,
+    path: "/docs/index.mdx",
+  }).toString();
+
+  const expected = readFileSync(
+    resolve("server/fixtures/result/var-in-yaml.mdx"),
+    "utf-8"
+  );
+
+  assert.equal(result, expected);
+});
+
 Suite.run();
