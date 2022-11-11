@@ -65,10 +65,10 @@ export const navigationData: NavbarData = [
     },
   },
   {
-    button: { title: "Use Cases", testId: "use-cases" },
+    button: { title: "Solutions", testId: "solutions" },
     menu: {
-      title: "Teleport Use Cases",
-      testId: "use-cases-menu",
+      title: "Teleport Solutions",
+      testId: "solutions-menu",
       children: [
         {
           title: "Financial Services",
@@ -157,11 +157,6 @@ export const navigationData: NavbarData = [
       title: "Learn More About Teleport",
       testId: "learn-menu",
       children: [
-        {
-          title: "Teleport Connect 2022",
-          href: "/teleport-connect-2022/?utm_campaign=eg&utm_medium=web&utm_source=navbar",
-          isExternal: true,
-        },
         {
           title: "The Blog",
           href: "/blog/",
