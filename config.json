@@ -37,24 +37,20 @@
     },
     {
       "name": "9.0",
-      "branch": "branch/v9",
-      "deprecated": false
+      "branch": "branch/v9"
     },
     {
       "name": "10.0",
-      "branch": "branch/v10",
-      "deprecated": false
+      "branch": "branch/v10"
     },
     {
       "name": "11.0",
       "branch": "branch/v11",
-      "latest": true,
-      "deprecated": false
+      "latest": true
     },
     {
       "name": "12.0",
-      "branch": "master",
-      "deprecated": false
+      "branch": "master"
     }
   ]
 }

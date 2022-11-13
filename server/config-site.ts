@@ -45,7 +45,7 @@ const validator = ajv.compile({
           name: { type: "string" },
           branch: { type: "string" },
           latest: { type: "boolean", nullable: true },
-          deprecated: { type: "boolean", nullable: false },
+          deprecated: { type: "boolean", nullable: true },
         },
         additionalProperties: false,
         required: ["name", "branch"],
