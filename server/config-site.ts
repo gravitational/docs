@@ -12,6 +12,7 @@ interface Config {
     name: string;
     branch: string;
     latest?: true;
+    deprecated: boolean;
   }[];
 }
 
@@ -44,6 +45,7 @@ const validator = ajv.compile({
           name: { type: "string" },
           branch: { type: "string" },
           latest: { type: "boolean", nullable: true },
+          deprecated: { type: "boolean", nullable: true },
         },
         additionalProperties: false,
         required: ["name", "branch"],
@@ -62,13 +64,14 @@ const validator = ajv.compile({
  */
 
 export const normalize = ({ versions }: Config): NormalizedConfig => {
+  const supportedVersions = versions.filter((version) => !version.deprecated);
   const result: NormalizedConfig = {
     latest: (
-      versions.find(({ latest }) => latest === true) ||
-      versions[versions.length - 1]
+      supportedVersions.find(({ latest }) => latest === true) ||
+      versions[supportedVersions.length - 1]
     ).name,
-    versions: versions.map(({ name }) => name),
-    branches: versions.reduce((result, { name, branch }) => {
+    versions: supportedVersions.map(({ name }) => name),
+    branches: supportedVersions.reduce((result, { name, branch }) => {
       return { ...result, [name]: branch };
     }, {}),
   };

@@ -1,6 +1,41 @@
 {
   "versions": [
     {
+      "name": "4",
+      "branch": "branch/4.4",
+      "deprecated": true
+    },
+    {
+      "name": "5.0",
+      "branch": "branch/5.0",
+      "deprecated": true
+    },
+    {
+      "name": "6.0",
+      "branch": "branch/v6.0",
+      "deprecated": true
+    },
+    {
+      "name": "6.1",
+      "branch": "branch/v6.1",
+      "deprecated": true
+    },
+    {
+      "name": "6.2",
+      "branch": "branch/v6.2",
+      "deprecated": true
+    },
+    {
+      "name": "7.0",
+      "branch": "branch/v7",
+      "deprecated": true
+    },
+    {
+      "name": "8.0",
+      "branch": "branch/v8",
+      "deprecated": true
+    },
+    {
       "name": "9.0",
       "branch": "branch/v9"
     },
