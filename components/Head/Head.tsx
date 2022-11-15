@@ -55,6 +55,7 @@ const Head = ({
 
   return (
     <NextHead>
+      <html lang="en" />
       <title>{title}</title>
       <link rel="icon" href="/docs/favicon.ico" />
       <link rel="icon" href="/docs/favicon.svg" type="image/svg+xml" />
