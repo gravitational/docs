@@ -30,7 +30,7 @@ export const CopyCommandVar: Story = {
         <Command>
           <CommandLine data-content="$ ">
             curl https://
-            <Var name="example.com" isGlobal="false" description="" />
+            <Var name="example.com" isGlobal={false} description="" />
             /v1/webapi/saml/acs/azure-saml
           </CommandLine>
         </Command>
@@ -61,7 +61,7 @@ export const CopyCodeLineVar: Story = {
       <Snippet>
         <CodeLine>
           curl https://
-          <Var name="example.com" isGlobal="false" description="" />
+          <Var name="example.com" isGlobal={false} description="" />
           /v1/webapi/saml/acs/azure-saml
         </CodeLine>
       </Snippet>

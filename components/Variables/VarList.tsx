@@ -13,7 +13,7 @@ export const VarList = () => {
         name={item}
         description={fieldDescriptions[item]}
         needLabel
-        isGlobal="true"
+        isGlobal={true}
       />
     </li>
   ));
