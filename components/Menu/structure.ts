@@ -142,9 +142,9 @@ const menu: MenuCategoryProps[] = [
       },
       {
         icon: "book",
-        title: "User Guides",
-        description: "Documentation for end users",
-        href: "/docs/user-guides/",
+        title: "Teleport Clients",
+        description: "Learn how to conenct to Teleport-protected services",
+        href: "/docs/connect-your-client/introduction/",
         passthrough: false,
       },
       {
