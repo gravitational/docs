@@ -25,7 +25,7 @@ const getConfigPath = (version: string) =>
   resolve("content", version, "docs/config.json");
 
 /*
- * Try to load config file and throw error if it does not exists.
+ * Try to load config file and throw error if it does not exist.
  */
 
 export const load = (version: string) => {
@@ -36,7 +36,7 @@ export const load = (version: string) => {
 
     return JSON.parse(content) as Config;
   } else {
-    throw Error(`File ${path} does not exists.`);
+    throw Error(`File ${path} does not exist.`);
   }
 };
 
