@@ -9,6 +9,7 @@ export interface MenuItemProps {
   href: string;
   icon?: IconName;
   image?: string;
+  passthrough?: boolean;
 }
 
 const DropdownMenuItem = ({
@@ -17,9 +18,10 @@ const DropdownMenuItem = ({
   title,
   description,
   href,
+  passthrough = true, // If no value is sent, default to true
 }: MenuItemProps) => {
   return (
-    <Link href={href} passthrough className={styles.wrapper}>
+    <Link href={href} passthrough={passthrough} className={styles.wrapper}>
       {image && (
         <div className={styles["image-wrapper"]}>
           <NextImage

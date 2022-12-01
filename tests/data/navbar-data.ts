@@ -124,6 +124,10 @@ export const navigationData: NavbarData = [
           href: "/docs/",
         },
         {
+          title: "Teleport Clients",
+          href: "/docs/connect-your-client/introduction/",
+        },
+        {
           title: "How It Works",
           href: "/how-it-works/",
           isExternal: true,

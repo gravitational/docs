@@ -141,6 +141,13 @@ const menu: MenuCategoryProps[] = [
         href: "/docs/",
       },
       {
+        icon: "book",
+        title: "Teleport Clients",
+        description: "Learn how to conenct to Teleport-protected services",
+        href: "/docs/connect-your-client/introduction/",
+        passthrough: false,
+      },
+      {
         icon: "gamepad",
         title: "How It Works",
         description: "Learn the fundamentals of how Teleport works",
