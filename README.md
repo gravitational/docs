@@ -64,15 +64,23 @@ Now run one of the following commands:
 
 ### Previewing changes locally with Docker
 
-To preview local changes you've made to `teleport/docs` with Docker, you can run
+To preview local changes you've made to `teleport/docs` with Docker, try this script:
 
 ```bash
-NEXT_PATH=/abs/path/to/next
-TELEPORT_PATH=/abs/path/to/teleport
-SEM_VER=9.0 # Change this to whatever the latest version is
+#!/bin/bash
+DOCKER_IMAGE=node:16-slim
+DOCS_PATH=/abs/path/to/gravitational/docs # replace with the path to a git checkout of the gravitational/docs repo
+TELEPORT_PATH=/abs/path/to/gravitational/teleport # replace with the path to a git checkout of the gravitational/teleport repo
+SEM_VER=11.0 # change this to whatever the latest version is
 
-docker run --rm -ti -v $NEXT_PATH:/src -v $TELEPORT_PATH:/src/content/$SEM_VER -w /src -p 3000:3000 node:12-slim yarn dev
+docker run --rm -ti -v $DOCS_PATH:/src -v $TELEPORT_PATH:/src/content/$SEM_VER -w /src -p 3000:3000 ${DOCKER_IMAGE} yarn dev
 ```
+
+You will need to have run `git submodule update --init --remote` in the `content` subdirectory of the `gravitational/docs` repo first to make sure that all the
+submodule checkouts of the docs repo are up to date, or you'll get errors like `Error: File /src/content/9.0/docs/config.json does not exists` (sic)
+
+Once things are running properly, you can navigate to http://localhost:3000/docs to view your edits to the docs. Saving changes to a file will live reload the
+page.
 
 ## `config.json`
 
