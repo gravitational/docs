@@ -5,7 +5,7 @@ STAGING_DOCKER_IMAGE=146628656107.dkr.ecr.us-west-2.amazonaws.com/gravitational/
 PRODUCTION_DOCKER_IMAGE=public.ecr.aws/gravitational/docs:latest
 
 ## Install aws
-apt install -y unzip
+apt install -y unzip jq
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip "awscliv2.zip"
 ./aws/install
