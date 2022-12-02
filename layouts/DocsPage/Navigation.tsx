@@ -71,40 +71,26 @@ const DocsNavigationItems = ({
           const selected = entry.slug === docPath;
           const active =
             selected || entry.entries?.some((entry) => entry.slug === docPath);
-          const hidden = Array.isArray(entry.hideInScopes)
-            ? entry.hideInScopes.includes(urlScope)
-            : entry.hideInScopes === urlScope;
 
           return (
             <li key={entry.slug}>
-              {hidden ? null : (
-                <Link
-                  className={cn(
-                    styles.link,
-                    active && styles.active,
-                    selected && styles.selected
-                  )}
-                  href={entry.slug}
-                  onClick={onClick}
-                >
-                  {entry.title}
-                  {!!entry.forScopes?.length && getScopeIcons(entry.forScopes)}
-                  {!!entry.entries?.length && (
-                    <Icon
-                      size="sm"
-                      name="ellipsis"
-                      className={styles.ellipsis}
-                    />
-                  )}
-                </Link>
-              )}
+              <Link
+                className={cn(
+                  styles.link,
+                  active && styles.active,
+                  selected && styles.selected
+                )}
+                href={entry.slug}
+                onClick={onClick}
+              >
+                {entry.title}
+                {!!entry.forScopes?.length && getScopeIcons(entry.forScopes)}
+                {!!entry.entries?.length && (
+                  <Icon size="sm" name="ellipsis" className={styles.ellipsis} />
+                )}
+              </Link>
               {!!entry.entries?.length && (
-                <ul
-                  className={cn(
-                    styles.submenu,
-                    active && !hidden && styles.opened
-                  )}
-                >
+                <ul className={cn(styles.submenu, active && styles.opened)}>
                   <DocsNavigationItems
                     entries={entry.entries}
                     onClick={onClick}
