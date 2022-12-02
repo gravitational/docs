@@ -43,6 +43,7 @@ yarn
 Now run one of the following commands:
 
 - `yarn dev` - will run development server for docs at `localhost:3000/docs` that will autorefresh pages in real time when you edit markdown documents.
+  - If you edit a partial file in `docs/pages/includes`, you will need to stop the dev server and restart it to re-include the partial.
 - `yarn build` - will build static production version.
 - `yarn start` - will display documentation built with `npm run build` at `localhost:3000`.
 - `yarn update-and-build` - shortcut for submodule update and build (this command is used on deploy to Vercel). Do not use this command if you plan to edit docs locally - on `run` it will switch your branch to the latest commit in `master` that can cause conflicts with your locally edited files.
@@ -64,15 +65,23 @@ Now run one of the following commands:
 
 ### Previewing changes locally with Docker
 
-To preview local changes you've made to `teleport/docs` with Docker, you can run
+To preview local changes you've made to `teleport/docs` with Docker, try this script:
 
 ```bash
-NEXT_PATH=/abs/path/to/next
-TELEPORT_PATH=/abs/path/to/teleport
-SEM_VER=9.0 # Change this to whatever the latest version is
+#!/bin/bash
+DOCKER_IMAGE=node:14-slim
+DOCS_PATH=/abs/path/to/gravitational/docs # replace with the path to a git checkout of the gravitational/docs repo
+TELEPORT_PATH=/abs/path/to/gravitational/teleport # replace with the path to a git checkout of the gravitational/teleport repo
+SEM_VER=11.0 # change this to whatever the latest version is
 
-docker run --rm -ti -v $NEXT_PATH:/src -v $TELEPORT_PATH:/src/content/$SEM_VER -w /src -p 3000:3000 node:12-slim yarn dev
+docker run --rm -ti -v $DOCS_PATH:/src -v $TELEPORT_PATH:/src/content/$SEM_VER -w /src --entrypoint=/bin/bash -p 3000:3000 ${DOCKER_IMAGE} -c "npm install && yarn dev"
 ```
+
+You will need to have run `git submodule update --init --remote` in the `content` subdirectory of the `gravitational/docs` repo first to make sure that all the
+submodule checkouts of the docs repo are up to date, or you'll get errors like `Error: File /src/content/9.0/docs/config.json does not exist`
+
+Once things are running properly, you can navigate to http://localhost:3000/docs to view your edits to the docs. Saving changes to a file will live reload the
+page. If you edit a partial file in `docs/pages/includes`, you will need to stop the dev server and restart it to re-include the partial.
 
 ## `config.json`
 
