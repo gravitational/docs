@@ -19,6 +19,12 @@ DOCKER_BUILDKIT=1 docker build -t $STAGING_DOCKER_IMAGE .
 export AWS_ACCESS_KEY_ID=$STAGING_DOCS_ECR_KEY
 export AWS_SECRET_ACCESS_KEY=$STAGING_DOCS_ECR_SECRET
 
+STAGING_ASSUME_OUTPUT=$(aws sts assume-role --role-arn $STAGING_DOCS_ASSUME_ROLE --role-session-name AWSCLI-Session-Docs-Publish-Image --output json)
+
+export AWS_ACCESS_KEY_ID=$(echo $STAGING_ASSUME_OUTPUT | jq -r .Credentials.AccessKeyId)
+export AWS_SECRET_ACCESS_KEY=$(echo $STAGING_ASSUME_OUTPUT | jq -r .Credentials.SecretAccessKey)
+export AWS_SESSION_TOKEN=$(echo $STAGING_ASSUME_OUTPUT | jq -r .Credentials.SessionToken)
+
 aws ecr get-login-password --region us-west-2 | docker login -u="AWS" --password-stdin 146628656107.dkr.ecr.us-west-2.amazonaws.com
 
 ## Push Staging Image
@@ -32,6 +38,13 @@ fi
 docker logout 146628656107.dkr.ecr.us-west-2.amazonaws.com
 export AWS_ACCESS_KEY_ID=$PRODUCTION_DOCS_ECR_KEY
 export AWS_SECRET_ACCESS_KEY=$PRODUCTION_DOCS_ECR_SECRET
+
+PRODUCTION_ASSUME_OUTPUT=$(aws sts assume-role --role-arn $PRODUCTION_DOCS_ASSUME_ROLE --role-session-name AWSCLI-Session-Docs-Publish-Image --output json)
+
+export AWS_ACCESS_KEY_ID=$(echo $PRODUCTION_ASSUME_OUTPUT | jq -r .Credentials.AccessKeyId)
+export AWS_SECRET_ACCESS_KEY=$(echo $PRODUCTION_ASSUME_OUTPUT | jq -r .Credentials.SecretAccessKey)
+export AWS_SESSION_TOKEN=$(echo $PRODUCTION_ASSUME_OUTPUT | jq -r .Credentials.SessionToken)
+
 aws ecr-public get-login-password --region us-east-1 | docker login -u="AWS" --password-stdin public.ecr.aws
 
 ## Push Production Image
