@@ -38,6 +38,7 @@ fi
 docker logout 146628656107.dkr.ecr.us-west-2.amazonaws.com
 export AWS_ACCESS_KEY_ID=$PRODUCTION_DOCS_ECR_KEY
 export AWS_SECRET_ACCESS_KEY=$PRODUCTION_DOCS_ECR_SECRET
+unset AWS_SESSION_TOKEN
 
 PRODUCTION_ASSUME_OUTPUT=$(aws sts assume-role --role-arn $PRODUCTION_DOCS_ASSUME_ROLE --role-session-name AWSCLI-Session-Docs-Publish-Image --output json)
 
