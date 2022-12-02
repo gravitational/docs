@@ -30,16 +30,18 @@ export default async function createJestConfig() {
   const loadConf = await createJestConfig(customJestConfig);
   const loadedConf = await loadConf();
 
-  // MDX-JS and dependencies use ECMAScript modules, so we need to ensure that
-  // we can transform the source. The default next/jest config ignores all
-  // contents of node_modules, so we override that config before passing
-  // it to Jest.
-  //
-  // Context: https://mdxjs.com/docs/troubleshooting-mdx/#esm
-  //
-  // Besides '/node_modules/' this is the second default
-  // transformIgnorePatterns value, so we preserve it here.
-  loadedConf.transformIgnorePatterns = ["^.+\\.module\\.(css|sass|scss)$"];
+  loadedConf.transformIgnorePatterns = [
+    // MDX-JS uses ECMAScript modules, so we need to ensure that we can
+    // transform the source. The default next/jest config ignores all
+    // contents of node_modules, so we override that config before passing
+    // it to Jest.
+    //
+    // Context: https://mdxjs.com/docs/troubleshooting-mdx/#esm
+    "/node_modules/(?!@mdx-js)",
+    // Besides '/node_modules/' this is the second default
+    // transformIgnorePatterns value.
+    "^.+\\.module\\.(css|sass|scss)$",
+  ];
 
   return loadedConf;
 }
