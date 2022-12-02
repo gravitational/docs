@@ -3,29 +3,15 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Tabs, TabItem } from "components/Tabs";
 import { describe, expect, test } from "@jest/globals";
-import { processMDXChunk } from "./process-mdx";
+import { NavigationCategory } from "layouts/DocsPage/types";
+import { default as DocsPage } from "layouts/DocsPage/";
+import TabsDropdownIdentical from "./testdata/TabsDropdownIdentical.mdx";
 
 describe("components/Tabs", () => {
-  test("only shows tab items for the selected dropdown option", async () => {
-    const TabsDropdownIdentical = await processMDXChunk(
-      `<Tabs dropdownSelected="Kubernetes" dropdownCaption="Environment">
-  <TabItem label="Latest release" options="Kubernetes">
-    Installing the latest release on Kubernetes
-  </TabItem>
-  <TabItem label="From source" options="Kubernetes">
-    Building from source on Kubernetes
-  </TabItem>
-  <TabItem label="Latest release" options="Executable">
-    Installing the latest release using an executable
-  </TabItem>
-  <TabItem label="From source" options="Executable">
-    Building from source using an executable
-  </TabItem>
-</Tabs>`
-    );
+  test("only shows tab items for the selected dropdown option", () => {
     render(<TabsDropdownIdentical />);
 
-    // console.log("screen.debug() after render:\n", screen.debug());
+      // console.log("screen.debug() after render:\n", screen.debug());
 
     userEvent.click(screen.getByText("Kubernetes"));
     userEvent.click(screen.getByText("Executable"));
