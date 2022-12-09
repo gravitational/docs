@@ -1,10 +1,20 @@
 import "process";
 import * as path from "path";
+import * as vm from "vm";
 
 // Following the example here:
 // https://nextjs.org/docs/testing#setting-up-jest-with-the-rust-compiler
 import { default as nextJest } from "next/jest.js";
 import { default as mdxConfig } from "./.build/server/mdx-config-docs.mjs";
+
+if (typeof vm.SyntheticModule !== "function") {
+  throw new Error(
+    "This Jest config requires you to run Jest with NodeJS's" +
+      " --experimental-vm-modules flag in order to use ECMAScript modules." +
+      " Our Jest config requires ESM in order to load MDX test files. This is" +
+      " because we need to support async operatiosn when processing MDX."
+  );
+}
 
 let mdxDocsOptions = {};
 
@@ -69,6 +79,13 @@ export default async function createJestConfig() {
       break;
     }
   }
+
+  loadedConf.extensionsToTreatAsEsm = [
+      ".ts",
+      ".tsx",
+      ".jsx",
+      ".mdx"
+  ]
 
   return loadedConf;
 }

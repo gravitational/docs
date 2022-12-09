@@ -1,17 +1,16 @@
 import "jsdom-global";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Tabs, TabItem } from "components/Tabs";
 import { describe, expect, test } from "@jest/globals";
-import { NavigationCategory } from "layouts/DocsPage/types";
-import { default as DocsPage } from "layouts/DocsPage/";
-import TabsDropdownIdentical from "./testdata/TabsDropdownIdentical.mdx";
+import * as TabsDropdownIdentical from "./testdata/TabsDropdownIdentical.mdx";
+
+console.log("TabsDropdownIdentical:", TabsDropdownIdentical);
 
 describe("components/Tabs", () => {
   test("only shows tab items for the selected dropdown option", () => {
-    render(<TabsDropdownIdentical />);
+    render(TabsDropdownIdentical);
 
-      // console.log("screen.debug() after render:\n", screen.debug());
+    // console.log("screen.debug() after render:\n", screen.debug());
 
     userEvent.click(screen.getByText("Kubernetes"));
     userEvent.click(screen.getByText("Executable"));
