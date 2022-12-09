@@ -29,7 +29,6 @@ export type ScopesInMeta = [""] | ["noScope"] | ScopeType[];
 interface BaseNavigationItem {
   title: string;
   slug: string;
-  hideInScopes?: ScopesType;
   entries?: NavigationItem[];
 }
 export interface RawNavigationItem extends BaseNavigationItem {
