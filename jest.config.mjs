@@ -23,9 +23,6 @@ process.env["DOCS_CONFIG_OVERRIDE_PATH"] = path.join(
   "empty-config.json"
 );
 
-// Generate an async function that Jest will call when loading its config. This
-// mimics the function signature of the default export of 'next/jest'. See:
-// https://github.com/vercel/next.js/blob/35308c668ee63d8cea5a2c12713d7c761f259764/packages/next/build/jest/jest.ts#L59-L61
 export default async function createJestConfig() {
   const createJestConfig = nextJest({
     // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
