@@ -1,8 +1,17 @@
+import "process";
+import * as path from "path";
+
 // Following the example here:
 // https://nextjs.org/docs/testing#setting-up-jest-with-the-rust-compiler
 import { default as nextJest } from "next/jest.js";
 import { default as mdxConfig } from "./.build/server/mdx-config-docs.mjs";
+
 let mdxDocsOptions = {};
+
+process.env["DOCS_CONFIG_OVERRIDE_PATH"] = path.join(
+  "jest-tests",
+  "empty-config.json"
+);
 
 // Generate an async function that Jest will call when loading its config. This
 // mimics the function signature of the default export of 'next/jest'. See:

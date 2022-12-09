@@ -4,6 +4,7 @@
  * these config files.
  */
 
+import "process";
 import type { Redirect } from "next/dist/lib/load-custom-routes";
 
 import Ajv from "ajv";
@@ -27,10 +28,7 @@ const getConfigPath = (version: string) =>
 /*
  * Try to load config file and throw error if it does not exist.
  */
-
-export const load = (version: string) => {
-  const path = getConfigPath(version);
-
+export const load = (path: string) => {
   if (existsSync(path)) {
     const content = readFileSync(path, "utf-8");
 
@@ -304,25 +302,42 @@ export const normalize = (config: Config, version: string): Config => {
   return config;
 };
 
-/* Load, validate and normalize config. */
-
+/* loadConfig loads the config file based on the provided docs version, then
+ * validates and normalizes it. This includes ensuring that each page listed as
+ * a navigation entry or redirect destination corresponds to an actual file.
+ *
+ * We expect the config file for a given version of the docs to be at the
+ * following path:
+ *
+ * content/<version>/docs/config.json
+ *
+ * However, you can override this during by assigning the environment variable
+ * "DOCS_CONFIG_OVERRIDE_PATH" when building the docs. This is intended for
+ * testing. If this is set, loadConfig will not check for the existence of pages
+ * named in the config.
+ */
 export const loadConfig = (version: string) => {
-  const config = load(version);
-
-  const badSlugs = checkURLsForCorrespondingFiles(
-    join("content", version, "docs", "pages"),
-    config.navigation,
-    config.redirects
-  );
-
-  if (badSlugs.length > 0) {
-    throw new Error(
-      "Error parsing docs config file " +
-        join("content", version, "docs", "config.json") +
-        ": The following navigation slugs or redirect destinations do not " +
-        "correspond to actual MDX files:\n\t- " +
-        badSlugs.join("\n\t- ")
+  let config: Config;
+  if (process.env.hasOwnProperty("DOCS_CONFIG_OVERRIDE_PATH")) {
+    config = load(process.env["DOCS_CONFIG_OVERRIDE_PATH"]);
+  } else {
+    const path = getConfigPath(version);
+    config = load(path);
+    const badSlugs = checkURLsForCorrespondingFiles(
+      join("content", version, "docs", "pages"),
+      config.navigation,
+      config.redirects
     );
+
+    if (badSlugs.length > 0) {
+      throw new Error(
+        "Error parsing docs config file " +
+          join("content", version, "docs", "config.json") +
+          ": The following navigation slugs or redirect destinations do not " +
+          "correspond to actual MDX files:\n\t- " +
+          badSlugs.join("\n\t- ")
+      );
+    }
   }
 
   validateConfig<Config>(validator, config);

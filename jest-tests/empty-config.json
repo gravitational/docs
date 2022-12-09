@@ -1,0 +1,16 @@
+{
+  "navigation": [
+    {
+      "icon": "home",
+      "title": "Home",
+      "entries": [
+        {
+          "title": "Introduction",
+          "slug": "/jest-tests/testdata/TabsDropdownIdentical/"
+        }
+      ]
+    }
+  ],
+  "variables": {},
+  "redirects": []
+}
