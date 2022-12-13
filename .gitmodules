@@ -1,16 +1,16 @@
-[submodule "content/9.0"]
-	path = content/9.0
-	url = https://github.com/gravitational/teleport/
+[submodule "content/9.x"]
+	path = content/9.x
+	url = https://github.com/gravitational/teleport
 	branch = branch/v9
-[submodule "content/10.0"]
-	path = content/10.0
-	url = https://github.com/gravitational/teleport/
+[submodule "content/10.x"]
+	path = content/10.x
+	url = https://github.com/gravitational/teleport
 	branch = branch/v10
-[submodule "content/11.0"]
-	path = content/11.0
-	url = https://github.com/gravitational/teleport/
+[submodule "content/11.x"]
+	path = content/11.x
+	url = https://github.com/gravitational/teleport
 	branch = branch/v11
-[submodule "content/12.0"]
-	path = content/12.0
+[submodule "content/12.x"]
+	path = content/12.x
 	url = https://github.com/gravitational/teleport
 	branch = master

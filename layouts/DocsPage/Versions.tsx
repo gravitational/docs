@@ -20,8 +20,20 @@ const pickOption = (options: VersionsDropdown[], id: string) =>
 // assigns component key and id props based on the value string
 const pickId = ({ value }: VersionsDropdown) => value;
 
-const validVersion = (thisVersion: number, latestVersion: number) => {
-  return thisVersion >= latestVersion - 2 ? true : false;
+const validVersion = (thisVersion: string, latestVersion: string) => {
+  const majorVersionRe = new RegExp("^[0-9]+");
+  const currentMajorVersion = majorVersionRe.exec(thisVersion);
+  const latestMajorVersion = majorVersionRe.exec(latestVersion);
+
+  // Can't calculate validity, so the version is invalid. This happens, e.g.,
+  // if we're dealing with a dropdown option like "Older Versions".
+  if (currentMajorVersion == null || latestMajorVersion == null) {
+    return false;
+  }
+
+  return Number(currentMajorVersion[0]) >= Number(latestMajorVersion[0]) - 2
+    ? true
+    : false;
 };
 
 const Versions = ({
@@ -35,19 +47,15 @@ const Versions = ({
   const router = useRouter();
   const [currentItem, setCurrentItem] = useState<string>(current);
 
-  const latestNumber = Math.floor(Number(latest));
-
   const versions = useMemo(() => {
     //creates list of versions ultimately from config.json
     const versionNames = [...available].reverse();
 
     //assigns versions a deprecated status: boolean
     const versionsList = versionNames.map((version) => {
-      const versionNumber = Number(version);
-
       const versionInfo: VersionsDropdown = {
         value: version,
-        deprecated: !validVersion(versionNumber, latestNumber),
+        deprecated: !validVersion(version, latest),
       };
       return versionInfo;
     });
@@ -59,13 +67,13 @@ const Versions = ({
     });
 
     return versionsList;
-  }, [available, latestNumber]);
+  }, [available, latest]);
 
   // only fires when dropdown selection is changed
   const navigateToVersion = useCallback(
     (option: string) => {
       // if version is deprecated or Older Versions is selected, redirect to /older-versions
-      if (!validVersion(Number(option), latestNumber)) {
+      if (!validVersion(option, latest)) {
         setCurrentItem(option);
         router.push("/older-versions");
         return;
@@ -89,7 +97,7 @@ const Versions = ({
         router.push(href);
       }
     },
-    [getNewVersionPath, router, latestNumber]
+    [getNewVersionPath, router, latest]
   );
 
   useEffect(() => {
