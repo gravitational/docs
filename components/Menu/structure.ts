@@ -6,15 +6,6 @@ import KubernetesSvgPath from "./assets/kubernetes.svg";
 import ServerSvgPath from "./assets/server.svg";
 import { MenuCategoryProps } from "./Category";
 
-import { sendAnalyticsEvent } from "utils/tracking";
-
-const onClick = () =>
-  sendAnalyticsEvent({
-    action: "Button Click",
-    category: "Pricing Buttons",
-    label: "Navbar Pricing Button",
-  });
-
 const menu: MenuCategoryProps[] = [
   {
     title: "Protocols",
@@ -226,7 +217,6 @@ const menu: MenuCategoryProps[] = [
     description: "Pricing",
     href: "/pricing/",
     testId: "pricing",
-    onClick,
   },
   {
     title: "Company",

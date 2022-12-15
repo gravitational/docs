@@ -8,16 +8,8 @@ import {
   DropdownMenuOverlay,
 } from "../DropdownMenu";
 import styles from "./HeaderCTA.module.css";
-import { sendAnalyticsEvent } from "utils/tracking";
 
 const HeaderCTA = () => {
-  const onClick = () =>
-    sendAnalyticsEvent({
-      action: "Button Click",
-      category: "Pricing Buttons",
-      label: "Navbar Get Started Button",
-    });
-
   const ref = useRef(null);
 
   const [isSignInVisible, setIsSignInVisible] = useState<boolean>(false);
@@ -73,7 +65,6 @@ const HeaderCTA = () => {
           href="/pricing/"
           className={styles.cta}
           data-testid="get-started"
-          onClick={onClick}
         >
           Get Started
         </Button>
