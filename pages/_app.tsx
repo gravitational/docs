@@ -10,7 +10,7 @@ import "styles/algolia-search.css";
 
 const NEXT_PUBLIC_GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 const NEXT_PUBLIC_GTAG_ID = process.env.NEXT_PUBLIC_GTAG_ID;
-
+const NEXT_PUBLIC_CLEARBIT_API_KEY = process.env.NEXT_PUBLIC_CLEARBIT_API_KEY;
 interface dataLayerItem {
   [key: string]: unknown;
   event?: string;
@@ -69,6 +69,16 @@ const Analytics = () => {
             }}
           />
           {/* End Google Tag Manager (noscript) */}
+        </>
+      )}
+      {NEXT_PUBLIC_CLEARBIT_API_KEY && (
+        <>
+          {/* Clearbit */}
+          <Script
+            async
+            src={`https://tag.clearbitscripts.com/v1/pk_${NEXT_PUBLIC_CLEARBIT_API_KEY}/tags.js`}
+          />
+          {/* Clearbit */}
         </>
       )}
     </>
