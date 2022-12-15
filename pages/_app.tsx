@@ -1,6 +1,9 @@
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 import Script from "next/script";
 import type { AppProps } from "next/app";
 import { DocsContextProvider } from "layouts/DocsPage/context";
+import { posthog, sendPageview } from "utils/posthog";
 
 import "styles/varaibles.css";
 import "styles/fonts-ubuntu.css";
@@ -76,6 +79,18 @@ const Analytics = () => {
 };
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    posthog(); // init posthog
+
+    router.events.on("routeChangeComplete", sendPageview);
+
+    return () => {
+      router.events.off("routeChangeComplete", sendPageview);
+    };
+  }, [router.events]);
+
   return (
     <>
       <Analytics />
