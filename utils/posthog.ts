@@ -1,7 +1,7 @@
 import posthogGlobal from "posthog-js";
 import type { PostHog } from "posthog-js";
 
-// Imported the keys directly ro prevent circular dependencies error with NX
+// Imported the keys directly to prevent circular dependencies error with NX
 
 const PH_API_KEY = process.env["NEXT_PUBLIC_POSTHOG_API_KEY"];
 const PH_API_URL = process.env["NEXT_PUBLIC_POSTHOG_API_URL"];
