@@ -203,13 +203,6 @@ const menu: MenuCategoryProps[] = [
         description: "View our upcoming events",
         href: "/about/events/",
       },
-      {
-        icon: "code2",
-        title: "What is SSH?",
-        description:
-          "Learn the basics of SSH and how it's used to Access Infrastructure",
-        href: "/ssh/",
-      },
     ],
   },
   {

@@ -181,11 +181,6 @@ export const navigationData: NavbarData = [
           href: "/about/events/",
           isExternal: true,
         },
-        {
-          title: "What is SSH?",
-          href: "/ssh/",
-          isExternal: true,
-        },
       ],
     },
   },
