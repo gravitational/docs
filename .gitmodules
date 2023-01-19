@@ -14,3 +14,7 @@
 	path = content/12.x
 	url = https://github.com/gravitational/teleport
 	branch = branch/v12
+[submodule "content/13.x"]
+	path = content/13.x
+	url = https://github.com/gravitational/teleport/
+	branch = master
