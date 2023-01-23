@@ -3,6 +3,10 @@
   flex-direction: column;
   margin: 0 0 var(--m-2);
 
+  &:last-child {
+    margin-bottom: 0;
+  }
+
   &.left {
     align-items: flex-start;
   }
