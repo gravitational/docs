@@ -37,7 +37,8 @@
     },
     {
       "name": "9.x",
-      "branch": "branch/v9"
+      "branch": "branch/v9",
+      "deprecated": true
     },
     {
       "name": "10.x",
