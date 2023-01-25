@@ -72,7 +72,7 @@ const getSlugsForVersion = (version: string, withNoIndex: boolean = false) => {
 
 export const generateSitemap = (root: string) => {
   const currentDocPages = getSlugsForVersion(latest).map((slug) => ({
-    loc: slug,
+    loc: normalizeDocSlug(slug, latest),
   }));
 
   sitemapGenerator({
@@ -93,7 +93,7 @@ export const generateFullSitemap = (root: string) => {
   versions.forEach((version) => {
     docPages.push(
       ...getSlugsForVersion(version).map((slug) => ({
-        loc: slug,
+        loc: normalizeDocSlug(slug, version),
       }))
     );
   });
