@@ -1,6 +1,5 @@
 import type { PageMeta } from "./types";
 
-import { createElement } from "react";
 import cn from "classnames";
 import { useContext, useEffect } from "react";
 import { VarsProvider } from "components/Variables";
@@ -12,23 +11,18 @@ import Link, { useCurrentHref } from "components/Link";
 import Notice from "components/Notice";
 import VideoBar from "components/VideoBar";
 import { useFindDestinationPath } from "utils/useFindDestinationPath";
-import { components } from "./components";
+
 import { DocsContext } from "./context";
 import Header from "./Header";
 import Footer from "./Footer";
 import Navigation, { getCurrentCategoryIndex } from "./Navigation";
-import rehypeReact from "rehype-react";
+
 import styles from "./DocsPage.module.css";
 
-const renderAst = new rehypeReact({
-  createElement,
-  components,
-}).Compiler;
-
-interface DocsPageProps {
+export interface DocsPageProps {
   meta: PageMeta;
   tableOfConents: HeaderMeta[];
-  AST: any;
+  children: React.ReactNode;
 }
 
 const DocsPage = ({
@@ -45,7 +39,7 @@ const DocsPage = ({
     scopes,
   },
   tableOfConents,
-  AST,
+  children,
 }: DocsPageProps) => {
   const route = useCurrentHref();
 
@@ -75,7 +69,7 @@ const DocsPage = ({
   const isOldVersion = available.indexOf(current) < available.indexOf(latest);
   const isBetaVersion = available.indexOf(current) > available.indexOf(latest);
 
-  let path = getPath(latest);
+  let path = "/";
 
   return (
     <>
@@ -115,14 +109,14 @@ const DocsPage = ({
                   {isOldVersion && (
                     <>
                       This chapter covers a past release: {current}. We
-                      recommend the <Link href={`/docs${path}`}>latest</Link>{" "}
-                      version instead.
+                      recommend the <Link href="/">latest</Link> version
+                      instead.
                     </>
                   )}
                   {isBetaVersion && (
                     <>
                       This chapter covers an upcoming release: {current}. We
-                      recommend the <Link href={`${path}`}>latest</Link> version
+                      recommend the <Link href="/">latest</Link> version
                       instead.
                     </>
                   )}
@@ -130,7 +124,7 @@ const DocsPage = ({
               )}
               <VarsProvider>
                 <div className={cn(styles.text, styles[layout])}>
-                  {renderAst(AST)}
+                  {children}
                 </div>
               </VarsProvider>
             </div>

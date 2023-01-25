@@ -44,7 +44,7 @@ export const components = {
   code: Code,
   inlineCode: Code,
   // eslint-disable-next-line jsx-a11y/alt-text
-  img: (props) => <Image {...props} />,
+  img: (props) => <Image {...props} />, // needed to circumvent props mismatch in types
   iframe: IFrame,
   h1: H1,
   h2: H2,
@@ -80,6 +80,6 @@ export const components = {
   notice: Notice,
   snippet: Snippet,
   details: Details,
-  var: Var,
+  var: (props) => <Var {...props} />, // needed to circumvent props mismatch in types
   varlist: VarList,
 };

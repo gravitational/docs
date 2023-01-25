@@ -3,15 +3,21 @@ import { GetStaticProps } from "next";
 import rehypeReact from "rehype-react";
 import { getDocsPaths, getDocsPageProps } from "server/docs-helpers";
 import { components } from "layouts/DocsPage/components";
+import Layout, { PageMeta } from "layouts/DocsPage";
+import { HeaderMeta } from "components/AnchorNavigation";
 
 const renderAst = new rehypeReact({
   createElement,
   components,
 }).Compiler;
 
-import Layout from "layouts/DocsPage";
+export interface DocsPageProps {
+  meta: PageMeta;
+  tableOfConents: HeaderMeta[];
+  AST: unknown;
+}
 
-const DocsPage = ({ meta, AST, tableOfConents }) => {
+const DocsPage = ({ meta, AST, tableOfConents }: DocsPageProps) => {
   return (
     <Layout meta={meta} tableOfConents={tableOfConents}>
       {renderAst(AST)}

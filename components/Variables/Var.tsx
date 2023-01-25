@@ -6,7 +6,7 @@ import type { VarsContextProps } from "./context";
 import styles from "./Var.module.css";
 
 interface VarProps {
-  name: string;
+  name?: string;
   description?: string;
   needLabel?: boolean;
   isGlobal?: boolean;
