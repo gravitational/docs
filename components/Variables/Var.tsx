@@ -9,21 +9,21 @@ interface VarProps {
   name?: string;
   description?: string;
   needLabel?: boolean;
-  isGlobal?: boolean;
+  isGlobal?: string;
 }
 
 export const Var = ({
   name,
   description = "",
   needLabel = false,
-  isGlobal = false,
+  isGlobal,
 }: VarProps) => {
   const { fields, setField, addField } =
     useContext<VarsContextProps>(VarsContext);
   const val = fields[name] || "";
 
   useEffect(() => {
-    addField(name, isGlobal, description);
+    addField(name, isGlobal === "true", description);
   }, [isGlobal, name, addField, description]);
 
   const onChange = useCallback(
