@@ -228,7 +228,7 @@ export const getDocsPageProps = async (slug: string) => {
     page.data.frontmatter.videoBanner = await fetchVideoMeta(videoBanner);
   }
 
-  // Transforms page text page to ASK while applying bunch of plugins
+  // Transforms page text page to AST
   const AST = await transformToAST(page.data.content, page);
 
   // Generates ToC from the headers in the AST
