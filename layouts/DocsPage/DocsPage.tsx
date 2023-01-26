@@ -21,7 +21,7 @@ import styles from "./DocsPage.module.css";
 
 export interface DocsPageProps {
   meta: PageMeta;
-  tableOfConents: HeaderMeta[];
+  tableOfContents: HeaderMeta[];
   children: React.ReactNode;
 }
 
@@ -38,7 +38,7 @@ const DocsPage = ({
     githubUrl,
     scopes,
   },
-  tableOfConents,
+  tableOfContents,
   children,
 }: DocsPageProps) => {
   const route = useCurrentHref();
@@ -61,7 +61,7 @@ const DocsPage = ({
   }, [versions, setVersions, setScope, scopes, scope]);
 
   const isSectionLayout = layout === "section";
-  const isTocVisible = (!layout || layout === "doc") && tableOfConents.length;
+  const isTocVisible = (!layout || layout === "doc") && tableOfContents.length;
 
   const categoryId = getCurrentCategoryIndex(navigation, route);
   const icon = navigation[categoryId]?.icon || "book";
@@ -130,7 +130,7 @@ const DocsPage = ({
             </div>
             {isTocVisible && (
               <AnchorNavigation
-                headers={tableOfConents}
+                headers={tableOfContents}
                 className={styles["anchor-navigation"]}
               />
             )}

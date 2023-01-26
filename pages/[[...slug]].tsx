@@ -13,13 +13,13 @@ const renderAst = new rehypeReact({
 
 export interface DocsPageProps {
   meta: PageMeta;
-  tableOfConents: HeaderMeta[];
+  tableOfContents: HeaderMeta[];
   AST: unknown;
 }
 
-const DocsPage = ({ meta, AST, tableOfConents }: DocsPageProps) => {
+const DocsPage = ({ meta, AST, tableOfContents }: DocsPageProps) => {
   return (
-    <Layout meta={meta} tableOfConents={tableOfConents}>
+    <Layout meta={meta} tableOfContents={tableOfContents}>
       {renderAst(AST)}
     </Layout>
   );

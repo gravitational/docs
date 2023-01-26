@@ -232,11 +232,11 @@ export const getDocsPageProps = async (slug: string) => {
   const AST = await transformToAST(page.data.content, page);
 
   // Generates ToC from the headers in the AST
-  const tableOfConents = getHeaders(AST);
+  const tableOfContents = getHeaders(AST);
 
   return {
     meta: { ...page.data.frontmatter, ...pageMeta },
     AST,
-    tableOfConents,
+    tableOfContents,
   };
 };
