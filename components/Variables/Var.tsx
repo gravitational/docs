@@ -16,7 +16,7 @@ export const Var = ({
   name,
   description = "",
   needLabel = false,
-  isGlobal,
+  isGlobal = "false",
 }: VarProps) => {
   const { fields, setField, addField } =
     useContext<VarsContextProps>(VarsContext);

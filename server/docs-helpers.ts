@@ -2,12 +2,15 @@
  * Bunch of helper functions to help with docs generation.
  */
 
+import { Node, Data } from "unist";
 import { resolve } from "path";
 import { getPathWithoutVersion } from "../utils/url";
 import { loadConfig as loadDocsConfig } from "./config-docs";
 import { loadConfig as loadSiteConfig } from "./config-site";
+import { HeaderMeta } from "components/AnchorNavigation/types";
 
 import type {
+  PageMeta,
   RawNavigationItem,
   NavigationItem,
   NavigationCategory,
@@ -212,7 +215,15 @@ const getPagesMap = () => {
  * Returns props for the docs page.
  */
 
-export const getDocsPageProps = async (slug: string) => {
+export interface DocsPageProps {
+  meta: PageMeta;
+  tableOfContents: HeaderMeta[];
+  AST: Node<Data>;
+}
+
+export const getDocsPageProps = async (
+  slug: string
+): Promise<DocsPageProps> => {
   const filepath = getPagesMap()[slug];
 
   // Read vfile with parsed frontmatter
@@ -235,7 +246,7 @@ export const getDocsPageProps = async (slug: string) => {
   const tableOfContents = getHeaders(AST);
 
   return {
-    meta: { ...page.data.frontmatter, ...pageMeta },
+    meta: { ...page.data.frontmatter, ...pageMeta } as PageMeta,
     AST,
     tableOfContents,
   };

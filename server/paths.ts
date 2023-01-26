@@ -113,7 +113,13 @@ export const generateFullSitemap = (root: string) => {
  * It will return: { params: { slug: ["one", "two"] } }
  */
 
-export const getStaticPathsForDocs = () => {
+interface DocsStaticPath {
+  params: {
+    slug: string[];
+  };
+}
+
+export const getStaticPathsForDocs = (): DocsStaticPath[] => {
   const result = [];
 
   versions.forEach((version) => {

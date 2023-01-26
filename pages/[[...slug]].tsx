@@ -1,21 +1,18 @@
 import { createElement } from "react";
 import { GetStaticProps } from "next";
 import rehypeReact from "rehype-react";
-import { getDocsPaths, getDocsPageProps } from "server/docs-helpers";
+import {
+  getDocsPaths,
+  getDocsPageProps,
+  DocsPageProps,
+} from "server/docs-helpers";
 import { components } from "layouts/DocsPage/components";
-import Layout, { PageMeta } from "layouts/DocsPage";
-import { HeaderMeta } from "components/AnchorNavigation";
+import Layout from "layouts/DocsPage";
 
 const renderAst = new rehypeReact({
   createElement,
   components,
 }).Compiler;
-
-export interface DocsPageProps {
-  meta: PageMeta;
-  tableOfContents: HeaderMeta[];
-  AST: unknown;
-}
 
 const DocsPage = ({ meta, AST, tableOfContents }: DocsPageProps) => {
   return (
@@ -25,12 +22,18 @@ const DocsPage = ({ meta, AST, tableOfContents }: DocsPageProps) => {
   );
 };
 
+// Here we generate a list of pages to render with getStaticProps,
+// in the future we may try to only generate current version and set
+// `fallback: true` to increase build speed
+
 export async function getStaticPaths() {
   return {
     paths: getDocsPaths(),
     fallback: false,
   };
 }
+
+// generates JSON with the page data
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug =

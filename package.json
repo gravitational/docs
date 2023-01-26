@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.25.0",
-    "@next/bundle-analyzer": "^12.1.5",
+    "@next/bundle-analyzer": "12.1.5",
     "@svgr/webpack": "^6.2.1",
     "@types/glob": "^7.2.0",
     "@types/hast": "^2.3.4",
