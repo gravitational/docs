@@ -69,7 +69,7 @@ const DocsPage = ({
   const isOldVersion = available.indexOf(current) < available.indexOf(latest);
   const isBetaVersion = available.indexOf(current) > available.indexOf(latest);
 
-  let path = "/";
+  let path = getPath(latest);
 
   return (
     <>
@@ -109,15 +109,15 @@ const DocsPage = ({
                   {isOldVersion && (
                     <>
                       This chapter covers a past release: {current}. We
-                      recommend the <Link href="/">latest</Link> version
-                      instead.
+                      recommend the <Link href={`/docs${path}`}>latest</Link>{" "}
+                      version instead.
                     </>
                   )}
                   {isBetaVersion && (
                     <>
                       This chapter covers an upcoming release: {current}. We
-                      recommend the <Link href="/">latest</Link> version
-                      instead.
+                      recommend the <Link href={`/docs${path}`}>latest</Link>{" "}
+                      version instead.
                     </>
                   )}
                 </Notice>

@@ -94,11 +94,7 @@ const Versions = ({
         if (href.includes("older-versions"))
           href = href.replace("older-versions", "");
 
-        if (option === latest) {
-          router.push("/");
-        } else {
-          router.push(href);
-        }
+        router.push(href);
       }
     },
     [getNewVersionPath, router, latest]
