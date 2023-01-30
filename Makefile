@@ -1,4 +1,4 @@
-DOCKER_IMAGE=quay.io/gravitational/next:main
+DOCKER_IMAGE ?= quay.io/gravitational/next:main
 
 # Commands for building the Docker image.
 .PHONY: docker-pull
