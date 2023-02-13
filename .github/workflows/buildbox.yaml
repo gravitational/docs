@@ -2,9 +2,6 @@ name: Build Docs Image
 run-name: Build Docs Image
 on:
   push:
-    paths:
-      - Dockerfile
-      - Makefile
     branches:
       - main
 
