@@ -7,6 +7,7 @@ import {
   DropdownMenu,
   DropdownMenuItem,
   DropdownMenuOverlay,
+  DropdownSubMenu,
   MenuItemProps,
 } from "../DropdownMenu";
 
@@ -16,6 +17,7 @@ export interface MenuCategoryProps {
   href: string;
   children?: MenuItemProps[];
   testId: string;
+  containsSubCategories?: boolean;
   onClick?: () => void | undefined;
 }
 
@@ -32,6 +34,7 @@ const MenuCategory = ({
   description,
   children,
   href,
+  containsSubCategories,
   onToggleOpened,
   testId,
   onClick,
@@ -61,7 +64,10 @@ const MenuCategory = ({
   return (
     <>
       {opened && <DropdownMenuOverlay />}
-      <div className={styles.wrapper} ref={ref}>
+      <div
+        className={cn(styles.wrapper, containsSubCategories && styles.subMenus)}
+        ref={ref}
+      >
         <a
           href={href}
           onClick={toggleOpened}
@@ -75,10 +81,26 @@ const MenuCategory = ({
           data-testid={menuTestId}
         >
           {children && (
-            <DropdownMenu title={description}>
-              {children.map((props) => (
-                <DropdownMenuItem key={props.href} {...props} />
-              ))}
+            <DropdownMenu
+              title={description}
+              displayAsRow={containsSubCategories ? true : false}
+            >
+              {children.map((props) =>
+                containsSubCategories ? (
+                  <DropdownSubMenu
+                    key={props.href}
+                    title={props.title}
+                    titleLink={props.titleLink}
+                    href={props.href}
+                  >
+                    {props.children?.map((childProps) => (
+                      <DropdownMenuItem key={childProps.href} {...childProps} />
+                    ))}
+                  </DropdownSubMenu>
+                ) : (
+                  <DropdownMenuItem key={props.href} {...props} />
+                )
+              )}
             </DropdownMenu>
           )}
         </div>

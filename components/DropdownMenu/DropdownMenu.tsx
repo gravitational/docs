@@ -3,14 +3,12 @@ import styles from "./DropdownMenu.module.css";
 export interface DropdownMenuProps {
   title: string;
   children: React.ReactNode;
+  displayAsRow?: boolean;
 }
 
-const DropdownMenu = ({ title, children }: DropdownMenuProps) => {
+const DropdownMenu = ({ title, children, displayAsRow }: DropdownMenuProps) => {
   return (
     <div className={styles.wrapper} data-testid="mobile-dropdown">
-      <h3 className={styles.header} data-testid="menu-title">
-        {title}
-      </h3>
       <div className={styles.body}>{children}</div>
     </div>
   );
