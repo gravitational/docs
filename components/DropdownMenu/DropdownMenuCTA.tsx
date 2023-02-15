@@ -1,3 +1,5 @@
+import styles from "./DropdownMenuCTA.module.css";
+
 export interface DropdownMenuCTAProps {
   title: string;
   children: React.ReactNode;
@@ -5,9 +7,9 @@ export interface DropdownMenuCTAProps {
 
 const DropdownMenuCTA = ({ title, children }: DropdownMenuCTAProps) => {
   return (
-    <div>
-      {title && <h3>{title}</h3>}
-      <div>{children}</div>
+    <div className={styles.dropdownContainer}>
+      {title && <h3 className={styles.title}>{title}</h3>}
+      <div className={styles.children}>{children}</div>
     </div>
   );
 };
