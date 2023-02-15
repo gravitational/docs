@@ -5,7 +5,7 @@ import styles from "./DropdownMenuItem.module.css";
 
 export interface MenuItemProps {
   title: string;
-  description: string;
+  description?: string;
   href: string;
   icon?: IconName;
   image?: string;

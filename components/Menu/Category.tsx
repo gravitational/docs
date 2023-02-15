@@ -12,8 +12,8 @@ import {
 } from "../DropdownMenu";
 
 export interface MenuCategoryProps {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   href: string;
   children?: MenuItemProps[];
   testId: string;
