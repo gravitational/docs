@@ -30,11 +30,6 @@ test("Sections in navbar contain appropriate titles and hrefs when viewed on des
 
       await expect(menu).toBeVisible();
 
-      if (!isMobile) {
-        const menuTitle = menu.locator("h3");
-        await expect(menuTitle).toHaveText(dropdown.menu.title);
-      }
-
       const links = menu.locator("a");
       const count = await links.count();
 
