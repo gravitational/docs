@@ -1,6 +1,4 @@
-import NextImage from "next/image";
 import Link from "components/Link";
-import Icon, { IconName } from "components/Icon";
 import styles from "./DropdownMenuItem.module.css";
 
 export interface MenuItemProps {
@@ -15,10 +13,13 @@ const DropdownMenuItem = ({
   title,
   href = "/",
   passthrough = true, // If no value is sent, default to true
+  titleLink = false,
 }: MenuItemProps) => {
   return (
     <Link href={href} passthrough={passthrough} className={styles.wrapper}>
-      <strong className={styles.title}>{title}</strong>
+      <strong className={`${styles.title} ${titleLink && styles.asTitle}`}>
+        {title}
+      </strong>
     </Link>
   );
 };

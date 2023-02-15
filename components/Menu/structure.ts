@@ -71,35 +71,35 @@ const menu: MenuCategoryProps[] = [
             title: "Software-as-a-service (SaaS) Providers",
             href: "/use-cases/saas/",
           },
+        ],
+      },
+      {
+        title: "By Use Case",
+        children: [
           {
-            title: "By Use Case",
-            children: [
-              {
-                title: "Privileged Access Management",
-                href: "/use-cases/privileged-access-management/",
-              },
-              {
-                title: "Machine-to-Machine Access",
-                href: "/use-cases/machine-to-machine-access/",
-              },
-              {
-                title: "Developer-friendly browser",
-                href: "/connect/",
-              },
-              {
-                title: "Passwordless Infrastructure Access",
-                href: "/passwordless/",
-              },
-            ],
+            title: "Privileged Access Management",
+            href: "/use-cases/privileged-access-management/",
           },
           {
-            title: "By Cloud Provider",
-            children: [
-              {
-                title: "Infrastructure Access for AWS",
-                href: "/use-cases/aws/",
-              },
-            ],
+            title: "Machine-to-Machine Access",
+            href: "/use-cases/machine-to-machine-access/",
+          },
+          {
+            title: "Developer-friendly browser",
+            href: "/connect/",
+          },
+          {
+            title: "Passwordless Infrastructure Access",
+            href: "/passwordless/",
+          },
+        ],
+      },
+      {
+        title: "By Cloud Provider",
+        children: [
+          {
+            title: "Infrastructure Access for AWS",
+            href: "/use-cases/aws/",
           },
         ],
       },

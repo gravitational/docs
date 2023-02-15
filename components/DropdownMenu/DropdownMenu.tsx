@@ -8,8 +8,14 @@ export interface DropdownMenuProps {
 
 const DropdownMenu = ({ title, children, displayAsRow }: DropdownMenuProps) => {
   return (
-    <div className={styles.wrapper} data-testid="mobile-dropdown">
-      <div className={styles.body}>{children}</div>
+    <div
+      className={`${styles.wrapper} ${displayAsRow && styles.asRow}`}
+      data-testid="mobile-dropdown"
+    >
+      {title && <h3 className={styles.menuTitle}>{title}</h3>}
+      <div className={`${styles.body} ${displayAsRow && styles.withSubMenus}`}>
+        {children}
+      </div>
     </div>
   );
 };

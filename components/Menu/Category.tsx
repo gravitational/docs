@@ -66,7 +66,10 @@ const MenuCategory = ({
     <>
       {opened && <DropdownMenuOverlay />}
       <div
-        className={cn(styles.wrapper, containsSubCategories && styles.subMenus)}
+        className={cn(
+          styles.wrapper,
+          containsSubCategories && styles.withSubMenus
+        )}
         ref={ref}
       >
         <a
@@ -78,7 +81,11 @@ const MenuCategory = ({
           {title}
         </a>
         <div
-          className={cn(styles.dropdown, opened && styles.opened)}
+          className={cn(
+            styles.dropdown,
+            opened && styles.opened,
+            containsSubCategories && styles.withSubCategories
+          )}
           data-testid={menuTestId}
         >
           {children && (

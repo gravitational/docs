@@ -1,0 +1,30 @@
+.subMenuWrapper {
+  background: white;
+  color: var(--color-code);
+  overflow: hidden;
+  width: 100%;
+  max-width: 330px;
+  padding: var(--m-2) var(--m-2) var(--m-4) var(--m-2);
+  @media (--sm-scr) {
+    max-width: none;
+    padding: 0;
+  }
+}
+
+.title {
+  display: block;
+  margin: 0 var(--m-2);
+  font-size: var(--fs-text-lg);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-xxl);
+  @media (--sm-scr) {
+    display: inline;
+  }
+}
+
+.children {
+  padding-bottom: var(--m-1);
+  @media (--sm-scr) {
+    padding-bottom: var(--m-2);
+  }
+}

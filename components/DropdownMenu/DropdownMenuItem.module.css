@@ -8,7 +8,7 @@
   text-decoration: none;
   color: var(--color-code);
   @media (--sm-scr) {
-    border: 1px solid var(--color-lightest-gray);
+    padding: var(--m-0-5) var(--m-2);
   }
 
   &:focus,
@@ -30,6 +30,11 @@
   font-size: var(--fs-text-lg);
   font-weight: var(--fw-regular);
   line-height: var(--lh-lg);
+}
+
+.asTitle {
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-xxl);
 }
 
 .description {

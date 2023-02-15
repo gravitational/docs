@@ -6,6 +6,10 @@
   position: relative;
 }
 
+.withSubMenus {
+  position: initial;
+}
+
 .link {
   position: relative;
   box-sizing: border-box;
@@ -17,7 +21,7 @@
   width: 100%;
   min-width: 0;
   height: 80px;
-  padding: 0;
+  padding: 0 var(--m-2);
   font-size: 15px;
   font-weight: 400;
   color: var(--color-darkest);
@@ -32,21 +36,23 @@
   &:hover {
     color: var(--color-dark-purple);
   }
-  @media (--lg-scr) {
-    padding: 0 var(--m-2);
-  }
   @media (--sm-scr) {
     width: 100%;
-    margin-bottom: var(--m-1);
     border-radius: var(--r-default);
     font-size: var(--fs-text-lg);
     line-height: 56px;
     color: var(--color-darkest);
     text-align: left;
+    border-bottom: 1px solid var(--color-lighter-gray);
   }
 
   &.active {
     color: var(--color-dark-purple);
+    @media (--sm-scr) {
+      margin-bottom: var(--m-2);
+      border-bottom: none;
+    }
+    background-color: #f3f5f6;
   }
 }
 
@@ -68,5 +74,11 @@
 
   &.opened {
     display: block;
+  }
+}
+
+.withSubCategories {
+  @media (--md-scr) {
+    position: absolute;
   }
 }

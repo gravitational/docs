@@ -1,4 +1,6 @@
 import DropdownMenuItem from "./DropdownMenuItem";
+import styles from "./DropdownSubMenu.module.css";
+
 export interface DropdownMenuProps {
   title: string;
   children: React.ReactNode;
@@ -13,13 +15,13 @@ const DropdownSubMenu = ({
   href = "/",
 }: DropdownMenuProps) => {
   return (
-    <div>
+    <div className={styles.subMenuWrapper}>
       {title && titleLink ? (
-        <DropdownMenuItem href={href} title={title} description="" />
+        <DropdownMenuItem href={href} title={title} titleLink={true} />
       ) : (
-        title && <h3>{title}</h3>
+        title && <h3 className={styles.title}>{title}</h3>
       )}
-      <div>{children}</div>
+      <div className={styles.children}>{children}</div>
     </div>
   );
 };
