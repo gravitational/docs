@@ -5,18 +5,15 @@ import styles from "./DropdownMenuItem.module.css";
 
 export interface MenuItemProps {
   title: string;
-  description?: string;
-  href: string;
-  icon?: IconName;
-  image?: string;
-  passthrough?: boolean;
+  href?: string;
   titleLink?: boolean;
   children?: MenuItemProps[];
+  passthrough?: boolean;
 }
 
 const DropdownMenuItem = ({
   title,
-  href,
+  href = "/",
   passthrough = true, // If no value is sent, default to true
 }: MenuItemProps) => {
   return (

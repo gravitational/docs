@@ -12,13 +12,14 @@ import {
 } from "../DropdownMenu";
 
 export interface MenuCategoryProps {
-  title?: string;
+  title: string;
   description?: string;
-  href: string;
-  children?: MenuItemProps[];
-  testId: string;
+  href?: string;
+  children?: MenuItemProps[] | MenuCategoryProps[];
   containsSubCategories?: boolean;
-  onClick?: () => void | undefined;
+  testId: string;
+  titleLink?: boolean;
+  onClick?: () => void | undefined | Promise<void>;
 }
 
 interface MenuCategoryComponentProps extends MenuCategoryProps {
