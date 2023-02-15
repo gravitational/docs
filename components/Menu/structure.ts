@@ -30,7 +30,9 @@ const menu: MenuCategoryProps[] = [
         ],
       },
       {
-        title: "Key Features",
+        title: "Our Features",
+        href: "/features/",
+        titleLink: true,
         children: [
           { title: "Single Sign On", href: "/features/sso-for-ssh/" },
           {
