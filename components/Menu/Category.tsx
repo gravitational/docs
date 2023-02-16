@@ -96,17 +96,20 @@ const MenuCategory = ({
               {children.map((props) =>
                 containsSubCategories ? (
                   <DropdownSubMenu
-                    key={props.href}
+                    key={`drdwn${props.title}`}
                     title={props.title}
                     titleLink={props.titleLink}
                     href={props.href}
                   >
                     {props.children?.map((childProps) => (
-                      <DropdownMenuItem key={childProps.href} {...childProps} />
+                      <DropdownMenuItem
+                        key={`drdwnchild${childProps.title}`}
+                        {...childProps}
+                      />
                     ))}
                   </DropdownSubMenu>
                 ) : (
-                  <DropdownMenuItem key={props.href} {...props} />
+                  <DropdownMenuItem key={props.title} {...props} />
                 )
               )}
             </DropdownMenu>
