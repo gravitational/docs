@@ -203,7 +203,7 @@ export const navigationData: NavbarData = [
           isExternal: true,
         },
         {
-          title: "Learn",
+          title: "Guides & Tutorials",
           href: "/learn/",
           isExternal: true,
         },
