@@ -62,12 +62,14 @@
 .content {
   display: flex;
   width: 100%;
+  flex-shrink: 1;
   box-sizing: border-box;
   position: initial;
   overflow: visible;
   background-color: transparent;
   padding: 0px;
   z-index: 1;
+  min-width: 0;
   @media (--sm-scr) {
     position: fixed;
     z-index: 2000;

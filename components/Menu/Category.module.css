@@ -17,6 +17,7 @@
   flex-direction: row;
   flex-shrink: 1;
   align-items: center;
+  justify-content: center;
   z-index: 3001;
   width: 100%;
   min-width: 0;
@@ -24,7 +25,7 @@
   padding: 0 var(--m-2);
   font-size: 15px;
   font-weight: 400;
-  color: var(--color-darkest);
+  color: var(--color-dark);
   outline: none;
   text-decoration: none;
   text-align: left;
@@ -44,6 +45,7 @@
     color: var(--color-darkest);
     text-align: left;
     border-bottom: 1px solid var(--color-lighter-gray);
+    justify-content: left;
   }
 
   &.active {
@@ -70,6 +72,7 @@
   @media (--md-scr) {
     position: absolute;
     min-width: 540px;
+    max-width: 100%;
   }
 
   &.opened {

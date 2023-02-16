@@ -19,9 +19,7 @@
   width: auto;
   flex-shrink: 1;
   margin-right: 10px;
-  @media (--md-scr) {
-    width: 100%;
-  }
+  min-width: 0;
   @media (--sm-scr) {
     flex-direction: column;
     width: 100%;

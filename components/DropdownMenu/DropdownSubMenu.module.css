@@ -9,6 +9,10 @@
     max-width: none;
     padding: 0;
   }
+  @media (--lg-scr) {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }
 
 .title {
