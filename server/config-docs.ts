@@ -13,6 +13,7 @@ import { existsSync, readFileSync } from "fs";
 import { isExternalLink, isHash, splitPath } from "../utils/url";
 import { NavigationCategory, NavigationItem } from "../layouts/DocsPage/types";
 import { loadConfig as loadSiteConfig } from "./config-site";
+import { RemarkLintMessagingOptions } from "./remark-lint-messaging";
 
 const { latest } = loadSiteConfig();
 export interface Config {
@@ -21,20 +22,19 @@ export interface Config {
   redirects?: Redirect[];
 }
 
-const getConfigPath = (version: string) =>
-  resolve("content", version, "docs/config.json");
+const getConfigPath = (version: string, filename: string) =>
+  resolve("content", version, "docs", filename);
 
 /*
  * Try to load config file and throw error if it does not exist.
  */
-
-export const load = (version: string) => {
-  const path = getConfigPath(version);
+export const load = <T>(version: string, filename: string): T => {
+  const path = getConfigPath(version, filename);
 
   if (existsSync(path)) {
     const content = readFileSync(path, "utf-8");
 
-    return JSON.parse(content) as Config;
+    return JSON.parse(content) as T;
   } else {
     throw Error(`File ${path} does not exist.`);
   }
@@ -129,6 +129,25 @@ const validator = ajv.compile({
   additionalProperties: false,
 });
 
+// Schema for the document that configures the messaging linter
+const messagingConfigValidator = ajv.compile({
+  type: "array",
+  items: {
+    type: "object",
+    properties: {
+      incorrect: {
+        type: "string",
+      },
+      correct: {
+        type: "string",
+      },
+      explanation: {
+        type: "string",
+      },
+    },
+  },
+});
+
 /*
  * We store relative paths in the config so we don't need to change them all
  * when we add new version, but for next/link and next/router to work they should be absolte.
@@ -147,7 +166,7 @@ export const normalizeDocsUrl = (version: string, url: string) => {
   }
 
   const path = splitPath(url).path;
-  const configPath = getConfigPath(version);
+  const configPath = getConfigPath(version, "config.json");
 
   if (!path.endsWith("/")) {
     throw Error(`File ${configPath} misses trailing slash in '${url}' path.`);
@@ -307,7 +326,7 @@ export const normalize = (config: Config, version: string): Config => {
 /* Load, validate and normalize config. */
 
 export const loadConfig = (version: string) => {
-  const config = load(version);
+  const config = load<Config>(version, "config.json");
 
   const badSlugs = checkURLsForCorrespondingFiles(
     join("content", version, "docs", "pages"),
@@ -328,4 +347,15 @@ export const loadConfig = (version: string) => {
   validateConfig<Config>(validator, config);
 
   return normalize(config, version);
+};
+
+export const loadMessagingConfig = (version: string) => {
+  const config = load<RemarkLintMessagingOptions>(
+    version,
+    "messaging-config.json"
+  );
+
+  validateConfig<RemarkLintMessagingOptions>(messagingConfigValidator, config);
+
+  return config;
 };
