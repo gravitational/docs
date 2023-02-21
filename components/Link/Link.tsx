@@ -70,7 +70,7 @@ const Link = ({
   };
 
   return (
-    <NextLink {...nextProps} prefetch={false}>
+    <NextLink {...nextProps} prefetch={false} legacyBehavior>
       <a
         {...linkProps}
         className={cn(styles.wrapper, styles[scheme], className)}

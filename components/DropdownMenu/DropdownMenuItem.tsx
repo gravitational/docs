@@ -27,8 +27,8 @@ const DropdownMenuItem = ({
           <NextImage
             src={image}
             alt=""
-            width="60px"
-            height="60px"
+            width="60"
+            height="60"
             className={styles.image}
           />
         </div>
