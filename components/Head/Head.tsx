@@ -38,7 +38,7 @@ export interface HeadProps {
   titleSuffix?: string;
   url?: string;
   noIndex?: boolean;
-  keywords?: Array<String>;
+  keywords?: string[];
 }
 
 const Head = ({

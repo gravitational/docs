@@ -74,7 +74,7 @@ export interface PageMeta {
   title?: string;
   description?: string;
   h1?: string;
-  keywords: Array<string>;
+  keywords: string[];
   githubUrl: string;
   layout?: LayoutName;
   videoBanner?: VideoBarProps;
