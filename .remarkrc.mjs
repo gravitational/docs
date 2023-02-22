@@ -1,3 +1,4 @@
+import { resolve } from "path";
 import remarkVariables from "./.build/server/remark-variables.mjs";
 import remarkIncludes from "./.build/server/remark-includes.mjs";
 import remarkCodeSnippet from "./.build/server/remark-code-snippet.mjs";
@@ -73,9 +74,7 @@ const configLint = {
     [remarkLintFrontmatter, ["error"]],
     [
       remarkLintMessaging,
-      (vfile) => {
-        return loadMessagingConfig(getVersion(vfile.path));
-      },
+      loadMessagingConfig(resolve("messaging-config.json")),
     ],
   ],
 };

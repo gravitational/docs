@@ -22,19 +22,20 @@ export interface Config {
   redirects?: Redirect[];
 }
 
-const getConfigPath = (version: string, filename: string) =>
-  resolve("content", version, "docs", filename);
+const getConfigPath = (version: string) =>
+  resolve("content", version, "docs/config.json");
 
 /*
  * Try to load config file and throw error if it does not exist.
  */
-export const load = <T>(version: string, filename: string): T => {
-  const path = getConfigPath(version, filename);
+
+export const load = (version: string) => {
+  const path = getConfigPath(version);
 
   if (existsSync(path)) {
     const content = readFileSync(path, "utf-8");
 
-    return JSON.parse(content) as T;
+    return JSON.parse(content) as Config;
   } else {
     throw Error(`File ${path} does not exist.`);
   }
@@ -166,7 +167,7 @@ export const normalizeDocsUrl = (version: string, url: string) => {
   }
 
   const path = splitPath(url).path;
-  const configPath = getConfigPath(version, "config.json");
+  const configPath = getConfigPath(version);
 
   if (!path.endsWith("/")) {
     throw Error(`File ${configPath} misses trailing slash in '${url}' path.`);
@@ -326,7 +327,7 @@ export const normalize = (config: Config, version: string): Config => {
 /* Load, validate and normalize config. */
 
 export const loadConfig = (version: string) => {
-  const config = load<Config>(version, "config.json");
+  const config = load(version);
 
   const badSlugs = checkURLsForCorrespondingFiles(
     join("content", version, "docs", "pages"),
@@ -349,12 +350,14 @@ export const loadConfig = (version: string) => {
   return normalize(config, version);
 };
 
-export const loadMessagingConfig = (version: string) => {
-  const config = load<RemarkLintMessagingOptions>(
-    version,
-    "messaging-config.json"
-  );
-
+export const loadMessagingConfig = (
+  path: string
+): RemarkLintMessagingOptions => {
+  if (!existsSync(path)) {
+    throw Error(`File ${path} does not exist.`);
+  }
+  const content = readFileSync(path, "utf-8");
+  const config = JSON.parse(content) as RemarkLintMessagingOptions;
   validateConfig<RemarkLintMessagingOptions>(messagingConfigValidator, config);
 
   return config;
