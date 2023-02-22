@@ -30,6 +30,7 @@ const DocsPage = ({
     h1,
     title,
     description,
+    keywords,
     layout,
     videoBanner,
     navigation,
@@ -75,6 +76,7 @@ const DocsPage = ({
         title={title}
         description={description}
         titleSuffix="Teleport Docs"
+        keywords={keywords}
       />
       <SiteHeader />
       <main className={styles.wrapper}>
