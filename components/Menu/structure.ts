@@ -161,7 +161,7 @@ const menu: MenuCategoryProps[] = [
         href: "/resources/",
       },
       {
-        title: "Guides & Tutorials",
+        title: "Learn",
         href: "/learn/",
       },
       {

@@ -58,12 +58,22 @@ export const navigationData: NavbarData = [
         },
         {
           title: "Databases",
+          href: "/access-modules#databases",
+          isExternal: true,
+        },
+        {
+          title: "Internal Applications",
           href: "/access-modules#applications",
           isExternal: true,
         },
         {
           title: "Windows",
           href: "/access-modules#windows",
+          isExternal: true,
+        },
+        {
+          title: "Our Features",
+          href: "/features/",
           isExternal: true,
         },
         {
@@ -203,7 +213,7 @@ export const navigationData: NavbarData = [
           isExternal: true,
         },
         {
-          title: "Guides & Tutorials",
+          title: "Learn",
           href: "/learn/",
           isExternal: true,
         },
