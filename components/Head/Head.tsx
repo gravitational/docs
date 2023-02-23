@@ -38,6 +38,7 @@ export interface HeadProps {
   titleSuffix?: string;
   url?: string;
   noIndex?: boolean;
+  keywords?: string[];
 }
 
 const Head = ({
@@ -46,12 +47,14 @@ const Head = ({
   titleSuffix,
   url: propsUrl,
   noIndex,
+  keywords: propsKeywords,
 }: HeadProps) => {
   const router = useRouter();
   const url = buildCanonicalUrl(router.basePath, propsUrl || router.asPath);
   const title = formatTitle(titleSuffix, propsTitle);
   const description = propsDescription || "";
   const firstLvlNav = getFirstLvlNav(router.asPath);
+  const keywords = propsKeywords || [];
 
   return (
     <NextHead>
@@ -69,6 +72,7 @@ const Head = ({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={`${host}/docs/og-image.png`} />
+      <meta property="keywords" content={keywords.join(", ")} />
     </NextHead>
   );
 };
