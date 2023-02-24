@@ -3,9 +3,9 @@ import { useState, useCallback, useRef, MouseEvent } from "react";
 import { useClickAway } from "react-use";
 import Button from "components/Button";
 import {
-  DropdownMenu,
-  DropdownMenuItem,
   DropdownMenuOverlay,
+  DropdownMenuCTA,
+  DropdownMenuItemCTA,
 } from "../DropdownMenu";
 import styles from "./HeaderCTA.module.css";
 
@@ -44,20 +44,20 @@ const HeaderCTA = () => {
             className={cn(styles.dropdown, isSignInVisible && styles.visible)}
             data-testid="sign-in-menu"
           >
-            <DropdownMenu title="Sign in to Teleport">
-              <DropdownMenuItem
+            <DropdownMenuCTA title="Sign in to Teleport">
+              <DropdownMenuItemCTA
                 href="https://teleport.sh/"
                 icon="clouds"
                 title="Teleport Cloud Login"
                 description="Login to your Teleport Account"
               />
-              <DropdownMenuItem
+              <DropdownMenuItemCTA
                 href="https://dashboard.gravitational.com/web/login/"
                 icon="download"
                 title="Dashboard Login"
                 description="Legacy Login &amp; Teleport Enterprise Downloads"
               />
-            </DropdownMenu>
+            </DropdownMenuCTA>
           </div>
         </div>
         <Button

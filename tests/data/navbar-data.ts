@@ -26,50 +26,91 @@ export type NavbarData = NavigationItem[];
 
 export const navigationData: NavbarData = [
   {
-    button: { title: "Protocols", testId: "products" },
+    button: { title: "Platform", testId: "platform" },
     menu: {
-      title: "Teleport Access Platform protocols",
-      testId: "products-menu",
+      title: "Platform",
+      testId: "platform-menu",
       children: [
         {
+          title: "Why Teleport",
+          href: "/why-teleport/",
+          isExternal: true,
+        },
+        {
+          title: "How It Works",
+          href: "/how-it-works/",
+          isExternal: true,
+        },
+        {
+          title: "Access Modules",
+          href: "/access-modules/",
+          isExternal: true,
+        },
+        {
           title: "SSH",
-          href: "/ssh-server-access/",
+          href: "/access-modules#ssh",
           isExternal: true,
         },
         {
           title: "Kubernetes",
-          href: "/kubernetes-access/",
+          href: "/access-modules#kubernetes",
           isExternal: true,
         },
         {
-          isExternal: true,
           title: "Databases",
-          href: "/database-access/",
+          href: "/access-modules#databases",
+          isExternal: true,
         },
         {
+          title: "Internal Applications",
+          href: "/access-modules#applications",
           isExternal: true,
-          title: "Applications",
-          href: "/application-access/",
         },
         {
           title: "Windows",
-          href: "/desktop-access/",
+          href: "/access-modules#windows",
           isExternal: true,
         },
         {
-          title: "Teleport Features",
+          title: "Our Features",
           href: "/features/",
           isExternal: true,
         },
+        {
+          title: "Single Sign On",
+          href: "/features/sso-for-ssh/",
+          isExternal: true,
+        },
+        {
+          title: "Just In Time Access Requests",
+          href: "/features/access-requests/",
+          isExternal: true,
+        },
+        {
+          title: "Role Based Access Control",
+          href: "/features/rbac-for-ssh/",
+          isExternal: true,
+        },
+        {
+          title: "Audit and Session Recordings",
+          href: "/how-it-works/audit-logging-for-ssh-and-kubernetes/",
+          isExternal: true,
+        },
+        { title: "Passwordless", href: "/passwordless/", isExternal: true },
       ],
     },
   },
   {
     button: { title: "Solutions", testId: "solutions" },
     menu: {
-      title: "Teleport Solutions",
+      title: "Solutions",
       testId: "solutions-menu",
       children: [
+        {
+          title: "E-commerce & Entertainment",
+          href: "/use-cases/ecommerce-entertainment/",
+          isExternal: true,
+        },
         {
           title: "Financial Services",
           href: "/use-cases/finance/",
@@ -78,16 +119,6 @@ export const navigationData: NavbarData = [
         {
           title: "Software-as-a-service (SaaS) Providers",
           href: "/use-cases/saas/",
-          isExternal: true,
-        },
-        {
-          title: "E-commerce & Entertainment",
-          href: "/use-cases/ecommerce-entertainment/",
-          isExternal: true,
-        },
-        {
-          title: "Infrastructure Access for AWS",
-          href: "/use-cases/aws/",
           isExternal: true,
         },
         {
@@ -108,6 +139,11 @@ export const navigationData: NavbarData = [
         {
           title: "Passwordless Infrastructure Access",
           href: "/passwordless/",
+          isExternal: true,
+        },
+        {
+          title: "Infrastructure Access for AWS",
+          href: "/use-cases/aws/",
           isExternal: true,
         },
       ],
@@ -174,6 +210,11 @@ export const navigationData: NavbarData = [
         {
           title: "Resources",
           href: "/resources/",
+          isExternal: true,
+        },
+        {
+          title: "Learn",
+          href: "/learn/",
           isExternal: true,
         },
         {

@@ -4,9 +4,9 @@ import structure from "./structure";
 import styles from "./Menu.module.css";
 
 const Menu = () => {
-  const [openedCategoryId, setOpenedCategoryId] = useState<number>(null);
+  const [openedCategoryId, setOpenedCategoryId] = useState<number | null>(null);
   return (
-    <nav className={styles.wrapper}>
+    <nav className={styles.navItems}>
       {structure.map((props, id) => (
         <MenuCategory
           key={id}

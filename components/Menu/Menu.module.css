@@ -11,3 +11,20 @@
     flex-direction: row;
   }
 }
+
+.navItems {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  flex-shrink: 1;
+  margin-right: 10px;
+  min-width: 0;
+  @media (--sm-scr) {
+    flex-direction: column;
+    width: 100%;
+    margin-right: 0;
+    flex-shrink: 0;
+    max-width: none;
+  }
+}

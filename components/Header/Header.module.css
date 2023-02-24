@@ -2,7 +2,7 @@
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid var(--color-lightest-gray);
+  flex-basis: auto;
   height: 80px;
   left: 0;
   position: absolute;
@@ -19,25 +19,24 @@
 }
 
 .logo-link {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  width: 200px;
-  min-width: 200px;
-  height: var(--m-10);
-  padding: 0 var(--m-4);
+  width: 150px;
+  min-width: 150px;
+  height: 24;
+  padding: 0 var(--m-2);
   color: var(--color-dark-purple);
   font-size: var(--fs-text-xl);
   font-weight: 700;
   line-height: var(--m-10);
   text-decoration: none;
   transition: background var(--t-interaction);
-
-  &:focus,
-  &:hover {
-    background: rgba(240 242 244 / 56%);
+  @media (--lg-scr) {
+    padding: 0 var(--m-4);
+    width: 200px;
   }
-
   @media (--sm-scr) {
     height: var(--m-6);
     padding: 0 var(--m-2);
@@ -62,9 +61,15 @@
 
 .content {
   display: flex;
-  align-items: center;
   width: 100%;
-
+  flex-shrink: 1;
+  box-sizing: border-box;
+  position: initial;
+  overflow: visible;
+  background-color: transparent;
+  padding: 0px;
+  z-index: 1;
+  min-width: 0;
   @media (--sm-scr) {
     position: fixed;
     z-index: 2000;
