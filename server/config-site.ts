@@ -32,7 +32,7 @@ export const load = () => {
  * to start dev or build mode.
  */
 
-const ajv = new Ajv({ allowUnionTypes: true });
+const ajv = new Ajv();
 
 const validator = ajv.compile({
   type: "object",

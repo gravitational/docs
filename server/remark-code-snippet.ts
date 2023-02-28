@@ -31,6 +31,7 @@ import type {
   MdxJsxFlowElement,
   MdxAnyElement,
 } from "./types-unist";
+import { createMdxJsxAttributeValueExpression } from "./mdx-helpers";
 import { visit } from "unist-util-visit";
 
 const RULE_ID = "code-snippet";
@@ -60,7 +61,7 @@ const getVariableNode = (
       {
         type: "mdxJsxAttribute",
         name: "isGlobal",
-        value: isGlobal.toString(),
+        value: createMdxJsxAttributeValueExpression(`${isGlobal}`),
       },
       {
         type: "mdxJsxAttribute",
@@ -170,6 +171,7 @@ export interface RemarkCodeSnippetOptions {
 export default function remarkCodeSnippet({
   langs = ["code"],
   lint = false,
+  resolve = false,
 }: RemarkCodeSnippetOptions): Transformer {
   return (root, vfile) => {
     visit(
