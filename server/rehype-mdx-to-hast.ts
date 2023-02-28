@@ -47,7 +47,7 @@ export default function rehypeMdxToHast(): Transformer {
                 if (prop.name === "scopeOnly") {
                   return {
                     ...result,
-                    [prop.name]: null,
+                    [prop.name]: prop?.value?.value || null,
                   };
                   // Temporary fix for scope={["oss", "cloud"]}, will transform value
                   // to scope="oss,cloud". Can be removed after docs update.
