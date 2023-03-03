@@ -47,6 +47,11 @@ const menu: MenuCategoryProps[] = [
             title: "Audit and Session Recordings",
             href: "/how-it-works/audit-logging-for-ssh-and-kubernetes/",
           },
+          {
+            title: "Device Trust",
+            href: "/docs/access-controls/guides/device-trust/",
+            passthrough: false,
+          },
           { title: "Passwordless", href: "/passwordless/" },
         ],
       },

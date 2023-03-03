@@ -96,6 +96,11 @@ export const navigationData: NavbarData = [
           href: "/how-it-works/audit-logging-for-ssh-and-kubernetes/",
           isExternal: true,
         },
+        {
+          title: "Device Trust",
+          href: "/docs/access-controls/guides/device-trust/",
+          isExternal: true,
+        },
         { title: "Passwordless", href: "/passwordless/", isExternal: true },
       ],
     },
