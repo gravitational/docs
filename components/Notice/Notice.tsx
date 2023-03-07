@@ -14,7 +14,7 @@ const typeIcons = {
   danger: "error",
 } as const;
 
-type NoticeType = (typeof types)[number];
+type NoticeType = typeof types[number];
 
 export interface NoticeProps {
   type: NoticeType;

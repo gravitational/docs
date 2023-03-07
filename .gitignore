@@ -10,7 +10,7 @@
 # production
 /.build
 /public/static/assets
-/public/sitemap.xml
+/public/docs_sitemap.xml
 /public/algolia_sitemap.xml
 /pages/ver/*
 /utils/articleLinks.json

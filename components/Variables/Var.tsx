@@ -6,24 +6,24 @@ import type { VarsContextProps } from "./context";
 import styles from "./Var.module.css";
 
 interface VarProps {
-  name?: string;
+  name: string;
   description?: string;
   needLabel?: boolean;
-  isGlobal?: string;
+  isGlobal?: boolean;
 }
 
 export const Var = ({
   name,
   description = "",
   needLabel = false,
-  isGlobal = "false",
+  isGlobal = false,
 }: VarProps) => {
   const { fields, setField, addField } =
     useContext<VarsContextProps>(VarsContext);
   const val = fields[name] || "";
 
   useEffect(() => {
-    addField(name, isGlobal === "true", description);
+    addField(name, isGlobal, description);
   }, [isGlobal, name, addField, description]);
 
   const onChange = useCallback(

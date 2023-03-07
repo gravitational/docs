@@ -8,7 +8,6 @@
  * See tests and fixtures for more examples.
  */
 
-import type { Transformer } from "unified";
 import type { Parent } from "unist";
 import type { Content, Code, Text } from "mdast";
 import type { VFile } from "vfile";
@@ -328,7 +327,7 @@ export default function remarkIncludes({
   rootDir = "",
   lint,
   resolve = true,
-}: RemarkIncludesOptions = {}): Transformer {
+}: RemarkIncludesOptions = {}) {
   return (root: Content, vfile: VFile) => {
     let resolvedRootDir: string;
 

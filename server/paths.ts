@@ -27,42 +27,30 @@ const filterNoIndexPage = (path: string) => {
 };
 
 /*
- * Converts paths to absolute from relative (we need sitemaps to have absolute paths).
+ * Returns all slugs for one docs version with normalized paths.
  */
 
-const normalizeDocSlug = (slug: string, version: string) => {
+const getSlugsForVersion = (version: string) => {
   const root = join("/ver", version);
-  const path = resolve("content", version, "docs/pages");
-  const isLatest = version === latest;
-  const baseSlug = slug.replace(/\/?(index)?.mdx?$/, "/").replace(path, root);
-
-  return isLatest ? baseSlug.replace(`/ver/${latest}`, "") : baseSlug;
-};
-
-/*
- * return an array of mdx file paths for docs a version without includes.
- */
-
-const getFilePathsForVersion = (
-  version: string,
-  withNoIndex: boolean = false
-) => {
   const path = resolve("content", version, "docs/pages");
 
   return glob
     .sync(join(path, "**/*.mdx"))
-    .filter((path) => (withNoIndex ? true : filterNoIndexPage(path)))
-    .filter((path) => !path.includes("/includes/"));
+    .filter(filterNoIndexPage)
+    .filter((path) => !path.includes("/includes/"))
+    .map((filename) =>
+      filename.replace(/\/?(index)?.mdx?$/, "/").replace(path, root)
+    );
 };
 
 /*
- * Returns all slugs for one docs version with normalized paths.
+ * Converts paths to absolute from relative (we need sitemaps to have absolute paths).
  */
 
-const getSlugsForVersion = (version: string, withNoIndex: boolean = false) => {
-  return getFilePathsForVersion(version, withNoIndex).map((slug) =>
-    normalizeDocSlug(slug, version)
-  );
+const normalizeDocSlug = (slug: string, version: string) => {
+  const isLatest = version === latest;
+
+  return isLatest ? slug.replace(`/ver/${latest}`, "") : slug;
 };
 
 /*
@@ -106,58 +94,6 @@ export const generateFullSitemap = (root: string) => {
 };
 
 /*
- * Generates an array of params for each docs page to use
- * in the getStaticPaths for the docs.
- *
- * For url `/docs/one/two/`
- * It will return: { params: { slug: ["one", "two"] } }
- */
-
-interface DocsStaticPath {
-  params: {
-    slug: string[];
-  };
-}
-
-export const getStaticPathsForDocs = (): DocsStaticPath[] => {
-  const result = [];
-
-  versions.forEach((version) => {
-    result.push(
-      ...getSlugsForVersion(version).map((path) => {
-        const slug = path.split("/").filter((part) => part);
-
-        return {
-          params: slug.length ? { slug } : { slug: undefined },
-        };
-      })
-    );
-  });
-
-  return result;
-};
-
-/*
- * Maps slugs to files in file system.
- *
- * Returns object { "/getting-started/": "/path/to/file/getting-started.mdx" }
- */
-
-export const getDocsPagesMap = () => {
-  const result = {};
-
-  versions.forEach((version) => {
-    const paths = getFilePathsForVersion(version, true);
-
-    paths.forEach((path) => {
-      result[normalizeDocSlug(path, version)] = path;
-    });
-  });
-
-  return result;
-};
-
-/*
  * Each version of docs has its own set of redirects in their config.json files.
  * Here we load and merge them all with the redirects list from the main config.json.
  */
@@ -190,7 +126,6 @@ export const getRedirects = () => {
   ...
 ]
 */
-
 export const generateArticleLinks = () => {
   const map = {};
 
@@ -198,14 +133,15 @@ export const generateArticleLinks = () => {
     map[ver] = [
       ...getSlugsForVersion(ver).map((slug) => {
         const configRedirects = loadDocsConfig(ver).redirects;
+        const docSlug = normalizeDocSlug(slug, ver);
         let foundedConfigRedirect = "";
 
         foundedConfigRedirect = configRedirects?.find(
-          (elem) => elem.destination === slug
+          (elem) => elem.destination === docSlug
         )?.source;
 
         return {
-          path: slug,
+          path: docSlug,
           ...(foundedConfigRedirect && { foundedConfigRedirect }),
         };
       }),

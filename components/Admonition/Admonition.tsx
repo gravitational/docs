@@ -9,7 +9,7 @@ const capitalize = (text: string): string =>
 const types = ["warning", "tip", "note", "danger"] as const;
 
 export interface AdmonitionProps {
-  type: (typeof types)[number];
+  type: typeof types[number];
   title: string;
   children: React.ReactNode;
   scopeOnly: boolean;

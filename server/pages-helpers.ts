@@ -43,11 +43,10 @@ export const getPageInfo = <T = MDXPageFrontmatter>(
   if (!result) {
     const file = readSync(path, "utf-8") as MDXPage<T>;
 
-    const { data, content } = matter(file.value);
+    const { data } = matter(file.value);
 
     file.data = {
       frontmatter: data,
-      content,
       uri: getURIFromPath(path),
     } as MDXPageData<T>;
 
