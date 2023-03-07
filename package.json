@@ -35,6 +35,10 @@
   "simple-git-hooks": {
     "pre-commit": "yarn lint-staged"
   },
+  "resolutions": {
+    "dns-packet": "^5.4.0",
+    "json5": "^2.2.2"
+  },
   "dependencies": {
     "@algolia/autocomplete-js": "^1.6.2",
     "@algolia/autocomplete-theme-classic": "^1.6.2",
