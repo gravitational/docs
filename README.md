@@ -72,7 +72,7 @@ To preview local changes you've made to `teleport/docs` with Docker, try this sc
 DOCKER_IMAGE=node:14-slim
 DOCS_PATH=/abs/path/to/gravitational/docs # replace with the path to a git checkout of the gravitational/docs repo
 TELEPORT_PATH=/abs/path/to/gravitational/teleport # replace with the path to a git checkout of the gravitational/teleport repo
-SEM_VER=11.0 # change this to whatever the latest version is
+SEM_VER=12.x # change this to whatever the latest version is
 
 docker run --rm -ti -v $DOCS_PATH:/src -v $TELEPORT_PATH:/src/content/$SEM_VER -w /src --entrypoint=/bin/bash -p 3000:3000 ${DOCKER_IMAGE} -c "npm install && yarn dev"
 ```
