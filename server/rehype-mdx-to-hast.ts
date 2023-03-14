@@ -73,7 +73,10 @@ export default function rehypeMdxToHast(): Transformer {
               }
 
               // for non-js nodes just return value
-              return { ...result, [prop.name]: prop.value };
+              return {
+                ...result,
+                [prop.name]: prop.value === null ? true : prop.value,
+              };
             },
             {}
           ),

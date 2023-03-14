@@ -1,0 +1,39 @@
+<video autoPlay loop muted playsInline>
+  <source src="../../img/database-access/dbaccessdemo.mp4" type="video/mp4" />
+  <source src="../../img/database-access/dbaccessdemo.webm" type="video/webm" />
+  Your browser does not support the video tag.
+</video>
+
+<Tabs>
+  <TabItem scope={["oss"]} label="Open Source">
+    We provide pre-built Docker images for every version of Teleport.
+
+    These images are hosted on Amazon ECR Public. All tags under
+    `public.ecr.aws/gravitational/teleport`
+    [are Teleport Open Source images](https://gallery.ecr.aws/gravitational/teleport).
+
+    <Admonition
+      type="warning"
+      title="Quay Docker Images"
+    >
+      Docker images will continue to be published to quay.io until Teleport 10 is EOL.
+    </Admonition>
+
+    The table below gives an idea of how our image naming scheme works. We offer
+    images that point to a static version of Teleport as well as images that are
+    automatically rebuilt every night. These nightly images point to the latest
+    version of Teleport from the three most recent release branches. They are
+    stable, and we recommend their use to keep your Teleport installation up to
+    date.
+
+  </TabItem>
+  <TabItem scope={["enterprise", "cloud"]} label="Commercial">
+    We provide pre-built Docker images for every version of Teleport.
+
+    (!docs/pages/includes/enterprise/docker-images.mdx!)
+
+    For instructions on running containers with these images, see
+    [Teleport Enterprise using Docker](./management/guides/docker.mdx).
+
+  </TabItem>
+</Tabs>
