@@ -171,7 +171,7 @@ export function useFindDestinationPath(versions: VersionsInfo) {
   const articleList = useRedirectMap();
 
   return useCallback(
-    (versDestination) => {
+    (versDestination: string) => {
       const targetPageWithVersion = `/ver/${versDestination}/${getPathWithoutVersion(
         router.asPath
       )}`;
@@ -189,7 +189,8 @@ export function useFindDestinationPath(versions: VersionsInfo) {
         });
       }
 
-      return path;
+      // return non-versioned path for current version
+      return path.replace(`/ver/${latest}`, "");
     },
     [articleList, available, current, latest, router.asPath]
   );

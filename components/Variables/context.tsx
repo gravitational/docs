@@ -26,10 +26,10 @@ interface VarsProviderProps {
   children: React.ReactNode;
 }
 
-const getName = (rawName) => `global_var_${rawName}`;
+const getName = (rawName: string) => `global_var_${rawName}`;
 
-const saveValue = (raw_name, value): boolean => {
-  const name = getName(raw_name);
+const saveValue = (rawName: string, value: string): boolean => {
+  const name = getName(rawName);
   try {
     sessionStorage.setItem(name, value);
     return true;
@@ -38,8 +38,8 @@ const saveValue = (raw_name, value): boolean => {
   }
 };
 
-const getValue = (raw_name): string | void => {
-  const name = getName(raw_name);
+const getValue = (rawName: string): string | undefined => {
+  const name = getName(rawName);
   try {
     return sessionStorage.getItem(name) || "";
   } catch (e) {
