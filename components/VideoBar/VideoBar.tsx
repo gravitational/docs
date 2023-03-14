@@ -26,7 +26,7 @@ export default function VideoBar({
           width={80}
           height={40}
           alt={title}
-          objectFit="contain"
+          className={styles.objectFit}
         />
       </div>
       <div className={styles.info}>

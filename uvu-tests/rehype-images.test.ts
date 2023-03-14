@@ -8,7 +8,7 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import html from "rehype-stringify";
 
-import rehypeImages from "./rehype-images";
+import rehypeImages from "../server/rehype-images";
 
 const staticPath = "/images/";
 const destinationDir = resolve(`server/fixtures/images`);
@@ -29,8 +29,6 @@ Suite("Add actual sizes to image without suffix", () => {
     value: "![Alt text](/images/image.png)",
     path: "/docs/index.mdx",
   });
-
-  console.log({ result });
 
   assert.equal(
     result,

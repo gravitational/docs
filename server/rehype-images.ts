@@ -5,8 +5,8 @@
  *   them inside the <figure> tags.
  */
 
-import { existsSync, readFileSync } from "fs";
-import probe from "probe-image-size";
+import { existsSync } from "fs";
+import sizeOf from "image-size";
 import { Transformer } from "unified";
 import { Element, Root } from "hast";
 import { visitParents, SKIP } from "unist-util-visit-parents";
@@ -58,10 +58,8 @@ export default function rehypeImages({
       const src = node.properties.src.replace(staticPath, `${destinationDir}/`);
 
       if (existsSync(src)) {
-        const file = readFileSync(src);
-
         try {
-          const { width, height } = probe.sync(file);
+          const { width, height } = sizeOf(src);
           const scaleRatio = getScaleRatio(src);
 
           node.properties.width = width / scaleRatio;

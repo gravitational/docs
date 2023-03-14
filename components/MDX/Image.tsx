@@ -22,10 +22,10 @@ export const Image = ({
     <span className={cn(styles.wrapper, styles[align])}>
       {bordered ? (
         <span className={styles.border}>
-          <NextImage {...props} layout="intrinsic" />
+          <NextImage {...props} className={styles.image} />
         </span>
       ) : (
-        <NextImage {...props} layout="intrinsic" />
+        <NextImage {...props} className={styles.image} />
       )}
       {caption && <figcaption className={styles.caption}>{caption}</figcaption>}
     </span>
