@@ -256,6 +256,11 @@ export const navigationData: NavbarData = [
           href: "/about/press/",
           isExternal: true,
         },
+        {
+          title: "Partners",
+          href: "/partners/",
+          isExternal: true,
+        },
       ],
     },
   },
