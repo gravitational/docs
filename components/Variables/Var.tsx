@@ -38,13 +38,13 @@ export const Var = ({
       <input
         className={styles.field}
         type="text"
-        size={name.length}
+        size={val.length || name.length}
         name={name}
         placeholder={name}
         onChange={onChange}
         value={val}
       />
-      <span className={styles["fake-field"]}>{val}</span>
+      <span className={styles["fake-field"]}>{val || name}</span>
       <Icon name="edit" className={styles.icon} />
     </>
   );
