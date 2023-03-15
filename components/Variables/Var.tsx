@@ -59,5 +59,5 @@ export const Var = ({
     );
   }
 
-  return <div className={cn("wrapper-input", styles.wrapper)}>{input}</div>;
+  return <span className={cn("wrapper-input", styles.wrapper)}>{input}</span>;
 };
