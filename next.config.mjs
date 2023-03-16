@@ -13,7 +13,15 @@ const { latest } = loadConfig();
 export default withBundleAnalyzer({
   pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
   basePath: "/docs",
-  redirects: async () => [...deprecatedVersionRedirects, ...getRedirects()],
+  redirects: async () => [
+    ...deprecatedVersionRedirects,
+    ...getRedirects(),
+    {
+      source: `/ver/${latest}/:path*`,
+      destination: "/:path*",
+      permanent: false,
+    },
+  ],
   headers: async () => [
     {
       source: "/:path*",
