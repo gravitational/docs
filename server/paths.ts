@@ -124,13 +124,15 @@ export const getStaticPathsForDocs = (): DocsStaticPath[] => {
 
   versions.forEach((version) => {
     result.push(
-      ...getSlugsForVersion(version).map((path) => {
-        const slug = path.split("/").filter((part) => part);
+      ...getSlugsForVersion(version)
+        .filter((path) => path !== "/older-versions/") // We should remove older-versions.mdx from docs
+        .map((path) => {
+          const slug = path.split("/").filter((part) => part);
 
-        return {
-          params: slug.length ? { slug } : { slug: undefined },
-        };
-      })
+          return {
+            params: slug.length ? { slug } : { slug: undefined },
+          };
+        })
     );
   });
 
