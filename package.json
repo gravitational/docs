@@ -38,7 +38,7 @@
     "@algolia/autocomplete-js": "^1.8.3",
     "@algolia/autocomplete-theme-classic": "^1.8.3",
     "@algolia/client-search": "^4.15.0",
-    "@reach/listbox": "^0.17.0",
+    "@reach/listbox": "^0.18.0",
     "algoliasearch": "^4.15.0",
     "classnames": "^2.3.1",
     "date-fns": "^2.27.0",
