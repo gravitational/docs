@@ -12,6 +12,7 @@
   {
     "incorrect": "(Database|Server|Application|Desktop|Kubernetes) Access\\W",
     "correct": "write about adding a resource or protocol, instead of using \"<Resource> Access\" as a proper noun",
-    "explanation": "Avoid the suggestion that Teleport includes multiple products, rather than a unified access platform"
+    "explanation": "Avoid the suggestion that Teleport includes multiple products, rather than a unified access platform",
+    "where": ["description", "headers", "comments", "body"]
   }
 ]

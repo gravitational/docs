@@ -6,10 +6,19 @@ import type { Code, Literal } from "mdast";
 import find from "unist-util-find";
 import yaml from "js-yaml";
 
+export enum PageLocation {
+  Title = "title",
+  Description = "description",
+  Headers = "headers",
+  Body = "body",
+  Comments = "comments",
+}
+
 interface RemarkLintMessagingRule {
   correct: string;
   incorrect: string;
   explanation: string;
+  where?: PageLocation[];
 }
 
 interface Frontmatter {
@@ -17,16 +26,29 @@ interface Frontmatter {
   description?: string;
 }
 
+function getReadableLocation(loc: PageLocation): string {
+  switch (loc) {
+    case PageLocation.Title:
+      return "in title";
+    case PageLocation.Description:
+      return "in page description";
+    case PageLocation.Headers:
+      return "in header";
+    case PageLocation.Body:
+      return "in body text";
+    case PageLocation.Comments:
+      return "in code comment";
+  }
+}
+
 export type RemarkLintMessagingOptions = RemarkLintMessagingRule[];
 
-const allowedNodeTypes = {
-  paragraph: true,
-  heading: true,
-};
-
+// checkMessaging applies the rules in conf against text, specifying the part of
+// the docs page this comes from in part.
 function checkMessaging(
   conf: RemarkLintMessagingOptions,
   file: VFile,
+  part: PageLocation,
   pos: Position,
   text: string
 ) {
@@ -35,16 +57,35 @@ function checkMessaging(
       "Cannot check messaging with an empty messaging configuration"
     );
   }
+
   conf.forEach((rule) => {
-    const re = new RegExp(rule.incorrect);
     // Empty text, so skip
     if (text === undefined) {
       return;
     }
+
+    if (!Array.isArray(rule.where) || rule.where.length === 0) {
+      rule.where = [
+        PageLocation.Title,
+        PageLocation.Description,
+        PageLocation.Headers,
+        PageLocation.Body,
+        PageLocation.Comments,
+      ];
+    }
+
+    if (!rule.where.includes(part)) {
+      return;
+    }
+
+    const re = new RegExp(rule.incorrect);
     const badText = text.match(re);
     if (text.match(re)) {
       file.message(
-        `Incorrect messaging: "${badText[0]}". ${rule.explanation}. You should ${rule.correct}. ` +
+        `Incorrect messaging: "${badText[0]}" (${getReadableLocation(
+          part
+        )}). ` +
+          `${rule.explanation}. You should ${rule.correct}. ` +
           'Add "{/*lint ignore messaging*/}" above this line to bypass the linter.',
         pos
       );
@@ -106,8 +147,14 @@ export const remarkLintMessaging = lintRule(
       const frontmatter = yaml.load(node.value as string) as Frontmatter;
       const { title, description } = frontmatter;
 
-      checkMessaging(config, file, node.position, title);
-      checkMessaging(config, file, node.position, description);
+      checkMessaging(config, file, PageLocation.Title, node.position, title);
+      checkMessaging(
+        config,
+        file,
+        PageLocation.Description,
+        node.position,
+        description
+      );
     }
 
     visit(
@@ -118,13 +165,30 @@ export const remarkLintMessaging = lintRule(
 
         if (node.type == "code") {
           val = getCommentText((node as Code).value);
+          checkMessaging(
+            config,
+            file,
+            PageLocation.Comments,
+            node.position,
+            val
+          );
         }
 
-        if (parent.type == "paragraph" || parent.type == "heading") {
+        if (parent.type == "paragraph") {
           val = (node as Literal).value;
+          checkMessaging(config, file, PageLocation.Body, node.position, val);
         }
 
-        checkMessaging(config, file, node.position, val);
+        if (parent.type == "heading") {
+          val = (node as Literal).value;
+          checkMessaging(
+            config,
+            file,
+            PageLocation.Headers,
+            node.position,
+            val
+          );
+        }
       }
     );
   }

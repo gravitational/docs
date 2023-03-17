@@ -9,6 +9,7 @@ import remarkMdx from "remark-mdx";
 import {
   remarkLintMessaging,
   RemarkLintMessagingOptions,
+  PageLocation,
 } from "../server/remark-lint-messaging";
 import remarkFrontmatter from "remark-frontmatter";
 
@@ -42,6 +43,19 @@ const transformer = (vfileOptions: VFileOptions): VFile => {
     .processSync(file);
 };
 
+const transformerWithConfig = (
+  vfileOptions: VFileOptions,
+  conf: RemarkLintMessagingOptions
+): VFile => {
+  const file = new VFile(vfileOptions);
+
+  return remark()
+    .use(remarkMdx)
+    .use(remarkFrontmatter)
+    .use(remarkLintMessaging, conf)
+    .processSync(file);
+};
+
 const getErrors = (result: VFile) => {
   if (result.messages === undefined || result.messages.length == 0) {
     return [];
@@ -66,7 +80,7 @@ install these services when getting started with Teleport.
   });
 
   const expectedErrors = [
-    'Incorrect messaging: "auth and proxy". ' +
+    'Incorrect messaging: "auth and proxy" (in body text). ' +
       'You must capitalize product names. You should use "Auth and Proxy Services" instead. ' +
       'Add "{/*lint ignore messaging*/}" above this line to bypass the linter.',
   ];
@@ -85,7 +99,7 @@ In this guide, we will explain how to set up Teleport to access Kubernetes.
 ## Step 1/1. Enable Kubernetes Access
 `;
   const expectedErrors = [
-    'Incorrect messaging: "Kubernetes Access". Focus our messaging ' +
+    'Incorrect messaging: "Kubernetes Access" (in header). Focus our messaging ' +
       "on a single product, rather than multiple. You should use " +
       '"registering a Kubernetes cluster" instead. ' +
       'Add "{/*lint ignore messaging*/}" above this line to bypass the linter.',
@@ -111,7 +125,7 @@ In this guide, we will explain how to set up Teleport to access Kubernetes.
 `;
 
   const expectedErrors = [
-    'Incorrect messaging: "Kubernetes Access". Focus our messaging ' +
+    'Incorrect messaging: "Kubernetes Access" (in title). Focus our messaging ' +
       "on a single product, rather than multiple. You should use " +
       '"registering a Kubernetes cluster" instead. Add "{/*lint ignore messaging*/}" ' +
       "above this line to bypass the linter.",
@@ -163,14 +177,14 @@ func myfunc(s string){
   });
 
   const expectedErrors = [
-    'Incorrect messaging: "auth and proxy". You must capitalize product ' +
+    'Incorrect messaging: "auth and proxy" (in code comment). You must capitalize product ' +
       'names. You should use "Auth and Proxy Services" instead. ' +
       'Add "{/*lint ignore messaging*/}" above this line to bypass the linter.',
-    'Incorrect messaging: "Kubernetes Access". Focus our messaging on a ' +
+    'Incorrect messaging: "Kubernetes Access" (in code comment). Focus our messaging on a ' +
       'single product, rather than multiple. You should use "registering a ' +
       'Kubernetes cluster" instead. ' +
       'Add "{/*lint ignore messaging*/}" above this line to bypass the linter.',
-    'Incorrect messaging: "machine id". See our Core Concepts page: ' +
+    'Incorrect messaging: "machine id" (in code comment). See our Core Concepts page: ' +
       "https://goteleport.com/docs/core-concepts. " +
       "You should capitalize the names of Teleport services. " +
       'Add "{/*lint ignore messaging*/}" above this line to bypass the linter.',
@@ -178,5 +192,175 @@ func myfunc(s string){
 
   assert.equal(getErrors(result), expectedErrors);
 });
+
+Suite("Allow ignoring incorrect usage in the title", () => {
+  const value = `---
+title: "Getting Started with the auth and proxy"
+description: "How to get started"
+---
+`;
+  const result = transformerWithConfig(
+    {
+      value,
+      path: "/content/4.0/docs/pages/filename.mdx",
+    },
+    [
+      {
+        incorrect: "auth and proxy",
+        correct: 'use "Auth and Proxy Services" instead',
+        explanation: "You must capitalize product names",
+        where: [
+          PageLocation.Description,
+          PageLocation.Headers,
+          PageLocation.Body,
+          PageLocation.Comments,
+        ],
+      },
+    ]
+  );
+
+  const expectedErrors = [];
+
+  assert.equal(getErrors(result), expectedErrors);
+});
+
+Suite("Allow ignoring incorrect usage in the description", () => {
+  const value = `---
+title: "Getting Started with the Auth and Proxy"
+description: "How to get started with the auth and proxy"
+---
+`;
+  const result = transformerWithConfig(
+    {
+      value,
+      path: "/content/4.0/docs/pages/filename.mdx",
+    },
+    [
+      {
+        incorrect: "auth and proxy",
+        correct: 'use "Auth and Proxy Services" instead',
+        explanation: "You must capitalize product names",
+        where: [
+          PageLocation.Title,
+          PageLocation.Headers,
+          PageLocation.Body,
+          PageLocation.Comments,
+        ],
+      },
+    ]
+  );
+
+  const expectedErrors = [];
+
+  assert.equal(getErrors(result), expectedErrors);
+});
+
+Suite("Allow ignoring incorrect usage in headers", () => {
+  const value = `---
+title: "Getting Started with the Auth and Proxy"
+description: "How to get started with the Auth and Proxy"
+---
+
+## Introducing the auth and proxy
+`;
+  const result = transformerWithConfig(
+    {
+      value,
+      path: "/content/4.0/docs/pages/filename.mdx",
+    },
+    [
+      {
+        incorrect: "auth and proxy",
+        correct: 'use "Auth and Proxy Services" instead',
+        explanation: "You must capitalize product names",
+        where: [
+          PageLocation.Title,
+          PageLocation.Description,
+          PageLocation.Body,
+          PageLocation.Comments,
+        ],
+      },
+    ]
+  );
+
+  const expectedErrors = [];
+
+  assert.equal(getErrors(result), expectedErrors);
+});
+
+Suite("Allow ignoring incorrect usage in the the body text", () => {
+  const value = `---
+title: "Getting Started with the Auth and Proxy"
+description: "How to get started with the Auth and Proxy"
+---
+
+This is text about the auth and proxy.
+`;
+  const result = transformerWithConfig(
+    {
+      value,
+      path: "/content/4.0/docs/pages/filename.mdx",
+    },
+    [
+      {
+        incorrect: "auth and proxy",
+        correct: 'use "Auth and Proxy Services" instead',
+        explanation: "You must capitalize product names",
+        where: [
+          PageLocation.Title,
+          PageLocation.Description,
+          PageLocation.Headers,
+          PageLocation.Comments,
+        ],
+      },
+    ]
+  );
+
+  const expectedErrors = [];
+
+  assert.equal(getErrors(result), expectedErrors);
+});
+
+Suite("Allow ignoring incorrect usage in comments", () => {
+  const value = `---
+title: "Getting Started"
+description: "How to get started"
+---
+
+Here is a YAML document:
+
+\`\`\`yaml
+# You can use this YAML to configure the auth and 
+# proxy.
+version: v3
+\`\`\`
+
+`;
+  const result = transformerWithConfig(
+    {
+      value,
+      path: "/content/4.0/docs/pages/filename.mdx",
+    },
+    [
+      {
+        incorrect: "auth and proxy",
+        correct: 'use "Auth and Proxy Services" instead',
+        explanation: "You must capitalize product names",
+        where: [
+          PageLocation.Title,
+          PageLocation.Description,
+          PageLocation.Headers,
+          PageLocation.Body,
+        ],
+      },
+    ]
+  );
+
+  const expectedErrors = [];
+
+  assert.equal(getErrors(result), expectedErrors);
+});
+
+// TODO: similar tests for other page parts
 
 Suite.run();

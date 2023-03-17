@@ -145,6 +145,13 @@ const messagingConfigValidator = ajv.compile({
       explanation: {
         type: "string",
       },
+      where: {
+        type: "array",
+        items: {
+          type: "string",
+          enum: ["title", "description", "comments", "body", "headers"],
+        },
+      },
     },
   },
 });
