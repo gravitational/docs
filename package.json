@@ -115,6 +115,6 @@
     "unist-util-visit-parents": "^5.1.3",
     "uvu": "^0.5.3",
     "vfile": "^5.3.7",
-    "webpack": "^5.76.1"
+    "webpack": "^5.76.2"
   }
 }
