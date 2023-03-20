@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 import { DocsContext } from "layouts/DocsPage/context";
 import { autocomplete } from "@algolia/autocomplete-js";
 import "@algolia/autocomplete-theme-classic";
-import { render } from "react-dom";
+import { createRoot } from "react-dom/client";
 import { debounced } from "utils/debounced";
 import { ProductItem } from "./ProductItem";
 import { getSearchResults, getEmptyNotice } from "./utils";
@@ -30,20 +30,30 @@ const ITEM_LINK: SearchResultRecord = {
 
 const SearchAutocomplete = (props) => {
   const containerRef = useRef(null);
+  const panelRootRef = useRef(null);
+  const rootRef = useRef(null);
 
   useEffect(() => {
     if (!containerRef.current) {
       return undefined;
     }
 
+    // see https://www.algolia.com/doc/ui-libraries/autocomplete/integrations/using-react/#with-react-18
     const search = autocomplete({
       container: containerRef.current,
-      renderer: { createElement, Fragment },
+      renderer: { createElement, Fragment, render: () => {} },
       onSubmit() {
         window.location.href = "/docs/search-results/";
       },
       render({ children }, root) {
-        render(children, root);
+        if (!panelRootRef.current || rootRef.current !== root) {
+          rootRef.current = root;
+
+          panelRootRef.current?.unmount();
+          panelRootRef.current = createRoot(root);
+        }
+
+        panelRootRef.current.render(children);
       },
       ...props,
     });
