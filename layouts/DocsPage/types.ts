@@ -5,7 +5,7 @@ import { VideoBarProps } from "components/VideoBar/types";
 
 export const scopeValues = ["oss", "enterprise", "cloud"] as const;
 
-export type ScopeType = typeof scopeValues[number];
+export type ScopeType = (typeof scopeValues)[number];
 export type ScopesType = ScopeType | ScopeType[];
 
 export type ComplexScopesConfig =

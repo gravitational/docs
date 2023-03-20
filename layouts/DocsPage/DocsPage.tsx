@@ -1,5 +1,6 @@
+import type { PageMeta } from "./types";
+
 import cn from "classnames";
-import { MDXProvider } from "@mdx-js/react";
 import { useContext, useEffect } from "react";
 import { VarsProvider } from "components/Variables";
 import AnchorNavigation, { HeaderMeta } from "components/AnchorNavigation";
@@ -10,18 +11,17 @@ import Link, { useCurrentHref } from "components/Link";
 import Notice from "components/Notice";
 import VideoBar from "components/VideoBar";
 import { useFindDestinationPath } from "utils/useFindDestinationPath";
-import { components } from "./components";
+
 import { DocsContext } from "./context";
 import Header from "./Header";
 import Footer from "./Footer";
 import Navigation, { getCurrentCategoryIndex } from "./Navigation";
-import type { PageMeta } from "./types";
 
 import styles from "./DocsPage.module.css";
 
-interface DocsPageProps {
+export interface DocsPageProps {
   meta: PageMeta;
-  tableOfConents: HeaderMeta[];
+  tableOfContents: HeaderMeta[];
   children: React.ReactNode;
 }
 
@@ -38,10 +38,11 @@ const DocsPage = ({
     githubUrl,
     scopes,
   },
-  tableOfConents,
+  tableOfContents,
   children,
 }: DocsPageProps) => {
   const route = useCurrentHref();
+
   const { setVersions, scope, setScope } = useContext(DocsContext);
 
   const { current, latest, available } = versions;
@@ -60,7 +61,7 @@ const DocsPage = ({
   }, [versions, setVersions, setScope, scopes, scope]);
 
   const isSectionLayout = layout === "section";
-  const isTocVisible = (!layout || layout === "doc") && tableOfConents.length;
+  const isTocVisible = (!layout || layout === "doc") && tableOfContents.length;
 
   const categoryId = getCurrentCategoryIndex(navigation, route);
   const icon = navigation[categoryId]?.icon || "book";
@@ -115,21 +116,21 @@ const DocsPage = ({
                   {isBetaVersion && (
                     <>
                       This chapter covers an upcoming release: {current}. We
-                      recommend the <Link href={`${path}`}>latest</Link> version
-                      instead.
+                      recommend the <Link href={`/docs${path}`}>latest</Link>{" "}
+                      version instead.
                     </>
                   )}
                 </Notice>
               )}
               <VarsProvider>
                 <div className={cn(styles.text, styles[layout])}>
-                  <MDXProvider components={components}>{children}</MDXProvider>
+                  {children}
                 </div>
               </VarsProvider>
             </div>
             {isTocVisible && (
               <AnchorNavigation
-                headers={tableOfConents}
+                headers={tableOfContents}
                 className={styles["anchor-navigation"]}
               />
             )}

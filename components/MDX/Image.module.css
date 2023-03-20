@@ -1,6 +1,7 @@
 .wrapper {
   display: flex;
   flex-direction: column;
+  margin: 0 0 var(--m-2);
 
   &.left {
     align-items: flex-start;
@@ -9,6 +10,11 @@
   &.right {
     align-items: flex-end;
   }
+}
+
+.image {
+  max-width: 100%;
+  height: auto;
 }
 
 .border {

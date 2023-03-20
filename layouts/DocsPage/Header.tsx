@@ -37,8 +37,8 @@ const DocHeader = ({
     <section className={styles.wrapper}>
       <a href={GITHUB_DOCS} className={styles["github-link"]}>
         <NextImage
-          width="112"
-          height="112"
+          width={112}
+          height={112}
           src={forkmeUrl}
           alt="Fork me on GitHub"
         />

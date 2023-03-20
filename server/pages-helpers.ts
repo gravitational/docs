@@ -38,15 +38,20 @@ const cache: Record<string, MDXPage> = {};
 export const getPageInfo = <T = MDXPageFrontmatter>(
   path: string
 ): MDXPage<T> => {
-  let result: MDXPage<T> = cache[path] as MDXPage<T>;
+  let result;
+
+  if (process.env.NODE_ENV === "production") {
+    result = cache[path] as MDXPage<T>;
+  }
 
   if (!result) {
     const file = readSync(path, "utf-8") as MDXPage<T>;
 
-    const { data } = matter(file.value);
+    const { data, content } = matter(file.value);
 
     file.data = {
       frontmatter: data,
+      content,
       uri: getURIFromPath(path),
     } as MDXPageData<T>;
 

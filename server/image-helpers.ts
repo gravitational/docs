@@ -1,5 +1,5 @@
 import { existsSync, readFileSync } from "fs";
-import probe from "probe-image-size";
+import sizeOf from "image-size";
 import { resolve, dirname } from "path";
 
 /*
@@ -49,10 +49,8 @@ export const getDimensions = (
   const src = getValidAssetPath(source, path);
 
   if (src) {
-    const file = readFileSync(src);
-
     try {
-      const { width, height } = probe.sync(file);
+      const { width, height } = sizeOf(src);
       const scaleRatio = getScaleRatio(src);
       return {
         width: Math.round(width / scaleRatio).toString(),

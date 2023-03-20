@@ -60,6 +60,7 @@ const Link = ({
 
   // At this point, we return Link from the next/link package
   const nextProps: NextLinkProps = {
+    ...linkProps,
     href: normalizedHref,
     as,
     replace,
@@ -70,13 +71,12 @@ const Link = ({
   };
 
   return (
-    <NextLink {...nextProps} prefetch={false}>
-      <a
-        {...linkProps}
-        className={cn(styles.wrapper, styles[scheme], className)}
-      >
-        {children}
-      </a>
+    <NextLink
+      {...nextProps}
+      prefetch={false}
+      className={cn(styles.wrapper, styles[scheme], className)}
+    >
+      {children}
     </NextLink>
   );
 };
