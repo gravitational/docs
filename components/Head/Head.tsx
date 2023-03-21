@@ -56,6 +56,28 @@ const Head = ({
   const firstLvlNav = getFirstLvlNav(router.asPath);
   const keywords = propsKeywords || [];
 
+  const corporationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Corporation",
+    name: "Teleport",
+    alternateName: "Gravitational Inc.",
+    url: "https://goteleport.com/",
+    logo: "https://goteleport.com/static/og-image.png",
+    sameAs: [
+      "https://www.youtube.com/channel/UCmtTJaeEKYxCjfNGiijOyJw",
+      "https://twitter.com/goteleport/",
+      "https://www.linkedin.com/company/go-teleport/",
+      "https://en.wikipedia.org/wiki/Teleport_(software)",
+    ],
+  };
+
+  const websiteSchema = {
+    "@context": "https://schema.org/",
+    "@type": "WebSite",
+    name: "Teleport Docs",
+    url: "https://goteleport.com/docs/",
+  };
+
   return (
     <NextHead>
       <title>{title}</title>
@@ -73,6 +95,14 @@ const Head = ({
       <meta property="og:description" content={description} />
       <meta property="og:image" content={`${host}/docs/og-image.png`} />
       <meta property="keywords" content={keywords.join(", ")} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(corporationSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      />
     </NextHead>
   );
 };
