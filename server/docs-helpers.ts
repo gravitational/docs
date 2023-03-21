@@ -242,8 +242,11 @@ export const getDocsPageProps = async (
   // Transforms page text page to AST
   const AST = await transformToAST(page.data.content, page);
 
+  //If we set 'toc-depth' in page metadata, import the value here for the ToC to use
+  const tocDepth = page.data.frontmatter.tocDepth;
+
   // Generates ToC from the headers in the AST
-  const tableOfContents = getHeaders(AST);
+  const tableOfContents = getHeaders(AST, tocDepth);
 
   return {
     meta: { ...page.data.frontmatter, ...pageMeta } as PageMeta,

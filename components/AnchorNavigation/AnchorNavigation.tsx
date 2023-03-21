@@ -13,13 +13,25 @@ const AnchorNavigation = ({ className, headers }: AnchorNavigationProps) => {
     <nav className={cn(styles.wrapper, className)}>
       <div className={styles.menu}>
         <div className={styles.header}>Table of Contents</div>
-        {headers.map(({ id, title }) => {
-          return (
-            <Link key={id} href={`#${id}`} className={styles.link}>
-              {title}
-            </Link>
-          );
-        })}
+        <ul className={styles.ul}>
+          {headers.map(({ id, title, rank }) => {
+            return rank < 3 ? (
+              <li>
+                <Link key={id} href={`#${id}`} className={styles.link}>
+                  {title}
+                </Link>
+              </li>
+            ) : (
+              <ul className={styles.ulSub}>
+                <li>
+                  <Link key={id} href={`#${id}`} className={styles.link}>
+                    {title}
+                  </Link>
+                </li>
+              </ul>
+            );
+          })}
+        </ul>
       </div>
     </nav>
   );
