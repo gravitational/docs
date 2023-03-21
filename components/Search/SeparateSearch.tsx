@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { unpackSearchResults } from "utils/general";
 import { getEmptyNotice, getSearchResults } from "./utils";
 import { ProductItem } from "./ProductItem";
@@ -14,7 +15,11 @@ export default function SeparateSearch() {
   const version = savedSearchResults?.version || "current";
   const [delayed, setDelayed] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [value, setValue] = useState(savedSearchResults?.query || "");
+  const router = useRouter();
+  console.log(router.query);
+  const initialQuery = router.query.query || "";
+  console.log(initialQuery);
+  const [value, setValue] = useState(initialQuery);
   const [results, setResults] = useState<SearchResultRecord[]>(
     savedSearchResults?.results || []
   );
@@ -74,6 +79,10 @@ export default function SeparateSearch() {
 
   if (version !== "current") {
     placeholder += ` (version ${version})`;
+  }
+
+  if (initialQuery) {
+    placeholder += `: ${initialQuery}`;
   }
 
   return (
