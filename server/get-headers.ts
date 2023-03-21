@@ -15,7 +15,7 @@ interface HeaderMeta {
   title: string;
 }
 
-export default function getHeaders(root: Node, tocDepth = 2) {
+export default function getHeaders(root: Node, tocDepth) {
   const headers: HeaderMeta[] = [];
 
   visit(root, "element", (node: Element) => {
