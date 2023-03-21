@@ -32,6 +32,17 @@ export const getVersion = (filepath: string) => {
   return result ? result[1] : "";
 };
 
+const getTocDepth = (frontmatterDepth: unknown) => {
+  let tocDepth = 2; // default to 2
+  if (typeof frontmatterDepth === "string") {
+    const newDepth = parseInt(frontmatterDepth);
+    if (!isNaN(newDepth)) {
+      tocDepth = newDepth;
+    }
+  }
+  return tocDepth;
+};
+
 /**
  * The function is needed to find the corresponding object in the navigation
  * by the passed page path. Since the navigation has a multi-level structure,
@@ -243,7 +254,7 @@ export const getDocsPageProps = async (
   const AST = await transformToAST(page.data.content, page);
 
   //If we set 'toc-depth' in page metadata, import the value here for the ToC to use
-  const tocDepth = page.data.frontmatter.tocDepth || "2";
+  const tocDepth = getTocDepth(page.data.frontmatter.tocDepth);
 
   // Generates ToC from the headers in the AST
   const tableOfContents = getHeaders(AST, tocDepth);
