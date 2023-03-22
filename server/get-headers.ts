@@ -15,11 +15,11 @@ interface HeaderMeta {
   title: string;
 }
 
-export default function getHeaders(root: Node) {
+export default function getHeaders(root: Node, tocDepth: number) {
   const headers: HeaderMeta[] = [];
 
   visit(root, "element", (node: Element) => {
-    if (headingRank(node) && headingRank(node) <= 2) {
+    if (headingRank(node) && headingRank(node) <= tocDepth) {
       headers.push({
         rank: headingRank(node),
         id: node.properties?.id as string,
