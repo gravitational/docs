@@ -24,12 +24,13 @@
   color: var(--color-darkest);
   border-bottom: 1px solid var(--color-lightest-gray);
 }
+
 .ul {
   list-style-type: none;
   padding-left: 0;
 }
 
-.ulSub {
+.ul > ul {
   list-style-type: none;
   padding-left: 10px;
 }

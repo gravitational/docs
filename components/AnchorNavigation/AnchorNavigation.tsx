@@ -16,14 +16,14 @@ const AnchorNavigation = ({ className, headers }: AnchorNavigationProps) => {
         <ul className={styles.ul}>
           {headers.map(({ id, title, rank }) => {
             return rank < 3 ? (
-              <li>
+              <li key={id}>
                 <Link key={id} href={`#${id}`} className={styles.link}>
                   {title}
                 </Link>
               </li>
             ) : (
-              <ul className={styles.ulSub}>
-                <li>
+              <ul className={styles.ulSub} key={id}>
+                <li key={id}>
                   <Link key={id} href={`#${id}`} className={styles.link}>
                     {title}
                   </Link>

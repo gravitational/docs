@@ -34,6 +34,9 @@ export const getVersion = (filepath: string) => {
 
 const getTocDepth = (frontmatterDepth: unknown) => {
   let tocDepth = 2; // default to 2
+  if (typeof frontmatterDepth === "number") {
+    tocDepth = frontmatterDepth;
+  }
   if (typeof frontmatterDepth === "string") {
     const newDepth = parseInt(frontmatterDepth);
     if (!isNaN(newDepth)) {
