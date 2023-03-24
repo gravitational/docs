@@ -6,6 +6,7 @@ import type { VFile } from "vfile";
 
 import { resolve } from "path";
 import { unified } from "unified";
+import remarkMermaid from "./remark-mermaid";
 import rehypeMdxToHast from "./rehype-mdx-to-hast";
 import remarkMDX from "remark-mdx";
 import rehypeHighlight from "rehype-highlight";
@@ -27,6 +28,7 @@ import { loadConfig } from "./config-docs";
 // be lost on subsequent builds.
 const destinationDir = resolve(`.next/static/assets`);
 const staticPath = "/docs/_next/static/assets/";
+const configFilePath = resolve("mermaid.json");
 
 export const transformToAST = async (value: string, vfile: VFile) => {
   // parse() will parse original file, but not apply plugins. But because
@@ -39,6 +41,7 @@ export const transformToAST = async (value: string, vfile: VFile) => {
 
   // run() will apply plugins and return modified AST
   const AST = await unified()
+    .use(remarkMermaid, { configFilePath, destinationDir, staticPath })
     .use(remarkIncludes, {
       rootDir: getVersionRootPath(vfile.path),
     }) // Resolves (!include.ext!) syntax
