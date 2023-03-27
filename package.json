@@ -4,6 +4,7 @@
   "license": "Apache-2.0",
   "private": true,
   "scripts": {
+    "spellcheck": "find content -mindepth 1 -maxdepth 1 -type d | xargs -I {} bash -c 'cspell lint --no-progress --config {}/cspell.json {}/docs/pages/**/*.mdx'",
     "git-update": "git submodule update --init --remote",
     "build-node": "rm -rf .build && tsc --build tsconfig.node.json && tsc-esm-fix --target='.build' --ext='.mjs'",
     "generate-sitemap": "node ./scripts/generate-sitemap.mjs",
@@ -64,6 +65,7 @@
     "@typescript-eslint/eslint-plugin": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",
     "ajv": "^8.11.0",
+    "cspell": "^6.31.1",
     "dotenv": "^16.0.0",
     "eslint": "^8.14.0",
     "eslint-config-next": "^13.2.4",
