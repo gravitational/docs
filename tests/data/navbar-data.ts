@@ -155,6 +155,11 @@ export const navigationData: NavbarData = [
     },
   },
   {
+    button: { title: "Integrations", testId: "integrations" },
+    href: "/integrations/",
+    isExternal: true,
+  },
+  {
     button: { title: "Documentation", testId: "docs" },
     menu: {
       title: "Teleport Documentation",
