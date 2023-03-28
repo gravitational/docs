@@ -197,6 +197,10 @@ const menu: MenuCategoryProps[] = [
         title: "News",
         href: "/about/press/",
       },
+      {
+        title: "Partners",
+        href: "/partners/",
+      },
     ],
   },
 ];
