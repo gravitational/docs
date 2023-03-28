@@ -22,10 +22,10 @@ export const Image = ({
     <span className={cn(styles.wrapper, styles[align])}>
       {bordered ? (
         <span className={styles.border}>
-          <NextImage {...props} layout="intrinsic" />
+          <NextImage {...props} className={styles.image} />
         </span>
       ) : (
-        <NextImage {...props} layout="intrinsic" />
+        <NextImage {...props} className={styles.image} />
       )}
       {caption && <figcaption className={styles.caption}>{caption}</figcaption>}
     </span>
@@ -39,7 +39,11 @@ export type FigureProps = ImageProps & {
 };
 
 export const Figure = ({ children, ...rest }: FigureProps) => {
-  const image = Children.only<ImageComponent>(children);
+  if (Children.count(children) > 0) {
+    const image = Children.toArray(children)[0] as ImageComponent;
 
-  return cloneElement(image, rest);
+    return cloneElement(image, rest);
+  }
+
+  return null;
 };

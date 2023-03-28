@@ -3,7 +3,7 @@ import Link from "next/link";
 import SiteHeader from "components/Header";
 import Header from "layouts/DocsPage/Header";
 import Footer from "layouts/DocsPage/Footer";
-import styles from "./OldVersions.module.css";
+import styles from "./styles.module.css";
 
 import config from "../../config.json";
 

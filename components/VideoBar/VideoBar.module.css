@@ -29,6 +29,10 @@
   flex-shrink: 0;
 }
 
+.objectFit {
+  object-fit: contain;
+}
+
 .icon {
   position: absolute;
   top: 50%;
