@@ -35,7 +35,7 @@ const Link = ({
   ) {
     return (
       <a
-        href={normalizedHref}
+        href={href}
         {...linkProps}
         className={cn(styles.wrapper, styles[scheme], className)}
       >
