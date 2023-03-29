@@ -4,7 +4,7 @@
   "license": "Apache-2.0",
   "private": true,
   "scripts": {
-    "spellcheck": "find content -mindepth 1 -maxdepth 1 -type d | xargs -I{} bash check-spelling.sh {}",
+    "spellcheck": "find content -mindepth 1 -maxdepth 1 -type d | xargs -I{} bash scripts/check-spelling.sh {}",
     "git-update": "git submodule update --init --remote",
     "build-node": "rm -rf .build && tsc --build tsconfig.node.json && tsc-esm-fix --target='.build' --ext='.mjs'",
     "generate-sitemap": "node ./scripts/generate-sitemap.mjs",
