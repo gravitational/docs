@@ -112,6 +112,7 @@ const menu: MenuCategoryProps[] = [
       },
     ],
   },
+  { title: "Integrations", href: "/integrations/", testId: "integrations" },
   {
     title: "Documentation",
     href: "/",
