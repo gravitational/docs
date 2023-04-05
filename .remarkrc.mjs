@@ -14,6 +14,7 @@ import {
   loadMessagingConfig,
 } from "./.build/server/config-docs.mjs";
 import { remarkLintMessaging } from "./.build/server/remark-lint-messaging.mjs";
+import { remarkLintSEO } from "./.build/server/remark-lint-seo.mjs";
 
 const configFix = {
   settings: {
@@ -80,6 +81,7 @@ const configLint = {
       remarkLintMessaging,
       loadMessagingConfig(resolve("messaging-config.json")),
     ],
+    [remarkLintSEO],
   ],
 };
 
