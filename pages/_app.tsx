@@ -5,9 +5,53 @@ import type { AppProps } from "next/app";
 import { DocsContextProvider } from "layouts/DocsPage/context";
 import { posthog, sendPageview } from "utils/posthog";
 
+// https://larsmagnus.co/blog/how-to-optimize-custom-fonts-with-next-font
+// Next Font to enable zero layout shift which is hurting SEO.
+import localUbuntu from "@next/font/local";
+import localLato from "@next/font/local";
+const ubuntu = localUbuntu({
+  src: "../styles/assets/ubuntu-mono-400.woff2",
+  variable: "--font-ubunt",
+  display: "swap",
+});
+const lato = localLato({
+  src: [
+    {
+      path: "../styles/assets/lato-400.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../styles/assets/lato-400-italic.woff2",
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "../styles/assets/lato-700.woff2",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../styles/assets/lato-700-italic.woff2",
+      weight: "700",
+      style: "italic",
+    },
+    {
+      path: "../styles/assets/lato-900.woff2",
+      weight: "900",
+      style: "normal",
+    },
+    {
+      path: "../styles/assets/lato-900-italic.woff2",
+      weight: "900",
+      style: "italic",
+    },
+  ],
+  variable: "--font-lato",
+  display: "swap",
+});
+
 import "styles/varaibles.css";
-import "styles/fonts-ubuntu.css";
-import "styles/fonts-lato.css";
 import "styles/global.css";
 import "styles/algolia-search.css";
 
@@ -93,6 +137,12 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
   return (
     <>
+      <style jsx global>{`
+        :root {
+          --font-base: ${lato.style.fontFamily};
+          --font-ubunt: ${ubuntu.style.fontFamily};
+        }
+      `}</style>
       <Analytics />
       <DocsContextProvider>
         <Component {...pageProps} />
