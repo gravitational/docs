@@ -22,9 +22,9 @@
   --color-note: #009cf1;
 
   /* fonts */
-  --font-body: "Lato", sans-serif;
+  --font-body: var(--font-base);
   --font-serif: "Georgia", serif;
-  --font-monospace: "Ubuntu Mono", monospace;
+  --font-monospace: var(--font-ubunt);
 
   /* font sizes */
   --fs-text-xs: 10px;
