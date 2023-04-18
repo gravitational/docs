@@ -1,3 +1,4 @@
+import { resolve } from "path";
 import remarkVariables from "./.build/server/remark-variables.mjs";
 import remarkIncludes from "./.build/server/remark-includes.mjs";
 import remarkCodeSnippet from "./.build/server/remark-code-snippet.mjs";
@@ -7,7 +8,11 @@ import {
   getVersion,
   getVersionRootPath,
 } from "./.build/server/docs-helpers.mjs";
-import { loadConfig } from "./.build/server/config-docs.mjs";
+import {
+  loadConfig,
+  loadMessagingConfig,
+} from "./.build/server/config-docs.mjs";
+import { remarkLintMessaging } from "./.build/server/remark-lint-messaging.mjs";
 
 const configFix = {
   settings: {
@@ -61,12 +66,16 @@ const configLint = {
       },
     ],
     // validate-links must be run after remarkVariables since some links
-    // include variables in their references, e.g., 
+    // include variables in their references, e.g.,
     // [CM-08 Information System Component Inventory]((=fedramp.control_url=)CM-8)
     ["validate-links", { repository: false }],
     [remarkCodeSnippet, { lint: true, langs: ["code", "bash"] }],
     [remarkLintDetails, ["error"]],
     [remarkLintFrontmatter, ["error"]],
+    [
+      remarkLintMessaging,
+      loadMessagingConfig(resolve("messaging-config.json")),
+    ],
   ],
 };
 
