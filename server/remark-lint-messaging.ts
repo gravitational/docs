@@ -131,6 +131,7 @@ export const remarkLintMessaging = lintRule(
       | ((vfile: VFile) => RemarkLintMessagingOptions)
   ) => {
     let config: RemarkLintMessagingOptions;
+    console.log("file at the top of remarkLintMessaging:", file);
 
     if (typeof options === "function") {
       config = options(file);
@@ -161,6 +162,7 @@ export const remarkLintMessaging = lintRule(
       root,
       isTextOrCodeNode,
       (node: Node, index: number, parent: Parent) => {
+        console.log("node at the top of the visit callback:", node);
         let val: string;
 
         if (node.type == "code") {

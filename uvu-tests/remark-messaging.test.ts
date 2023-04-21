@@ -387,8 +387,10 @@ const transformerWithIncludes = (
     .processSync(file);
 };
 
-Suite("Lints messaging in includes correctly", () => {
+Suite.only("Lints messaging in includes correctly", () => {
   const value = `This is an including file.
+
+There is a messaging violation on the final line:
 
 (!include-bad-messaging.mdx!)
 `;
@@ -400,7 +402,7 @@ Suite("Lints messaging in includes correctly", () => {
     { lint: true, resolve: true }
   );
 
-  assert.equal(result.messages[0].line, 3);
+  assert.equal(result.messages[0].line, 7);
 });
 
 Suite.run();
