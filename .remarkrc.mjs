@@ -71,7 +71,9 @@ const configLint = {
     ["validate-links", { repository: false }],
     [remarkCodeSnippet, { lint: true, langs: ["code", "bash"] }],
     [remarkLintDetails, ["error"]],
-    [remarkLintFrontmatter, ["error"]],
+    // Disabling the remarkLintFrontmatter check until we fix
+    // gravitational/docs#80
+    // [remarkLintFrontmatter, ["error"]],
     [
       remarkLintMessaging,
       loadMessagingConfig(resolve("messaging-config.json")),
