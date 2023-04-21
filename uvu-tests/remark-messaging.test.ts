@@ -6,6 +6,15 @@ import { readFileSync } from "fs";
 import { resolve } from "path";
 import { remark } from "remark";
 import remarkMdx from "remark-mdx";
+import remarkGFM from "remark-gfm";
+import remarkIncludes, {
+  ParameterAssignments,
+  RemarkIncludesOptions,
+  parsePartialParams,
+  parseParamDefaults,
+  resolveParamValue,
+} from "../server/remark-includes";
+
 import {
   remarkLintMessaging,
   RemarkLintMessagingOptions,
@@ -361,6 +370,37 @@ version: v3
   assert.equal(getErrors(result), expectedErrors);
 });
 
-// TODO: similar tests for other page parts
+const transformerWithIncludes = (
+  vfileOptions: VFileOptions,
+  pluginOptions: RemarkIncludesOptions = { resolve: true }
+) => {
+  const file = new VFile(vfileOptions);
+
+  return remark()
+    .use(remarkMdx)
+    .use(remarkGFM)
+    .use(remarkIncludes, {
+      rootDir: "server/fixtures/includes/",
+      ...pluginOptions,
+    })
+    .use(remarkLintMessaging, config)
+    .processSync(file);
+};
+
+Suite("Lints messaging in includes correctly", () => {
+  const value = `This is an including file.
+
+(!include-bad-messaging.mdx!)
+`;
+  const result = transformerWithIncludes(
+    {
+      value,
+      path: "/content/4.0/docs/pages/filename.mdx",
+    },
+    { lint: true, resolve: true }
+  );
+
+  assert.equal(result.messages[0].line, 3);
+});
 
 Suite.run();
