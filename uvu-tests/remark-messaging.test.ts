@@ -82,7 +82,8 @@ install these services when getting started with Teleport.
   const expectedErrors = [
     'Incorrect messaging: "auth and proxy" (in body text). ' +
       'You must capitalize product names. You should use "Auth and Proxy Services" instead. ' +
-      'Add "{/*lint ignore messaging*/}" above this line to bypass the linter.',
+      'Add "{/*lint ignore messaging*/}" above this line to bypass the linter.' +
+      " Note that the line number is not accurate if the issue occurs inside a partial.",
   ];
 
   assert.equal(getErrors(result), expectedErrors);
@@ -102,7 +103,8 @@ In this guide, we will explain how to set up Teleport to access Kubernetes.
     'Incorrect messaging: "Kubernetes Access" (in header). Focus our messaging ' +
       "on a single product, rather than multiple. You should use " +
       '"registering a Kubernetes cluster" instead. ' +
-      'Add "{/*lint ignore messaging*/}" above this line to bypass the linter.',
+      'Add "{/*lint ignore messaging*/}" above this line to bypass the linter. ' +
+      "Note that the line number is not accurate if the issue occurs inside a partial.",
   ];
 
   const result = transformer({
@@ -179,15 +181,22 @@ func myfunc(s string){
   const expectedErrors = [
     'Incorrect messaging: "auth and proxy" (in code comment). You must capitalize product ' +
       'names. You should use "Auth and Proxy Services" instead. ' +
-      'Add "{/*lint ignore messaging*/}" above this line to bypass the linter.',
+      'Add "{/*lint ignore messaging*/}" above this line to bypass the linter.' +
+      " Note that the line number refers to the first line in the code snippet" +
+      " where the issue occurs, and is not accurate if the issue occurs inside a partial.",
+
     'Incorrect messaging: "Kubernetes Access" (in code comment). Focus our messaging on a ' +
       'single product, rather than multiple. You should use "registering a ' +
       'Kubernetes cluster" instead. ' +
-      'Add "{/*lint ignore messaging*/}" above this line to bypass the linter.',
+      'Add "{/*lint ignore messaging*/}" above this line to bypass the linter.' +
+      " Note that the line number refers to the first line in the code snippet" +
+      " where the issue occurs, and is not accurate if the issue occurs inside a partial.",
     'Incorrect messaging: "machine id" (in code comment). See our Core Concepts page: ' +
       "https://goteleport.com/docs/core-concepts. " +
       "You should capitalize the names of Teleport services. " +
-      'Add "{/*lint ignore messaging*/}" above this line to bypass the linter.',
+      'Add "{/*lint ignore messaging*/}" above this line to bypass the linter.' +
+      " Note that the line number refers to the first line in the code snippet" +
+      " where the issue occurs, and is not accurate if the issue occurs inside a partial.",
   ];
 
   assert.equal(getErrors(result), expectedErrors);
