@@ -42,7 +42,8 @@
     },
     {
       "name": "10.x",
-      "branch": "branch/v10"
+      "branch": "branch/v10",
+      "deprecated": true
     },
     {
       "name": "11.x",
@@ -50,11 +51,15 @@
     },
     {
       "name": "12.x",
-      "branch": "branch/v12",
-      "latest": true
+      "branch": "branch/v12"
     },
     {
       "name": "13.x",
+      "branch": "branch/v13",
+      "latest": true
+    },
+    {
+      "name": "14.x",
       "branch": "master"
     }
   ]
