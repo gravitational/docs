@@ -19,14 +19,14 @@ const menu: MenuCategoryProps[] = [
         titleLink: true,
         href: "/access-modules/",
         children: [
-          { title: "SSH", href: "/access-modules#ssh" },
-          { title: "Kubernetes", href: "/access-modules#kubernetes" },
-          { title: "Databases", href: "/access-modules#databases" },
+          { title: "SSH", href: "/access-modules/#ssh" },
+          { title: "Kubernetes", href: "/access-modules/#kubernetes" },
+          { title: "Databases", href: "/access-modules/#databases" },
           {
             title: "Internal Applications",
-            href: "/access-modules#applications",
+            href: "/access-modules/#applications",
           },
-          { title: "Windows", href: "/access-modules#windows" },
+          { title: "Windows", href: "/access-modules/#windows" },
         ],
       },
       {
