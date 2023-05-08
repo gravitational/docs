@@ -25,6 +25,7 @@ const Header = () => {
         onClick={toggleNavigaton}
         className={styles.hamburger}
         data-testid="hamburger"
+        aria-details="Toggle Main navigation"
       >
         <Icon name={isNavigationVisible ? "close" : "hamburger"} size="md" />
       </HeadlessButton>
