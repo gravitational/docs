@@ -48,27 +48,27 @@ export const navigationData: NavbarData = [
         },
         {
           title: "SSH",
-          href: "/access-modules#ssh",
+          href: "/access-modules/#ssh",
           isExternal: true,
         },
         {
           title: "Kubernetes",
-          href: "/access-modules#kubernetes",
+          href: "/access-modules/#kubernetes",
           isExternal: true,
         },
         {
           title: "Databases",
-          href: "/access-modules#databases",
+          href: "/access-modules/#databases",
           isExternal: true,
         },
         {
           title: "Internal Applications",
-          href: "/access-modules#applications",
+          href: "/access-modules/#applications",
           isExternal: true,
         },
         {
           title: "Windows",
-          href: "/access-modules#windows",
+          href: "/access-modules/#windows",
           isExternal: true,
         },
         {
