@@ -25,6 +25,7 @@ export default function VideoBar({
           src={thumbnail}
           width={80}
           height={40}
+          priority={true}
           alt={title}
           className={styles.objectFit}
         />

@@ -39,6 +39,7 @@ const DocHeader = ({
         <NextImage
           width={112}
           height={112}
+          priority={true}
           src={forkmeUrl}
           alt="Fork me on GitHub"
         />
