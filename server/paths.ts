@@ -83,29 +83,6 @@ export const generateSitemap = (root: string) => {
 };
 
 /*
- * Generates sitemap used by Algolia indexer.
- * Have paths for all versions of docs and no other pages.
- */
-
-export const generateFullSitemap = (root: string) => {
-  const docPages = [];
-
-  versions.forEach((version) => {
-    docPages.push(
-      ...getSlugsForVersion(version).map((slug) => ({
-        loc: normalizeDocSlug(slug, version),
-      }))
-    );
-  });
-
-  sitemapGenerator({
-    pages: docPages,
-    path: resolve("public", "algolia_sitemap.xml"),
-    root,
-  });
-};
-
-/*
  * Generates an array of params for each docs page to use
  * in the getStaticPaths for the docs.
  *
