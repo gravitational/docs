@@ -84,11 +84,11 @@ function checkMessaging(
       let extras = "";
       if (part == PageLocation.Body || part == PageLocation.Headers) {
         extras +=
-          " Note that the line number is not accurate if the issue occurs inside a partial.";
+          " (Note that the line number is not accurate if the issue occurs inside a partial.)";
       }
       if (part == PageLocation.Comments) {
         extras +=
-          " Note that the line number refers to the first line in the code snippet where the issue occurs, and is not accurate if the issue occurs inside a partial.";
+          " (Note that the line number refers to the first line in the code snippet where the issue occurs, and is not accurate if the issue occurs inside a partial.)";
       }
       file.message(
         `Incorrect messaging: "${badText[0]}" (${getReadableLocation(
