@@ -1,5 +1,11 @@
 [
   {
+    "incorrect": "(?<!`)teleport(?!`)",
+    "correct": "`teleport` or Teleport",
+    "explanation": "capitalize \"Teleport\" unless you are describing the binary, in which case use code style",
+    "where": ["headers", "title", "body"]
+  },
+  {
     "incorrect": "\\W(machine id|(database|app(lication)?|desktop|kubernetes|ssh|discovery) service)\\W",
     "correct": "capitalize the names of Teleport services",
     "explanation": "We want to ensure that product names are consistent across the docs"
