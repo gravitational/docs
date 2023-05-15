@@ -27,7 +27,7 @@ export interface DetailsProps {
 export const Details = ({
   scope,
   scopeOnly = false,
-  opened,
+  opened = false,
   title,
   min,
   children,
@@ -38,7 +38,7 @@ export const Details = ({
   } = useContext(DocsContext);
   const router = useRouter();
   const scopes = useMemo(() => getScopes(scope), [scope]);
-  const [isOpened, setIsOpened] = useState<boolean>(Boolean(opened));
+  const [isOpened, setIsOpened] = useState(opened);
   const isInCurrentScope = scopes.includes(currentScope);
   const detailsId = title ? transformTitleToAnchor(title) : "title";
   const anchorInPath = getAnchor(router.asPath);
