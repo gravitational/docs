@@ -46,8 +46,8 @@ function render(
     fs.outputFileSync(tmpMmdFilePath, source);
 
     const command = configFilePath
-      ? `${mmdcExecutable} -q  -i ${tmpMmdFilePath} -o ${svgFilePath} -b transparent --configFile ${configFilePath}`
-      : `${mmdcExecutable} -q -i ${tmpMmdFilePath} -o ${svgFilePath} -b transparent`;
+      ? `${mmdcExecutable} -i ${tmpMmdFilePath} -o ${svgFilePath} -p puppeteerConfig.json -b transparent --configFile ${configFilePath}`
+      : `${mmdcExecutable} -i ${tmpMmdFilePath} -o ${svgFilePath} -p puppeteerConfig.json -b transparent`;
 
     // Invoke mermaid.cli
     execSync(command);
