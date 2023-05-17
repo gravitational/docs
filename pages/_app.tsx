@@ -7,8 +7,8 @@ import { posthog, sendPageview } from "utils/posthog";
 
 // https://larsmagnus.co/blog/how-to-optimize-custom-fonts-with-next-font
 // Next Font to enable zero layout shift which is hurting SEO.
-import localUbuntu from "@next/font/local";
-import localLato from "@next/font/local";
+import localUbuntu from "next/font/local";
+import localLato from "next/font/local";
 const ubuntu = localUbuntu({
   src: "../styles/assets/ubuntu-mono-400.woff2",
   variable: "--font-ubunt",
