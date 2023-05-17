@@ -17,6 +17,8 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Navigation, { getCurrentCategoryIndex } from "./Navigation";
 
+import Feedback from "components/Feedback";
+
 import styles from "./DocsPage.module.css";
 
 export interface DocsPageProps {
@@ -135,6 +137,7 @@ const DocsPage = ({
               />
             )}
           </div>
+          <Feedback></Feedback>
           <Footer section={isSectionLayout}>
             <div className={styles.footer}>
               Have a suggestion or can’t find something?
