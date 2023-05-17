@@ -71,14 +71,17 @@ export default function PageWithJSbasedForm() {
       ) : (
         <>
           <p>Any additional comments:</p>
-          <textarea
-            id="comment"
-            name="comment"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-          />
+          <div>
+            <textarea
+              id="comment"
+              name="comment"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              style={{ width: "100%", height: "150px" }}
+            />
 
-          <ButtonPrimary type="submit">Submit</ButtonPrimary>
+            <ButtonPrimary type="submit">Submit</ButtonPrimary>
+          </div>
         </>
       )}
     </form>
