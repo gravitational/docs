@@ -1,9 +1,5 @@
 import React, { FormEvent, useState } from "react";
-import Button, {
-  ButtonPrimary,
-  ButtonBorder,
-  ButtonText,
-} from "components/Button";
+import ButtonPrimary from "components/Button";
 
 export default function PageWithJSbasedForm() {
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -82,7 +78,7 @@ export default function PageWithJSbasedForm() {
             onChange={(e) => setComment(e.target.value)}
           />
 
-          <Button type="submit">Submit</Button>
+          <ButtonPrimary type="submit">Submit</ButtonPrimary>
         </>
       )}
     </form>
