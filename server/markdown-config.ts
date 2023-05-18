@@ -41,10 +41,10 @@ export const transformToAST = async (value: string, vfile: VFile) => {
 
   // run() will apply plugins and return modified AST
   const AST = await unified()
-    .use(remarkMermaid, { configFilePath, destinationDir, staticPath })
     .use(remarkIncludes, {
       rootDir: getVersionRootPath(vfile.path),
     }) // Resolves (!include.ext!) syntax
+    .use(remarkMermaid, { configFilePath, destinationDir, staticPath })
     .use(remarkVariables, {
       variables: loadConfig(getVersion(vfile.path)).variables || {},
     }) // Resolves (=variable=) syntax
