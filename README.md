@@ -32,6 +32,8 @@ To update docs to the latest version from master, run:
 yarn git-update
 ```
 
+(Note that the `git-update` operation may take 20+ minutes to complete)
+
 Install dependencies with:
 
 ```bash
