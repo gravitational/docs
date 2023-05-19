@@ -1,5 +1,6 @@
 import React, { FormEvent, useState } from "react";
 import ButtonPrimary from "components/Button";
+import { sendDocsFeedback } from "utils/posthog";
 
 export default function PageWithJSbasedForm() {
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -35,6 +36,9 @@ export default function PageWithJSbasedForm() {
 
     const response = await fetch(endpoint, options);
     const result = await response.json();
+
+    //Send feedback to posthog
+    void sendDocsFeedback(feedback, comment);
 
     setIsSubmitted(true);
   };

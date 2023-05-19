@@ -22,7 +22,8 @@ export default async function handler(
 
   // Prepare form-data
   const formData = new FormData();
-  formData.append("page_id", body.page_id);
+  console.log("*******************BODY URL: " + body.url)
+  formData.append("page_id", body.url);
   formData.append("was_helpful", body.feedback);
   formData.append("comments", body.comment);
 
