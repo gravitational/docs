@@ -1876,11 +1876,6 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.2.0.tgz#8be36a1f66f3265389e90b5f9c9962146758f728"
   integrity sha512-sXo/qW2/pAcmT43VoRKOJbDOfV3cYpq3szSVfIThQXNt+E4DfKj361vaAt3c88U5tPUxzEswam7GW48PJqtKAg==
 
-"@sentry/types@7.22.0":
-  version "7.22.0"
-  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.22.0.tgz#58e4ce77b523048e0f31e2ea4b597946d76f6079"
-  integrity sha512-LhCL+wb1Jch+OesB2CIt6xpfO1Ab6CRvoNYRRzVumWPLns1T3ZJkarYfhbLaOEIb38EIbPgREdxn2AJT560U4Q==
-
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
@@ -7573,12 +7568,11 @@ postcss@^8.4.12, postcss@^8.4.19:
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 
-posthog-js@^1.38.0:
-  version "1.40.2"
-  resolved "https://registry.yarnpkg.com/posthog-js/-/posthog-js-1.40.2.tgz#f9658f532653789287015f7df9f61988949e08e9"
-  integrity sha512-jVq/g5J/339u2uHulfpTR57iyG8xmbSKpB9xtbEqp5gQpr/eu0P4OAdfye12tsjm8IB3+7RR/SDArQ7PI/m6Yg==
+posthog-js@^1.57.2:
+  version "1.57.2"
+  resolved "https://registry.yarnpkg.com/posthog-js/-/posthog-js-1.57.2.tgz#131fb93e2ad099baff4317f3d91a4d6c96a08e7f"
+  integrity sha512-ER4gkYZasrd2Zwmt/yLeZ5G/nZJ6tpaYBCpx3CvocDx+3F16WdawJlYMT0IyLKHXDniC5+AsjzFd6fi8uyYlJA==
   dependencies:
-    "@sentry/types" "7.22.0"
     fflate "^0.4.1"
     rrweb-snapshot "^1.1.14"
 
