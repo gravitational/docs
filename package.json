@@ -42,7 +42,7 @@
     "@chakra-ui/theme-tools": "^2.0.16",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
-    "@inkeep/inkeep-widget-library": "^0.1.59",
+    "@inkeep/inkeep-widget-library": "^0.1.60",
     "@mermaid-js/mermaid-cli": "^9.3.0",
     "@next/font": "13.3.0",
     "@reach/listbox": "^0.17.0",
