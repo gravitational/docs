@@ -3,6 +3,5 @@
   border: 1px solid var(--color-light-gray);
   border-radius: var(--r-sm);
   font-size: var(--fs-text-md);
-  word-break: break-word;
   background-color: var(--color-lightest-gray);
 }
