@@ -6,23 +6,6 @@
   margin-right: var(--m-1);
   margin-left: var(--m-1);
 
-  & :global {
-    & .aa-Form,
-    & .aa-DetachedSearchButton {
-      height: 30px;
-      border-radius: 24px;
-      border-color: var(--color-light-gray);
-    }
-
-    & .aa-SubmitIcon {
-      color: var(--color-lighter-gray);
-    }
-
-    & .aa-Input {
-      font-size: var(--fs-text-md);
-    }
-  }
-
   @media (max-width: 560px) {
     width: 100%;
   }

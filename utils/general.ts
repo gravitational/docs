@@ -1,6 +1,3 @@
-import { SEACH_RESULTS_KEY } from "../components/Search/utils";
-import type { SearchResultMeta } from "../components/Search/types";
-
 const pushVars = (rowTexts: string[], command: HTMLElement[]) => {
   for (const commandLine of command) {
     for (const child of Array.from(commandLine.children)) {
@@ -66,21 +63,4 @@ export const getFirstLvlNav = (locPath: string): string => {
   }
 
   return firstLvlNav;
-};
-
-function checkMeta(data): data is SearchResultMeta {
-  return typeof data === "object" && "query" in data && "results" in data;
-}
-
-/**
- * get the search results stored in SessionStorage
- */
-export const unpackSearchResults = (): undefined | SearchResultMeta => {
-  try {
-    const data = sessionStorage.getItem(SEACH_RESULTS_KEY);
-    const parsed = JSON.parse(data);
-    return checkMeta(parsed) ? parsed : undefined;
-  } catch (e) {
-    return undefined;
-  }
 };

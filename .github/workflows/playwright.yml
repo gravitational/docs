@@ -38,6 +38,8 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-${{ steps.nvm.ouputs.NVMRC }}-nodemodules-${{ hashFiles('**/yarn.lock') }}
           ${{ runner.os }}-${{ steps.nvm.ouputs.NVMRC }}-nodemodules-
+    - name: Authenticate with NPM_TOKEN for private NPM packages
+      run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
     - run: yarn
       if: |
         steps.cache-yarn-cache.outputs.cache-hit != 'true' ||

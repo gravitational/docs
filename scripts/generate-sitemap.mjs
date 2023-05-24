@@ -1,9 +1,6 @@
 import { resolve } from "path";
 import dotEnv from "dotenv";
-import {
-  generateSitemap,
-  generateFullSitemap,
-} from "../.build/server/paths.mjs";
+import { generateSitemap } from "../.build/server/paths.mjs";
 
 /* dotEnv is used here to read .env file values that are used inside server/rss */
 
@@ -16,4 +13,3 @@ if (process.env.NODE_ENV === "development") {
 }
 
 generateSitemap(`${process.env.NEXT_PUBLIC_HOST}/docs`);
-generateFullSitemap(`${process.env.NEXT_PUBLIC_HOST}/docs`);

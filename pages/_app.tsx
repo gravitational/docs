@@ -53,7 +53,6 @@ const lato = localLato({
 
 import "styles/varaibles.css";
 import "styles/global.css";
-import "styles/algolia-search.css";
 
 const NEXT_PUBLIC_GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 const NEXT_PUBLIC_GTAG_ID = process.env.NEXT_PUBLIC_GTAG_ID;
