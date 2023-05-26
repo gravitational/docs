@@ -13,7 +13,7 @@ import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
 import remarkGFM from "remark-gfm";
 import remarkIncludes from "./remark-includes";
-import remarkLinks from "./remark-links";
+import { remarkLinks } from "./remark-links";
 import remarkVariables from "./remark-variables";
 import remarkCodeSnippet from "./remark-code-snippet";
 import remarkParse from "remark-parse";
