@@ -137,21 +137,8 @@ const DocsPage = ({
               />
             )}
           </div>
-          <Feedback></Feedback>
           <Footer section={isSectionLayout}>
-            <div className={styles.footer}>
-              Have a suggestion or can’t find something?
-            </div>
-            <Button
-              as="link"
-              href={githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              shape="lg"
-              variant="secondary"
-            >
-              IMPROVE THE DOCS
-            </Button>
+            <Feedback githubUrl={githubUrl}></Feedback>
           </Footer>
         </div>
       </main>

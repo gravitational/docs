@@ -22,6 +22,13 @@ interface DocHeaderProps {
 
 const GITHUB_DOCS = process.env.NEXT_PUBLIC_GITHUB_DOCS;
 
+const handleClickScroll = () => {
+  const element = document.getElementById('feedback');
+  if (element) {
+    element.scrollIntoView({behavior: 'smooth'});
+  }
+};
+
 const DocHeader = ({
   title,
   icon = "book",
@@ -61,13 +68,10 @@ const DocHeader = ({
           <Scopes className={styles.scopes} scopes={scopes} />
           {!!githubUrl && (
             <Button
-              as="link"
+              onClick={handleClickScroll}
               shape="md"
               variant="secondary"
               className={styles.button}
-              href={githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
             >
               Improve
             </Button>
