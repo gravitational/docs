@@ -40,9 +40,11 @@ export const sendPageview = async () => {
   ph?.capture("$pageview");
 };
 
-export const sendDocsFeedback = async (rating: string, comment: string ) => {
+export const sendDocsFeedback = async (rating: string, comment: string) => {
   const ph = await posthog();
 
-  ph?.capture("web.docs.feedback", {"web.docs.rating": rating, "web.docs.comment": comment})
-
-}
+  ph?.capture("web.docs.feedback", {
+    "web.docs.rating": rating,
+    "web.docs.comment": comment,
+  });
+};

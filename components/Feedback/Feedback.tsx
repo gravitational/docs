@@ -2,10 +2,10 @@ import styles from "./Feedback.module.css";
 import React, { FormEvent, useState } from "react";
 import ButtonPrimary from "components/Button";
 import { sendDocsFeedback } from "utils/posthog";
-import Button from "components/Button"
+import Button from "components/Button";
 import Image from "next/image";
-import ThumbsUp from "./thumbs-up.svg"
-import ThumbsDown from "./thumbs-down.svg"
+import ThumbsUp from "./thumbs-up.svg";
+import ThumbsDown from "./thumbs-down.svg";
 
 export default function PageWithJSbasedForm(props) {
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -60,11 +60,26 @@ export default function PageWithJSbasedForm(props) {
   return (
     <form onSubmit={handleSubmit}>
       <div className={styles.feedbackForm}>
-        <p id="feedback" className={styles.feedbackTitle}> Was this page helpful? </p>
+        <p id="feedback" className={styles.feedbackTitle}>
+          {" "}
+          Was this page helpful?{" "}
+        </p>
         {showButtons ? (
           <div className={styles.svgContainer}>
-            <Image src={ThumbsUp} alt="thumbs-up" height="27" width="27" onClick={() => handleFeedbackClick("yes")}/>
-            <Image src={ThumbsDown} alt="thumbs-down" height="27" width="27" onClick={() => handleFeedbackClick("no")}/>
+            <Image
+              src={ThumbsUp}
+              alt="thumbs-up"
+              height="27"
+              width="27"
+              onClick={() => handleFeedbackClick("yes")}
+            />
+            <Image
+              src={ThumbsDown}
+              alt="thumbs-down"
+              height="27"
+              width="27"
+              onClick={() => handleFeedbackClick("no")}
+            />
           </div>
         ) : (
           <>
@@ -76,7 +91,14 @@ export default function PageWithJSbasedForm(props) {
                   value={comment}
                   placeholder="Any additional comments..."
                   onChange={(e) => setComment(e.target.value)}
-                  style={{ width: "100%", height: "150px", fontFamily: "inherit", resize: "none", borderColor: "#4b31c1", borderRadius: "5px" }}
+                  style={{
+                    width: "100%",
+                    height: "150px",
+                    fontFamily: "inherit",
+                    resize: "none",
+                    borderColor: "#4b31c1",
+                    borderRadius: "5px",
+                  }}
                 />
                 <ButtonPrimary type="submit">Submit</ButtonPrimary>
                 <p className={styles.feedbackTitle}> or </p>

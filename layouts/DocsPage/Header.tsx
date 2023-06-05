@@ -23,9 +23,9 @@ interface DocHeaderProps {
 const GITHUB_DOCS = process.env.NEXT_PUBLIC_GITHUB_DOCS;
 
 const handleClickScroll = () => {
-  const element = document.getElementById('feedback');
+  const element = document.getElementById("feedback");
   if (element) {
-    element.scrollIntoView({behavior: 'smooth'});
+    element.scrollIntoView({ behavior: "smooth" });
   }
 };
 
