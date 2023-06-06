@@ -17,8 +17,7 @@ export default async function handler(
   }
 
   // The endpoint where we want to forward the data
-  const endpoint =
-    "https://38vi2wiqw1.execute-api.us-west-2.amazonaws.com/prod/";
+  const endpoint = "https://usage.teleport.dev/docs/";
 
   // Prepare form-data
   const formData = new FormData();
