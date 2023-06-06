@@ -37,6 +37,14 @@ export const posthog = async (): Promise<PostHog | undefined> => {
 
 export const sendPageview = async () => {
   const ph = await posthog();
-
   ph?.capture("$pageview");
+};
+
+export const sendDocsFeedback = async (rating: string, comment: string) => {
+  const ph = await posthog();
+
+  ph?.capture("web.docs.feedback", {
+    "web.docs.rating": rating,
+    "web.docs.comment": comment,
+  });
 };
