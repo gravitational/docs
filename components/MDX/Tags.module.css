@@ -79,6 +79,10 @@
   line-height: var(--lh-md);
   padding: var(--m-2);
 
+  & code {
+    white-space: pre;
+  }
+
   @media (--sm-scr) {
     font-size: var(--fs-text-md);
   }
