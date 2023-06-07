@@ -69,7 +69,7 @@ const configLint = {
     // include variables in their references, e.g.,
     // [CM-08 Information System Component Inventory]((=fedramp.control_url=)CM-8)
     ["validate-links", { repository: false }],
-    [remarkCodeSnippet, { lint: true, langs: ["code", "bash"] }],
+    [remarkCodeSnippet, { lint: true, langs: codeFormats }],
     [remarkLintDetails, ["error"]],
     [remarkLintFrontmatter, ["error"]],
     [

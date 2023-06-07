@@ -89,3 +89,21 @@
     }
   }
 }
+
+.line {
+  display: block;
+  & :global {
+    & .wrapper-input input {
+      color: var(--color-light-blue);
+      background-color: transparent;
+    }
+
+    & .wrapper-input input::placeholder {
+      color: var(--color-light-gray);
+    }
+
+    & .wrapper-input svg {
+      color: var(--color-light-blue);
+    }
+  }
+}
