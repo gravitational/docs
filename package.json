@@ -23,7 +23,10 @@
     "typecheck": "tsc --noEmit --skipLibCheck --incremental --tsBuildInfoFile node_modules/.cache/tsc/tsbuildinfo --project .",
     "markdown-lint": "remark --rc-path .remarkrc.mjs 'content/**/docs/pages/**/*.mdx' --frail --ignore-pattern '**/includes/**' --silently-ignore",
     "markdown-lint-external-links": "WITH_EXTERNAL_LINKS=true yarn markdown-lint",
-    "markdown-fix": "FIX=true yarn markdown-lint -o"
+    "markdown-fix": "FIX=true yarn markdown-lint -o",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "test-storybook": "test-storybook"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -60,6 +63,13 @@
   "devDependencies": {
     "@next/bundle-analyzer": "13.2.4",
     "@playwright/test": "^1.25.0",
+    "@storybook/addon-interactions": "^7.0.20",
+    "@storybook/addon-viewport": "^7.0.20",
+    "@storybook/jest": "^0.1.0",
+    "@storybook/nextjs": "^7.0.20",
+    "@storybook/react": "^7.0.20",
+    "@storybook/test-runner": "^0.10.0",
+    "@storybook/testing-library": "^0.0.14-next.2",
     "@svgr/webpack": "^6.2.1",
     "@types/glob": "^7.2.0",
     "@types/hast": "^2.3.4",
@@ -93,6 +103,7 @@
     "micromark-extension-mdxjs": "^1.0.0",
     "postcss": "^8.4.12",
     "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-loader": "^7.3.3",
     "postcss-preset-env": "^7.4.4",
     "prettier": "^2.6.2",
     "prettier-config-standard": "^5.0.0",
@@ -113,6 +124,7 @@
     "remark-validate-links": "^11.0.2",
     "sharp": "^0.30.5",
     "simple-git-hooks": "^2.7.0",
+    "storybook": "^7.0.20",
     "stylelint": "^14.8.0",
     "stylelint-config-standard": "^25.0.0",
     "to-vfile": "7.2.3",

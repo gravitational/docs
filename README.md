@@ -63,6 +63,7 @@ Now run one of the following commands:
 - `yarn markdown-lint-external-links` – same as `yarn markdown-lint` but checks that external links work. Separate command because of slowness.
 - `yarn markdown-fix` – fixes syntax automatically in `*.mdx` files inside `content/**/docs/pages/`.
 - `yarn storybook` – runs [Storybook](https://storybook.js.org/) instance at the `6006` port. You can check existing components here and try different options.
+- `yarn test-storybook` - runs Storybook components tests via [Test Runner](https://storybook.js.org/docs/react/writing-tests/test-runner). To run all tests locally, you first need to run Storybook by `yarn storybook`. Used on CI.
 - `yarn build-storybook` – builds static version of Storybook.
 
 ### Previewing changes locally with Docker
