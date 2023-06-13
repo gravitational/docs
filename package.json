@@ -71,6 +71,7 @@
     "@storybook/test-runner": "^0.10.0",
     "@storybook/testing-library": "^0.0.14-next.2",
     "@svgr/webpack": "^6.2.1",
+    "@types/form-data": "^2.5.0",
     "@types/glob": "^7.2.0",
     "@types/hast": "^2.3.4",
     "@types/js-yaml": "^4.0.5",

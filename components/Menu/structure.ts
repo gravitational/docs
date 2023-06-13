@@ -123,6 +123,10 @@ const menu: MenuCategoryProps[] = [
         href: "/docs/",
       },
       {
+        title: "Download Teleport",
+        href: "/download/",
+      },
+      {
         title: "Teleport Clients",
         href: "/docs/connect-your-client/introduction/",
         passthrough: false,
