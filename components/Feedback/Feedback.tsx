@@ -13,22 +13,8 @@ export default function PageWithJSbasedForm(props) {
   const [showButtons, setShowButtons] = useState<boolean>(true);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (!feedback) {
-      alert("Please select a feedback!");
-      return;
-    }
-
-    const data = {
-      feedback,
-      comment,
-      url: window.location.pathname, // This will include the current page URL
-    };
-
+  const forwardData = async (data) => {
     const JSONdata = JSON.stringify(data);
-
     const endpoint = "api/feedback";
 
     const options = {
@@ -44,13 +30,32 @@ export default function PageWithJSbasedForm(props) {
 
     //Send feedback to posthog
     void sendDocsFeedback(feedback, comment);
+  };
 
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const data = {
+      feedback,
+      comment,
+      url: window.location.pathname, // This will include the current page URL
+    };
+
+    forwardData(data);
     setIsSubmitted(true);
   };
 
   const handleFeedbackClick = (feedbackValue: string) => {
     setFeedback(feedbackValue);
     setShowButtons(false);
+
+    const data = {
+      feedback: feedbackValue,
+      comment: "",
+      url: window.location.pathname, // This will include the current page URL
+    };
+
+    forwardData(data);
   };
 
   if (isSubmitted) {
