@@ -68,24 +68,25 @@ export const Image = ({
       setShowExpandedImage(true);
     }
   };
+  const PlainImage = () => {
+    if (shouldExpand) {
+      return (
+        <button onClick={handleClickImage} className={styles.clickable}>
+          <NextImage {...props} className={styles.image} />
+        </button>
+      );
+    } else return <NextImage {...props} className={styles.image} />;
+  };
 
   return (
     <>
       <span className={cn(styles.wrapper, styles[align])}>
         {bordered ? (
           <span className={styles.border}>
-            <NextImage
-              {...props}
-              className={cn(styles.image, shouldExpand && styles.clickable)}
-              onClick={handleClickImage}
-            />
+            <PlainImage />
           </span>
         ) : (
-          <NextImage
-            {...props}
-            className={cn(styles.image, shouldExpand && styles.clickable)}
-            onClick={handleClickImage}
-          />
+          <PlainImage />
         )}
         {caption && (
           <figcaption className={styles.caption}>{caption}</figcaption>
