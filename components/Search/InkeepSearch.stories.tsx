@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { userEvent, waitFor, within } from "@storybook/testing-library";
+import { userEvent, within } from "@storybook/testing-library";
 import { expect } from "@storybook/jest";
 
 import { InkeepSearch } from "./InkeepSearch";
@@ -23,9 +23,7 @@ export const ClickAndSearch: Story = {
     });
     await step("Focus and type in Search Input", async () => {
       await userEvent.click(canvas.getByTestId("search-input"));
-      await waitFor(() => new Promise((resolve) => setTimeout(resolve, 500)));
       await userEvent.type(canvas.getByTestId("search-input"), "Some value");
-      await waitFor(() => new Promise((resolve) => setTimeout(resolve, 300)));
       expect(canvas.getByTestId("search-input")).toHaveValue("Some value");
     });
   },

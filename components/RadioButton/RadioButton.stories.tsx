@@ -1,6 +1,6 @@
 import { expect } from "@storybook/jest";
 import type { Meta, StoryObj } from "@storybook/react";
-import { userEvent, waitFor, within } from "@storybook/testing-library";
+import { userEvent, within } from "@storybook/testing-library";
 
 import { RadioButton } from "./RadioButton";
 
@@ -52,7 +52,6 @@ export const ClickAndCheck: Story = {
     const canvas = within(canvasElement);
     await step("Click on radio button should check it", async () => {
       await userEvent.click(canvas.getByRole("radio"));
-      await waitFor(() => new Promise((resolve) => setTimeout(resolve, 300)));
       expect(canvas.getByRole("radio")).toBeChecked();
     });
   },

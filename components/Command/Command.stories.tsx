@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { userEvent, waitFor, within } from "@storybook/testing-library";
+import { userEvent, within } from "@storybook/testing-library";
 
 import Command from "./Command";
 
@@ -26,7 +26,6 @@ export const CopyButton: Story = {
     const canvas = within(canvasElement);
     await step("Hover and click on copy button", async () => {
       await userEvent.hover(canvas.getByTestId("copy-button"));
-      await waitFor(() => new Promise((resolve) => setTimeout(resolve, 300)));
       await userEvent.click(canvas.getByTestId("copy-button"));
     });
   },

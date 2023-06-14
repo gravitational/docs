@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { userEvent, waitFor, within } from "@storybook/testing-library";
+import { userEvent, within } from "@storybook/testing-library";
 import { expect } from "@storybook/jest";
 
 import { TabItem } from "./TabItem";
@@ -49,7 +49,6 @@ export const ChangeTab: Story = {
     await step("Select another option", async () => {
       expect(canvas.getByText("Helm")).toBeEnabled();
       await userEvent.click(canvas.getByText("Helm"));
-      await waitFor(() => new Promise((resolve) => setTimeout(resolve, 300)));
       expect(
         canvas.findByText(
           "Instructions for installing release using a Helm chart."
