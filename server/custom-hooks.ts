@@ -1,12 +1,11 @@
 import { useEffect } from "react";
 
-export function useClickOutside(ref, handler) {
+export function useClickInside(ref, handler) {
   useEffect(() => {
     const listener = (e: MouseEvent) => {
-      if (!ref.current || ref.current.contains(e.target)) {
-        return;
+      if (ref.current) {
+        handler(e);
       }
-      handler(e);
     };
     document.addEventListener("mousedown", listener);
     return () => {

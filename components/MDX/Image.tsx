@@ -11,7 +11,7 @@ import {
 import NextImage, { ImageProps as NextImageProps } from "next/image";
 import styles from "./Image.module.css";
 import {
-  useClickOutside,
+  useClickInside,
   useEscape,
   useDisableBodyScroll,
 } from "server/custom-hooks";
@@ -40,16 +40,16 @@ const ModalImage = ({ setShowExpandedImage, ...props }: ModalImageProps) => {
     [setShowExpandedImage]
   );
   const modalRef = useRef<HTMLDivElement>();
-  useClickOutside(modalRef, closeHandler);
+  useClickInside(modalRef, closeHandler);
   useEscape(closeHandler);
 
   return (
-    <>
+    <div ref={modalRef}>
       <div className={styles.overlay} />
-      <div className={styles.modal} ref={modalRef}>
+      <div className={styles.dialog}>
         <NextImage className={styles.image} {...props} />
       </div>
-    </>
+    </div>
   );
 };
 
@@ -71,7 +71,7 @@ export const Image = ({
   const PlainImage = () => {
     if (shouldExpand) {
       return (
-        <button onClick={handleClickImage} className={styles.clickable}>
+        <button onClick={handleClickImage} className={styles.zoomable}>
           <NextImage {...props} className={styles.image} />
         </button>
       );

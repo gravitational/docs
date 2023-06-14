@@ -32,7 +32,7 @@
 }
 
 .overlay {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.7);
   width: 100vw;
   height: 100%;
   min-width: 100%;
@@ -41,22 +41,27 @@
   z-index: 3002;
   transform: translate(-50%, -50%);
   position: fixed;
-  cursor: pointer;
+  cursor: zoom-out;
 }
 
-.clickable {
-  cursor: pointer;
+.zoomable {
+  cursor: zoom-in;
+  cursor: -moz-zoom-in; 
+  cursor: -webkit-zoom-in;
 }
 
-.modal {
+.dialog {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background: white;
+  cursor: zoom-out;
+  cursor: -moz-zoom-out; 
+  cursor: -webkit-zoom-out;
   z-index: 3002;
   & .image {
-    max-width: 93vw;
-    max-height: 93vh;
+    max-width: 95vw;
+    max-height: 95vh;
   }
 }
