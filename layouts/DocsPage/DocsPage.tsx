@@ -118,7 +118,7 @@ const DocsPage = ({
                   {isBetaVersion && (
                     <>
                       This chapter covers an upcoming release: {current}. We
-                      recommend the <Link href={`/docs${path}`}>latest</Link>{" "}
+                      recommend the <Link href={`${path}`}>latest</Link>{" "}
                       version instead.
                     </>
                   )}
