@@ -10,7 +10,7 @@
   z-index: 1;
   padding: var(--m-0-5) var(--m-3) var(--m-0-5) var(--m-0-5);
   font-family: var(--font-monospace);
-  font-size: var(--fs-text-md);
+  font-size: var(--fs-text-lg);
   color: var(--color-light-blue);
   border: 1px solid transparent;
   border-radius: var(--r-default);

@@ -38,13 +38,11 @@ import {
   IFrame,
   Pre,
 } from "components/MDX";
-import { CodeLine } from "components/Code";
 
 export const components = {
   a: Link,
   code: Code,
   inlineCode: Code,
-  codeline: CodeLine,
   // eslint-disable-next-line jsx-a11y/alt-text
   img: (props) => <Image {...props} />, // needed to circumvent props mismatch in types
   iframe: IFrame,

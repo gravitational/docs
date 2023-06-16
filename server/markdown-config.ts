@@ -22,7 +22,6 @@ import remarkCopyLinkedFiles from "remark-copy-linked-files";
 import rehypeImages from "./rehype-images";
 import { getVersion, getVersionRootPath } from "./docs-helpers";
 import { loadConfig } from "./config-docs";
-import { codeLangs } from "./code-langs";
 
 // We move images to `.next/static` because this folder is preserved
 // in the cache on rebuilds. If we place them in `public` folder, they will
@@ -50,7 +49,7 @@ export const transformToAST = async (value: string, vfile: VFile) => {
       variables: loadConfig(getVersion(vfile.path)).variables || {},
     }) // Resolves (=variable=) syntax
     .use(remarkCodeSnippet, {
-      langs: codeLangs,
+      langs: ["code"],
     }) // Adds custom code snippets
     .use(remarkLinks) // Makes links absolute and removes mdx extension
     .use(remarkCopyLinkedFiles, {

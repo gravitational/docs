@@ -161,20 +161,6 @@ const getCommentNode = (
   ],
 });
 
-const getCodeLine = (
-  content: string,
-  attributes: MdxJsxAttribute[] = []
-): MdxJsxFlowElement => {
-  const children = getChildrenNode(content);
-
-  return {
-    type: "mdxJsxFlowElement",
-    name: "CodeLine",
-    attributes,
-    children: children,
-  };
-};
-
 export interface RemarkCodeSnippetOptions {
   langs: string[];
   lint?: boolean;
@@ -280,7 +266,7 @@ export default function remarkCodeSnippet({
               );
             }
           } else {
-            children.push(getCodeLine(codeLines[i]));
+            children.push(getCommentNode(codeLines[i]));
           }
         }
 
