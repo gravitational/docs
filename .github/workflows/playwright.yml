@@ -50,10 +50,13 @@ jobs:
       env:
         PLAYWRIGHT_TEST_BASE_URL: ${{ github.event.deployment_status.target_url }}
       run: yarn playwright test --shard=${{ matrix.shard }}
-    - name: Run Storybook tests
-      env:
-        TARGET_URL: '${{ github.event.deployment_status.target_url }}'
-      run: yarn test-storybook
+    - name: Build Storybook
+      run: yarn build-storybook --quiet
+    - name: Serve Storybook and run tests
+      run: |
+        npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+          "npx http-server storybook-static --port 6006 --silent" \
+          "npx wait-on tcp:6006 && yarn test-storybook"
     - uses: actions/upload-artifact@v2
       if: always()
       with:
