@@ -48,6 +48,8 @@ export { default as shieldCheck } from "./svg/shield-check.svg?react";
 export { default as spreading } from "./svg/spreading.svg?react";
 export { default as stack } from "./svg/stack.svg?react";
 export { default as success } from "./svg/success.svg?react";
+export { default as thumbsUp } from "./svg/thumbs-up.svg?react";
+export { default as thumbsDown } from "./svg/thumbs-down.svg?react";
 export { default as wand } from "./svg/magic-wand.svg?react";
 export { default as warning } from "./svg/warning.svg?react";
 export { default as window } from "./svg/window.svg?react";

@@ -61,6 +61,7 @@
     "@next/bundle-analyzer": "13.2.4",
     "@playwright/test": "^1.25.0",
     "@svgr/webpack": "^6.2.1",
+    "@types/form-data": "^2.5.0",
     "@types/glob": "^7.2.0",
     "@types/hast": "^2.3.4",
     "@types/js-yaml": "^4.0.5",

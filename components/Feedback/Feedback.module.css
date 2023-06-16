@@ -1,0 +1,56 @@
+rect.btn {
+  stroke:#fff;
+  fill:#fff;
+  fill-opacity:0;
+  stroke-opacity:0;
+}
+
+.svgContainer img {
+  padding-top: 5px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  cursor: pointer;
+
+}
+
+
+
+.feedbackForm {
+  z-index: 10;
+  position: relative;
+}
+
+.svgContainer {
+  display: flex;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+}
+
+.feedbackTitle {
+  margin-bottom: var(--m-1);
+  margin-top: var(--m-1);
+  padding: 0 var(--m-2);
+  text-align: center;
+  font-size: var(--fs-text-l);
+  line-height: var(--lh-md);
+  color: var(--color-gray);
+
+@media (--md-scr) {
+  font-size: var(--fs-text-xl);
+  line-height: var(--lh-xl);
+}
+
+}
+
+.buttonContainer {
+  display: block;
+  justify-content: center;
+  padding: 5px;
+  text-align: center;
+  height: 100%;
+  align-items: center;
+}
