@@ -29,7 +29,7 @@ EOF
 exit 1;
 fi
 
-npx cspell lint --no-progress --config $1/docs/cspell.json "$1/docs/pages/**/*.mdx";
+npx cspell lint --no-progress --config $1/docs/cspell.json "$1/docs/pages/**/*.mdx" "$1/CHANGELOG.md";
 RES=$?;
 if [ $RES -ne 0 ]; then
   cat<<EOF
