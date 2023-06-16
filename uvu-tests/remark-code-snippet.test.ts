@@ -9,13 +9,12 @@ import mdx from "remark-mdx";
 import remarkCodeSnippet, {
   RemarkCodeSnippetOptions,
 } from "../server/remark-code-snippet";
-import { codeLangs } from "../server/code-langs";
 
 const transformer = (
   options: VFileOptions,
   pluginOptions: RemarkCodeSnippetOptions = {
     resolve: true,
-    langs: codeLangs,
+    langs: ["code", "bash", "var"],
   }
 ) =>
   remark()
@@ -187,9 +186,9 @@ Suite("Variables in command support", () => {
   assert.equal(result, expected);
 });
 
-Suite("Variables in yaml support", () => {
+Suite("Variables in var-block support", () => {
   const value = readFileSync(
-    resolve("server/fixtures/includes/includes-var-in-yaml.mdx"),
+    resolve("server/fixtures/includes/includes-var-in-block-var.mdx"),
     "utf-8"
   );
 
@@ -199,7 +198,7 @@ Suite("Variables in yaml support", () => {
   }).toString();
 
   const expected = readFileSync(
-    resolve("server/fixtures/result/var-in-yaml.mdx"),
+    resolve("server/fixtures/result/var-in-block-var.mdx"),
     "utf-8"
   );
 
