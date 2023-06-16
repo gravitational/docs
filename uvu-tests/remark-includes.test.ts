@@ -1,9 +1,14 @@
 import { suite } from "uvu";
 import * as assert from "uvu/assert";
+import remarkParse from "remark-parse";
+import remarkMDX from "remark-mdx";
+import remarkGFM from "remark-gfm";
 
+import { unified } from "unified";
 import { VFile, VFileOptions } from "vfile";
-import { readFileSync } from "fs";
-import { resolve } from "path";
+import { readFileSync, mkdtempSync } from "fs";
+import { tmpdir } from "os";
+import { resolve, join } from "path";
 import { remark } from "remark";
 import remarkMdx from "remark-mdx";
 import remarkGFM from "remark-gfm";
@@ -14,6 +19,7 @@ import remarkIncludes, {
   parseParamDefaults,
   resolveParamValue,
 } from "../server/remark-includes";
+import remarkMermaid from "../server/remark-mermaid";
 
 const transformer = (
   vfileOptions: VFileOptions,
@@ -589,5 +595,35 @@ boundary" section.
     }
   }
 );
+
+Suite.only("Loads Mermaid diagram as expected", async () => {
+  const value = `
+Here is a partial with a diagram.:
+
+(!mermaid.mdx!)
+`;
+  const ast = unified()
+    .use(remarkParse)
+    .use(remarkMDX) // Will add mdx parser
+    .use(remarkGFM) // Will add tables parser
+    .parse(value);
+
+  const destinationDir = resolve(mkdtempSync(join(tmpdir(), "mermaid")));
+  const staticPath = destinationDir;
+  const configFilePath = resolve("mermaid.json");
+
+  await unified()
+    .use(remarkIncludes, {
+      rootDir: "server/fixtures/includes/",
+      resolve: true,
+    })
+    .use(remarkMermaid, { configFilePath, destinationDir, staticPath })
+    .run(
+      ast,
+      new VFile({
+        path: "server/fixtures/mypage.mdx",
+      })
+    );
+});
 
 Suite.run();

@@ -1,6 +1,7 @@
 // This plugin is heavily based on https://github.com/temando/remark-mermaid/
 
 import { Image, Code, Root } from "mdast";
+import { env } from "process";
 import type { Transformer } from "unified";
 import type { VFile } from "vfile";
 import { visit } from "unist-util-visit";
@@ -50,7 +51,11 @@ function render(
       : `${mmdcExecutable} -i ${tmpMmdFilePath} -o ${svgFilePath} -p puppeteerConfig.json -b transparent`;
 
     // Invoke mermaid.cli
-    execSync(command);
+    execSync(command, {
+      // Trim the environment to include only what is necessary to run the
+      // Mermaid CLI. This makes testing more reliable.
+      env: { PATH: env.PATH },
+    });
 
     // Clean up temporary file
     fs.removeSync(tmpMmdFilePath);
