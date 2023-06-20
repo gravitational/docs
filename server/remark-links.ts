@@ -57,67 +57,37 @@ const isLocalHref = (href?: string | EsmNode) => {
   return !isExternalLink(href) && !isHash(href) && isPage(href);
 };
 
-const isMdxComponentWithHref = (node: MdxastNode): node is MdxAnyElement => {
+const isMdxComponentWithLocalHref = (
+  node: MdxastNode
+): node is MdxAnyElement => {
   return (
     mdxNodeTypes.has(node.type) &&
     (node as MdxAnyElement).attributes.some(
-      ({ name, value }) => name === "href"
+      ({ name, value }) =>
+        name === "href" && isLocalHref(value as string | EsmNode)
     )
   );
 };
 
-const isRemarkLinkWithLocalHref = (node: MdxastNode): node is MdastLink => {
+const isRemarkLinkWilthLocalHref = (node: MdxastNode): node is MdastLink => {
   return node.type === "link" && isLocalHref(node.url);
 };
 
-export interface RemarkLinksOptions {
-  lint?: boolean;
-}
-
-const isAnAbsoluteDocsLink = (href: string): boolean => {
-  return (
-    href.startsWith("/docs") || href.startsWith("https://goteleport.com/docs")
-  );
-};
-
-export function remarkLinks(options?: RemarkLinksOptions): Transformer {
+export default function remarkLinks(): Transformer {
   return (root, vfile) => {
     const basename = vfile?.basename || "";
-    let lint: boolean;
-    if (
-      options !== undefined &&
-      options.hasOwnProperty("lint") &&
-      options.lint
-    ) {
-      lint = true;
-    }
+
     visit(root, (node: MdxastNode) => {
-      if (lint && node.type == "link" && isAnAbsoluteDocsLink(node.url)) {
-        vfile.message(
-          `Link reference ${node.url} must be a relative link to an *.mdx page`,
-          node.position
-        );
-      }
-      if (isRemarkLinkWithLocalHref(node)) {
+      if (isRemarkLinkWilthLocalHref(node)) {
         node.url = updateHref(basename, node.url) as string;
-      } else if (isMdxComponentWithHref(node)) {
+      } else if (isMdxComponentWithLocalHref(node)) {
         const hrefAttribute = node.attributes.find(
           ({ name }) => name === "href"
         );
-
-        if (isLocalHref(hrefAttribute.value as string)) {
-          hrefAttribute.value = updateHref(
-            basename,
-            hrefAttribute.value as Href
-          ) as string;
-          return;
-        }
-        if (lint && isAnAbsoluteDocsLink(hrefAttribute.value as string)) {
-          vfile.message(
-            `Component href ${hrefAttribute.value} must be a relative link to an *.mdx page`,
-            node.position
-          );
-        }
+        hrefAttribute.value = updateHref(
+          basename,
+          hrefAttribute.value as Href
+        ) as string;
       }
     });
   };
