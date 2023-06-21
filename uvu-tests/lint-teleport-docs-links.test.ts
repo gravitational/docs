@@ -6,12 +6,6 @@ import { remark } from "remark";
 import mdx from "remark-mdx";
 import { remarkLintTeleportDocsLinks } from "../server/lint-teleport-docs-links";
 
-const transformer = (options: VFileOptions) => {
-  const file = new VFile(options);
-
-  return remark().use(mdx).use(remarkLinks).processSync(file).toString();
-};
-
 const Suite = suite("utils/lint-teleport-docs-links");
 
 const lint = (options: VFileOptions) => {
