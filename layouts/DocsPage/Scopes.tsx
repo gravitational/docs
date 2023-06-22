@@ -15,7 +15,7 @@ interface ScopeDescription {
 }
 
 const SCOPE_DESCRIPTIONS: Record<
-  "oss" | "enterprise" | "cloud",
+  "oss" | "enterprise" | "cloud" | "team",
   ScopeDescription
 > = {
   oss: {
@@ -28,13 +28,19 @@ const SCOPE_DESCRIPTIONS: Record<
     icon: "building2",
     value: "enterprise",
     title: "Enterprise",
-    color: "green",
+    color: "gray",
   },
   cloud: {
     icon: "cloud2",
     value: "cloud",
     title: "Cloud",
-    color: "blue",
+    color: "gray",
+  },
+  team: {
+    icon: "users",
+    value: "team",
+    title: "Team",
+    color: "gray",
   },
 };
 

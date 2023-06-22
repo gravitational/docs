@@ -18,8 +18,9 @@ const SCOPELESS_HREF_REGEX = /\?|\#/;
 
 const SCOPE_DICTIONARY: Record<string, ScopeType> = {
   code3: "oss",
-  building2: "enterprise",
+  users: "team",
   cloud2: "cloud",
+  building2: "enterprise",
 };
 
 const getScopeIcons = (scopes: ScopesInMeta) => {
@@ -28,7 +29,7 @@ const getScopeIcons = (scopes: ScopesInMeta) => {
   }
 
   const scopeIcons = Object.keys(SCOPE_DICTIONARY).map(
-    (scope: "code3" | "building2" | "cloud2") => {
+    (scope: "code3" | "building2" | "cloud2" | "users") => {
       const hideScope = !scopes.includes(SCOPE_DICTIONARY[scope]);
       const ariaLabel = hideScope ? "" : SCOPE_DICTIONARY[scope];
 
