@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: test-dir
-        run: echo ${{ GITHUB_REF_NAME }}
+        run: echo ${{ github.ref_name }}
 
 #      - uses: actions/checkout@v2
 #      - name: Install Vercel CLI
