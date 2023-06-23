@@ -15,9 +15,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      #TODO: remove
-      - name: test-dir
-        run: echo ${{ github.ref_name }}
       - uses: actions/checkout@v2
       - name: Install Vercel CLI
         run: yarn global add vercel@latest
