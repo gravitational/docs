@@ -5,6 +5,8 @@ import { VFile, VFileOptions } from "vfile";
 import { readFileSync } from "fs";
 import { resolve } from "path";
 import { remark } from "remark";
+import { unified } from "unified";
+import remarkParse from "remark-parse";
 import remarkMdx from "remark-mdx";
 import remarkGFM from "remark-gfm";
 import remarkIncludes, {
@@ -14,6 +16,7 @@ import remarkIncludes, {
   parseParamDefaults,
   resolveParamValue,
 } from "../server/remark-includes";
+import remarkCodeSnippet from "../server/remark-code-snippet";
 
 const transformer = (
   vfileOptions: VFileOptions,
@@ -589,5 +592,55 @@ boundary" section.
     }
   }
 );
+
+Suite.only("Does not tamper with the expected Markdown AST", () => {
+  const value = [
+    `<Tabs>
+<TabItem label="option 1">`,
+    "```code",
+    "$ echo 'hello world';",
+    "```",
+    `
+<Admonition type="warning">
+  This is something bad that could happen.
+</Admonition>
+
+</TabItem>
+</Tabs>
+`,
+  ].join("\n");
+
+  let AST1 = unified()
+    .use(remarkParse)
+    .use(remarkMdx)
+    .use(remarkGFM)
+    .use(remarkCodeSnippet, {
+      langs: ["code"],
+    })
+    .parse(value);
+
+  const AST2 = remark()
+    .use(remarkParse)
+    .use(remarkMdx)
+    .use(remarkGFM)
+    .use(remarkIncludes, {
+      rootDir: "server/fixtures/includes/",
+      resolve: true,
+    })
+    .use(remarkCodeSnippet, {
+      langs: ["code"],
+    })
+    .parse(
+      readFileSync(
+        resolve("server/fixtures/include-code-admonition.mdx"),
+        "utf-8"
+      )
+    );
+
+  console.log("AST1", AST1);
+  console.log("AST2", AST2);
+
+  assert.equal(AST1, AST2);
+});
 
 Suite.run();
