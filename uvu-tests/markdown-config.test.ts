@@ -11,7 +11,7 @@ import { readFileSync, writeFileSync } from "fs";
 const Suite = suite("server/markdown-config");
 
 Suite.only(
-  "Does not tamper with the expected Markdown AST when including partials",
+  "Does not tamper with the expected Markdown AST when including partials: in text",
   async () => {
     const value = [
       `<Tabs>
@@ -66,6 +66,63 @@ Suite.only(
     // finishing testing
     writeFileSync("ast1.json", JSON.stringify(AST1, null, 4));
     writeFileSync("ast2.json", JSON.stringify(AST2, null, 4));
+
+    console.log("AST1", AST1);
+    console.log("AST2", AST2);
+
+    assert.equal(AST1, AST2);
+  }
+);
+
+Suite.only(
+  "Does not tamper with the expected Markdown AST when including partials: in code",
+  async () => {
+    const value = [
+      "Here is some YAML:",
+      "",
+      "```yaml",
+      `key1: value
+key2: value`,
+      "```",
+    ].join("\n");
+
+    let AST1 = await transformToAST(
+      value,
+      new VFile({
+        value: value,
+        path: "/content/4.0/docs/pages/filename.mdx",
+      }),
+      {
+        versionRootPath: "server/fixtures/includes",
+        variables: {},
+        staticPath: os.tmpdir(),
+        staticDestinationDir: os.tmpdir(),
+      }
+    );
+
+    const value2 = readFileSync(
+      resolve("server/fixtures/include-code-yaml.mdx"),
+      "utf-8"
+    );
+
+    const AST2 = await transformToAST(
+      value2,
+      new VFile({
+        value: value2,
+        path: "/content/4.0/docs/pages/filename.mdx",
+      }),
+      {
+        versionRootPath: "server/fixtures/includes",
+        variables: {},
+        staticPath: os.tmpdir(),
+        staticDestinationDir: os.tmpdir(),
+      }
+    );
+
+    // TODO: These two calls are for temporary debugging. Remove them after
+    // finishing testing
+    writeFileSync("ast1-code.json", JSON.stringify(AST1, null, 4));
+    writeFileSync("ast2-code.json", JSON.stringify(AST2, null, 4));
 
     console.log("AST1", AST1);
     console.log("AST2", AST2);
