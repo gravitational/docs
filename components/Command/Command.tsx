@@ -49,7 +49,11 @@ export default function Command({ children, ...props }: CommandProps) {
 
   return (
     <div {...props} ref={codeRef} className={styles.command}>
-      <HeadlessButton onClick={handleCopy} className={styles.button}>
+      <HeadlessButton
+        onClick={handleCopy}
+        className={styles.button}
+        data-testid="copy-button"
+      >
         {isCopied ? (
           <Icon size="sm" name="check" />
         ) : (

@@ -49,6 +49,7 @@ export function InkeepSearch() {
       <div className={styles["search-input-wrapper"]}>
         <InkeepSearchIconSvg className={styles["inkeep-search-icon"]} />
         <input
+          data-testid="search-input"
           type="text"
           className={styles["search-input"]}
           onChange={(e) => handleChange(e.target.value)}

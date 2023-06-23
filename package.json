@@ -23,7 +23,12 @@
     "typecheck": "tsc --noEmit --skipLibCheck --incremental --tsBuildInfoFile node_modules/.cache/tsc/tsbuildinfo --project .",
     "markdown-lint": "remark --rc-path .remarkrc.mjs 'content/**/docs/pages/**/*.mdx' --frail --ignore-pattern '**/includes/**' --silently-ignore",
     "markdown-lint-external-links": "WITH_EXTERNAL_LINKS=true yarn markdown-lint",
-    "markdown-fix": "FIX=true yarn markdown-lint -o"
+    "markdown-fix": "FIX=true yarn markdown-lint -o",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "test-storybook": "test-storybook",
+    "storybook:test-ci": "yarn build-storybook --quiet && npx concurrently -k -s first -n \"SB,TEST\" -c \"magenta,blue\" \"npx http-server storybook-static --port 6006 --silent\" \"npx wait-on tcp:6006 && yarn test-storybook\"",
+    "storybook:test-local": "yarn build-storybook --quiet && npx concurrently -k -s first -n \"SB,TEST\" -c \"magenta,blue\" \"npx http-server storybook-static --port 6006 --silent\" \"yarn test-storybook\""
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -60,6 +65,13 @@
   "devDependencies": {
     "@next/bundle-analyzer": "13.2.4",
     "@playwright/test": "^1.25.0",
+    "@storybook/addon-interactions": "^7.0.20",
+    "@storybook/addon-viewport": "^7.0.20",
+    "@storybook/jest": "^0.1.0",
+    "@storybook/nextjs": "^7.0.20",
+    "@storybook/react": "^7.0.20",
+    "@storybook/test-runner": "^0.10.0",
+    "@storybook/testing-library": "^0.0.14-next.2",
     "@svgr/webpack": "^6.2.1",
     "@types/form-data": "^2.5.0",
     "@types/glob": "^7.2.0",
@@ -71,6 +83,7 @@
     "@typescript-eslint/eslint-plugin": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",
     "ajv": "^8.11.0",
+    "concurrently": "^8.2.0",
     "cspell": "^6.31.1",
     "dotenv": "^16.0.0",
     "eslint": "^8.14.0",
@@ -81,6 +94,7 @@
     "gray-matter": "^4.0.3",
     "hast-util-heading-rank": "^2.1.0",
     "hast-util-to-string": "^2.0.0",
+    "http-server": "^14.1.1",
     "image-size": "^1.0.2",
     "js-yaml": "^4.1.0",
     "lint-staged": "^12.4.1",
@@ -94,6 +108,7 @@
     "micromark-extension-mdxjs": "^1.0.0",
     "postcss": "^8.4.12",
     "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-loader": "^7.3.3",
     "postcss-preset-env": "^7.4.4",
     "prettier": "^2.6.2",
     "prettier-config-standard": "^5.0.0",
@@ -114,6 +129,7 @@
     "remark-validate-links": "^11.0.2",
     "sharp": "^0.30.5",
     "simple-git-hooks": "^2.7.0",
+    "storybook": "^7.0.20",
     "stylelint": "^14.8.0",
     "stylelint-config-standard": "^25.0.0",
     "to-vfile": "7.2.3",
@@ -127,6 +143,10 @@
     "unist-util-visit-parents": "^5.1.0",
     "uvu": "^0.5.3",
     "vfile": "^5.3.2",
+    "wait-on": "^7.0.1",
     "webpack": "^5.76.1"
+  },
+  "resolutions": {
+    "semver": "^7.5.2"
   }
 }
