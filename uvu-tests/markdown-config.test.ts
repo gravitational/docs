@@ -67,9 +67,6 @@ Suite.only(
     writeFileSync("ast1.json", JSON.stringify(AST1, null, 4));
     writeFileSync("ast2.json", JSON.stringify(AST2, null, 4));
 
-    console.log("AST1", AST1);
-    console.log("AST2", AST2);
-
     assert.equal(AST1, AST2);
   }
 );
@@ -123,9 +120,6 @@ key2: value`,
     // finishing testing
     writeFileSync("ast1-code.json", JSON.stringify(AST1, null, 4));
     writeFileSync("ast2-code.json", JSON.stringify(AST2, null, 4));
-
-    console.log("AST1", AST1);
-    console.log("AST2", AST2);
 
     assert.equal(AST1, AST2);
   }
