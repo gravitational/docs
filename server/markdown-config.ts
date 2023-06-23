@@ -24,14 +24,25 @@ import { getVersion, getVersionRootPath } from "./docs-helpers";
 import { loadConfig } from "./config-docs";
 import { codeLangs } from "./code-langs";
 
-// We move images to `.next/static` because this folder is preserved
-// in the cache on rebuilds. If we place them in `public` folder, they will
-// be lost on subsequent builds.
-const destinationDir = resolve(`.next/static/assets`);
-const staticPath = "/docs/_next/static/assets/";
 const configFilePath = resolve("mermaid.json");
 
-export const transformToAST = async (value: string, vfile: VFile) => {
+export interface MDXParseConfig {
+  // Directory path in which remarkIncludes will look for partial files
+  versionRootPath: string;
+  // Object where keys are variable names, i.e., the "variables" section
+  // within docs/config.json in a content submodule.
+  variables: Record<string, unknown>;
+  // URL Path in which to look for static files on the web server
+  staticPath: string;
+  // Directory path in which to create static files at build time
+  staticDestinationDir: string;
+}
+
+export const transformToAST = async (
+  value: string,
+  vfile: VFile,
+  config: MDXParseConfig
+) => {
   // parse() will parse original file, but not apply plugins. But because
   // MDX and GFM are extending parser we need to add them here.
   const ast = unified()
@@ -43,19 +54,23 @@ export const transformToAST = async (value: string, vfile: VFile) => {
   // run() will apply plugins and return modified AST
   const AST = await unified()
     .use(remarkIncludes, {
-      rootDir: getVersionRootPath(vfile.path),
+      rootDir: config.versionRootPath,
     }) // Resolves (!include.ext!) syntax
-    .use(remarkMermaid, { configFilePath, destinationDir, staticPath })
+    .use(remarkMermaid, {
+      configFilePath: configFilePath,
+      destinationDir: config.staticDestinationDir,
+      staticPath: config.staticPath,
+    })
     .use(remarkVariables, {
-      variables: loadConfig(getVersion(vfile.path)).variables || {},
+      variables: config.variables,
     }) // Resolves (=variable=) syntax
     .use(remarkCodeSnippet, {
       langs: codeLangs,
     }) // Adds custom code snippets
     .use(remarkLinks) // Makes links absolute and removes mdx extension
     .use(remarkCopyLinkedFiles, {
-      destinationDir,
-      staticPath,
+      destinationDir: config.staticDestinationDir,
+      staticPath: config.staticPath,
       ignoreFileExtensions: [".md", ".mdx"],
     }) // Copies images and files to public folder and updates links
     .use(remarkRehype, {
@@ -76,8 +91,8 @@ export const transformToAST = async (value: string, vfile: VFile) => {
     }) // Adds syntax highlighting
     .use(rehypeMdxToHast)
     .use(rehypeImages, {
-      destinationDir,
-      staticPath,
+      destinationDir: config.staticDestinationDir,
+      staticPath: config.staticPath,
     }) // Adds sizes to the images
     .run(ast, vfile);
 

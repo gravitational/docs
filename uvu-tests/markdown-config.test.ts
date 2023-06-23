@@ -1,4 +1,5 @@
 import { suite } from "uvu";
+import * as os from "node:os";
 import { resolve } from "path";
 import * as assert from "uvu/assert";
 import { transformToAST } from "../server/markdown-config";
@@ -11,7 +12,7 @@ const Suite = suite("server/markdown-config");
 
 Suite.only(
   "Does not tamper with the expected Markdown AST when including partials",
-  () => {
+  async () => {
     const value = [
       `<Tabs>
 <TabItem label="option 1">`,
@@ -28,12 +29,18 @@ Suite.only(
 `,
     ].join("\n");
 
-    let AST1 = transformToAST(
+    let AST1 = await transformToAST(
       value,
       new VFile({
         value: value,
         path: "/content/4.0/docs/pages/filename.mdx",
-      })
+      }),
+      {
+        versionRootPath: "server/fixtures/includes",
+        variables: {},
+        staticPath: os.tmpdir(),
+        staticDestinationDir: os.tmpdir(),
+      }
     );
 
     const value2 = readFileSync(
@@ -41,12 +48,18 @@ Suite.only(
       "utf-8"
     );
 
-    const AST2 = transformToAST(
+    const AST2 = await transformToAST(
       value2,
       new VFile({
         value: value2,
         path: "/content/4.0/docs/pages/filename.mdx",
-      })
+      }),
+      {
+        versionRootPath: "server/fixtures/includes",
+        variables: {},
+        staticPath: os.tmpdir(),
+        staticDestinationDir: os.tmpdir(),
+      }
     );
 
     // TODO: These two calls are for temporary debugging. Remove them after

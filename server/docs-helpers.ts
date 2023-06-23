@@ -24,6 +24,12 @@ import { fetchVideoMeta } from "./youtube-meta";
 import getHeaders from "./get-headers";
 import { transformToAST } from "./markdown-config";
 
+// We move images to `.next/static` because this folder is preserved
+// in the cache on rebuilds. If we place them in `public` folder, they will
+// be lost on subsequent builds.
+const destinationDir = resolve(`.next/static/assets`);
+const staticPath = "/docs/_next/static/assets/";
+
 const { branches, versions, latest } = loadSiteConfig();
 const NEXT_PUBLIC_GITHUB_DOCS = process.env.NEXT_PUBLIC_GITHUB_DOCS;
 
@@ -254,7 +260,12 @@ export const getDocsPageProps = async (
   }
 
   // Transforms page text page to AST
-  const AST = await transformToAST(page.data.content, page);
+  const AST = await transformToAST(page.data.content, page, {
+    versionRootPath: getVersionRootPath(page.path),
+    variables: loadDocsConfig(getVersion(page.path)).variables || {},
+    staticPath: staticPath,
+    staticDestinationDir: destinationDir,
+  });
 
   //If we set 'toc-depth' in page metadata, import the value here for the ToC to use
   const tocDepth = getTocDepth(page.data.frontmatter.tocDepth);
