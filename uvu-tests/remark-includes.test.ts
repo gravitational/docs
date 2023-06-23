@@ -2,7 +2,8 @@ import { suite } from "uvu";
 import * as assert from "uvu/assert";
 
 import { VFile, VFileOptions } from "vfile";
-import { readFileSync } from "fs";
+// TODO: Remove writeFileSync after finishing testing
+import { readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import { remark } from "remark";
 import { unified } from "unified";
@@ -636,6 +637,11 @@ Suite.only("Does not tamper with the expected Markdown AST", () => {
         "utf-8"
       )
     );
+
+  // TODO: These two calls are for temporary debugging. Remove them after
+  // finishing testing
+  writeFileSync("ast1.json", JSON.stringify(AST1, null, 4));
+  writeFileSync("ast2.json", JSON.stringify(AST2, null, 4));
 
   console.log("AST1", AST1);
   console.log("AST2", AST2);
