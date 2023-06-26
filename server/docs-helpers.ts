@@ -79,6 +79,13 @@ const findNavItem = (
   return undefined;
 };
 
+export const defaultScopes: ScopesInMeta = [
+  "oss",
+  "enterprise",
+  "cloud",
+  "team",
+];
+
 type AnyNavItem = RawNavigationItem | NavigationItem;
 type AnyNav = NavigationCategory | AnyNavItem;
 type CookedNav = NavigationCategory | NavigationItem;
@@ -97,7 +104,7 @@ function addScopesToNavigation(nav: AnyNav[]) {
   const transformedNav: CookedNav[] = [];
 
   for (let i = 0; i < nav.length; i++) {
-    let scopes: ScopesInMeta = ["oss", "team", "cloud", "enterprise"];
+    let scopes: ScopesInMeta = defaultScopes;
     const item = Object.assign({}, nav[i]);
 
     if ("forScopes" in item) {

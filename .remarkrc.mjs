@@ -1,14 +1,17 @@
 import { resolve } from "path";
+import { defaultScopes } from "./.build/server/docs-helpers.mjs";
 import remarkVariables from "./.build/server/remark-variables.mjs";
 import remarkIncludes from "./.build/server/remark-includes.mjs";
 import remarkCodeSnippet from "./.build/server/remark-code-snippet.mjs";
 import remarkLintDetails from "./.build/server/remark-lint-details.mjs";
 import remarkLintFrontmatter from "./.build/server/remark-lint-frontmatter.mjs";
-import { remarkLintTeleportDocsLinks} from "./.build/server/lint-teleport-docs-links.mjs"
+import { remarkLintTeleportDocsLinks } from "./.build/server/lint-teleport-docs-links.mjs";
 import {
   getVersion,
   getVersionRootPath,
+  getPageMeta,
 } from "./.build/server/docs-helpers.mjs";
+import { remarkLintScopes } from "./.build/server/remark-lint-scopes.mjs";
 import {
   loadConfig,
   loadMessagingConfig,
@@ -79,6 +82,18 @@ const configLint = {
     [
       remarkLintMessaging,
       loadMessagingConfig(resolve("messaging-config.json")),
+    ],
+    [
+      remarkLintScopes,
+      (vfile) => {
+        const scopes = getPageMeta(vfile.path).scopes;
+        // getPageMeta assigns the "scopes" field to [""] if
+        // the page's forScopes config includes no scopes.
+        if (scopes.indexOf("") !== -1 && scopes.length === 1) {
+          return defaultScopes;
+        }
+        return scopes;
+      },
     ],
   ],
 };
