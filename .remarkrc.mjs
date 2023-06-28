@@ -4,6 +4,7 @@ import remarkIncludes from "./.build/server/remark-includes.mjs";
 import remarkCodeSnippet from "./.build/server/remark-code-snippet.mjs";
 import remarkLintDetails from "./.build/server/remark-lint-details.mjs";
 import remarkLintFrontmatter from "./.build/server/remark-lint-frontmatter.mjs";
+import { remarkLintTeleportDocsLinks} from "./.build/server/lint-teleport-docs-links.mjs"
 import {
   getVersion,
   getVersionRootPath,
@@ -69,6 +70,7 @@ const configLint = {
     // include variables in their references, e.g.,
     // [CM-08 Information System Component Inventory]((=fedramp.control_url=)CM-8)
     ["validate-links", { repository: false }],
+    [remarkLintTeleportDocsLinks],
     [remarkCodeSnippet, { lint: true, langs: ["code", "bash"] }],
     [remarkLintDetails, ["error"]],
     // Disabling the remarkLintFrontmatter check until we fix
