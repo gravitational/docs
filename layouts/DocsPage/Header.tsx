@@ -61,7 +61,7 @@ const DocHeader = ({
               {...versions}
               className={styles.versions}
               getNewVersionPath={getNewVersionPath}
-              disabled={scope === "cloud"}
+              disabled={scope === "cloud" || scope === "team"}
               latest={latest}
             />
           )}

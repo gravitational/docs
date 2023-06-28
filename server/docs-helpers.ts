@@ -15,7 +15,6 @@ import type {
   NavigationItem,
   NavigationCategory,
   ScopesInMeta,
-  ComplexScopesConfig,
 } from "layouts/DocsPage/types";
 
 import { getStaticPathsForDocs, getDocsPagesMap } from "./paths";
@@ -80,10 +79,6 @@ const findNavItem = (
   return undefined;
 };
 
-function isComplexScopesConfig(smth: string): smth is ComplexScopesConfig {
-  return smth.includes(",");
-}
-
 type AnyNavItem = RawNavigationItem | NavigationItem;
 type AnyNav = NavigationCategory | AnyNavItem;
 type CookedNav = NavigationCategory | NavigationItem;
@@ -102,24 +97,11 @@ function addScopesToNavigation(nav: AnyNav[]) {
   const transformedNav: CookedNav[] = [];
 
   for (let i = 0; i < nav.length; i++) {
-    let scopes: ScopesInMeta = ["oss", "enterprise", "cloud"];
+    let scopes: ScopesInMeta = ["oss", "team", "cloud", "enterprise"];
     const item = Object.assign({}, nav[i]);
 
     if ("forScopes" in item) {
-      if (typeof item.forScopes === "string") {
-        const itemScopes = item.forScopes;
-
-        if (isComplexScopesConfig(itemScopes)) {
-          const parsedScopes = itemScopes
-            .split(",")
-            .map((scope) => scope.trim()) as ScopesInMeta;
-          scopes = parsedScopes;
-        } else {
-          scopes = [itemScopes];
-        }
-      } else {
-        scopes = item.forScopes;
-      }
+      scopes = item.forScopes;
     } else if (item.entries) {
       scopes = ["noScope"];
 
