@@ -23,9 +23,9 @@
   min-width: 0;
   height: 80px;
   padding: 0 var(--m-2);
-  font-size: 15px;
+  font-size: var(--fs-text-md);
   font-weight: 400;
-  color: var(--color-dark);
+  color: var(--color-code);
   outline: none;
   text-decoration: none;
   text-align: left;

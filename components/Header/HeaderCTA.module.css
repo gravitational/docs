@@ -20,7 +20,9 @@
 
 .cta {
   flex-shrink: 0;
-
+  font-size: var(--fs-text-md);
+  height: 48px !important;
+  width: 135px;
   @media (--sm-scr) {
     font-size: var(--fs-text-lg);
     height: 56px !important;
@@ -33,10 +35,20 @@
   }
 }
 
+.downloadsLink {
+  text-decoration: none;
+  font-weight: 700;
+  font-size: var(--fs-text-md);
+  color: var(--color-code);
+  padding-left: var(--m-3);
+  padding-right: var(--m-3);
+}
+
 .group {
   position: relative;
-
+  padding-left: var(--m-2);
   @media (--sm-scr) {
+    padding-left: 0;
     width: 100%;
   }
 }
@@ -52,7 +64,7 @@
 
   @media (--md-scr) {
     position: absolute;
-    top: var(--m-4);
+    top: var(--m-6);
     right: var(--m-2);
     min-width: 400px;
   }

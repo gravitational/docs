@@ -30,7 +30,11 @@ const HeaderCTA = () => {
     <>
       {isSignInVisible && <DropdownMenuOverlay />}
       <div className={styles.wrapper}>
-        <Link href="https://goteleport.com/download/" data-testid="downloads">
+        <Link
+          className={styles.downloadsLink}
+          href="https://goteleport.com/download/"
+          data-testid="downloads"
+        >
           Downloads
         </Link>
         <div className={styles.group} ref={ref}>
