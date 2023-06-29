@@ -23,7 +23,6 @@
   height: 48px !important;
   width: 135px;
   @media (--sm-scr) {
-    height: 56px !important;
     width: 100%;
     margin-top: var(--m-2);
     padding-left: var(--m-4);
