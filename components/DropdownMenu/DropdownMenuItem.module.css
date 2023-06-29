@@ -5,9 +5,6 @@
   text-align: left;
   text-decoration: none;
   color: var(--color-code);
-  @media (--sm-scr) {
-    padding: var(--m-0-5) var(--m-2);
-  }
 
   &:focus,
   &:hover {
@@ -18,6 +15,10 @@
 .imageLink {
   border: 1px solid var(--color-lightest-gray);
   width: 280px;
+  @media (--sm-scr) {
+    margin-left: var(--m-4);
+    margin-bottom: var(--m-2);
+  }
 }
 
 .title {
@@ -26,6 +27,9 @@
   font-weight: var(--fw-regular);
   line-height: var(--lh-md);
   padding-bottom: var(--m-2);
+  @media (--sm-scr) {
+    padding-left: var(--m-4);
+  }
 }
 
 .imageTitle {

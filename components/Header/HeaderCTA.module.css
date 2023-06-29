@@ -4,12 +4,11 @@
   justify-content: flex-end;
   flex-grow: 0;
   flex-shrink: 0;
-  margin-left: auto;
   @media (--sm-scr) {
     flex-direction: column;
-    margin-top: var(--m-4);
-    width: 100%;
-    margin-left: 0;
+    margin-top: var(--m-3);
+    padding-left: var(--m-4);
+    padding-right: var(--m-4);
   }
 
   @media (--md-scr) {
@@ -24,10 +23,11 @@
   height: 48px !important;
   width: 135px;
   @media (--sm-scr) {
-    font-size: var(--fs-text-lg);
     height: 56px !important;
     width: 100%;
-    margin-top: var(--m-1);
+    margin-top: var(--m-2);
+    padding-left: var(--m-4);
+    padding-right: var(--m-4);
   }
 
   @media (--md-scr) {
@@ -45,6 +45,9 @@
   @media (--lg-scr) {
     padding-left: var(--m-3);
     padding-right: var(--m-3);
+  }
+  @media (--sm-scr) {
+    display: none;
   }
   &:focus,
   &:hover {

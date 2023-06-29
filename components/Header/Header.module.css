@@ -83,8 +83,7 @@
     display: none;
     overflow: auto;
     width: auto;
-    padding: var(--m-1);
-    background-color: var(--color-white);
+    background-color: #f3f5f6;
 
     &.visible {
       display: flex;
