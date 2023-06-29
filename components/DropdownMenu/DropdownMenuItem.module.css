@@ -1,9 +1,8 @@
 .wrapper {
   display: block;
   overflow: hidden;
-  padding: 0.5px var(--m-2);
-  border-radius: var(--r-sm);
-  line-height: var(--lh-md);
+  padding-top: 0.5px;
+  line-height: 21px;
   text-align: left;
   text-decoration: none;
   color: var(--color-code);
@@ -15,31 +14,27 @@
   &:hover {
     color: var(--color-dark-purple);
   }
-  & + & {
-    margin-top: var(--m-1);
-  }
 }
 
-.image-wrapper {
-  float: left;
-  border: 10px solid transparent;
+.imageLink {
+  border: 1px solid var(--color-lightest-gray);
+  width: 280px;
+  height: 139px;
+  color: var(--color-code);
+  &:focus,
+  &:hover {
+    color: var(--color-dark-purple);
+  }
 }
 
 .title {
   display: block;
-  font-size: var(--fs-text-lg);
+  font-size: var(--fs-text-md);
   font-weight: var(--fw-regular);
-  line-height: var(--lh-lg);
+  line-height: var(--lh-md);
+  padding-bottom: var(--m-2);
 }
 
 .asTitle {
   font-weight: var(--fw-bold);
-  line-height: var(--lh-xxl);
-}
-
-.description {
-  display: block;
-  font-size: var(--fs-text-md);
-  line-height: var(--lh-md);
-  color: var(--color-darkest);
 }

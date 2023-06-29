@@ -40,8 +40,16 @@
   font-weight: 700;
   font-size: var(--fs-text-md);
   color: var(--color-code);
-  padding-left: var(--m-3);
-  padding-right: var(--m-3);
+  padding-left: 10px;
+  padding-right: 10px;
+  @media (--lg-scr) {
+    padding-left: var(--m-3);
+    padding-right: var(--m-3);
+  }
+  &:focus,
+  &:hover {
+    color: var(--color-dark-purple);
+  }
 }
 
 .group {

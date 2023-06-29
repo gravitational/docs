@@ -102,6 +102,8 @@ const MenuCategory = ({
                     title={props.title}
                     titleLink={props.titleLink}
                     href={props.href}
+                    isImageLink={props?.isImageLink}
+                    childLength={children.length}
                   >
                     {props.children?.map((childProps) => (
                       <DropdownMenuItem

@@ -6,6 +6,8 @@ export interface DropdownMenuProps {
   children: React.ReactNode;
   titleLink?: boolean;
   href?: string;
+  isImageLink?: boolean;
+  childLength?: number;
 }
 
 const DropdownSubMenu = ({
@@ -13,13 +15,19 @@ const DropdownSubMenu = ({
   children,
   titleLink = false,
   href = "/",
+  isImageLink = false,
+  childLength = 3,
 }: DropdownMenuProps) => {
   return (
-    <div className={styles.subMenuWrapper}>
+    <div
+      className={`${styles.subMenuWrapper} ${
+        childLength > 3 && styles.moreItems
+      }`}
+    >
       {title && titleLink ? (
         <DropdownMenuItem href={href} title={title} titleLink={true} />
       ) : (
-        title && <h3 className={styles.title}>{title}</h3>
+        !isImageLink && title && <h3 className={styles.title}>{title}</h3>
       )}
       <div className={styles.children}>{children}</div>
     </div>
