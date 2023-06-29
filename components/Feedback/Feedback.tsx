@@ -14,8 +14,9 @@ export default function PageWithJSbasedForm(props) {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   const forwardData = async (data) => {
+    console.log(feedback);
     const JSONdata = JSON.stringify(data);
-    const endpoint = "api/feedback";
+    const endpoint = "/docs/api/feedback/";
 
     const options = {
       method: "POST",
@@ -32,7 +33,7 @@ export default function PageWithJSbasedForm(props) {
     void sendDocsFeedback(feedback, comment);
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const data = {
@@ -41,21 +42,21 @@ export default function PageWithJSbasedForm(props) {
       url: window.location.pathname, // This will include the current page URL
     };
 
-    forwardData(data);
+    await forwardData(data);
     setIsSubmitted(true);
   };
 
-  const handleFeedbackClick = (feedbackValue: string) => {
+  const handleFeedbackClick = async (feedbackValue: string) => {
+    let feedback = feedbackValue;
     setFeedback(feedbackValue);
     setShowButtons(false);
-
     const data = {
-      feedback: feedbackValue,
+      feedback,
       comment: "",
       url: window.location.pathname, // This will include the current page URL
     };
 
-    forwardData(data);
+    await forwardData(data);
   };
 
   if (isSubmitted) {
@@ -64,7 +65,7 @@ export default function PageWithJSbasedForm(props) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className={styles.feedbackForm}>
+      <div id="feedbackContainer" className={styles.feedbackForm}>
         <p id="feedback" className={styles.feedbackTitle}>
           {" "}
           Was this page helpful?{" "}

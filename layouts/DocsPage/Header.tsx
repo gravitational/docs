@@ -23,10 +23,25 @@ interface DocHeaderProps {
 const GITHUB_DOCS = process.env.NEXT_PUBLIC_GITHUB_DOCS;
 
 const handleClickScroll = () => {
-  const element = document.getElementById("feedback");
+  const element = document.getElementById("feedbackContainer");
   if (element) {
     element.scrollIntoView({ behavior: "smooth" });
   }
+
+  let defaultBG = element.style.backgroundColor;
+  let defaultTransition = element.style.transition;
+
+  element.style.transition = "background 1.5s";
+  setTimeout(
+    () => (element.style.backgroundColor = "rgba(81, 47, 202, 0.50)"),
+    750
+  );
+  setTimeout(function () {
+    element.style.backgroundColor = defaultBG;
+    setTimeout(function () {
+      element.style.transition = defaultTransition;
+    }, 2000);
+  }, 2000);
 };
 
 const DocHeader = ({
