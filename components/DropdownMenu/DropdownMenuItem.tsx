@@ -35,8 +35,9 @@ const DropdownMenuItem = ({
           height={139}
           style={{ objectFit: "contain" }}
           alt="featured resource"
+          sizes="25vw"
         />
-        <strong className={styles.title} style={{ paddingLeft: "10px" }}>
+        <strong className={`${styles.title} ${styles.imageTitle}`}>
           {title}
         </strong>
       </div>

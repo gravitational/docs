@@ -25,10 +25,16 @@
 }
 
 .moreItems {
+  min-width: 0 !important;
+  overflow: visible;
   @media (--md-scr) {
     padding-left: 20px;
     padding-right: 40px;
-    min-width: 170px !important;
+    max-width: 140px;
+  }
+  @media (--lg-scr) {
+    width: 236px;
+    max-width: 236px;
   }
 }
 
