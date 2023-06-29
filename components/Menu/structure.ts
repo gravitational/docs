@@ -3,7 +3,7 @@ import { MenuCategoryProps } from "./Category";
 const menu: MenuCategoryProps[] = [
   {
     title: "Platform",
-    href: "/teleport/",
+    href: "/",
     testId: "platform",
     containsSubCategories: true,
     children: [
@@ -19,9 +19,9 @@ const menu: MenuCategoryProps[] = [
         titleLink: true,
         href: "/access-modules/",
         children: [
-          { title: "SSH", href: "/access-modules/#ssh" },
-          { title: "Kubernetes", href: "/access-modules/#kubernetes" },
-          { title: "Databases", href: "/access-modules/#databases" },
+          { title: "SSH", href: "/ssh-server-access/" },
+          { title: "Kubernetes", href: "/kubernetes-access/" },
+          { title: "Databases", href: "/database-access/" },
           {
             title: "Internal Applications",
             href: "/access-modules/#applications",
@@ -34,6 +34,7 @@ const menu: MenuCategoryProps[] = [
         href: "/features/",
         titleLink: true,
         children: [
+          { title: "Assist", href: "/features/assist/" },
           { title: "Single Sign On", href: "/features/sso-for-ssh/" },
           {
             title: "Just In Time Access Requests",
@@ -50,7 +51,6 @@ const menu: MenuCategoryProps[] = [
           {
             title: "Device Trust",
             href: "/docs/access-controls/guides/device-trust/",
-            passthrough: false,
           },
           { title: "Passwordless", href: "/passwordless/" },
         ],
@@ -112,10 +112,104 @@ const menu: MenuCategoryProps[] = [
       },
     ],
   },
-  { title: "Integrations", href: "/integrations/", testId: "integrations" },
+  {
+    title: "Resources",
+    href: "/resources/",
+    containsSubCategories: true,
+    testId: "resources",
+    children: [
+      {
+        title: "Try Teleport",
+        children: [
+          {
+            title: "Teleport Labs",
+            href: "/labs/",
+          },
+          {
+            title: "Teleport Teams",
+            href: "/signup/",
+          },
+          {
+            title: "Integrations",
+            href: "/integrations/",
+          },
+        ],
+      },
+      {
+        title: "Community",
+        titleLink: true,
+        href: "/community/",
+        children: [
+          {
+            title: "GitHub",
+            href: "https://github.com/gravitational/teleport/",
+          },
+        ],
+      },
+      {
+        title: "Resources",
+        titleLink: true,
+        href: "/resources/",
+        children: [
+          {
+            title: "Blog",
+            href: "/blog/",
+          },
+          {
+            title: "Events",
+            href: "/about/events/",
+          },
+          {
+            title: "Webinars",
+            href: "/resources/videos/",
+          },
+          {
+            title: "Podcasts",
+            href: "/resources/podcast/",
+          },
+          {
+            title: "Tech Papers",
+            href: "/resources/white-papers/",
+          },
+        ],
+      },
+      {
+        title: "Support",
+        children: [
+          {
+            title: "Support Portal",
+            href: "/support/",
+          },
+          {
+            title: "Community Slack",
+            href: "/community-slack/",
+          },
+          {
+            title: "GitHub Discussion",
+            href: "https://github.com/gravitational/teleport/discussion",
+          },
+          {
+            title: "System Status",
+            href: "https://status.goteleport.com/",
+          },
+        ],
+      },
+      {
+        title: "",
+        children: [
+          {
+            href: "/resources/books/identity-native-infrastructure-access-management/",
+            title: "Featured Resource",
+            isImageLink: true,
+            imageSrc: "/static/og-cards/books/oreilly.png",
+          },
+        ],
+      },
+    ],
+  },
   {
     title: "Documentation",
-    href: "/",
+    href: "/docs/",
     testId: "docs",
     children: [
       {
@@ -123,13 +217,8 @@ const menu: MenuCategoryProps[] = [
         href: "/docs/",
       },
       {
-        title: "Download Teleport",
-        href: "/download/",
-      },
-      {
         title: "Teleport Clients",
         href: "/docs/connect-your-client/introduction/",
-        passthrough: false,
       },
       {
         title: "How It Works",
@@ -145,7 +234,7 @@ const menu: MenuCategoryProps[] = [
       },
       {
         title: "Teleport Slack Channel",
-        href: "/slack/",
+        href: "/community-slack/",
       },
       {
         title: "GitHub",
@@ -154,59 +243,9 @@ const menu: MenuCategoryProps[] = [
     ],
   },
   {
-    title: "Learn",
-    href: "/resources/",
-    testId: "learn",
-    children: [
-      {
-        title: "The Blog",
-        href: "/blog/",
-      },
-      {
-        title: "Our Customers",
-        href: "/case-study/",
-      },
-      {
-        title: "Resources",
-        href: "/resources/",
-      },
-      {
-        title: "Learn",
-        href: "/learn/",
-      },
-      {
-        title: "Events",
-        href: "/about/events/",
-      },
-    ],
-  },
-  {
     title: "Pricing",
     href: "/pricing/",
     testId: "pricing",
-  },
-  {
-    title: "Company",
-    href: "/about/",
-    testId: "company",
-    children: [
-      {
-        title: "About Us",
-        href: "/about/",
-      },
-      {
-        title: "Careers",
-        href: "/careers/",
-      },
-      {
-        title: "News",
-        href: "/about/press/",
-      },
-      {
-        title: "Partners",
-        href: "/partners/",
-      },
-    ],
   },
 ];
 

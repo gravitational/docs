@@ -31,16 +31,8 @@ export const navigationData: NavbarData = [
       title: "Platform",
       testId: "platform-menu",
       children: [
-        {
-          title: "Why Teleport",
-          href: "/why-teleport/",
-          isExternal: true,
-        },
-        {
-          title: "How It Works",
-          href: "/how-it-works/",
-          isExternal: true,
-        },
+        { title: "Why Teleport", href: "/why-teleport/", isExternal: true },
+        { title: "How It Works", href: "/how-it-works/", isExternal: true },
         {
           title: "Access Modules",
           href: "/access-modules/",
@@ -48,17 +40,17 @@ export const navigationData: NavbarData = [
         },
         {
           title: "SSH",
-          href: "/access-modules/#ssh",
+          href: "/ssh-server-access/",
           isExternal: true,
         },
         {
           title: "Kubernetes",
-          href: "/access-modules/#kubernetes",
+          href: "/kubernetes-access/",
           isExternal: true,
         },
         {
           title: "Databases",
-          href: "/access-modules/#databases",
+          href: "/database-access/",
           isExternal: true,
         },
         {
@@ -71,11 +63,8 @@ export const navigationData: NavbarData = [
           href: "/access-modules/#windows",
           isExternal: true,
         },
-        {
-          title: "Our Features",
-          href: "/features/",
-          isExternal: true,
-        },
+        { title: "Our Features", href: "/features/", isExternal: true },
+        { title: "Assist", href: "/features/assist/", isExternal: true },
         {
           title: "Single Sign On",
           href: "/features/sso-for-ssh/",
@@ -155,23 +144,103 @@ export const navigationData: NavbarData = [
     },
   },
   {
-    button: { title: "Integrations", testId: "integrations" },
-    href: "/integrations/",
-    isExternal: true,
+    button: { title: "Resources", testId: "resources" },
+    menu: {
+      title: "Resources",
+      testId: "resources-menu",
+      children: [
+        {
+          title: "Teleport Labs",
+          href: "/labs/",
+          isExternal: true,
+        },
+        {
+          title: "Teleport Teams",
+          href: "/signup/",
+          isExternal: true,
+        },
+        {
+          title: "Integrations",
+          href: "/integrations/",
+          isExternal: true,
+        },
+        {
+          title: "Community",
+          href: "/community/",
+          isExternal: true,
+        },
+        {
+          title: "GitHub",
+          href: "https://github.com/gravitational/teleport/",
+          isExternal: true,
+        },
+        {
+          title: "Resources",
+          href: "/resources/",
+          isExternal: true,
+        },
+        {
+          title: "Blog",
+          href: "/blog/",
+          isExternal: true,
+        },
+        {
+          title: "Events",
+          href: "/about/events/",
+          isExternal: true,
+        },
+        {
+          title: "Webinars",
+          href: "/resources/videos/",
+          isExternal: true,
+        },
+        {
+          title: "Podcasts",
+          href: "/resources/podcast/",
+          isExternal: true,
+        },
+        {
+          title: "Tech Papers",
+          href: "/resources/white-papers/",
+          isExternal: true,
+        },
+        {
+          title: "Support Portal",
+          href: "/support/",
+          isExternal: true,
+        },
+        {
+          title: "Community Slack",
+          href: "/community-slack/",
+          isExternal: true,
+        },
+        {
+          title: "GitHub Discussion",
+          href: "https://github.com/gravitational/teleport/discussion",
+          isExternal: true,
+        },
+        {
+          title: "System Status",
+          href: "https://status.goteleport.com/",
+          isExternal: true,
+        },
+        {
+          title: "Featured Resource",
+          href: "/resources/books/identity-native-infrastructure-access-management/",
+          isExternal: true,
+        },
+      ],
+    },
   },
   {
     button: { title: "Documentation", testId: "docs" },
     menu: {
-      title: "Teleport Documentation",
+      title: "Documentation",
       testId: "docs-menu",
       children: [
         {
           title: "Documentation",
           href: "/docs/",
-        },
-        {
-          title: "Download Teleport",
-          href: "/download/",
         },
         {
           title: "Teleport Clients",
@@ -194,7 +263,7 @@ export const navigationData: NavbarData = [
         },
         {
           title: "Teleport Slack Channel",
-          href: "/slack/",
+          href: "/community-slack/",
           isExternal: true,
         },
         {
@@ -206,72 +275,14 @@ export const navigationData: NavbarData = [
     },
   },
   {
-    button: { title: "Learn", testId: "learn" },
-    menu: {
-      title: "Learn More About Teleport",
-      testId: "learn-menu",
-      children: [
-        {
-          title: "The Blog",
-          href: "/blog/",
-          isExternal: true,
-        },
-        {
-          title: "Our Customers",
-          href: "/case-study/",
-          isExternal: true,
-        },
-        {
-          title: "Resources",
-          href: "/resources/",
-          isExternal: true,
-        },
-        {
-          title: "Learn",
-          href: "/learn/",
-          isExternal: true,
-        },
-        {
-          title: "Events",
-          href: "/about/events/",
-          isExternal: true,
-        },
-      ],
-    },
-  },
-  {
     button: { title: "Pricing", testId: "pricing" },
     href: "/pricing/",
     isExternal: true,
   },
   {
-    button: { title: "Company", testId: "company" },
-    menu: {
-      title: "Company",
-      testId: "company-menu",
-      children: [
-        {
-          title: "About Us",
-          href: "/about/",
-          isExternal: true,
-        },
-        {
-          title: "Careers",
-          href: "/careers/",
-          isExternal: true,
-        },
-        {
-          title: "News",
-          href: "/about/press/",
-          isExternal: true,
-        },
-        {
-          title: "Partners",
-          href: "/partners/",
-          isExternal: true,
-        },
-      ],
-    },
+    button: { title: "Downloads", testId: "downloads" },
+    href: "https://goteleport.com/download/",
+    isExternal: true,
   },
   {
     button: { title: "Sign In", testId: "sign-in" },

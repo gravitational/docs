@@ -19,6 +19,8 @@ export interface MenuCategoryProps {
   containsSubCategories?: boolean;
   testId: string;
   titleLink?: boolean;
+  isImageLink?: boolean;
+  imageSrc?: string;
   onClick?: () => void | undefined | Promise<void>;
 }
 

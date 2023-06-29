@@ -2,6 +2,7 @@ import cn from "classnames";
 import { useState, useCallback, useRef, MouseEvent } from "react";
 import { useClickAway } from "react-use";
 import Button from "components/Button";
+import Link from "components/Link";
 import {
   DropdownMenuOverlay,
   DropdownMenuCTA,
@@ -29,6 +30,9 @@ const HeaderCTA = () => {
     <>
       {isSignInVisible && <DropdownMenuOverlay />}
       <div className={styles.wrapper}>
+        <Link href="https://goteleport.com/download/" data-testid="downloads">
+          Downloads
+        </Link>
         <div className={styles.group} ref={ref}>
           <Button
             as="link"

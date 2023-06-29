@@ -5,6 +5,8 @@ export interface MenuItemProps {
   title: string;
   href?: string;
   titleLink?: boolean;
+  isImageLink?: boolean;
+  imageSrc?: string;
   children?: MenuItemProps[];
   passthrough?: boolean;
 }
