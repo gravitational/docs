@@ -170,6 +170,11 @@ export const navigationData: NavbarData = [
           isExternal: true,
         },
         {
+          title: "Our Customers",
+          href: "/case-study/",
+          isExternal: true,
+        },
+        {
           title: "GitHub",
           href: "https://github.com/gravitational/teleport/",
           isExternal: true,

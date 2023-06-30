@@ -142,6 +142,10 @@ const menu: MenuCategoryProps[] = [
         href: "/community/",
         children: [
           {
+            title: "Our Customers",
+            href: "/case-study/",
+          },
+          {
             title: "GitHub",
             href: "https://github.com/gravitational/teleport/",
           },
