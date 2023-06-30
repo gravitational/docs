@@ -27,12 +27,12 @@ jobs:
           preview_url="$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} | grep "Inspect" | cut -d ' ' -f2)"
           echo "PREVIEW_URL=$preview_url" >> "$GITHUB_OUTPUT"
       - uses: actions/github-script@v6
-          with:
-            script: |
-              github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: '🤖 Vercel Preview Here: ${{ steps.deploy.outputs.PREVIEW_URL }} '
-              })
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '🤖 Vercel Preview Here: ${{ steps.deploy.outputs.PREVIEW_URL }} '
+            })
 
