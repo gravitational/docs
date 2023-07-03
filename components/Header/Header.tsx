@@ -7,6 +7,8 @@ import HeadlessButton from "components/HeadlessButton";
 import blockBodyScroll from "utils/block-body-scroll";
 import HeaderCTA from "./HeaderCTA";
 import styles from "./Header.module.css";
+import Magnifier from "./assets/magnify.svg?react";
+import Link from "components/Link";
 
 const Header = () => {
   const [isNavigationVisible, setIsNavigationVisible] =
@@ -21,6 +23,9 @@ const Header = () => {
       <a href="/" className={styles["logo-link"]}>
         <Logo />
       </a>
+      <div className={styles.searchLink}>
+        <NavSearch testid="mobile-search" aria-details="Search website" />
+      </div>
       <HeadlessButton
         onClick={toggleNavigaton}
         className={styles.hamburger}
@@ -40,5 +45,11 @@ const Header = () => {
     </header>
   );
 };
+
+export const NavSearch = ({ testid }: { testid: string }) => (
+  <Link href="https://goteleport.com/search/" data-testid={testid}>
+    <Magnifier width="24px" height="24px" />
+  </Link>
+);
 
 export default Header;

@@ -9,6 +9,7 @@ import {
   DropdownMenuItemCTA,
 } from "../DropdownMenu";
 import styles from "./HeaderCTA.module.css";
+import { NavSearch } from "./Header";
 
 const HeaderCTA = () => {
   const ref = useRef(null);
@@ -30,6 +31,9 @@ const HeaderCTA = () => {
     <>
       {isSignInVisible && <DropdownMenuOverlay />}
       <div className={styles.wrapper}>
+        <div className={styles.searchWrapper}>
+          <NavSearch testid="search" />
+        </div>
         <Link
           className={styles.downloadsLink}
           href="https://goteleport.com/download/"

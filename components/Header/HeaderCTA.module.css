@@ -54,6 +54,13 @@
   }
 }
 
+.searchWrapper {
+  padding: var(--m-1) var(--m-1) 0 var(--m-2);
+  @media (--sm-scr) {
+    display: none;
+  }
+}
+
 .group {
   position: relative;
   padding-left: var(--m-2);

@@ -285,6 +285,11 @@ export const navigationData: NavbarData = [
     isExternal: true,
   },
   {
+    button: { title: "", testId: "search" },
+    href: "https://goteleport.com/search/",
+    isExternal: true,
+  },
+  {
     button: { title: "Downloads", testId: "downloads" },
     href: "https://goteleport.com/download/",
     isExternal: true,
