@@ -16,18 +16,17 @@ const menu: MenuCategoryProps[] = [
         ],
       },
       {
-        title: "Access Modules",
-        titleLink: true,
-        href: "/access-modules/",
+        title: "Access Control",
         children: [
           { title: "SSH", href: "/ssh-server-access/" },
           { title: "Kubernetes", href: "/kubernetes-access/" },
           { title: "Databases", href: "/database-access/" },
           {
-            title: "Internal Applications",
-            href: "/access-modules/#applications",
+            title: "Internal Webapps",
+            href: "/application-access/",
           },
-          { title: "Windows", href: "/access-modules/#windows" },
+          { title: "Windows", href: "/desktop-access/" },
+          { title: "AWS Console", href: "/use-cases/aws/" },
         ],
       },
       {

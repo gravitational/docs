@@ -34,11 +34,6 @@ export const navigationData: NavbarData = [
         { title: "Why Teleport", href: "/why-teleport/", isExternal: true },
         { title: "How It Works", href: "/how-it-works/", isExternal: true },
         {
-          title: "Access Modules",
-          href: "/access-modules/",
-          isExternal: true,
-        },
-        {
           title: "SSH",
           href: "/ssh-server-access/",
           isExternal: true,
@@ -54,13 +49,18 @@ export const navigationData: NavbarData = [
           isExternal: true,
         },
         {
-          title: "Internal Applications",
-          href: "/access-modules/#applications",
+          title: "Internal Webapps",
+          href: "/application-access/",
           isExternal: true,
         },
         {
           title: "Windows",
-          href: "/access-modules/#windows",
+          href: "/desktop-access/",
+          isExternal: true,
+        },
+        {
+          title: "AWS Console",
+          href: "/use-cases/aws/",
           isExternal: true,
         },
         { title: "Our Features", href: "/features/", isExternal: true },
