@@ -98,6 +98,14 @@ function InkeepWidget({
     remoteErrorLoggingLevel: 0,
     isOptedOutAllAnalytics: true,
     theme: {
+      zIndices: {
+        overlay: 2100,
+        modal: 2200,
+        popover: 2300,
+        skipLink: 2400,
+        toast: 2500,
+        tooltip: 2600,
+      },
       components: {
         InkeepWidgetModal: {
           ModalContent: {
