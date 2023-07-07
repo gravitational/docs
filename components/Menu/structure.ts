@@ -110,6 +110,23 @@ const menu: MenuCategoryProps[] = [
           },
         ],
       },
+      {
+        title: "By Compliance",
+        children: [
+          {
+            title: "FedRAMP",
+            href: "/use-cases/fedramp-compliance/",
+          },
+          {
+            title: "HIPAA",
+            href: "/use-cases/hipaa-compliance/",
+          },
+          {
+            title: "SOC2",
+            href: "/use-cases/soc2-compliance/",
+          },
+        ],
+      },
     ],
   },
   {

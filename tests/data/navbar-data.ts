@@ -140,6 +140,21 @@ export const navigationData: NavbarData = [
           href: "/use-cases/aws/",
           isExternal: true,
         },
+        {
+          title: "FedRAMP",
+          href: "/use-cases/fedramp-compliance/",
+          isExternal: true,
+        },
+        {
+          title: "HIPAA",
+          href: "/use-cases/hipaa-compliance/",
+          isExternal: true,
+        },
+        {
+          title: "SOC2",
+          href: "/use-cases/soc2-compliance/",
+          isExternal: true,
+        },
       ],
     },
   },
