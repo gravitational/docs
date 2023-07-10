@@ -122,7 +122,7 @@ const menu: MenuCategoryProps[] = [
             href: "/use-cases/hipaa-compliance/",
           },
           {
-            title: "SOC2",
+            title: "SOC 2",
             href: "/use-cases/soc2-compliance/",
           },
         ],
