@@ -6,6 +6,7 @@ import Button from "components/Button";
 import Image from "next/image";
 import ThumbsUp from "./thumbs-up.svg";
 import ThumbsDown from "./thumbs-down.svg";
+import { useRouter } from "next/router";
 
 export default function PageWithJSbasedForm(props) {
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -31,6 +32,10 @@ export default function PageWithJSbasedForm(props) {
     //Send feedback to posthog
     void sendDocsFeedback(feedback, comment);
   };
+
+  //resets the state on page navigation
+  const dynamicRoute = useRouter().asPath;
+  React.useEffect(() => setShowButtons(true), [dynamicRoute]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
