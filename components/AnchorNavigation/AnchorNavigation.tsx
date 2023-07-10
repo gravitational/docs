@@ -1,14 +1,20 @@
 import cn from "classnames";
 import Link from "components/Link";
+import Feedback from "components/Feedback";
 import { HeaderMeta } from "./types";
 import styles from "./AnchorNavigation.module.css";
 
 export interface AnchorNavigationProps {
   className?: string;
   headers: HeaderMeta[];
+  githubUrl: string;
 }
 
-const AnchorNavigation = ({ className, headers }: AnchorNavigationProps) => {
+const AnchorNavigation = ({
+  className,
+  headers,
+  githubUrl,
+}: AnchorNavigationProps) => {
   return (
     <nav className={cn(styles.wrapper, className)}>
       <div className={styles.menu}>
@@ -32,6 +38,7 @@ const AnchorNavigation = ({ className, headers }: AnchorNavigationProps) => {
             );
           })}
         </ul>
+        <Feedback githubUrl={githubUrl}></Feedback>
       </div>
     </nav>
   );
