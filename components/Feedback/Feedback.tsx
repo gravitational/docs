@@ -14,7 +14,6 @@ export default function PageWithJSbasedForm(props) {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   const forwardData = async (data) => {
-    console.log(feedback);
     const JSONdata = JSON.stringify(data);
     const endpoint = "/docs/api/feedback/";
 
@@ -67,8 +66,7 @@ export default function PageWithJSbasedForm(props) {
     <form onSubmit={handleSubmit}>
       <div id="feedbackContainer" className={styles.feedbackForm}>
         <p id="feedback" className={styles.feedbackTitle}>
-          {" "}
-          Was this page helpful?{" "}
+          Was this page helpful?
         </p>
         {showButtons ? (
           <div className={styles.svgContainer}>
@@ -107,7 +105,7 @@ export default function PageWithJSbasedForm(props) {
                   }}
                 />
                 <ButtonPrimary type="submit">Submit</ButtonPrimary>
-                <p className={styles.feedbackTitle}> or </p>
+                <p className={styles.buttonSeparator}> or </p>
                 <Button
                   as="link"
                   shape="md"

@@ -132,14 +132,13 @@ const DocsPage = ({
             </div>
             {isTocVisible && (
               <AnchorNavigation
+                githubUrl={githubUrl}
                 headers={tableOfContents}
                 className={styles["anchor-navigation"]}
               />
             )}
           </div>
-          <Footer section={isSectionLayout}>
-            <Feedback githubUrl={githubUrl}></Feedback>
-          </Footer>
+          <Footer section={isSectionLayout}></Footer>
         </div>
       </main>
     </>

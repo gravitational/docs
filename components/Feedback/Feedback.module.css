@@ -11,7 +11,6 @@ rect.btn {
   padding-left: 10px;
   padding-right: 10px;
   cursor: pointer;
-
 }
 
 
@@ -23,14 +22,29 @@ rect.btn {
 
 .svgContainer {
   display: flex;
-  padding: 5px;
+  padding-right: 35px;
   justify-content: center;
   align-items: center;
   text-align: center;
-  height: 100%;
 }
 
 .feedbackTitle {
+  margin-bottom: var(--m-1);
+  margin-top: var(--m-1);
+  padding: 0;
+  text-align: left;
+  font-size: var(--fs-text-l);
+  line-height: var(--lh-md);
+  color: var(--color-gray);
+
+@media (--md-scr) {
+  font-size: var(--fs-text-m);
+  line-height: var(--lh-l);
+}
+
+}
+
+.buttonSeparator {
   margin-bottom: var(--m-1);
   margin-top: var(--m-1);
   padding: 0 var(--m-2);
@@ -40,16 +54,16 @@ rect.btn {
   color: var(--color-gray);
 
 @media (--md-scr) {
-  font-size: var(--fs-text-xl);
-  line-height: var(--lh-xl);
+  font-size: var(--fs-text-m);
+  line-height: var(--lh-l);
 }
 
 }
+
 
 .buttonContainer {
   display: block;
   justify-content: center;
-  padding: 5px;
   text-align: center;
   height: 100%;
   align-items: center;
