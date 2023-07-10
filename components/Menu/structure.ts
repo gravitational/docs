@@ -111,7 +111,7 @@ const menu: MenuCategoryProps[] = [
         ],
       },
       {
-        title: "By Compliance",
+        title: "By Compliance Standard",
         children: [
           {
             title: "FedRAMP",
