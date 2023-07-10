@@ -36,7 +36,9 @@ export default function Command({ children, ...props }: CommandProps) {
     }
 
     if (codeRef.current) {
-      const procesedInnerText = toCopyContent(codeRef.current);
+      const procesedInnerText = toCopyContent(codeRef.current, [
+        "." + styles.line,
+      ]);
 
       navigator.clipboard.writeText(procesedInnerText);
       setIsCopied(true);
