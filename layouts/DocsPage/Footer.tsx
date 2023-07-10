@@ -3,7 +3,7 @@ import styles from "./Footer.module.css";
 
 interface DocsFooterProps {
   section?: boolean;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const DocsFooter = ({ children, section }: DocsFooterProps) => {
