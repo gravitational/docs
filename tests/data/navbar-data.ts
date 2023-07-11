@@ -151,7 +151,7 @@ export const navigationData: NavbarData = [
           isExternal: true,
         },
         {
-          title: "SOC2",
+          title: "SOC 2",
           href: "/use-cases/soc2-compliance/",
           isExternal: true,
         },
