@@ -13,8 +13,6 @@ rect.btn {
   cursor: pointer;
 }
 
-
-
 .feedbackForm {
   z-index: 10;
   position: relative;
@@ -22,41 +20,34 @@ rect.btn {
 
 .svgContainer {
   display: flex;
-  padding-right: 35px;
-  justify-content: center;
+  padding-left: 18px;
+  justify-content: left;
   align-items: center;
   text-align: center;
 }
 
 .feedbackTitle {
-  margin-bottom: var(--m-1);
-  margin-top: var(--m-1);
-  padding: 0;
-  text-align: left;
-  font-size: var(--fs-text-l);
+  font-size: var(--fs-text-sm);
   line-height: var(--lh-md);
-  color: var(--color-gray);
-
-@media (--md-scr) {
-  font-size: var(--fs-text-m);
-  line-height: var(--lh-l);
-}
-
+  max-height: 100%;
+  overflow-y: auto;
+  margin: 0 var(--m-0-5) var(--m-0-5);
+  padding: var(--m-0-5) 0;
+  font-weight: var(--fw-bold);
+  color: var(--color-darkest);
 }
 
 .buttonSeparator {
-  margin-bottom: var(--m-1);
-  margin-top: var(--m-1);
-  padding: 0 var(--m-2);
-  text-align: center;
-  font-size: var(--fs-text-l);
+  font-size: var(--fs-text-sm);
   line-height: var(--lh-md);
-  color: var(--color-gray);
+  max-height: 100%;
+  overflow-y: auto;
+  margin: 0 var(--m-0-5) var(--m-0-5);
+  padding: var(--m-0-5) 0;
+  font-weight: var(--fw-bold);
+  color: var(--color-darkest);
+  text-align: center;
 
-@media (--md-scr) {
-  font-size: var(--fs-text-m);
-  line-height: var(--lh-l);
-}
 
 }
 
