@@ -33,6 +33,14 @@ export const NoteAdmonition: Story = {
   },
 };
 
+export const NoticeAdmonition: Story = {
+  args: {
+    type: "tip",
+    title: "Notice",
+    children: <span>Login Rules are currently in Preview mode.</span>,
+  },
+};
+
 export const DangerAdmonition: Story = {
   args: {
     type: "danger",
