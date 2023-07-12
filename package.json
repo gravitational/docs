@@ -8,7 +8,7 @@
   "private": true,
   "scripts": {
     "spellcheck": "bash scripts/check-spelling.sh",
-    "git-update": "git submodule update --init --remote --progress",
+    "git-update": "git --version && git submodule update --init --depth 1 --remote --progress",
     "build-node": "rm -rf .build && tsc --build tsconfig.node.json && tsc-esm-fix --target='.build' --ext='.mjs'",
     "generate-sitemap": "node ./scripts/generate-sitemap.mjs",
     "generate-article-links": "node ./scripts/generate-article-links.mjs",
