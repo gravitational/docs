@@ -22,18 +22,10 @@ interface DocHeaderProps {
 
 const GITHUB_DOCS = process.env.NEXT_PUBLIC_GITHUB_DOCS;
 
-const handleClickScroll = () => {
-  const element = document.getElementById("feedback");
-  if (element) {
-    element.scrollIntoView({ behavior: "smooth" });
-  }
-};
-
 const DocHeader = ({
   title,
   icon = "book",
   versions,
-  githubUrl,
   getNewVersionPath,
   latest,
   scopes,
@@ -66,16 +58,6 @@ const DocHeader = ({
             />
           )}
           <Scopes className={styles.scopes} scopes={scopes} />
-          {!!githubUrl && (
-            <Button
-              onClick={handleClickScroll}
-              shape="md"
-              variant="secondary"
-              className={styles.button}
-            >
-              Improve
-            </Button>
-          )}
         </div>
       </div>
     </section>

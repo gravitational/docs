@@ -6,6 +6,7 @@ import Button from "components/Button";
 import Image from "next/image";
 import ThumbsUp from "./thumbs-up.svg";
 import ThumbsDown from "./thumbs-down.svg";
+import { useRouter } from "next/router";
 
 export default function PageWithJSbasedForm(props) {
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -15,7 +16,7 @@ export default function PageWithJSbasedForm(props) {
 
   const forwardData = async (data) => {
     const JSONdata = JSON.stringify(data);
-    const endpoint = "api/feedback";
+    const endpoint = "/docs/api/feedback/";
 
     const options = {
       method: "POST",
@@ -32,7 +33,11 @@ export default function PageWithJSbasedForm(props) {
     void sendDocsFeedback(feedback, comment);
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  //resets the state on page navigation
+  const dynamicRoute = useRouter().asPath;
+  React.useEffect(() => setShowButtons(true), [dynamicRoute]);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const data = {
@@ -41,21 +46,21 @@ export default function PageWithJSbasedForm(props) {
       url: window.location.pathname, // This will include the current page URL
     };
 
-    forwardData(data);
+    await forwardData(data);
     setIsSubmitted(true);
   };
 
-  const handleFeedbackClick = (feedbackValue: string) => {
+  const handleFeedbackClick = async (feedbackValue: string) => {
+    let feedback = feedbackValue;
     setFeedback(feedbackValue);
     setShowButtons(false);
-
     const data = {
-      feedback: feedbackValue,
+      feedback,
       comment: "",
       url: window.location.pathname, // This will include the current page URL
     };
 
-    forwardData(data);
+    await forwardData(data);
   };
 
   if (isSubmitted) {
@@ -64,10 +69,9 @@ export default function PageWithJSbasedForm(props) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className={styles.feedbackForm}>
+      <div id="feedbackContainer" className={styles.feedbackForm}>
         <p id="feedback" className={styles.feedbackTitle}>
-          {" "}
-          Was this page helpful?{" "}
+          Was this page helpful?
         </p>
         {showButtons ? (
           <div className={styles.svgContainer}>
@@ -106,7 +110,7 @@ export default function PageWithJSbasedForm(props) {
                   }}
                 />
                 <ButtonPrimary type="submit">Submit</ButtonPrimary>
-                <p className={styles.feedbackTitle}> or </p>
+                <p className={styles.buttonSeparator}> or </p>
                 <Button
                   as="link"
                   shape="md"
