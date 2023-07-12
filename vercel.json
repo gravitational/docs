@@ -1,5 +1,6 @@
 {
   "trailingSlash": true,
+  "buildCommand": "turbo update-and-build",
   "headers": [
     {
       "source": "/(.*)",
