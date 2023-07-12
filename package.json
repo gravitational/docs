@@ -131,7 +131,7 @@
     "sharp": "^0.30.5",
     "simple-git-hooks": "^2.7.0",
     "storybook": "^7.0.20",
-    "stylelint": "^14.8.0",
+    "stylelint": "^15.10.1",
     "stylelint-config-standard": "^25.0.0",
     "to-vfile": "7.2.3",
     "tsc-esm-fix": "^2.13.0",
