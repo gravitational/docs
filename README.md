@@ -2,9 +2,9 @@
 
 ## Prerequisites
 
-**Node.js 14+ is installed in the system.**
+**Node.js 18+ is installed in the system.**
 
-If you don't have Node.js installed, or its version is smaller than 14, follow
+If you don't have Node.js installed, or its version is smaller than 18, follow
 [this guide](https://nodejs.org/en/download/package-manager/) to install it.
 
 **`yarn` is installed in the system as a package manager.**
@@ -74,7 +74,7 @@ To preview local changes you've made to `teleport/docs` with Docker, try this sc
 
 ```bash
 #!/bin/bash
-DOCKER_IMAGE=node:14-slim
+DOCKER_IMAGE=node:18-slim
 DOCS_PATH=/abs/path/to/gravitational/docs # replace with the path to a git checkout of the gravitational/docs repo
 TELEPORT_PATH=/abs/path/to/gravitational/teleport # replace with the path to a git checkout of the gravitational/teleport repo
 SEM_VER=12.x # change this to whatever the latest version is
