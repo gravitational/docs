@@ -170,7 +170,7 @@ export const navigationData: NavbarData = [
           isExternal: true,
         },
         {
-          title: "Teleport Teams",
+          title: "Teleport Team",
           href: "/signup/",
           isExternal: true,
         },

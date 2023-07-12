@@ -143,7 +143,7 @@ const menu: MenuCategoryProps[] = [
             href: "/labs/",
           },
           {
-            title: "Teleport Teams",
+            title: "Teleport Team",
             href: "/signup/",
           },
           {
