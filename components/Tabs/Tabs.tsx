@@ -204,6 +204,7 @@ export const Tabs = ({
         currentTab={currentTab}
         latestDocVers={latest}
         currentDocVers={current}
+        selectedOption={selectedDropdownOption}
       />
     </div>
   );

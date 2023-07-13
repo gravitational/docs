@@ -29,7 +29,7 @@ export const InitialStateTab: Story = {
     const canvas = within(canvasElement);
     await step("Should be the text for the selected option", async () => {
       expect(
-        canvas.findByText(
+        await canvas.findByText(
           "Instructions for installing release using shell commands."
         )
       ).toBeTruthy();
@@ -50,10 +50,97 @@ export const ChangeTab: Story = {
       expect(canvas.getByText("Helm")).toBeEnabled();
       await userEvent.click(canvas.getByText("Helm"));
       expect(
-        canvas.findByText(
+        await canvas.findByText(
           "Instructions for installing release using a Helm chart."
         )
       ).toBeTruthy();
     });
+  },
+};
+
+export const TabsWithDropdownView: Story = {
+  render: () => {
+    return (
+      <Tabs dropdownCaption="Platform" dropdownView>
+        <TabItem label="Option 1">Instructions for Option 1.</TabItem>
+        <TabItem label="Option 2">Instructions for Option 2.</TabItem>
+        <TabItem label="Option 3">Instructions for Option 3.</TabItem>
+      </Tabs>
+    );
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    step("View the initial tab", async () => {
+      expect(await canvas.findByText("Instructions for Option 1.")).not.toBe(
+        null
+      );
+    });
+  },
+};
+
+export const TabsWithDropdownAndIdenticalLabels: Story = {
+  render: () => {
+    return (
+      <Tabs dropdownCaption="Platform">
+        <TabItem options="Kubernetes Option" label="OSS">
+          Kubernetes/OSS
+        </TabItem>
+        <TabItem options="Linux Server Option" label="OSS">
+          Linux Server/OSS
+        </TabItem>
+        <TabItem options="Kubernetes Option" label="Enterprise">
+          Kubernetes/Enterprise
+        </TabItem>
+        <TabItem options="Linux Server Option" label="Enterprise">
+          Linux Server/Enterprise
+        </TabItem>
+      </Tabs>
+    );
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    step("Switch dropdown tabs", async () => {
+      userEvent.click(canvas.getByTestId("listbox-input"));
+      userEvent.click(await canvas.findByText("Linux Server Option"));
+      const tabs = canvas.getAllByTestId("tabitem");
+      const visibleTabs = tabs.filter((tab) => {
+        return !tab.parentElement.className.includes("hidden");
+      });
+      expect(visibleTabs.length).toBe(1);
+    });
+  },
+};
+
+export const TabsWithDropdownIdenticalLabelsAndMultipleOptionValues: Story = {
+  render: () => {
+    return (
+      <Tabs dropdownCaption="Platform">
+        <TabItem options="Kubernetes Option" label="OSS">
+          Kubernetes/OSS
+        </TabItem>
+        <TabItem options="Linux Server Option" label="OSS">
+          Linux Server/OSS
+        </TabItem>
+        <TabItem options="Kubernetes Option" label="Enterprise">
+          Kubernetes/Enterprise
+        </TabItem>
+        <TabItem options="Linux Server Option" label="Enterprise">
+          Linux Server/Enterprise
+        </TabItem>
+        <TabItem
+          options="Linux Server Option,Kubernetes Option"
+          label="Cloud Label"
+        >
+          Cloud instructions
+        </TabItem>
+      </Tabs>
+    );
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    await userEvent.click(canvas.getByText("Cloud Label"));
+    expect(
+      canvas.getByText("Cloud instructions").parentElement.className
+    ).not.toContain("hidden");
   },
 };

@@ -31,6 +31,7 @@ export interface TabsProps {
 export interface TabItemsListProps {
   childTabs: React.ReactComponentElement<React.FC<TabItemProps>>[];
   currentTab: string;
+  selectedOption: string;
   latestDocVers: string;
   currentDocVers: string;
 }
