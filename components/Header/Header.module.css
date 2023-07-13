@@ -61,6 +61,15 @@
   }
 }
 
+.searchLink {
+  position: absolute;
+  right: 60px;
+  top: 12px;
+  @media (--md-scr) {
+    display: none;
+  }
+}
+
 .content {
   display: flex;
   width: 100%;
@@ -83,8 +92,7 @@
     display: none;
     overflow: auto;
     width: auto;
-    padding: var(--m-1);
-    background-color: var(--color-white);
+    background-color: #f3f5f6;
 
     &.visible {
       display: flex;

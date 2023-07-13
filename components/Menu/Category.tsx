@@ -19,6 +19,8 @@ export interface MenuCategoryProps {
   containsSubCategories?: boolean;
   testId: string;
   titleLink?: boolean;
+  isImageLink?: boolean;
+  imageSrc?: string;
   onClick?: () => void | undefined | Promise<void>;
 }
 
@@ -100,6 +102,8 @@ const MenuCategory = ({
                     title={props.title}
                     titleLink={props.titleLink}
                     href={props.href}
+                    isImageLink={props?.isImageLink}
+                    childLength={children.length}
                   >
                     {props.children?.map((childProps) => (
                       <DropdownMenuItem

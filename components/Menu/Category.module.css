@@ -23,9 +23,9 @@
   min-width: 0;
   height: 80px;
   padding: 0 var(--m-2);
-  font-size: 15px;
+  font-size: var(--fs-text-md);
   font-weight: 400;
-  color: var(--color-dark);
+  color: var(--color-code);
   outline: none;
   text-decoration: none;
   text-align: left;
@@ -38,20 +38,19 @@
     color: var(--color-dark-purple);
   }
   @media (--sm-scr) {
+    background-color: white;
     width: 100%;
     border-radius: var(--r-default);
-    font-size: var(--fs-text-lg);
-    line-height: 56px;
     color: var(--color-darkest);
     text-align: left;
     border-bottom: 1px solid var(--color-lighter-gray);
     justify-content: left;
+    padding-left: var(--m-4);
   }
 
   &.active {
     color: var(--color-dark-purple);
     @media (--sm-scr) {
-      margin-bottom: var(--m-2);
       border-bottom: none;
     }
     background-color: #f3f5f6;

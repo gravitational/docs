@@ -2,12 +2,14 @@ import cn from "classnames";
 import { useState, useCallback, useRef, MouseEvent } from "react";
 import { useClickAway } from "react-use";
 import Button from "components/Button";
+import Link from "components/Link";
 import {
   DropdownMenuOverlay,
   DropdownMenuCTA,
   DropdownMenuItemCTA,
 } from "../DropdownMenu";
 import styles from "./HeaderCTA.module.css";
+import { NavSearch } from "./Header";
 
 const HeaderCTA = () => {
   const ref = useRef(null);
@@ -29,6 +31,16 @@ const HeaderCTA = () => {
     <>
       {isSignInVisible && <DropdownMenuOverlay />}
       <div className={styles.wrapper}>
+        <div className={styles.searchWrapper}>
+          <NavSearch testid="search" />
+        </div>
+        <Link
+          className={styles.downloadsLink}
+          href="https://goteleport.com/download/"
+          data-testid="downloads"
+        >
+          Downloads
+        </Link>
         <div className={styles.group} ref={ref}>
           <Button
             as="link"

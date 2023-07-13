@@ -4,12 +4,11 @@
   justify-content: flex-end;
   flex-grow: 0;
   flex-shrink: 0;
-  margin-left: auto;
   @media (--sm-scr) {
     flex-direction: column;
-    margin-top: var(--m-4);
-    width: 100%;
-    margin-left: 0;
+    margin-top: var(--m-3);
+    padding-left: var(--m-4);
+    padding-right: var(--m-4);
   }
 
   @media (--md-scr) {
@@ -20,12 +19,14 @@
 
 .cta {
   flex-shrink: 0;
-
+  font-size: var(--fs-text-md);
+  height: 48px !important;
+  width: 135px;
   @media (--sm-scr) {
-    font-size: var(--fs-text-lg);
-    height: 56px !important;
     width: 100%;
-    margin-top: var(--m-1);
+    margin-top: var(--m-2);
+    padding-left: var(--m-4);
+    padding-right: var(--m-4);
   }
 
   @media (--md-scr) {
@@ -33,10 +34,38 @@
   }
 }
 
+.downloadsLink {
+  text-decoration: none;
+  font-weight: 700;
+  font-size: var(--fs-text-md);
+  color: var(--color-code);
+  padding-left: 10px;
+  padding-right: 10px;
+  @media (--lg-scr) {
+    padding-left: var(--m-3);
+    padding-right: var(--m-3);
+  }
+  @media (--sm-scr) {
+    display: none;
+  }
+  &:focus,
+  &:hover {
+    color: var(--color-dark-purple);
+  }
+}
+
+.searchWrapper {
+  padding: var(--m-1) var(--m-1) 0 var(--m-2);
+  @media (--sm-scr) {
+    display: none;
+  }
+}
+
 .group {
   position: relative;
-
+  padding-left: var(--m-2);
   @media (--sm-scr) {
+    padding-left: 0;
     width: 100%;
   }
 }
@@ -52,7 +81,7 @@
 
   @media (--md-scr) {
     position: absolute;
-    top: var(--m-4);
+    top: var(--m-6);
     right: var(--m-2);
     min-width: 400px;
   }
