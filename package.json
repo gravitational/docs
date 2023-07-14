@@ -9,7 +9,7 @@
   "scripts": {
     "spellcheck": "bash scripts/check-spelling.sh",
     "git-update": "git submodule update --init --remote --progress",
-    "build-node": "rm -rf .build && tsc --build tsconfig.node.json && tsc-esm-fix --target='.build' --ext='.mjs' && npm i puppeteer",
+    "build-node": "rm -rf .build && tsc --build tsconfig.node.json && tsc-esm-fix --target='.build' --ext='.mjs'",
     "generate-sitemap": "node ./scripts/generate-sitemap.mjs",
     "generate-article-links": "node ./scripts/generate-article-links.mjs",
     "preflight": "yarn build-node && yarn generate-article-links",
