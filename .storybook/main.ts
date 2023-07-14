@@ -2,6 +2,9 @@ import type { StorybookConfig } from "@storybook/nextjs";
 
 const config: StorybookConfig = {
   stories: ["../components/**/*.stories.@(js|jsx|ts|tsx)"],
+  core: {
+    builder: "@storybook/builder-webpack5",
+  },
   addons: ["@storybook/addon-interactions", "@storybook/addon-viewport"],
   framework: {
     name: "@storybook/nextjs",
