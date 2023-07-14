@@ -1,3 +1,4 @@
 {
+  "executablePath": "/vercel/.cache/puppeteer/chromium-browser",
   "args": ["--no-sandbox"]
 }
