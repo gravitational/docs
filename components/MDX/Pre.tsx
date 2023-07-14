@@ -5,6 +5,8 @@ import Icon from "components/Icon";
 import HeadlessButton from "components/HeadlessButton";
 import { toCopyContent } from "utils/general";
 import styles from "./Pre.module.css";
+import commandStyles from "../Command/Command.module.css";
+import codeStyles from "../Code/Code.module.css";
 
 const TIMEOUT = 1000;
 
@@ -34,8 +36,13 @@ const Pre = ({ children, className }: CodeProps) => {
       }
 
       document.body.appendChild(copyText);
-
-      const processedInnerText = toCopyContent(copyText, true);
+      const processedInnerText = toCopyContent(copyText, [
+        "." + commandStyles.line,
+        "." + codeStyles.line,
+        // Class name added by rehype-highlight to a `code` element when
+        // highlighting syntax in code snippets
+        ".hljs",
+      ]);
 
       navigator.clipboard.writeText(processedInnerText);
       document.body.removeChild(copyText);
@@ -54,6 +61,7 @@ const Pre = ({ children, className }: CodeProps) => {
         onClick={handleCopy}
         ref={buttonRef}
         className={styles.button}
+        data-testid="copy-button-all"
       >
         <Icon name="copy" />
         {isCopied && <div className={styles.copied}>Copied!</div>}
