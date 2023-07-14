@@ -30,7 +30,7 @@ export default function PageWithJSbasedForm(props) {
     const result = await response.json();
 
     //Send feedback to posthog
-    void sendDocsFeedback(feedback, comment);
+    void sendDocsFeedback(data.feedback, data.comment);
   };
 
   //resets the state on page navigation
