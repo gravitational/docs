@@ -1,10 +1,7 @@
 import type { StorybookConfig } from "@storybook/nextjs";
-
 const config: StorybookConfig = {
   stories: ["../components/**/*.stories.@(js|jsx|ts|tsx)"],
-  core: {
-    builder: "@storybook/builder-webpack5",
-  },
+  core: {},
   addons: ["@storybook/addon-interactions", "@storybook/addon-viewport"],
   framework: {
     name: "@storybook/nextjs",
@@ -38,25 +35,28 @@ const config: StorybookConfig = {
         },
       },
     });
-
     const imageRule = config.module?.rules?.find((rule) => {
-      const test = (rule as { test: RegExp }).test;
-
+      const test = (
+        rule as {
+          test: RegExp;
+        }
+      ).test;
       if (!test) {
         return false;
       }
-
       return test.test(".svg");
-    }) as { [key: string]: any };
-
+    }) as {
+      [key: string]: any;
+    };
     imageRule.exclude = /\.svg$/;
-
     config.module?.rules?.push({
       test: /\.svg$/,
       use: ["@svgr/webpack"],
     });
-
     return config;
+  },
+  docs: {
+    autodocs: true,
   },
 };
 export default config;
