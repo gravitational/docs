@@ -207,7 +207,7 @@ const menu: MenuCategoryProps[] = [
           },
           {
             title: "GitHub Discussion",
-            href: "https://github.com/gravitational/teleport/discussion",
+            href: "https://github.com/gravitational/teleport/discussions",
           },
           {
             title: "System Status",
