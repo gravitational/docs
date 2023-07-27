@@ -47,7 +47,7 @@ const configLint = {
     ["lint-list-item-spacing", { checkBlanks: true }],
     ["lint-no-shell-dollars", false],
     ["lint-list-item-indent", "space"],
-    "lint-ordered-list-marker-value",
+    ["lint-ordered-list-marker-value", "single"],
     ["lint-maximum-heading-length", false],
     ["lint-no-shortcut-reference-link", false],
     [
