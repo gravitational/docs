@@ -35,14 +35,25 @@ const Pre = ({ children, className }: CodeProps) => {
         }
       }
 
-      document.body.appendChild(copyText);
-      const processedInnerText = toCopyContent(copyText, [
-        "." + commandStyles.line,
-        "." + codeStyles.line,
+      // Assemble an array of class names of elements within copyText to copy
+      // when a user clicks the copy button.
+      let classesToCopy = [
         // Class name added by rehype-highlight to a `code` element when
         // highlighting syntax in code snippets
         ".hljs",
-      ]);
+      ];
+
+      // If copyText includes at least one CommandLine, the intention is for
+      // users to copy commands and not example outputs (CodeLines). If there
+      // are no CommandLines, it is fine to copy the CodeLines.
+      if (copyText.getElementsByClassName(commandStyles.line).length > 0) {
+        classesToCopy.push("." + commandStyles.line);
+      } else {
+        classesToCopy.push("." + codeStyles.line);
+      }
+
+      document.body.appendChild(copyText);
+      const processedInnerText = toCopyContent(copyText, classesToCopy);
 
       navigator.clipboard.writeText(processedInnerText);
       document.body.removeChild(copyText);
