@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { userEvent, within } from "@storybook/testing-library";
-import type { default as tlEvent } from "@testing-library/user-event";
+import { replaceClipboardWithCopyBuffer } from "utils/clipboard";
 
 import Command from "./Command";
 
@@ -24,15 +24,11 @@ export const SimpleCommand: Story = {
 
 export const CopyButton: Story = {
   play: async ({ canvasElement, step }) => {
+    replaceClipboardWithCopyBuffer();
     const canvas = within(canvasElement);
     await step("Hover and click on copy button", async () => {
-      // This stubs out the browser clipboard, which is necessary to avoid
-      // permission issues. The @storybook/testing-library userEvent extends the
-      // one from @testing-library/user-event, but the "setup" method is not
-      // part of its type declaration.
-      const user = (userEvent as typeof tlEvent).setup();
-      await user.hover(canvas.getByTestId("copy-button"));
-      await user.click(canvas.getByTestId("copy-button"));
+      await userEvent.hover(canvas.getByTestId("copy-button"));
+      await userEvent.click(canvas.getByTestId("copy-button"));
     });
   },
 };
