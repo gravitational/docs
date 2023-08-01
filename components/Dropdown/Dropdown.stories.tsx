@@ -28,7 +28,7 @@ export const ExpandedDropdown: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
     await step("Expand dropdown", async () => {
-      await userEvent.click(canvas.getByText("Version 2"));
+      await userEvent.click(canvas.getByTestId("listbox-input").children[0]);
     });
   },
 };

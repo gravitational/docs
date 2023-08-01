@@ -48,6 +48,7 @@ export function Dropdown<T>({
       onChange={onChange}
       disabled={disabled}
       className={cn(styles.input, bgColor && styles[bgColor], className)}
+      data-testid={"listbox-input"}
     >
       <ListboxButton
         arrow={icon}
@@ -55,7 +56,9 @@ export function Dropdown<T>({
       >
         {renderOption(value ? pickOption(options, value) : options[0])}
       </ListboxButton>
-      <ListboxPopover className={styles.popover}>
+      {/* Disable the Reach UI portal to enable testing of the component in
+      Storybook*/}
+      <ListboxPopover portal={false} className={styles.popover}>
         <ListboxList>
           {options.map((option) => {
             const id = pickId(option);
