@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { userEvent, within } from "@storybook/testing-library";
 import { expect } from "@storybook/jest";
+import { default as Pre } from "../MDX/Pre";
 
 import { TabItem } from "./TabItem";
 import { Tabs } from "./Tabs";
@@ -142,5 +143,34 @@ export const TabsWithDropdownIdenticalLabelsAndMultipleOptionValues: Story = {
     expect(
       canvas.getByText("Cloud instructions").parentElement.className
     ).not.toContain("hidden");
+  },
+};
+
+// Ensure the dropdown appears above the code snippet
+export const DropdownWithCodeSnippet: Story = {
+  render: () => {
+    return (
+      <Tabs dropdownCaption="Platform" dropdownView>
+        <TabItem label="Option 1">
+          <Pre>
+            <code>
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+            </code>
+          </Pre>
+        </TabItem>
+        <TabItem label="Option 2">Instructions for the second option.</TabItem>
+        <TabItem label="Option 3">Instructions for the third option.</TabItem>
+      </Tabs>
+    );
   },
 };
