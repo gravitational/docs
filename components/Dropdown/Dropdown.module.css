@@ -70,6 +70,7 @@
   border: none;
   border-radius: var(--r-sm);
   box-shadow: 0 4px 16px rgba(0 0 0 / 24%) !important;
+  z-index: 1000;
 
   &:focus-within {
     outline: none;
