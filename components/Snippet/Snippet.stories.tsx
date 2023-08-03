@@ -63,7 +63,7 @@ export const CopyCommandVarWithOutput: Story = {
         <Command>
           <CommandLine data-content="$ ">
             curl https://
-            <Var name="example.com" isGlobal="false" description="" />
+            <Var name="example.com" isGlobal={false} description="" />
             /v1/webapi/saml/acs/azure-saml
           </CommandLine>
         </Command>
