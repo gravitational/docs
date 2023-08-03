@@ -7,19 +7,28 @@ export interface VarsContextProps {
   globalFields: {
     [name: string]: boolean;
   };
+  initials: {
+    [name: string]: string;
+  };
   fieldDescriptions: {
     [name: string]: string;
   };
-  setField(name: string, value: string, description: string): void;
-  addField(name: string, isGlobal?: boolean, description?: string): void;
+  putField: (
+    name: string,
+    value: string,
+    isGlobal?: boolean,
+    description?: string
+  ) => void;
+  setInitial: (name: string, initial: string) => void;
 }
 
 export const VarsContext = createContext<VarsContextProps>({
   fields: {},
   globalFields: {},
+  initials: {},
   fieldDescriptions: {},
-  setField: () => {},
-  addField: () => {},
+  putField: () => {},
+  setInitial: () => {},
 });
 
 interface VarsProviderProps {
@@ -51,47 +60,40 @@ export const VarsProvider = ({ children }: VarsProviderProps) => {
   const [fields, setFields] = useState({});
   const [globalFields, setGlobalFields] = useState({});
   const [fieldDescriptions, setFieldDescriptions] = useState({});
+  const [initials, setInitials] = useState({});
 
-  const setField = useCallback(
-    (name, value = "") => {
-      setFields((f) => ({ ...f, [name]: value }));
+  // putField is provided to context consumers. Since it calls state setter
+  // functions (via useState, above), each call triggers a rerender of
+  // VarsProvider, providing up-to-date values to context consumers.
+  const putField = (name, value, isGlobal, description) => {
+    if (description) {
+      setFieldDescriptions((d) => ({ ...d, [name]: description }));
+    }
 
-      if (globalFields[name]) {
-        saveValue(name, value);
-      }
-    },
-    [globalFields]
-  );
+    if (isGlobal) {
+      setGlobalFields((f) => ({ ...f, [name]: true }));
+    }
 
-  const addField = useCallback(
-    (name, isGlobal, description) => {
-      if (description) {
-        setFieldDescriptions((d) => ({ ...d, [name]: description }));
-      }
+    setFields((f) => ({ ...f, [name]: value }));
 
-      if ((isGlobal && name in globalFields) || name in fields) {
-        return;
-      }
+    if (globalFields[name]) {
+      saveValue(name, value);
+    }
+  };
 
-      if (isGlobal) {
-        setGlobalFields((f) => ({ ...f, [name]: true }));
-      }
+  const setInitial = (name: string, initial: string) => {
+    setInitials((i) => ({ ...i, [name]: initial }));
+    setFields((f) => ({ ...f, [name]: initial }));
+  };
 
-      setField(name, isGlobal ? getValue(name) : "");
-    },
-    [setField, fields, globalFields]
-  );
-
-  const value = useMemo(
-    () => ({
-      fields,
-      globalFields,
-      fieldDescriptions,
-      setField,
-      addField,
-    }),
-    [fields, globalFields, fieldDescriptions, addField, setField]
-  );
+  const value = {
+    fields,
+    globalFields,
+    fieldDescriptions,
+    initials,
+    putField,
+    setInitial,
+  };
 
   return <VarsContext.Provider value={value}>{children}</VarsContext.Provider>;
 };

@@ -1,5 +1,6 @@
+import { useEffect } from "react";
 import cn from "classnames";
-import { useCallback, useContext, useEffect } from "react";
+import { useContext } from "react";
 import Icon from "components/Icon";
 import { VarsContext } from "./context";
 import type { VarsContextProps } from "./context";
@@ -9,33 +10,43 @@ interface VarProps {
   name?: string;
   description?: string;
   needLabel?: boolean;
-  isGlobal?: string;
+  isGlobal?: boolean;
+  initial?: string;
 }
 
 export const Var = ({
   name,
   description = "",
   needLabel = false,
-  isGlobal = "false",
+  isGlobal = false,
+  initial = "",
 }: VarProps) => {
-  const { fields, setField, addField } =
+  const { fields, initials, putField, setInitial } =
     useContext<VarsContextProps>(VarsContext);
-  const val = fields[name] || "";
+  let defaultVal = initial;
+  const val = fields[name] || initials[name] || initial || "";
 
+  const onChange = (event) => {
+    putField(name, event.target.value, isGlobal, description);
+  };
+
+  // Update VarsContext after the Var renders. Once VarsContext re-renders, it
+  // also re-renders the rest of the DOM with the variable's initial value.
+  // The dependency array after the useEffect callback prevents an infinite
+  // render loop.
+  //
+  // This is not the intended purpose of useEffect, so we should eventually find
+  // a better way to do this.
   useEffect(() => {
-    addField(name, isGlobal === "true", description);
-  }, [isGlobal, name, addField, description]);
-
-  const onChange = useCallback(
-    (event) => {
-      setField(name, event.target.value, description);
-    },
-    [name, setField, description]
-  );
+    if (!initials[name] && initial) {
+      setInitial(name, initial);
+    }
+  }, [name, initial, initials, setInitial]);
 
   const input = (
     <>
       <input
+        data-testid="var-input"
         className={styles.field}
         type="text"
         size={val.length || name.length}
