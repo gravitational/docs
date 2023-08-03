@@ -58,6 +58,7 @@
     "date-fns": "^2.27.0",
     "framer-motion": "^10.12.9",
     "graphql": "^16.6.0",
+    "highlightjs-terraform": "https://github.com/highlightjs/highlightjs-terraform#eb1b9661e143a43dff6b58b391128ce5cdad31d4",
     "jsdom": "^22.1.0",
     "next": "13.2.4",
     "posthog-js": "^1.57.2",
