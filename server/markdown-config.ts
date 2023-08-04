@@ -23,6 +23,7 @@ import rehypeImages from "./rehype-images";
 import { getVersion, getVersionRootPath } from "./docs-helpers";
 import { loadConfig } from "./config-docs";
 import { codeLangs } from "./code-langs";
+import { definer as hcl } from "highlightjs-terraform";
 
 // We move images to `.next/static` because this folder is preserved
 // in the cache on rebuilds. If we place them in `public` folder, they will
@@ -73,6 +74,7 @@ export const transformToAST = async (value: string, vfile: VFile) => {
         bash: ["bsh", "systemd", "code", "powershell"],
         yaml: ["conf", "toml"],
       },
+      languages: { hcl: hcl },
     }) // Adds syntax highlighting
     .use(rehypeMdxToHast)
     .use(rehypeImages, {
