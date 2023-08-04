@@ -281,6 +281,17 @@ export default function remarkCodeSnippet({
             }
           } else {
             children.push(getCodeLine(codeLines[i]));
+            // This is an empty code line. Make sure it renders correctly by
+            // pushing a <br> element after it. Otherwise, this becomes an
+            // empty "CodeLine" element that does not display unless we apply
+            // styling that could have unintended effects on other CodeLines.
+            if (codeLines[i] == "") {
+              children.push({
+                type: "mdxJsxFlowElement",
+                name: "br",
+                attributes: [],
+              });
+            }
           }
         }
 
