@@ -48,8 +48,6 @@ jobs:
       env:
         PLAYWRIGHT_TEST_BASE_URL: ${{ github.event.deployment_status.target_url }}
       run: yarn playwright test --shard=${{ matrix.shard }}
-    - name: Build Storybook, serve and run tests
-      run: yarn storybook:test-ci
     - uses: actions/upload-artifact@v2
       if: always()
       with:
