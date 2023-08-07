@@ -66,6 +66,7 @@
     "react-dom": "18.2.0",
     "react-use": "^17.3.1",
     "url": "^0.11.0",
+    "uuid": "^9.0.0",
     "which": "^3.0.0"
   },
   "devDependencies": {

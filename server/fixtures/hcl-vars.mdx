@@ -1,0 +1,11 @@
+Assign <Var name="proxy" initial="teleport.example.com:443" /> to the address of
+your Teleport Proxy Service.
+
+```hcl
+provider "teleport" {
+  # Update addr to point to your Teleport Cloud tenant URL's host:port
+  addr               = "<Var name="proxy" />"
+  identity_file_path = "terraform-identity"
+}
+```
+

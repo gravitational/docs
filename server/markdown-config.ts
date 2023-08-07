@@ -9,7 +9,6 @@ import { unified } from "unified";
 import remarkMermaid from "./remark-mermaid";
 import rehypeMdxToHast from "./rehype-mdx-to-hast";
 import remarkMDX from "remark-mdx";
-import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
 import remarkGFM from "remark-gfm";
 import remarkIncludes from "./remark-includes";
@@ -24,6 +23,7 @@ import { getVersion, getVersionRootPath } from "./docs-helpers";
 import { loadConfig } from "./config-docs";
 import { codeLangs } from "./code-langs";
 import { definer as hcl } from "highlightjs-terraform";
+import { rehypeVarInHLJS } from "./rehype-hljs-var";
 
 // We move images to `.next/static` because this folder is preserved
 // in the cache on rebuilds. If we place them in `public` folder, they will
@@ -69,7 +69,7 @@ export const transformToAST = async (value: string, vfile: VFile) => {
       ], // passThrough options says transformer which nodes to leave as is
     }) // Transforms remark to rehype
     .use(rehypeSlug) // Add IDs to headers
-    .use(rehypeHighlight, {
+    .use(rehypeVarInHLJS, {
       aliases: {
         bash: ["bsh", "systemd", "code", "powershell"],
         yaml: ["conf", "toml"],
