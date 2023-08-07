@@ -1,0 +1,16 @@
+```code
+$ tsh request search --kind node
+Name                                 Hostname    Labels       Resource ID
+------------------------------------ ----------- ------------
+------------------------------------------------------
+b1168402-9340-421a-a344-af66a6675738 iot         test=test
+/teleport.example.com/node/b1168402-9340-421a-a344-af66a6675738
+bbb56211-7b54-4f9e-bee9-b68ea156be5f node        test=test
+/teleport.example.com/node/bbb56211-7b54-4f9e-bee9-b68ea156be5f
+
+To request access to these resources, run
+> tsh request create --resource
+> /teleport.example.com/node/b1168402-9340-421a-a344-af66a6675738 --resource
+> /teleport.example.com/node/bbb56211-7b54-4f9e-bee9-b68ea156be5f \
+>     --reason <request reason>
+```
