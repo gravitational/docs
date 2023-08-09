@@ -119,4 +119,12 @@ Suite("Insert Var components as HTML nodes: text after a Var", () => {
   );
 });
 
+Suite("Ignore VarList in code snippet components", () => {
+  // This throws if the plugin interprets VarList components as being Vars.
+  transformer({
+    value: readFileSync(resolve("server/fixtures/varlist.mdx"), "utf-8"),
+    path: "/docs/index.mdx",
+  });
+});
+
 Suite.run();

@@ -46,7 +46,7 @@ export const rehypeVarInHLJS = (
         parent.hasOwnProperty("tagName") &&
         (parent as Element).tagName === "code"
       ) {
-        const varPattern = new RegExp("<Var[^>]+/>", "g");
+        const varPattern = new RegExp("<Var [^>]+/>", "g");
         (node as Text).value = (node as Text).value.replace(
           varPattern,
           (match) => {
