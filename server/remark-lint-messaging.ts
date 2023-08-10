@@ -26,6 +26,10 @@ interface Frontmatter {
   description?: string;
 }
 
+interface YamlNode extends Node {
+  value: string;
+}
+
 function getReadableLocation(loc: PageLocation): string {
   switch (loc) {
     case PageLocation.Title:
@@ -149,7 +153,7 @@ export const remarkLintMessaging = lintRule(
     }
 
     // This is a type of the node created by remark-frontmatter plugin in remark-lint
-    const node = find(root, (node: Node) => node.type === "yaml");
+    const node = find(root, (node: Node) => node.type === "yaml") as YamlNode;
 
     // If there's no frontmatter, we'll let other linting steps take care of
     // it.
