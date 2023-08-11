@@ -52,6 +52,29 @@ Suite("Fixture match result on resolve", () => {
   assert.equal(result, expected);
 });
 
+// https://github.com/gravitational/docs/issues/299
+Suite(
+  "Processes partials within TabItems declared within an outer partial",
+  () => {
+    const value = readFileSync(
+      resolve("server/fixtures/includes-tabs-source.mdx"),
+      "utf-8"
+    );
+
+    const result = transformer({
+      value,
+      path: "/content/4.0/docs/pages/filename.mdx",
+    }).toString();
+
+    const expected = readFileSync(
+      resolve("server/fixtures/includes-tabs-source-result.mdx"),
+      "utf-8"
+    );
+
+    assert.equal(result, expected);
+  }
+);
+
 Suite("Returns correct warnings on lint", () => {
   const value = readFileSync(
     resolve("server/fixtures/includes-source.mdx"),
