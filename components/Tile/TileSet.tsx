@@ -1,6 +1,8 @@
+import Tile from "./Tile";
 import TileList from "./TileList";
 import styles from "./TileSet.module.css";
 
+type TileType = React.ReactElement<typeof Tile>;
 type TileListTyle = React.ReactElement<typeof TileList>;
 
 export interface TileWrapperProps {
@@ -12,7 +14,7 @@ export const TileWrapper = ({ children }: TileWrapperProps) => {
 };
 
 export interface TileSetProps {
-  children: TileListTyle | Array<TileListTyle>;
+  children: TileType | TileListTyle | Array<TileType | TileListTyle>;
 }
 
 const TileSet = ({ children }: TileSetProps) => {
