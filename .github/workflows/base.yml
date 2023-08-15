@@ -1,5 +1,16 @@
 name: CI
-on: push
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+  merge_group:
+    types:
+      - checks_requested
 jobs:
   lint-code-base:
     name: Lint code base
