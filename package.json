@@ -15,7 +15,7 @@
     "preflight": "yarn build-node && yarn generate-article-links",
     "dev": "yarn preflight && next dev",
     "build": "yarn preflight && next build",
-    "update-and-build": "yarn git-update && yarn build && yarn generate-sitemap",
+    "update-and-build": "node --version && yarn git-update && yarn build && yarn generate-sitemap",
     "start": "next start",
     "uvu-test": "loadr -- uvu uvu-tests",
     "test": "npx playwright test",
