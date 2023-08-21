@@ -1,8 +1,8 @@
 rect.btn {
-  stroke:#fff;
-  fill:#fff;
-  fill-opacity:0;
-  stroke-opacity:0;
+  stroke: #fff;
+  fill: #fff;
+  fill-opacity: 0;
+  stroke-opacity: 0;
 }
 
 .svgContainer img {
@@ -47,10 +47,7 @@ rect.btn {
   font-weight: var(--fw-bold);
   color: var(--color-darkest);
   text-align: center;
-
-
 }
-
 
 .buttonContainer {
   display: block;

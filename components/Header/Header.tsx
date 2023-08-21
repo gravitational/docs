@@ -9,8 +9,11 @@ import HeaderCTA from "./HeaderCTA";
 import styles from "./Header.module.css";
 import Magnifier from "./assets/magnify.svg?react";
 import Link from "components/Link";
+import { EventBanner } from "components/EventBanner";
+import eventData from "../../public/events.json";
 
 const Header = () => {
+  const [events] = useState(eventData);
   const [isNavigationVisible, setIsNavigationVisible] =
     useState<boolean>(false);
   const toggleNavigaton = useCallback(() => {
@@ -19,30 +22,33 @@ const Header = () => {
   }, [isNavigationVisible]);
 
   return (
-    <header className={styles.wrapper}>
-      <a href="/" className={styles["logo-link"]}>
-        <Logo />
-      </a>
-      <div className={styles.searchLink}>
-        <NavSearch testid="mobile-search" aria-details="Search website" />
-      </div>
-      <HeadlessButton
-        onClick={toggleNavigaton}
-        className={styles.hamburger}
-        data-testid="hamburger"
-        aria-details="Toggle Main navigation"
-      >
-        <Icon name={isNavigationVisible ? "close" : "hamburger"} size="md" />
-      </HeadlessButton>
-      <div
-        className={cn(styles.content, {
-          [styles.visible]: isNavigationVisible,
-        })}
-      >
-        <Menu />
-        <HeaderCTA />
-      </div>
-    </header>
+    <>
+      <EventBanner events={events} />
+      <header className={styles.wrapper}>
+        <a href="/" className={styles["logo-link"]}>
+          <Logo />
+        </a>
+        <div className={styles.searchLink}>
+          <NavSearch testid="mobile-search" aria-details="Search website" />
+        </div>
+        <HeadlessButton
+          onClick={toggleNavigaton}
+          className={styles.hamburger}
+          data-testid="hamburger"
+          aria-details="Toggle Main navigation"
+        >
+          <Icon name={isNavigationVisible ? "close" : "hamburger"} size="md" />
+        </HeadlessButton>
+        <div
+          className={cn(styles.content, {
+            [styles.visible]: isNavigationVisible,
+          })}
+        >
+          <Menu />
+          <HeaderCTA />
+        </div>
+      </header>
+    </>
   );
 };
 
