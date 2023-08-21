@@ -28,6 +28,7 @@
   max-width: 600px;
   font-weight: 700;
   font-family: Lato, sans-serif;
+  line-height: 21px;
   display: -webkit-box;
   -webkit-line-clamp: 2 /* Number of lines to show before truncating */;
   -webkit-box-orient: vertical;
@@ -46,7 +47,7 @@
   white-space: nowrap;
   @media (--sm-scr) {
     flex-direction: column;
-    gap: 0;
+    gap: 4px;
   }
 }
 
@@ -63,8 +64,10 @@
   min-width: fit-content;
   font-weight: 400;
   font-family: Lato, sans-serif;
+  line-height: 21px;
   @media (--sm-scr) {
     font-size: 12px;
+    line-height: 12px;
   }
 }
 
@@ -73,6 +76,8 @@
   align-items: center;
   gap: 24px;
   font-size: 14px;
+  line-height: 21px;
+  font-weight: 700;
   padding: 0;
   min-width: 0;
   text-transform: none;
