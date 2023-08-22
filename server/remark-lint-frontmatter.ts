@@ -20,6 +20,9 @@ interface Entry {
   frontmatter: Frontmatter;
 }
 
+interface YamlUnistNode extends UnistNode {
+  value: string;
+}
 let cache: Entry[] = [];
 
 const hasMatchingFieldValueInCache = (field: string) => (value: string) => {
@@ -41,7 +44,10 @@ const remarkLintFrontmatter = lintRule(
   "remark-lint:frontmatter",
   (root: UnistParent, file: VFile) => {
     // This is a type of the node created by remark-frontmatter plugin in remark-lint
-    const node = find(root, (node: UnistNode) => node.type === "yaml");
+    const node = find(
+      root,
+      (node: UnistNode) => node.type === "yaml"
+    ) as YamlUnistNode;
 
     if (!node) return;
 
