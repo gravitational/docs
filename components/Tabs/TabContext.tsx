@@ -18,18 +18,21 @@ export const TabContext = createContext<TabContextProps>({
   },
 });
 
+// labelHashKey returns the key that TabContextProvider uses to get and set the
+// selected tab label or dropdown menu item within a particular combination of
+// lables/menu items.
 const labelHashKey = (labels: Array<string>): string => {
   const labelsCopy = [...labels];
   labelsCopy.sort();
-  const hash = createHash("sha256");
-  hash.update(labelsCopy.join(""));
-  return hash.digest("utf8" as BinaryToTextEncoding);
+  return labelsCopy.join("");
 };
 
 interface TabContextProviderProps {
   children: ReactNode;
 }
 
+// TabContextProvider tracks the currently selected tab label and dropdown menu
+// option in each Tabs component that has rendered.
 export const TabContextProvider = ({ children }: TabContextProviderProps) => {
   const [stateForAllLabels, setStateForAllLabels] = useState({});
 
