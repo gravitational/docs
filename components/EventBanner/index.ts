@@ -1,1 +1,1 @@
-export { EventBanner } from "./EventBanner";
+export * from "./EventBanner";

@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Icon from "components/Icon";
 import Logo from "components/Logo";
 import Menu from "components/Menu";
@@ -9,11 +9,12 @@ import HeaderCTA from "./HeaderCTA";
 import styles from "./Header.module.css";
 import Magnifier from "./assets/magnify.svg?react";
 import Link from "components/Link";
-import { EventBanner } from "components/EventBanner";
+import { EventBanner, EventProps } from "components/EventBanner";
 import eventData from "../../public/events.json";
 
 const Header = () => {
-  const [events] = useState(eventData);
+  const [events] = useState<EventProps[]>(eventData);
+  const [screenWidth, setScreenWidth] = useState(900);
   const [isNavigationVisible, setIsNavigationVisible] =
     useState<boolean>(false);
   const toggleNavigaton = useCallback(() => {
@@ -21,10 +22,24 @@ const Header = () => {
     blockBodyScroll(isNavigationVisible);
   }, [isNavigationVisible]);
 
+  const handleResize = () => {
+    setScreenWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [screenWidth]);
   return (
     <>
       <EventBanner events={events} />
-      <header className={styles.wrapper}>
+      <header
+        style={{ top: !!events.length && screenWidth < 900 ? "48px" : 0 }}
+        className={styles.wrapper}
+      >
         <a href="/" className={styles["logo-link"]}>
           <Logo />
         </a>
@@ -43,6 +58,7 @@ const Header = () => {
           className={cn(styles.content, {
             [styles.visible]: isNavigationVisible,
           })}
+          style={{ top: !!events ? "96px" : "48px" }}
         >
           <Menu />
           <HeaderCTA />

@@ -15,16 +15,8 @@ export async function fetchEventsFromSanity() {
     query
   )}`;
 
-  try {
-    const response = await fetch(apiUrl);
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
+  const response = await fetch(apiUrl);
 
-    const data = await response.json();
-    return data.result;
-  } catch (error) {
-    console.error("Error fetching Sanity document:", error);
-    throw error;
-  }
+  const data = await response.json();
+  return data.result || [];
 }
