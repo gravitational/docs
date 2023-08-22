@@ -9,7 +9,7 @@ import {
   isExternalLink,
   isLocalAssetFile,
 } from "utils/url";
-import { DocsContext, updateScopeInUrl } from "layouts/DocsPage/context";
+import { DocsContext } from "layouts/DocsPage/context";
 
 /*
  * This hook should return current href with resolved rewrites
@@ -35,8 +35,6 @@ export const useNormalizedHref = (href: string) => {
     ? href.substring(basePath.length)
     : href;
 
-  let scope: ScopeType = useContext(DocsContext).scope;
-
   const { query } = splitPath(href);
 
   // This needs to be added because all strings of "/docs/" are being stripped down to
@@ -44,15 +42,6 @@ export const useNormalizedHref = (href: string) => {
   // in which hooks are not able to be called conditionally
   if (href === `${basePath}/`) {
     return href;
-  }
-
-  // If a valid scope is provided via query parameter, adjust the
-  // link to navigate to that scope.
-  if (
-    query.hasOwnProperty("scope") &&
-    scopeValues.includes(query.scope as ScopeType)
-  ) {
-    scope = query["scope"] as ScopeType;
   }
 
   if (
@@ -65,7 +54,5 @@ export const useNormalizedHref = (href: string) => {
 
   const currentHref = normalizePath(asPath);
 
-  let fullHref = resolve(splitPath(currentHref).path, noBaseHref);
-
-  return updateScopeInUrl(fullHref, scope);
+  return resolve(splitPath(currentHref).path, noBaseHref);
 };

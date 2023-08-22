@@ -6,7 +6,7 @@ import {
   useMemo,
 } from "react";
 import { Dropdown } from "components/Dropdown";
-import { DocsContext, getScopes } from "layouts/DocsPage/context";
+import { DocsContext } from "layouts/DocsPage/context";
 import { TabLabelList } from "./TabLabel";
 import { TabItemList } from "./TabItem";
 import { DataTab, TabsInDropdowns, TabItemProps, TabsProps } from "./types";
@@ -46,7 +46,7 @@ import { TabContext } from "./TabContext";
       ```
     </TabItem>
 
-    <TabItem scope={["oss", "enterprise"]} label="From Source">
+    <TabItem label="From Source">
       ```code
         # Checkout teleport-plugins
         $ git clone https://github.com/gravitational/teleport-plugins.git
@@ -78,7 +78,6 @@ export const Tabs = ({
   dropdownView,
 }: TabsProps) => {
   const {
-    scope,
     versions: { latest, current },
   } = useContext(DocsContext);
 
@@ -167,16 +166,6 @@ export const Tabs = ({
   useEffect(() => {
     setCurrentTab(getSelectedTab(tabsMeta));
   }, [tabsMeta, selectedDropdownOption]);
-
-  useEffect(() => {
-    const scopedTab = childTabs.find(({ props }) =>
-      getScopes(props.scope).includes(scope)
-    );
-
-    if (scopedTab) {
-      setCurrentTab(scopedTab.props.label);
-    }
-  }, [scope, childTabs]);
 
   const visibleTabs = dropdownVarsArr.filter((t) => t !== DEFAULT_DROPDOWN);
   const dropOptions = tabsMeta.map((item) => item.label);

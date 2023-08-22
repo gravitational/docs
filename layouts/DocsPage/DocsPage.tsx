@@ -45,22 +45,14 @@ const DocsPage = ({
 }: DocsPageProps) => {
   const route = useCurrentHref();
 
-  const { setVersions, scope, setScope } = useContext(DocsContext);
+  const { setVersions } = useContext(DocsContext);
 
   const { current, latest, available } = versions;
   const getPath = useFindDestinationPath(versions);
 
   useEffect(() => {
     setVersions(versions);
-
-    if (
-      scopes[0] !== "" &&
-      scopes[0] !== "noScope" &&
-      !scopes.includes(scope)
-    ) {
-      setScope(scopes[0]);
-    }
-  }, [versions, setVersions, setScope, scopes, scope]);
+  }, [versions, setVersions]);
 
   const isSectionLayout = layout === "section";
   const isTocVisible = (!layout || layout === "doc") && tableOfContents.length;

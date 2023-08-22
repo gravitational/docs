@@ -30,7 +30,6 @@ const DocHeader = ({
   latest,
   scopes,
 }: DocHeaderProps) => {
-  const { scope } = useContext(DocsContext);
 
   return (
     <section className={styles.wrapper}>
@@ -53,7 +52,6 @@ const DocHeader = ({
               {...versions}
               className={styles.versions}
               getNewVersionPath={getNewVersionPath}
-              disabled={scope === "cloud" || scope === "team"}
               latest={latest}
             />
           )}
