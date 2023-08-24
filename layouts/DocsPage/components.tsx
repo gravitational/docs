@@ -3,7 +3,6 @@ import Command, { CommandLine, CommandComment } from "components/Command";
 import Icon from "components/Icon";
 import InlineCode from "components/InlineCode";
 import Notice from "components/Notice";
-import ScopedBlock from "components/ScopedBlock";
 import Snippet from "components/Snippet";
 import { Tabs, TabItem } from "components/Tabs";
 import { TileSet, TileList, TileListItem } from "components/Tile";
@@ -64,7 +63,6 @@ export const components = {
   commandcomment: CommandComment,
   icon: Icon,
   inlinecode: InlineCode,
-  scopedblock: ScopedBlock,
   tabs: Tabs,
   tabitem: TabItem,
   tileset: TileSet,
