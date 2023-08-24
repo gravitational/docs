@@ -6,13 +6,7 @@ import Notice from "components/Notice";
 import ScopedBlock from "components/ScopedBlock";
 import Snippet from "components/Snippet";
 import { Tabs, TabItem } from "components/Tabs";
-import {
-  Tile,
-  TileSet,
-  TileList,
-  TileListItem,
-  TileImage,
-} from "components/Tile";
+import { TileSet, TileList, TileListItem } from "components/Tile";
 import { Var, VarList } from "components/Variables";
 import Details from "components/Details";
 import {
@@ -73,11 +67,9 @@ export const components = {
   scopedblock: ScopedBlock,
   tabs: Tabs,
   tabitem: TabItem,
-  tile: Tile,
   tileset: TileSet,
   tilelist: TileList,
   tilelistitem: TileListItem,
-  tileimage: TileImage,
   figure: Figure,
   notice: Notice,
   snippet: Snippet,
