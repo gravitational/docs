@@ -7,7 +7,8 @@ const query = `*[_type == "event" && ((now() <= start) || (now() <= end))] | ord
     link,
     start,
     end,
-    location
+    location,
+    featured,
   }`;
 
 export async function fetchEventsFromSanity() {

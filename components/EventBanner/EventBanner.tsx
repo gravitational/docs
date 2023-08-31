@@ -11,6 +11,7 @@ export interface EventProps {
   location: string;
   start: string;
   title: string;
+  featured?: boolean;
 }
 
 export interface Events {
@@ -25,6 +26,11 @@ const getComingEvent = (events: EventProps[]) => {
   const currentDate = new Date();
   let selectedEvent = null;
   for (const event of events) {
+    // If the event is not featured, skip it
+    if (!event?.featured) {
+      continue;
+    }
+
     const startDate = new Date(event.start);
     const endDate = event.end ? new Date(event.end) : startDate;
 
