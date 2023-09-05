@@ -30,7 +30,6 @@ const DocHeader = ({
   latest,
   scopes,
 }: DocHeaderProps) => {
-
   return (
     <section className={styles.wrapper}>
       <a href={GITHUB_DOCS} className={styles["github-link"]}>
