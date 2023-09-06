@@ -5,7 +5,6 @@ import HeadlessButton from "components/HeadlessButton";
 import Search from "components/Search";
 import Icon from "components/Icon";
 import Link, { useCurrentHref } from "components/Link";
-import { getScopeFromUrl } from "./context";
 import {
   NavigationItem,
   NavigationCategory,
@@ -63,7 +62,6 @@ const DocsNavigationItems = ({
 }: DocsNavigationItemsProps) => {
   const router = useRouter();
   const docPath = useCurrentHref().split(SCOPELESS_HREF_REGEX)[0];
-  const urlScope = getScopeFromUrl(router.asPath);
 
   return (
     <>

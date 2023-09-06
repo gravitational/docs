@@ -1,7 +1,5 @@
 import { useMemo, useContext } from "react";
 import Icon from "components/Icon";
-import { DocsContext, getScopes } from "layouts/DocsPage/context";
-import { ScopesType } from "layouts/DocsPage/types";
 import cn from "classnames";
 import styles from "./Notice.module.css";
 
@@ -21,7 +19,7 @@ export interface NoticeProps {
   children: React.ReactNode;
   className?: string;
   icon?: boolean;
-  scope?: ScopesType;
+  scope?: string;
 }
 
 const Notice = ({
@@ -34,17 +32,8 @@ const Notice = ({
 }: NoticeProps) => {
   const type = baseType && types.includes(baseType) ? baseType : "tip";
   const iconName = typeIcons[type];
-  const { scope: currentScope } = useContext(DocsContext);
-  const scopes = useMemo(() => getScopes(scope), [scope]);
-
-  const isHidden = scope && !scopes.includes(currentScope);
-
   return (
-    <div
-      className={cn(styles.wrapper, styles[type], className, {
-        [`${styles.hidden}`]: isHidden,
-      })}
-    >
+    <div className={cn(styles.wrapper, styles[type], className)}>
       {icon && <Icon name={iconName} className={styles.icon} />}
       <div className={styles.body}>{children}</div>
     </div>

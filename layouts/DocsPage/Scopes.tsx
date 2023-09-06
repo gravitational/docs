@@ -6,6 +6,7 @@ import type { ScopeType, ScopesInMeta } from "./types";
 import type { IconName } from "components/Icon";
 import type { RadioButtonVariant } from "components/RadioButton";
 import styles from "./Scopes.module.css";
+import Icon from "components/Icon";
 
 interface ScopeDescription {
   value: ScopeType;
@@ -46,22 +47,19 @@ const SCOPE_DESCRIPTIONS: Record<
 
 interface ScopesItemProps {
   scopeFeatures: ScopeDescription;
-  currentScope: ScopeType;
 }
 
-const ScopesItem = ({ scopeFeatures, currentScope }: ScopesItemProps) => {
+const ScopesItem = ({ scopeFeatures }: ScopesItemProps) => {
   return (
     <li className={styles.item}>
-      <RadioButton
-        variant={scopeFeatures.color}
-        className={styles.button}
-        name="scope"
-        id={scopeFeatures.value}
-        value={scopeFeatures.value}
-        label={scopeFeatures.title}
-        icon={scopeFeatures.icon}
-        checked={scopeFeatures.value === currentScope}
-      />
+      <div className={styles.wrapper}>
+        <span
+          className={cn(styles.label, styles[`variant-${scopeFeatures.color}`])}
+        >
+          <Icon name={scopeFeatures.icon} className={styles.icon} />{" "}
+          {scopeFeatures.title}
+        </span>
+      </div>
     </li>
   );
 };
@@ -72,27 +70,22 @@ interface ScopesProps {
 }
 
 export const Scopes = ({ scopes, className }: ScopesProps) => {
-  const { scope, setScope } = useContext(DocsContext);
-
-  const onChange = useCallback(
-    (event) => {
-      setScope(event.target.value);
-    },
-    [setScope]
-  );
-
   if (scopes[0] === "noScope" || scopes[0] === "") return <></>;
 
   const scopeItems = scopes?.map((item) => (
     <ScopesItem
       key={SCOPE_DESCRIPTIONS[item].value}
       scopeFeatures={SCOPE_DESCRIPTIONS[item]}
-      currentScope={scope}
     />
   ));
 
   return (
-    <ul className={cn(styles.list, className)} onChange={onChange}>
+    <ul className={cn(styles.list, className)}>
+      <li className={styles.item}>
+        <span className={cn(styles.label, styles["variant-availablefor"])}>
+          Available for:
+        </span>
+      </li>
       {scopeItems}
     </ul>
   );
