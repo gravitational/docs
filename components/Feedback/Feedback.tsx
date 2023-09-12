@@ -88,14 +88,14 @@ export default function PageWithJSbasedForm(props) {
               alt="thumbs-up"
               height="27"
               width="27"
-              onClick={() => handleFeedbackClick("yes")}
+              onClick={() => handleFeedbackClick("true")}
             />
             <Image
               src={ThumbsDown}
               alt="thumbs-down"
               height="27"
               width="27"
-              onClick={() => handleFeedbackClick("no")}
+              onClick={() => handleFeedbackClick("false")}
             />
           </div>
         ) : (
