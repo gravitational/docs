@@ -1,6 +1,10 @@
 import { getPathWithoutVersion } from "./url";
 
-const agnost = ["preview/upcoming-releases/", "changelog/"];
+// Paths including these segments are version agnostic. If a URL path includes
+// one of these segments when a user visits a page via a navigation link:
+// - The docs site will render the default version of the page
+// - The version switcher will be disabled on the page
+const agnost = ["upcoming-releases/", "changelog/", "contributing/"];
 
 export const useVersionAgnosticPages = () => {
   const isVersionAgnosticPage = (route: string) => {
