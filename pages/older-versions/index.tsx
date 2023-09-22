@@ -19,7 +19,11 @@ const OldVersions = () => {
       <SiteHeader />
       <main className={styles.wrapper}>
         <div className={styles.body}>
-          <Header title={title} scopes={["noScope"]} />
+          <Header
+            title={title}
+            scopes={["noScope"]}
+            isVersionAgnosticPage={true}
+          />
           <div className={styles.content}>
             <p>
               Deprecated versions of the Teleport docs can be found at the
