@@ -330,7 +330,7 @@ export const navigationData: NavbarData = [
   },
   {
     button: { title: "Get Started", testId: "get-started" },
-    href: "/pricing/",
+    href: "/signup/",
     isExternal: true,
   },
 ];
