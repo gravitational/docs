@@ -8,3 +8,5 @@ jobs:
     uses: gravitational/shared-workflows/.github/workflows/dependency-review.yaml@main
     permissions:
       contents: read
+    with:
+      allow-dependencies-licenses: 'pkg:npm/%40inkeep/widgets'

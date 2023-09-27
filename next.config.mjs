@@ -13,10 +13,7 @@ const { latest } = loadConfig();
 export default withBundleAnalyzer({
   pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
   basePath: "/docs",
-  transpilePackages: [
-    "@inkeep/inkeep-widget-library",
-    "react-syntax-highlighter",
-  ],
+  transpilePackages: ["@inkeep/widgets", "react-syntax-highlighter"],
   redirects: async () => [
     ...deprecatedVersionRedirects,
     ...getRedirects(),

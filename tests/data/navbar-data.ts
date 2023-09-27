@@ -236,7 +236,7 @@ export const navigationData: NavbarData = [
         },
         {
           title: "GitHub Discussion",
-          href: "https://github.com/gravitational/teleport/discussion",
+          href: "https://github.com/gravitational/teleport/discussions",
           isExternal: true,
         },
         {
