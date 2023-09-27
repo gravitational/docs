@@ -1,5 +1,4 @@
 import { MenuCategoryProps } from "./Category";
-import featuredOreilly from "./assets/featured-oreilly.png";
 
 const menu: MenuCategoryProps[] = [
   {
@@ -222,7 +221,8 @@ const menu: MenuCategoryProps[] = [
             href: "/resources/books/identity-native-infrastructure-access-management/",
             title: "Featured Resource",
             isImageLink: true,
-            imageSrc: featuredOreilly,
+            imageSrc:
+              "https://goteleport.com/static/og-cards/books/oreilly.png",
           },
         ],
       },

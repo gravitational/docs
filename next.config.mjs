@@ -35,7 +35,7 @@ export default withBundleAnalyzer({
   images: {
     path: "/docs/_next/image",
     disableStaticImages: true,
-    domains: ["i.ytimg.com"], // Images for youtube preview
+    domains: ["i.ytimg.com", "goteleport.com"], // Images for youtube preview, goteleport.com for featured resource
   },
   trailingSlash: true,
   env: {
