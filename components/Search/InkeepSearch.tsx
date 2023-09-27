@@ -134,16 +134,6 @@ const inkeepAIChatSettings: InkeepAIChatSettings = {
   botAvatarSrcUrl: "https://goteleport.com/static/pam-standing.svg",
   isControlledMessage: true,
   defaultChatMode: "AUTO",
-  toggleButtonSettings: {
-    isChatModeToggleEnabled: true,
-    chatModeToggleValue: "TURBO",
-    chatModeToggleLabel: "Turbo Mode",
-    chatModeToggleTooltip:
-      "Turbo mode provides faster responses but can be less accurate.",
-  },
-  disclaimerSettings: {
-    isDisclaimerEnabled: false,
-  },
 };
 
 const inkeepSearchSettings: InkeepSearchSettings = {
