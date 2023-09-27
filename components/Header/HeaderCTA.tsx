@@ -70,7 +70,7 @@ const HeaderCTA = () => {
         </div>
         <Button
           as="link"
-          href="/pricing/"
+          href="/signup/"
           className={styles.cta}
           data-testid="get-started"
         >
