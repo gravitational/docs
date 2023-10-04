@@ -268,6 +268,33 @@ const menu: MenuCategoryProps[] = [
     href: "/pricing/",
     testId: "pricing",
   },
+  {
+    title: "Community",
+    href: "/community/",
+    testId: "community",
+    children: [
+      {
+        title: "Getting Started with OSS",
+        href: "/docs/",
+      },
+      {
+        title: "Downloads",
+        href: "/download/",
+      },
+      {
+        title: "Community Slack",
+        href: "/community-slack/",
+      },
+      {
+        title: "GitHub Discussions",
+        href: "https://github.com/gravitational/teleport/discussions",
+      },
+      {
+        title: "Podcasts",
+        href: "/resources/podcast/",
+      },
+    ],
+  },
 ];
 
 export default menu;

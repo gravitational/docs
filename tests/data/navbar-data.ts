@@ -300,9 +300,33 @@ export const navigationData: NavbarData = [
     isExternal: true,
   },
   {
-    button: { title: "", testId: "search" },
-    href: "https://goteleport.com/search/",
-    isExternal: true,
+    button: { title: "Community", testId: "community" },
+    menu: {
+      title: "Community",
+      testId: "community-menu",
+      children: [
+        {
+          title: "Getting Started with OSS",
+          href: "/docs/",
+        },
+        {
+          title: "Downloads",
+          href: "/download/",
+        },
+        {
+          title: "Community Slack",
+          href: "/community-slack/",
+        },
+        {
+          title: "GitHub Discussions",
+          href: "https://github.com/gravitational/teleport/discussions",
+        },
+        {
+          title: "Podcasts",
+          href: "/resources/podcast/",
+        },
+      ],
+    },
   },
   {
     button: { title: "Downloads", testId: "downloads" },
