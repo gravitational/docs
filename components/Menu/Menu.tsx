@@ -35,7 +35,7 @@ const Menu = () => {
           {...props}
         />
       ))}
-      <div style={{ position: "relative" }}>
+      <div style={{ position: "relative" }} ref={ref}>
         <a
           href="https://teleport.sh/"
           onClick={toggleSignIn}
