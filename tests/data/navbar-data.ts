@@ -329,11 +329,6 @@ export const navigationData: NavbarData = [
     },
   },
   {
-    button: { title: "Downloads", testId: "downloads" },
-    href: "https://goteleport.com/download/",
-    isExternal: true,
-  },
-  {
     button: { title: "Sign In", testId: "sign-in" },
     menu: {
       title: "Sign in to Teleport",
