@@ -300,37 +300,50 @@ export const navigationData: NavbarData = [
     isExternal: true,
   },
   {
-    button: { title: "", testId: "search" },
-    href: "https://goteleport.com/search/",
-    isExternal: true,
-  },
-  {
-    button: { title: "Downloads", testId: "downloads" },
-    href: "https://goteleport.com/download/",
-    isExternal: true,
-  },
-  {
-    button: { title: "Sign In", testId: "sign-in" },
+    button: { title: "Community", testId: "community" },
     menu: {
-      title: "Sign in to Teleport",
-      testId: "sign-in-menu",
+      title: "Community",
+      testId: "community-menu",
       children: [
         {
-          title: "Teleport Cloud Login",
-          href: "https://teleport.sh/",
+          title: "Getting Started with OSS",
+          href: "/docs/",
+        },
+        {
+          title: "Downloads",
+          href: "/download/",
+        },
+        {
+          title: "Community Slack",
+          href: "/community-slack/",
+        },
+        {
+          title: "GitHub",
+          href: "https://github.com/gravitational/teleport/",
           isExternal: true,
         },
         {
-          title: "Dashboard Login",
-          href: "https://dashboard.gravitational.com/web/login/",
-          isExternal: true,
+          title: "GitHub Discussions",
+          href: "https://github.com/gravitational/teleport/discussions",
+        },
+        {
+          title: "Podcasts",
+          href: "/resources/podcast/",
         },
       ],
     },
   },
   {
+    button: { title: "Sign In", testId: "sign-in" },
+    href: "https://teleport.sh/",
+  },
+  {
     button: { title: "Get Started", testId: "get-started" },
     href: "/signup/",
     isExternal: true,
+  },
+  {
+    button: { title: "Contact Sales", testId: "contact-sales" },
+    href: "/signup/enterprise/",
   },
 ];

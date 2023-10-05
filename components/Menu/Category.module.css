@@ -19,7 +19,7 @@
   align-items: center;
   justify-content: center;
   z-index: 3001;
-  width: 100%;
+  white-space: nowrap;
   min-width: 0;
   height: 80px;
   padding: 0 var(--m-2);
