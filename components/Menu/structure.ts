@@ -286,6 +286,10 @@ const menu: MenuCategoryProps[] = [
         href: "/community-slack/",
       },
       {
+        title: "GitHub",
+        href: "https://github.com/gravitational/teleport/",
+      },
+      {
         title: "GitHub Discussions",
         href: "https://github.com/gravitational/teleport/discussions",
       },
@@ -294,6 +298,11 @@ const menu: MenuCategoryProps[] = [
         href: "/resources/podcast/",
       },
     ],
+  },
+  {
+    title: "Sign In",
+    href: "https://teleport.sh/",
+    testId: "sign-in",
   },
 ];
 

@@ -318,6 +318,11 @@ export const navigationData: NavbarData = [
           href: "/community-slack/",
         },
         {
+          title: "GitHub",
+          href: "https://github.com/gravitational/teleport/",
+          isExternal: true,
+        },
+        {
           title: "GitHub Discussions",
           href: "https://github.com/gravitational/teleport/discussions",
         },
@@ -330,26 +335,15 @@ export const navigationData: NavbarData = [
   },
   {
     button: { title: "Sign In", testId: "sign-in" },
-    menu: {
-      title: "Sign in to Teleport",
-      testId: "sign-in-menu",
-      children: [
-        {
-          title: "Teleport Cloud Login",
-          href: "https://teleport.sh/",
-          isExternal: true,
-        },
-        {
-          title: "Dashboard Login",
-          href: "https://dashboard.gravitational.com/web/login/",
-          isExternal: true,
-        },
-      ],
-    },
+    href: "https://teleport.sh/",
   },
   {
     button: { title: "Get Started", testId: "get-started" },
     href: "/signup/",
     isExternal: true,
+  },
+  {
+    button: { title: "Contact Sales", testId: "contact-sales" },
+    href: "/signup/enterprise/",
   },
 ];

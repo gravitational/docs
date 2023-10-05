@@ -28,23 +28,3 @@
     max-width: none;
   }
 }
-
-.signInDropdown {
-  display: none;
-  z-index: 3000;
-
-  @media (--sm-scr) {
-    position: relative;
-    width: 100%;
-  }
-
-  @media (--md-scr) {
-    position: absolute;
-    left: 0;
-    min-width: 400px;
-  }
-
-  &.visible {
-    display: block;
-  }
-}
