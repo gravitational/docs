@@ -1,4 +1,3 @@
-import { VersionWarning } from "layouts/DocsPage";
 import { TabItemProps, TabItemsListProps } from "./types";
 import styles from "./TabItem.module.css";
 
@@ -47,13 +46,7 @@ export const TabItemList = ({
 
     return (
       <div key={tab.props.label + tab.props.options} className={labeClassName}>
-        {tab.props.scope === "cloud" && latestDocVers !== currentDocVers ? (
-          <TabItem label={tab.props.label}>
-            <VersionWarning />
-          </TabItem>
-        ) : (
-          tab
-        )}
+        {tab}
       </div>
     );
   });

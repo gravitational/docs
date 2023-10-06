@@ -4,6 +4,8 @@ import { expect } from "@storybook/jest";
 import { default as Pre } from "../MDX/Pre";
 import { TabContextProvider } from "./TabContext";
 import { DocsContextProvider } from "layouts/DocsPage/context";
+import { default as DocsPage } from "layouts/DocsPage/DocsPage";
+import type { ScopesInMeta } from "layouts/DocsPage/types";
 
 import { TabItem } from "./TabItem";
 import { Tabs } from "./Tabs";
@@ -316,5 +318,43 @@ export const TabsWithDropdownViewChangeTogether: Story = {
       canvas.getByText("Second instructions for Option 2.").parentElement
         .className
     ).not.toContain("hidden");
+  },
+};
+
+export const TabsWithNonLatestVersionAndCloud: Story = {
+  render: () => {
+    const meta = {
+      h1: "My Page",
+      title: "My Page",
+      description: "Provides content for testing.",
+      versions: {
+        current: "13.x",
+        latest: "14.x",
+        available: ["13.x", "14.x"],
+      },
+      scopes: ["oss", "cloud"] as ScopesInMeta,
+      navigation: [],
+      keywords: [],
+      githubUrl: "",
+    };
+    return (
+      <DocsPage meta={meta} tableOfContents={[]}>
+        <TabContextProvider>
+          <Tabs>
+            <TabItem scope="cloud" label="Cloud Instructions">
+              Here are Cloud instructions.
+            </TabItem>
+            <TabItem scope="oss" label="OSS Instructions">
+              OSS Instructions
+            </TabItem>
+          </Tabs>
+        </TabContextProvider>
+      </DocsPage>
+    );
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+    const tabs = canvas.getAllByTestId("tabitem");
+    expect(tabs[0].textContent).not.toContain("Cloud is not available");
   },
 };
