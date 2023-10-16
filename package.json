@@ -114,7 +114,7 @@
     "micromark-extension-frontmatter": "^1.0.0",
     "micromark-extension-gfm": "2.0.1",
     "micromark-extension-mdxjs": "^1.0.0",
-    "postcss": "^8.4.12",
+    "postcss": "^8.4.31",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-loader": "^7.3.3",
     "postcss-preset-env": "^7.4.4",
