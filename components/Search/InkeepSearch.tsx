@@ -1,23 +1,33 @@
 import React, { useContext, useState, useRef, useCallback } from "react";
 import dynamic from "next/dynamic";
 import {
-  InkeepAIChatSettings,
-  InkeepSearchSettings,
-  InkeepCustomTriggerProps,
-  InkeepWidgetBaseSettings,
-  RemoteErrorLogsLevel,
-  ConsoleDebugLevel,
-  AIChatFunctions,
-  SearchFunctions,
+  type InkeepAIChatSettings,
+  type InkeepSearchSettings,
+  type InkeepCustomTriggerProps,
+  type InkeepWidgetBaseSettings,
+  type AIChatFunctions,
+  type SearchFunctions,
 } from "@inkeep/widgets";
 
 import { DocsContext } from "layouts/DocsPage/context";
 
 import styles from "./InkeepSearch.module.css";
 import InkeepSearchIconSvg from "./inkeepIcon.svg?react";
+import { lato } from "../../pages/_app";
 
 const API_KEY = process.env.NEXT_PUBLIC_INKEEP_API_KEY;
 const INTEGRATION_ID = process.env.NEXT_PUBLIC_INKEEP_INTEGRATION_ID;
+
+const cssOverrides = `
+  .inkeep-modal-widget-content {
+    border: 2px solid #512FC9;
+    border-radius: 12px;
+    top: 88px;
+    left: 12px;
+  }
+`;
+
+const stylesheets = [<style key="inkeep-overrides">{cssOverrides}</style>];
 
 const InkeepCustomTrigger = dynamic<InkeepCustomTriggerProps>(
   () => import("@inkeep/widgets").then((mod) => mod.InkeepCustomTrigger),
@@ -49,11 +59,17 @@ export function InkeepSearch() {
   const inkeepCustomTriggerProps: InkeepCustomTriggerProps = {
     isOpen,
     onClose: handleClose,
-    baseSettings: { ...inkeepBaseSettings, productVersion: version },
+    stylesheets,
+    baseSettings: {
+      ...inkeepBaseSettings,
+    },
     aiChatSettings: {
       ...inkeepAIChatSettings,
       chatFunctionsRef: chatCallableFunctionsRef,
       handleMessageChange: handleChange,
+      // messageAttributes: {
+      //   productVersion: version,
+      // },
     },
     searchSettings: {
       ...inkeepSearchSettings,
@@ -90,12 +106,10 @@ const inkeepBaseSettings: InkeepWidgetBaseSettings = {
   organizationId: "teleport",
   organizationDisplayName: "Teleport",
   primaryBrandColor: "#512FC9",
-  product: "Teleport",
-  isInkeepMentionEnabled: true,
-  apiProxyDomain: "goteleport.com/inkeep-proxy",
-  remoteErrorLogsLevel: RemoteErrorLogsLevel.AnonymousErrors,
+  chatApiProxyDomain: "goteleport.com/inkeep-proxy",
+  remoteErrorLogsLevel: 1,
   optOutAllAnalytics: true,
-  consoleDebugLevel: ConsoleDebugLevel.None,
+  consoleDebugLevel: 0,
   customCardSettings: [
     {
       filters: {
@@ -106,24 +120,18 @@ const inkeepBaseSettings: InkeepWidgetBaseSettings = {
     },
   ],
   theme: {
-    zIndices: {
-      overlay: "2100",
-      modal: "2200",
-      popover: "2300",
-      skipLink: "2400",
-      toast: "2500",
-      tooltip: "2600",
-    },
-    components: {
-      InkeepWidgetModal: {
-        ModalContent: {
-          styles: {
-            border: "2px solid #512FC9",
-            borderRadius: "xl",
-            top: "88px",
-            left: "12px",
-          },
-        },
+    tokens: {
+      fonts: {
+        heading: lato?.style?.fontFamily,
+        body: lato?.style?.fontFamily,
+      },
+      zIndex: {
+        overlay: "2100",
+        modal: "2200",
+        popover: "2300",
+        skipLink: "2400",
+        toast: "2500",
+        tooltip: "2600",
       },
     },
   },
