@@ -4453,15 +4453,15 @@
   resolved "https://registry.yarnpkg.com/@inkeep/styled-system/-/styled-system-0.0.6.tgz#4710c641ddd3d28d6faae72521d420fe6985d9d7"
   integrity sha512-/oj0QZ7Lf/3RimO22Vu+raA2qvQxPl78FcLHbfmOHlgqA8FQlthWEaXvewkY0RbbmMeJpbGMAwGBb8PFUnS0lQ==
 
-"@inkeep/styled-system@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@inkeep/styled-system/-/styled-system-0.0.8.tgz#5b2204247c7076acb1355026fdcdd0fa962e2263"
-  integrity sha512-trtjnINInClC+pQGbFmwy0+tlo77iowA8JgyMlJoFmogTEEdDEt0et4pJ06W5B1ub+voCWt1VnFof310jI7+uw==
+"@inkeep/styled-system@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@inkeep/styled-system/-/styled-system-0.0.9.tgz#1063ad7a39ac004cdbf6fa7cd6cee05d4da7caee"
+  integrity sha512-1+n7/I7r0qRTO5V21INnJhf+Dvx2JBcMn8rejqjYO4bFIO+81mTxNjgfcTAY1Zj0fdeRSkyoD+A58/ZO0pRj8A==
 
-"@inkeep/widgets@^0.2.212":
-  version "0.2.212"
-  resolved "https://registry.yarnpkg.com/@inkeep/widgets/-/widgets-0.2.212.tgz#35a7d855cdc80dee7638b951192f620c57b275e2"
-  integrity sha512-h+Ixq+lFAk3SPtF0aRT/NWE0QAmpIYz8VDP3UziaksviGHAM8XsifrxbH7jrfg3+KXCJnEH3optKU/W2M14yHA==
+"@inkeep/widgets@^0.2.213":
+  version "0.2.213"
+  resolved "https://registry.yarnpkg.com/@inkeep/widgets/-/widgets-0.2.213.tgz#6ad1d2c5cb0902669730735a2e7e5444d45bf626"
+  integrity sha512-KSXgDW/sdAk/OPo+Xuj6xCr4xpjWik1C7/gNNMS6nEeTFnxNlmnoQ06ZIrcg24ZaOL6HR5yiyIIgKrbiVUQBCw==
   dependencies:
     "@apollo/client" "^3.8.1"
     "@ark-ui/react" "^0.15.0"
@@ -4470,7 +4470,7 @@
     "@inkeep/preset" "^0.0.7"
     "@inkeep/preset-chakra" "^0.0.7"
     "@inkeep/shared" "^0.0.8"
-    "@inkeep/styled-system" "^0.0.8"
+    "@inkeep/styled-system" "^0.0.9"
     "@sentry/core" "^7.71.0"
     "@sentry/react" "^7.64.0"
     "@types/lodash.isequal" "^4.5.7"
@@ -14732,7 +14732,7 @@ is-unicode-supported@^0.1.0:
   resolved "https://registry.npmjs.org/is-unicode-supported/-/is-unicode-supported-0.1.0.tgz#3f26c76a809593b52bfa2ecb5710ed2779b522a7"
   integrity sha512-knxG2q4UC3u8stRGyAVJCOdxFmv5DZiRcdlIaAQXAbSfJya+OhopNotLQrstBhququ4ZpuKbDc/8S6mgXgPFPw==
 
-is-unicode-supported@^1.1.0, is-unicode-supported@^1.3.0:
+is-unicode-supported@^1.1.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/is-unicode-supported/-/is-unicode-supported-1.3.0.tgz#d824984b616c292a2e198207d4a609983842f714"
   integrity sha512-43r2mRvz+8JRIKnWJ+3j8JtjRKZ6GmjzfaE/qiBJnikNnYv/6bagRJ1kUhNk8R5EX/GkobD+r+sfxCPJsiKBLQ==
