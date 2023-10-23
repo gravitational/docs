@@ -67,9 +67,9 @@ export function InkeepSearch() {
       ...inkeepAIChatSettings,
       chatFunctionsRef: chatCallableFunctionsRef,
       handleMessageChange: handleChange,
-      // messageAttributes: {
-      //   productVersion: version,
-      // },
+      messageAttributes: {
+        productVersion: version,
+      },
     },
     searchSettings: {
       ...inkeepSearchSettings,
