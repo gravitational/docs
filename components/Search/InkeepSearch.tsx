@@ -19,7 +19,7 @@ const API_KEY = process.env.NEXT_PUBLIC_INKEEP_API_KEY;
 const INTEGRATION_ID = process.env.NEXT_PUBLIC_INKEEP_INTEGRATION_ID;
 
 const cssOverrides = `
-  .inkeep-modal-widget-content {
+  .ikp-modal-widget-content {
     border: 2px solid #512FC9;
     border-radius: 12px;
     top: 88px;
