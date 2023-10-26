@@ -120,6 +120,9 @@ const inkeepBaseSettings: InkeepWidgetBaseSettings = {
     },
   ],
   theme: {
+    colorMode: {
+      forcedColorMode: "light",
+    },
     tokens: {
       fonts: {
         heading: lato?.style?.fontFamily,
