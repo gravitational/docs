@@ -45,6 +45,13 @@
 }
 
 .zoomable {
+  /* 
+   * The background-color and border styles override browser defaults for the
+   * button element.
+   */
+  background-color: inherit;
+  border: inherit;
+
   cursor: zoom-in;
   cursor: -moz-zoom-in; 
   cursor: -webkit-zoom-in;
