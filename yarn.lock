@@ -2814,10 +2814,10 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-2.0.1.tgz#e5211452df060fa8522b55c7b3c0c4d1981cb044"
   integrity sha512-dvuCeX5fC9dXgJn9t+X5atfmgQAzUOWqS1254Gh0m6i8wKd10ebXkfNKiRK+1GWi/yTvvLDHpoxLr0xxxeslWw==
 
-"@inkeep/widgets@^0.2.219":
-  version "0.2.219"
-  resolved "https://registry.yarnpkg.com/@inkeep/widgets/-/widgets-0.2.219.tgz#c878f95c0c837db27c2c947dfcca26d6e2bca324"
-  integrity sha512-8x55UYHmizje1yceT5ziY0+GrsocKyMYyq0ByQXtGxEVPKcbmGI3PlTnaFnfhqX2xcF+VaOifR0zBAiBMw1riA==
+"@inkeep/widgets@^0.2.220":
+  version "0.2.220"
+  resolved "https://registry.yarnpkg.com/@inkeep/widgets/-/widgets-0.2.220.tgz#3f3655a8f27c59c1ad44bdb85f49eb8daf1d66b8"
+  integrity sha512-rpT30l14ZEKmxvdvJld4UiKPpPK7jz9PHf7VlO2yLXV+73hpPGxaCQrPmzcmbG6ZIG2phHGIIOpAVHBwcQvMmA==
   dependencies:
     "@apollo/client" "^3.8.1"
     "@ark-ui/react" "^0.15.0"
