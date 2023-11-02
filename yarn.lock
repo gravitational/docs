@@ -10620,7 +10620,7 @@ fetch-retry@^5.0.2:
 
 fflate@^0.4.1:
   version "0.4.8"
-  resolved "https://registry.npmjs.org/fflate/-/fflate-0.4.8.tgz#f90b82aefbd8ac174213abb338bd7ef848f0f5ae"
+  resolved "https://registry.yarnpkg.com/fflate/-/fflate-0.4.8.tgz#f90b82aefbd8ac174213abb338bd7ef848f0f5ae"
   integrity sha512-FJqqoDBR00Mdj9ppamLa/Y7vxm+PRmNWA67N846RvsoYVMKB4q3y/de5PA7gUmRMYK/8CMz2GDZQmCRN1wBcWA==
 
 figgy-pudding@^3.5.1:
@@ -15798,7 +15798,14 @@ postcss@^8.2.14, postcss@^8.4.21, postcss@^8.4.25, postcss@^8.4.31:
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 
-posthog-js@^1.57.2, posthog-js@^1.57.3:
+posthog-js@1.88.1:
+  version "1.88.1"
+  resolved "https://registry.yarnpkg.com/posthog-js/-/posthog-js-1.88.1.tgz#ab81f21ec158a9c57be0e696744a9c9f6967ba3b"
+  integrity sha512-+8kFFU5KIcFSm8zB3tX8l0GSPyq/OtMtdrS9dYpMJk6nsEwXvOjkwFEpSrYzL5eGEpTPdbM65M52HvMqqsjpXw==
+  dependencies:
+    fflate "^0.4.1"
+
+posthog-js@^1.57.3:
   version "1.72.2"
   resolved "https://registry.npmjs.org/posthog-js/-/posthog-js-1.72.2.tgz#8330bf740b0dda84156816628fe27e4e10a07eeb"
   integrity sha512-de/AMQ2zgXeEnvMGBrT746VFmvo95Zo+0pqiXc0xwlQPgwDyyxwGgHXBRKRNl5yDGDZ/Nvb2R64Jc+QwV9YYXw==
