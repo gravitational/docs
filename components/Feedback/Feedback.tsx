@@ -18,7 +18,7 @@ export default function PageWithJSbasedForm(props) {
   const forwardData = async (data) => {
     const JSONdata = JSON.stringify(data);
     const endpoint = "/docs/api/feedback/";
-    console.log("Sending feedback to: " + endpoint);
+
     const options = {
       method: "POST",
       headers: {
@@ -26,13 +26,11 @@ export default function PageWithJSbasedForm(props) {
       },
       body: JSONdata,
     };
-    console.log("Sending feedback to: " + endpoint);
+
     const response = await fetch(endpoint, options);
     const result = await response.json();
-    console.log(result);
-    console.log("Feedback sent successfully!");
+
     //Send feedback to posthog
-    console.log("Sending feedback to PostHog");
     void sendDocsFeedback(data.feedback, data.comment);
   };
 
@@ -63,7 +61,6 @@ export default function PageWithJSbasedForm(props) {
 
   const handleFeedbackClick = async (feedbackValue: string) => {
     let feedback = feedbackValue;
-    console.log(feedbackValue);
     setFeedback(feedbackValue);
     setShowButtons(false);
     const data = {

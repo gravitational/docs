@@ -42,7 +42,6 @@ export const sendPageview = async () => {
 
 export const sendDocsFeedback = async (rating: string, comment: string) => {
   const ph = await posthog();
-  console.log("sendDocsFeedback", rating, comment);
 
   ph?.capture("web.docs.feedback", {
     "web.docs.rating": rating,
