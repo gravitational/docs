@@ -287,8 +287,14 @@ const handleURLPath = (
   ) {
     const href = node.url;
 
-    // Ignore non-strings, absolute paths, or web URLs
-    if (typeof href !== "string" || href[0] === "/" || /^http/.test(href)) {
+    // Ignore non-strings, absolute paths, web URLs, and links consisting only
+    // of anchors (these will end up pointing to the containing page).
+    if (
+      typeof href !== "string" ||
+      href[0] === "/" ||
+      /^http/.test(href) ||
+      href[0] === "#"
+    ) {
       return href;
     }
 
