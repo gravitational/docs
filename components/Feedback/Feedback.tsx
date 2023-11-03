@@ -40,7 +40,6 @@ export default function PageWithJSbasedForm(props) {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(feedback);
 
     const data = {
       feedback,
