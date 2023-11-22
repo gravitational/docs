@@ -11,6 +11,10 @@ const menu: MenuCategoryProps[] = [
         title: "Platform",
         children: [
           { title: "Why Teleport", href: "/why-teleport/" },
+          {
+            title: "Identity Governance & Security",
+            href: "/identity-governance-security/",
+          },
           { title: "How It Works", href: "/how-it-works/" },
         ],
       },
@@ -190,6 +194,10 @@ const menu: MenuCategoryProps[] = [
           {
             title: "Tech Papers",
             href: "/resources/white-papers/",
+          },
+          {
+            title: "Hot Takes",
+            href: "/resources/hot-takes/",
           },
         ],
       },
