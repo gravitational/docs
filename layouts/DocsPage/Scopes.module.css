@@ -5,6 +5,7 @@
   margin-left: var(--m-4);
   padding-left: 0;
   list-style: none;
+  flex-wrap: wrap;
 
   @media (--sm-scr) {
     margin-left: 0;

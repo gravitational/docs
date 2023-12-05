@@ -12,7 +12,7 @@
 
 .search-input {
   width: 100%;
-  color: var(--color-black);
+  color: var(--color-text);
   background: transparent;
   border: none;
   font-size: 14px;
@@ -23,6 +23,7 @@
 
   @media (max-width: 560px) {
     width: 100%;
+    font-size: 16px;
   }
 }
 

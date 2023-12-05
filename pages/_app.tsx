@@ -15,7 +15,7 @@ const ubuntu = localUbuntu({
   variable: "--font-ubunt",
   display: "swap",
 });
-const lato = localLato({
+export const lato = localLato({
   src: [
     {
       path: "../styles/assets/lato-400.woff2",
