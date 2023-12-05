@@ -9,4 +9,4 @@ jobs:
     permissions:
       contents: read
     with:
-      allow-dependencies-licenses: 'pkg:npm/%40inkeep/widgets'
+      allow-dependencies-licenses: 'pkg:npm/%40inkeep/widgets, Artistic-2.0'

@@ -4532,7 +4532,7 @@
   resolved "https://registry.yarnpkg.com/@storybook/manager/-/manager-7.6.3.tgz#10fc8171e02d19aac8e0c0bfa05b4897f1179b78"
   integrity sha512-6eMaogHANCSVV2zLPt4Q7fp8RT+AdlOe6IR0583AuqpepcFzj33iGNYABk2rmXAlkD0WzoLcC4H5mouU0fduLA==
 
-"@storybook/nextjs@^7.0.27":
+"@storybook/nextjs@^7.6.3":
   version "7.6.3"
   resolved "https://registry.yarnpkg.com/@storybook/nextjs/-/nextjs-7.6.3.tgz#e57e9dc922eaf7a1701189b11b6cc9475e35e7d7"
   integrity sha512-lRLtbQtGwl2PE0TTcmJnRNglUmU/diiJPmMXCaBr6bAFHTNQ4HASzZPnbo3We2Y6cetG76JYGPiXt35yNzRLtw==
@@ -13269,7 +13269,7 @@ is-unicode-supported@^0.1.0:
   resolved "https://registry.yarnpkg.com/is-unicode-supported/-/is-unicode-supported-0.1.0.tgz#3f26c76a809593b52bfa2ecb5710ed2779b522a7"
   integrity sha512-knxG2q4UC3u8stRGyAVJCOdxFmv5DZiRcdlIaAQXAbSfJya+OhopNotLQrstBhququ4ZpuKbDc/8S6mgXgPFPw==
 
-is-unicode-supported@^1.1.0, is-unicode-supported@^1.3.0:
+is-unicode-supported@^1.1.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/is-unicode-supported/-/is-unicode-supported-1.3.0.tgz#d824984b616c292a2e198207d4a609983842f714"
   integrity sha512-43r2mRvz+8JRIKnWJ+3j8JtjRKZ6GmjzfaE/qiBJnikNnYv/6bagRJ1kUhNk8R5EX/GkobD+r+sfxCPJsiKBLQ==
