@@ -32,6 +32,11 @@ export const navigationData: NavbarData = [
       testId: "platform-menu",
       children: [
         { title: "Why Teleport", href: "/why-teleport/", isExternal: true },
+        {
+          title: "Identity Governance & Security",
+          href: "/identity-governance-security/",
+          isExternal: true,
+        },
         { title: "How It Works", href: "/how-it-works/", isExternal: true },
         {
           title: "SSH",
@@ -222,6 +227,11 @@ export const navigationData: NavbarData = [
         {
           title: "Tech Papers",
           href: "/resources/white-papers/",
+          isExternal: true,
+        },
+        {
+          title: "Hot Takes",
+          href: "/resources/hot-takes/",
           isExternal: true,
         },
         {
