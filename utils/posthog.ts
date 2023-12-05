@@ -20,6 +20,7 @@ export const posthog = async (): Promise<PostHog | undefined> => {
     if (PH_IS_ENABLED && PH_API_URL && PH_API_KEY) {
       posthogGlobal.init(PH_API_KEY, {
         api_host: PH_API_URL,
+        advanced_disable_decide: true,
         get_device_id: (id) => `web.${id}`,
         loaded: (ph) => {
           inited = true;
