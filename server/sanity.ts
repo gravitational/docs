@@ -22,9 +22,9 @@ export async function fetchEventsFromSanity() {
     query
   )}`;
 
-  const response = await fetch(apiUrl);
+  const response = await fetch(apiUrl).then((res) => res.json());
 
-  const data = await response.json();
+  const data = response.result;
   if (data?.bannerType === "event")
     return { ...data?.event, cta: data?.cta, bannerType: data?.bannerType };
   return data;
