@@ -8,11 +8,13 @@ import { useEffect, useState } from "react";
 
 export interface EventProps {
   end?: string | null;
-  link: string;
-  location: string;
-  start: string;
-  title: string;
-  featured?: boolean;
+  link?: string;
+  location?: string | null;
+  start?: string | null;
+  title?: string | null;
+  cta?: string;
+  isVirtual?: boolean;
+  bannerType?: "custom" | "event" | string;
 }
 
 export interface Events {
@@ -23,25 +25,16 @@ export interface Event {
   event: EventProps;
 }
 
-export const getComingEvent = (events: EventProps[]) => {
-  const currentDate = new Date();
-  let selectedEvent = null;
-  for (const event of events) {
-    // If the event is not featured, skip it
-    if (!event?.featured) {
-      continue;
-    }
+export const getComingEvent = (event: EventProps) => {
+  if (!event || !event?.title) return null;
+  const currentDate = new Date().setHours(0, 0, 0, 0);
+  const endDate = event.end ? new Date(event.end).setHours(0, 0, 0, 0) : null;
 
-    const startDate = new Date(event.start);
-    const endDate = event.end ? new Date(event.end) : startDate;
-
-    if (currentDate <= endDate) {
-      selectedEvent = event;
-      break;
-    }
+  if (endDate && currentDate > endDate) {
+    //Event end date has gone
+    return null;
   }
-
-  return selectedEvent;
+  return event; //No end date set or end date is in the future
 };
 
 export const EventBanner: React.FC<{

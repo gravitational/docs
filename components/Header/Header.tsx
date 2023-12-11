@@ -18,7 +18,7 @@ import eventData from "../../public/events.json";
 
 const Header = () => {
   const selectedEvent = eventData
-    ? getComingEvent(eventData as EventProps[])
+    ? getComingEvent(eventData as EventProps)
     : null;
   const [isNavigationVisible, setIsNavigationVisible] =
     useState<boolean>(false);
