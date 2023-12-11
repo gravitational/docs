@@ -14,7 +14,8 @@ import {
   EventProps,
   getComingEvent,
 } from "components/EventBanner";
-import eventData from "../../public/events.json";
+// @ts-ignore
+import eventData from "../../public/data/events.json";
 
 const Header = () => {
   const selectedEvent = eventData

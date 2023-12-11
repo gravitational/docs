@@ -12,7 +12,7 @@ const publicRoot = resolve("public");
   Generate event file
 =========================================================*/
 generateEvent({
-  file: resolve(publicRoot, "events.json"),
+  file: resolve(publicRoot + "/data/", "events.json"),
 });
 
 const withBundleAnalyzer = bundleAnalyzer({
