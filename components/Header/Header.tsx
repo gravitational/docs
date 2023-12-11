@@ -9,11 +9,17 @@ import HeaderCTA from "./HeaderCTA";
 import styles from "./Header.module.css";
 import Magnifier from "./assets/magnify.svg?react";
 import Link from "components/Link";
-import { EventBanner, EventProps } from "components/EventBanner";
+import {
+  EventBanner,
+  EventProps,
+  getComingEvent,
+} from "components/EventBanner";
 import eventData from "../../public/events.json";
 
 const Header = () => {
-  const [events] = useState<EventProps[]>(eventData);
+  const selectedEvent = eventData
+    ? getComingEvent(eventData as EventProps[])
+    : null;
   const [isNavigationVisible, setIsNavigationVisible] =
     useState<boolean>(false);
   const toggleNavigaton = useCallback(() => {
@@ -22,9 +28,11 @@ const Header = () => {
   }, [isNavigationVisible]);
   return (
     <>
-      <EventBanner events={events} />
+      {selectedEvent && (
+        <EventBanner initialEvent={selectedEvent as EventProps} />
+      )}
       <header
-        className={`${styles.wrapper} ${!!events.length ? styles.margin : " "}`}
+        className={`${styles.wrapper} ${selectedEvent ? styles.margin : " "}`}
       >
         <a href="/" className={styles["logo-link"]}>
           <Logo />
@@ -44,7 +52,7 @@ const Header = () => {
           className={cn(styles.content, {
             [styles.visible]: isNavigationVisible,
           })}
-          style={{ top: !!events ? "96px" : "48px" }}
+          style={{ top: selectedEvent ? "96px" : "48px" }}
         >
           <Menu />
           <HeaderCTA />

@@ -4,6 +4,7 @@ import ArrowRight from "./assets/arrow-right.svg?react";
 import MapPin from "./assets/map-pin.svg?react";
 import Link from "next/link";
 import styles from "./EventBanner.module.css";
+import { useEffect, useState } from "react";
 
 export interface EventProps {
   end?: string | null;
@@ -19,10 +20,10 @@ export interface Events {
 }
 
 export interface Event {
-  selectedEvent: EventProps;
+  event: EventProps;
 }
 
-const getComingEvent = (events: EventProps[]) => {
+export const getComingEvent = (events: EventProps[]) => {
   const currentDate = new Date();
   let selectedEvent = null;
   for (const event of events) {
@@ -44,28 +45,36 @@ const getComingEvent = (events: EventProps[]) => {
 };
 
 export const EventBanner: React.FC<{
-  events: EventProps[];
-}> = ({ events }) => {
-  const selectedEvent = getComingEvent(events);
-  return selectedEvent ? (
-    <Link className={styles.banner} href={selectedEvent.link}>
-      <div className={styles.mainText}>{selectedEvent.title}</div>
+  initialEvent: EventProps;
+}> = ({ initialEvent }) => {
+  const [event, setEvent] = useState<EventProps>(initialEvent);
+  useEffect(() => {
+    const fetchEvent = async () => {
+      const tempEvent = await fetch("/api/getfeaturedevent/").then(
+        (res) => res.status === 200 && res.json()
+      );
+      tempEvent && setEvent(tempEvent.data as EventProps);
+    };
+    fetchEvent();
+  }, []);
+  return event ? (
+    <Link className={styles.banner} href={event.link}>
+      <div className={styles.mainText}>{event.title}</div>
       <div className={styles.container}>
         <div className={styles.styledBox}>
           <div className={styles.icon}>
             <CalendarTrans />
           </div>
           <div className={styles.styledText}>
-            {getParsedDate(new Date(selectedEvent.start), "MMM d")}
-            {selectedEvent.end != null &&
-              "-" + getParsedDate(new Date(selectedEvent.end), "d")}
+            {getParsedDate(new Date(event.start), "MMM d")}
+            {event.end != null && "-" + getParsedDate(new Date(event.end), "d")}
           </div>
         </div>
         <div className={styles.styledBox}>
           <div className={styles.icon}>
             <MapPin />
           </div>
-          <div className={styles.styledText}>{selectedEvent.location}</div>
+          <div className={styles.styledText}>{event.location}</div>
         </div>
       </div>
       <div style={{ display: "flex", alignItems: "center" }}>
