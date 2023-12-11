@@ -2,6 +2,7 @@ import { getParsedDate } from "utils/date";
 import CalendarTrans from "./assets/calendar-trans.svg?react";
 import ArrowRight from "./assets/arrow-right.svg?react";
 import MapPin from "./assets/map-pin.svg?react";
+import VirtualIcon from "./assets/video-meeting.svg?react";
 import Link from "next/link";
 import styles from "./EventBanner.module.css";
 import { useEffect, useState } from "react";
@@ -54,24 +55,37 @@ export const EventBanner: React.FC<{
     <Link className={styles.banner} href={event.link}>
       <div className={styles.mainText}>{event.title}</div>
       <div className={styles.container}>
-        <div className={styles.styledBox}>
-          <div className={styles.icon}>
-            <CalendarTrans />
+        {event.start && (
+          <div className={styles.styledBox}>
+            <div className={styles.icon}>
+              <CalendarTrans />
+            </div>
+            <div className={styles.styledText}>
+              {getParsedDate(new Date(event.start), "MMM d")}
+              {event.end != null &&
+                "-" + getParsedDate(new Date(event.end), "d")}
+            </div>
           </div>
-          <div className={styles.styledText}>
-            {getParsedDate(new Date(event.start), "MMM d")}
-            {event.end != null && "-" + getParsedDate(new Date(event.end), "d")}
-          </div>
-        </div>
-        <div className={styles.styledBox}>
-          <div className={styles.icon}>
-            <MapPin />
-          </div>
-          <div className={styles.styledText}>{event.location}</div>
-        </div>
+        )}
+
+        {event.bannerType === "custom" &&
+          (event.location || event.isVirtual) && (
+            <div className={styles.styledBox}>
+              <div className={styles.icon}>
+                {event.location === "virtual" || event.isVirtual ? (
+                  <VirtualIcon viewBox="0 0 16 16" />
+                ) : (
+                  <MapPin />
+                )}
+              </div>
+              <div className={styles.styledText}>
+                {event.location || (event.isVirtual && "Virtual")}
+              </div>
+            </div>
+          )}
       </div>
       <div style={{ display: "flex", alignItems: "center" }}>
-        <div className={styles.linkButton}>Register</div>
+        <div className={styles.linkButton}>{event.cta || "Register"}</div>
         <div className={styles.icon}>
           <ArrowRight />
         </div>
