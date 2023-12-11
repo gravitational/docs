@@ -14,31 +14,17 @@ import eventData from "../../public/events.json";
 
 const Header = () => {
   const [events] = useState<EventProps[]>(eventData);
-  const [screenWidth, setScreenWidth] = useState(900);
   const [isNavigationVisible, setIsNavigationVisible] =
     useState<boolean>(false);
   const toggleNavigaton = useCallback(() => {
     setIsNavigationVisible((value) => !value);
     blockBodyScroll(isNavigationVisible);
   }, [isNavigationVisible]);
-
-  const handleResize = () => {
-    setScreenWidth(window.innerWidth);
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [screenWidth]);
   return (
     <>
       <EventBanner events={events} />
       <header
-        style={{ top: !!events.length && screenWidth < 900 ? "48px" : 0 }}
-        className={styles.wrapper}
+        className={`${styles.wrapper} ${!!events.length ? styles.margin : " "}`}
       >
         <a href="/" className={styles["logo-link"]}>
           <Logo />

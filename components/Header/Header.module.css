@@ -11,10 +11,15 @@
   max-width: 100vw;
   @media (--sm-scr) {
     position: sticky;
-    top: 48px;
+    top:0;
     height: 48px;
     background: var(--color-white);
     box-shadow: 0 1px 4px rgba(0 0 0 / 24%);
+  }
+  &.margin {
+    @media (--sm-scr) {
+      top:48px;
+    }
   }
 }
 
