@@ -2,6 +2,7 @@ import styles from "./Feedback.module.css";
 import React, { FormEvent, useState } from "react";
 import ButtonPrimary from "components/Button";
 import { sendDocsFeedback } from "utils/posthog";
+import { filterTextForXSS } from "utils/general";
 import Button from "components/Button";
 import Image from "next/image";
 import ThumbsUp from "./thumbs-up.svg";
@@ -45,6 +46,13 @@ export default function PageWithJSbasedForm(props) {
       comment,
       url: window.location.pathname, // This will include the current page URL
     };
+
+    data.comment = filterTextForXSS(data.comment);
+
+    // Appending URL to comment for context due to PostHog viewing limitations
+    if (data.comment !== "") {
+      data.comment += ` (${data.url})`;
+    }
 
     await forwardData(data);
     setIsSubmitted(true);

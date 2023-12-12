@@ -20,6 +20,7 @@ import Navigation, { getCurrentCategoryIndex } from "./Navigation";
 import Feedback from "components/Feedback";
 
 import styles from "./DocsPage.module.css";
+import { useVersionAgnosticPages } from "utils/useVersionAgnosticPages";
 
 export interface DocsPageProps {
   meta: PageMeta;
@@ -45,22 +46,15 @@ const DocsPage = ({
 }: DocsPageProps) => {
   const route = useCurrentHref();
 
-  const { setVersions, scope, setScope } = useContext(DocsContext);
+  const { setVersions } = useContext(DocsContext);
 
   const { current, latest, available } = versions;
   const getPath = useFindDestinationPath(versions);
+  const { isVersionAgnosticPage } = useVersionAgnosticPages();
 
   useEffect(() => {
     setVersions(versions);
-
-    if (
-      scopes[0] !== "" &&
-      scopes[0] !== "noScope" &&
-      !scopes.includes(scope)
-    ) {
-      setScope(scopes[0]);
-    }
-  }, [versions, setVersions, setScope, scopes, scope]);
+  }, [versions, setVersions]);
 
   const isSectionLayout = layout === "section";
   const isTocVisible = (!layout || layout === "doc") && tableOfContents.length;
@@ -100,6 +94,7 @@ const DocsPage = ({
             getNewVersionPath={getPath}
             latest={latest}
             scopes={scopes}
+            isVersionAgnosticPage={isVersionAgnosticPage(route)}
           />
           {videoBanner && (
             <VideoBar className={styles.video} {...videoBanner} />

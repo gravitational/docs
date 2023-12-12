@@ -1,11 +1,9 @@
 import cn from "classnames";
 import { useState, useCallback, useEffect } from "react";
-import { useRouter } from "next/router";
 import HeadlessButton from "components/HeadlessButton";
 import Search from "components/Search";
 import Icon from "components/Icon";
 import Link, { useCurrentHref } from "components/Link";
-import { getScopeFromUrl } from "./context";
 import {
   NavigationItem,
   NavigationCategory,
@@ -13,6 +11,7 @@ import {
   ScopesInMeta,
 } from "./types";
 import styles from "./Navigation.module.css";
+import { useVersionAgnosticPages } from "utils/useVersionAgnosticPages";
 
 const SCOPELESS_HREF_REGEX = /\?|\#/;
 
@@ -61,9 +60,8 @@ const DocsNavigationItems = ({
   entries,
   onClick,
 }: DocsNavigationItemsProps) => {
-  const router = useRouter();
   const docPath = useCurrentHref().split(SCOPELESS_HREF_REGEX)[0];
-  const urlScope = getScopeFromUrl(router.asPath);
+  const { getVersionAgnosticRoute } = useVersionAgnosticPages();
 
   return (
     <>
@@ -81,7 +79,7 @@ const DocsNavigationItems = ({
                   active && styles.active,
                   selected && styles.selected
                 )}
-                href={entry.slug}
+                href={getVersionAgnosticRoute(entry.slug)}
                 onClick={onClick}
               >
                 {entry.title}

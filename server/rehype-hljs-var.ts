@@ -162,7 +162,11 @@ export const rehypeVarInHLJS = (
           }
         });
         // Delete the current span and replace it with the new children.
-        parent.children.splice(index, 1, ...newChildren);
+        (parent.children as Array<MdxJsxFlowElement | Element>).splice(
+          index,
+          1,
+          ...newChildren
+        );
         return [SKIP, index + newChildren.length];
       }
     });

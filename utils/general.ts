@@ -39,3 +39,15 @@ export const getFirstLvlNav = (locPath: string): string => {
 
   return firstLvlNav;
 };
+
+/**
+ * This function is a basic filter for XSS when form text is submitted.
+ * Very simply, it just looks for the opening symbol of a script '<' tag.
+ * If includes, then returns a blank string, otherwise returns the text.
+ */
+export const filterTextForXSS = (text: string): string => {
+  if (text.includes("<")) {
+    return "";
+  }
+  return text;
+};

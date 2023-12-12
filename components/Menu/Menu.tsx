@@ -5,6 +5,7 @@ import styles from "./Menu.module.css";
 
 const Menu = () => {
   const [openedCategoryId, setOpenedCategoryId] = useState<number | null>(null);
+
   return (
     <nav className={styles.navItems}>
       {structure.map((props, id) => (

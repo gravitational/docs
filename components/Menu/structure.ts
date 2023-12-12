@@ -1,5 +1,4 @@
 import { MenuCategoryProps } from "./Category";
-import featuredOreilly from "./assets/featured-oreilly.png";
 
 const menu: MenuCategoryProps[] = [
   {
@@ -12,6 +11,10 @@ const menu: MenuCategoryProps[] = [
         title: "Platform",
         children: [
           { title: "Why Teleport", href: "/why-teleport/" },
+          {
+            title: "Identity Governance & Security",
+            href: "/identity-governance-security/",
+          },
           { title: "How It Works", href: "/how-it-works/" },
         ],
       },
@@ -192,6 +195,10 @@ const menu: MenuCategoryProps[] = [
             title: "Tech Papers",
             href: "/resources/white-papers/",
           },
+          {
+            title: "Hot Takes",
+            href: "/resources/hot-takes/",
+          },
         ],
       },
       {
@@ -222,7 +229,8 @@ const menu: MenuCategoryProps[] = [
             href: "/resources/books/identity-native-infrastructure-access-management/",
             title: "Featured Resource",
             isImageLink: true,
-            imageSrc: featuredOreilly,
+            imageSrc:
+              "https://goteleport.com/static/og-cards/books/oreilly.png",
           },
         ],
       },
@@ -267,6 +275,42 @@ const menu: MenuCategoryProps[] = [
     title: "Pricing",
     href: "/pricing/",
     testId: "pricing",
+  },
+  {
+    title: "Community",
+    href: "/community/",
+    testId: "community",
+    children: [
+      {
+        title: "Getting Started with OSS",
+        href: "/docs/",
+      },
+      {
+        title: "Downloads",
+        href: "/download/",
+      },
+      {
+        title: "Community Slack",
+        href: "/community-slack/",
+      },
+      {
+        title: "GitHub",
+        href: "https://github.com/gravitational/teleport/",
+      },
+      {
+        title: "GitHub Discussions",
+        href: "https://github.com/gravitational/teleport/discussions",
+      },
+      {
+        title: "Podcasts",
+        href: "/resources/podcast/",
+      },
+    ],
+  },
+  {
+    title: "Sign In",
+    href: "https://teleport.sh/",
+    testId: "sign-in",
   },
 ];
 

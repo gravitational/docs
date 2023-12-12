@@ -4,6 +4,7 @@ import Script from "next/script";
 import type { AppProps } from "next/app";
 import { DocsContextProvider } from "layouts/DocsPage/context";
 import { posthog, sendPageview } from "utils/posthog";
+import { TabContextProvider } from "components/Tabs";
 
 // https://larsmagnus.co/blog/how-to-optimize-custom-fonts-with-next-font
 // Next Font to enable zero layout shift which is hurting SEO.
@@ -14,7 +15,7 @@ const ubuntu = localUbuntu({
   variable: "--font-ubunt",
   display: "swap",
 });
-const lato = localLato({
+export const lato = localLato({
   src: [
     {
       path: "../styles/assets/lato-400.woff2",
@@ -144,7 +145,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       `}</style>
       <Analytics />
       <DocsContextProvider>
-        <Component {...pageProps} />
+        <TabContextProvider>
+          <Component {...pageProps} />
+        </TabContextProvider>
       </DocsContextProvider>
     </>
   );

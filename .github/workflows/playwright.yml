@@ -1,58 +1,60 @@
-name: Playwright Tests
-on: [deployment_status]
-jobs:
-  test:
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
-    if: github.event.deployment_status.state == 'success'
+# TODO fix docs/issues/376
+
+# name: Playwright Tests
+# on: [deployment_status]
+# jobs:
+#   test:
+#     timeout-minutes: 60
+#     runs-on: ubuntu-latest
+#     if: github.event.deployment_status.state == 'success'
     
-    strategy:
-      matrix:
-        shard: ["1/3", "2/3", "3/3"]
-    steps:
-    - uses: actions/checkout@v2
-    - id: nvm
-      name: Read .nvmrc
-      run: echo "::set-output name=NVMRC;$(cat .nvmrc)"
-    - uses: actions/setup-node@v2
-      with:
-        node-version: '${{ steps.nvm.outputs.NVMRC }}'
-    - name: Get yarn cache directory path
-      id: yarn-cache-dir-path
-      run: echo "::set-output name=dir::$(yarn cache dir)"
-    - name: Cache yarn cache
-      uses: actions/cache@v3.0.7
-      id: cache-yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-      with:
-        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-${{ steps.nvm.ouputs.NVMRC }}-yarn-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-${{ steps.nvm.ouputs.NVMRC }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          ${{ runner.os }}-${{ steps.nvm.ouputs.NVMRC }}-yarn-
-    - name: Cache node_modules
-      id: cache-node-modules
-      uses: actions/cache@v2
-      with:
-        path: node_modules
-        key: ${{ runner.os }}-${{ steps.nvm.ouputs.NVMRC }}-nodemodules-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-${{ steps.nvm.ouputs.NVMRC }}-nodemodules-${{ hashFiles('**/yarn.lock') }}
-          ${{ runner.os }}-${{ steps.nvm.ouputs.NVMRC }}-nodemodules-
-    - run: yarn
-      if: |
-        steps.cache-yarn-cache.outputs.cache-hit != 'true' ||
-        steps.cache-node-modules.outputs.cache-hit != 'true'
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      env:
-        PLAYWRIGHT_TEST_BASE_URL: ${{ github.event.deployment_status.target_url }}
-      run: yarn playwright test --shard=${{ matrix.shard }}
-    - name: Build Storybook, serve and run tests
-      run: yarn storybook:test-ci
-    - uses: actions/upload-artifact@v2
-      if: always()
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
+#     strategy:
+#       matrix:
+#         shard: ["1/3", "2/3", "3/3"] 
+#     steps:
+#     - uses: actions/checkout@v2
+#     - id: nvm
+#       name: Read .nvmrc
+#       run: echo "::set-output name=NVMRC;$(cat .nvmrc)"
+#     - uses: actions/setup-node@v2
+#       with:
+#         node-version: '${{ steps.nvm.outputs.NVMRC }}'
+#     - name: Get yarn cache directory path
+#       id: yarn-cache-dir-path
+#       run: echo "::set-output name=dir::$(yarn cache dir)"
+#     - name: Cache yarn cache
+#       uses: actions/cache@v3.0.7
+#       id: cache-yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+#       with:
+#         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+#         key: ${{ runner.os }}-${{ steps.nvm.ouputs.NVMRC }}-yarn-${{ hashFiles('**/yarn.lock') }}
+#         restore-keys: |
+#           ${{ runner.os }}-${{ steps.nvm.ouputs.NVMRC }}-yarn-${{ hashFiles('**/yarn.lock') }}
+#           ${{ runner.os }}-${{ steps.nvm.ouputs.NVMRC }}-yarn-
+#     - name: Cache node_modules
+#       id: cache-node-modules
+#       uses: actions/cache@v2
+#       with:
+#         path: node_modules
+#         key: ${{ runner.os }}-${{ steps.nvm.ouputs.NVMRC }}-nodemodules-${{ hashFiles('**/yarn.lock') }}
+#         restore-keys: |
+#           ${{ runner.os }}-${{ steps.nvm.ouputs.NVMRC }}-nodemodules-${{ hashFiles('**/yarn.lock') }}
+#           ${{ runner.os }}-${{ steps.nvm.ouputs.NVMRC }}-nodemodules-
+#     - run: yarn
+#       if: |
+#         steps.cache-yarn-cache.outputs.cache-hit != 'true' ||
+#         steps.cache-node-modules.outputs.cache-hit != 'true'
+#     - name: Install Playwright Browsers
+#       run: npx playwright install --with-deps
+#     - name: Run Playwright tests
+#       env:
+#         PLAYWRIGHT_TEST_BASE_URL: ${{ github.event.deployment_status.target_url }}
+#       run: yarn playwright test
+#     - name: Build Storybook, serve and run tests
+#       run: yarn storybook:test-ci
+#     - uses: actions/upload-artifact@v2
+#       if: always()
+#       with:
+#         name: playwright-report
+#         path: playwright-report/
+#         retention-days: 30

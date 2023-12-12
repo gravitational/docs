@@ -17,6 +17,7 @@ interface DocHeaderProps {
   githubUrl?: string;
   latest?: string;
   versions?: VersionsInfo;
+  isVersionAgnosticPage: boolean;
   getNewVersionPath?: (ver: string) => string;
 }
 
@@ -29,9 +30,8 @@ const DocHeader = ({
   getNewVersionPath,
   latest,
   scopes,
+  isVersionAgnosticPage,
 }: DocHeaderProps) => {
-  const { scope } = useContext(DocsContext);
-
   return (
     <section className={styles.wrapper}>
       <a href={GITHUB_DOCS} className={styles["github-link"]}>
@@ -48,12 +48,11 @@ const DocHeader = ({
         <p className={styles.subtitle}>Teleport</p>
         <h1 className={styles.title}>{title}</h1>
         <div className={styles.dropdowns}>
-          {versions && latest && (
+          {versions && latest && !isVersionAgnosticPage && (
             <Versions
               {...versions}
               className={styles.versions}
               getNewVersionPath={getNewVersionPath}
-              disabled={scope === "cloud" || scope === "team"}
               latest={latest}
             />
           )}

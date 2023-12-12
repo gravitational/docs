@@ -4,14 +4,14 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useState,
 } from "react";
 import { Dropdown } from "components/Dropdown";
-import { DocsContext, getScopes } from "layouts/DocsPage/context";
+import { DocsContext } from "layouts/DocsPage/context";
 import { TabLabelList } from "./TabLabel";
 import { TabItemList } from "./TabItem";
 import { DataTab, TabsInDropdowns, TabItemProps, TabsProps } from "./types";
 import styles from "./Tabs.module.css";
+import { TabContext } from "./TabContext";
 
 /**
  * An example of using this component.
@@ -46,7 +46,7 @@ import styles from "./Tabs.module.css";
       ```
     </TabItem>
 
-    <TabItem scope={["oss", "enterprise"]} label="From Source">
+    <TabItem label="From Source">
       ```code
         # Checkout teleport-plugins
         $ git clone https://github.com/gravitational/teleport-plugins.git
@@ -67,11 +67,6 @@ const isInDropdown = (options: string, dropdownSelected: string): boolean => {
   return getDropdownFromItem(options).includes(dropdownSelected);
 };
 
-const getSelectedTab = (tabsMeta: DataTab[]) => {
-  const selected = tabsMeta.find((t) => t.isPreSelected);
-  return selected ? selected.label : tabsMeta[0].label;
-};
-
 // this option is added to unify the code.
 // It is needed to display tabs correctly if there is no dropdown
 const DEFAULT_DROPDOWN = "$all";
@@ -83,9 +78,25 @@ export const Tabs = ({
   dropdownView,
 }: TabsProps) => {
   const {
-    scope,
     versions: { latest, current },
   } = useContext(DocsContext);
+
+  const { getSelectedLabel, setSelectedLabel } = useContext(TabContext);
+
+  const getSelectedTab = (tabsMeta: DataTab[]) => {
+    const labels = tabsMeta.map((t) => t.label);
+    const previousLabel = getSelectedLabel(labels);
+    if (previousLabel) {
+      return previousLabel;
+    }
+    const selected = tabsMeta.find((t) => t.isPreSelected);
+    return selected ? selected.label : tabsMeta[0].label;
+  };
+
+  const getSelectedDropdownOption = (options: Array<string>) => {
+    const prevLabel = getSelectedLabel(options);
+    return prevLabel ? prevLabel : options[0];
+  };
 
   const childTabs = useMemo(
     () =>
@@ -133,11 +144,19 @@ export const Tabs = ({
     return data;
   }, [childTabs, dropdownVarsArr]);
 
-  const [selectedDropdownOption, setSelectedDropdownOpt] = useState(
-    dropdownSelected ? dropdownSelected : dropdownVarsArr[0]
-  );
+  const selectedDropdownOption = getSelectedDropdownOption(dropdownVarsArr);
   const tabsMeta = tabsInDropdown[selectedDropdownOption];
-  const [currentTab, setCurrentTab] = useState(getSelectedTab(tabsMeta));
+  const currentTab = getSelectedTab(tabsMeta);
+  const setCurrentTab = (label: string) => {
+    setSelectedLabel(
+      tabsMeta.map((t) => t.label),
+      label
+    );
+  };
+
+  const setSelectedDropdownOpt = (option: string) => {
+    setSelectedLabel(dropdownVarsArr, option);
+  };
 
   /* selectedDropdownOption is needed here.
    * We have to change the selected tab when we change a dropdown option
@@ -147,16 +166,6 @@ export const Tabs = ({
   useEffect(() => {
     setCurrentTab(getSelectedTab(tabsMeta));
   }, [tabsMeta, selectedDropdownOption]);
-
-  useEffect(() => {
-    const scopedTab = childTabs.find(({ props }) =>
-      getScopes(props.scope).includes(scope)
-    );
-
-    if (scopedTab) {
-      setCurrentTab(scopedTab.props.label);
-    }
-  }, [scope, childTabs]);
 
   const visibleTabs = dropdownVarsArr.filter((t) => t !== DEFAULT_DROPDOWN);
   const dropOptions = tabsMeta.map((item) => item.label);
