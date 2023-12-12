@@ -67,9 +67,8 @@
 }
 
 .searchLink {
+  margin-right: 16px;
   position: absolute;
-    
-    
       &:hover {
         color: #651FFF;
       }
