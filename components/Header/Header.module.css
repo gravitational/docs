@@ -68,13 +68,36 @@
 
 .searchLink {
   position: absolute;
-  right: 60px;
-  top: 12px;
+    & svg {
+        width: 26px;
+        height: 26px;
+      }
+    
+      &:hover {
+        color: #651FFF;
+      }
+}
+.navSearchMobile {
+  display:flex;
+  position: absolute;
+  right:60px;
+  height:26px;
+
   @media (--md-scr) {
     display: none;
   }
 }
-
+.magnifier {
+  display:none;
+  @media (--md-scr) {
+      display:block;
+  }
+}
+.magnifierMobile {
+  @media (--md-scr) {
+    display: none;
+  }
+}
 .content {
   display: flex;
   width: 100%;
