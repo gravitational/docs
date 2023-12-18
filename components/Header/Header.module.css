@@ -68,7 +68,10 @@
 
 .searchLink {
   position: absolute;
-    
+    & svg {
+        width: 26px;
+        height: 26px;
+      }
     
       &:hover {
         color: #651FFF;
@@ -86,20 +89,11 @@
 }
 .magnifier {
   display:none;
- & svg {
-  width: 26px;
-    height: 26px;
- } 
   @media (--md-scr) {
-      display:initial;
+      display:block;
   }
 }
 .magnifierMobile {
-  display:initial;
-  & svg {
-      width: 26px;
-      height: 26px;
-    }
   @media (--md-scr) {
     display: none;
   }

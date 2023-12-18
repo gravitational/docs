@@ -71,20 +71,16 @@ export const NavSearch = ({
   ...props
 }: {
   testid: string;
-  className?: string;
+  className: string;
 }) => (
   <div {...props} className={className}>
     <a
       className={styles.searchlink}
-      href="https://goteleport.com/search/"
+      href={`https://${HOST}/search/`}
       data-testid={testid}
     >
-      <div className={styles.magnifierMobile}>
-        <MagnifierMobile />
-      </div>
-      <div className={styles.magnifier}>
-        <Magnifier />
-      </div>
+      <MagnifierMobile className={styles.mobileMagnifier} />
+      <Magnifier className={styles.magnifier} />
     </a>
   </div>
 );

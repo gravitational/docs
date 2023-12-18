@@ -33,10 +33,3 @@
     margin-right: var(--m-2);
   }
 }
-.searchBox {
-  display:none;
-  margin-right: 12px;
-  @media (--md-scr) {
-    display:initial;
-  }
-}
