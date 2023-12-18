@@ -8,7 +8,6 @@ import blockBodyScroll from "utils/block-body-scroll";
 import HeaderCTA from "./HeaderCTA";
 import styles from "./Header.module.css";
 import Magnifier from "./assets/magnify.svg?react";
-import MagnifierMobile from "./assets/magnify-mobile.svg?react";
 import Link from "components/Link";
 import {
   EventBanner,
@@ -39,11 +38,6 @@ const Header = () => {
         <a href="/" className={styles["logo-link"]}>
           <Logo />
         </a>
-        <NavSearch
-          className={styles.navSearchMobile}
-          testid="mobile-search"
-          aria-label="search website"
-        />
         <HeadlessButton
           onClick={toggleNavigaton}
           className={styles.hamburger}
@@ -65,23 +59,5 @@ const Header = () => {
     </>
   );
 };
-export const NavSearch = ({
-  testid,
-  className,
-  ...props
-}: {
-  testid: string;
-  className: string;
-}) => (
-  <div {...props} className={className}>
-    <a
-      className={styles.searchlink}
-      href={`https://${HOST}/search/`}
-      data-testid={testid}
-    >
-      <MagnifierMobile className={styles.mobileMagnifier} />
-      <Magnifier className={styles.magnifier} />
-    </a>
-  </div>
-);
+
 export default Header;
