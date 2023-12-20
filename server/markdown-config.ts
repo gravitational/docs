@@ -6,7 +6,6 @@ import type { VFile } from "vfile";
 
 import { resolve } from "path";
 import { unified } from "unified";
-import remarkMermaid from "./remark-mermaid";
 import rehypeMdxToHast from "./rehype-mdx-to-hast";
 import remarkMDX from "remark-mdx";
 import rehypeSlug from "rehype-slug";
@@ -46,7 +45,6 @@ export const transformToAST = async (value: string, vfile: VFile) => {
     .use(remarkIncludes, {
       rootDir: getVersionRootPath(vfile.path),
     }) // Resolves (!include.ext!) syntax
-    .use(remarkMermaid, { configFilePath, destinationDir, staticPath })
     .use(remarkVariables, {
       variables: loadConfig(getVersion(vfile.path)).variables || {},
     }) // Resolves (=variable=) syntax
