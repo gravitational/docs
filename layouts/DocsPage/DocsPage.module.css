@@ -5,11 +5,6 @@
 
   @media (--sm-scr) {
     flex-direction: column;
-    padding-top: var(--m-6);
-  }
-
-  @media (--md-scr) {
-    padding-top: var(--m-10);
   }
 }
 

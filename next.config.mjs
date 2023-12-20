@@ -3,6 +3,17 @@ import { loadConfig } from "./.build/server/config-site.mjs";
 import { getRedirects } from "./.build/server/paths.mjs";
 import { securityHeaders } from "./server/headers.mjs";
 import { deprecatedVersionRedirects } from "./server/redirects/redirects.mjs";
+import { resolve } from "path";
+import { generateEvent } from "./.build/server/events.mjs";
+
+const publicRoot = resolve("public");
+
+/*=========================================================
+  Generate event file
+=========================================================*/
+generateEvent({
+  file: resolve(publicRoot + "/data/", "events.json"),
+});
 
 const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
