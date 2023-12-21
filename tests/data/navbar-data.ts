@@ -69,6 +69,11 @@ export const navigationData: NavbarData = [
           isExternal: true,
         },
         { title: "Our Features", href: "/features/", isExternal: true },
+        {
+          title: "Access Graph",
+          href: "/features/access-graph/",
+          isExternal: true,
+        },
         { title: "Assist", href: "/features/assist/", isExternal: true },
         {
           title: "Single Sign On",

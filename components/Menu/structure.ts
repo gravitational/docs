@@ -37,6 +37,10 @@ const menu: MenuCategoryProps[] = [
         href: "/features/",
         titleLink: true,
         children: [
+          {
+            title: "Access Graph",
+            href: "/features/access-graph/",
+          },
           { title: "Assist", href: "/features/assist/" },
           { title: "Single Sign On", href: "/features/sso-for-ssh/" },
           {
