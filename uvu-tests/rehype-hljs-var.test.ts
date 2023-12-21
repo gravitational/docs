@@ -33,6 +33,9 @@ const transformer = (options: VFileOptions) =>
       ], // passThrough options says transformer which nodes to leave as is
     }) // Transforms remark to rehype
     .use(rehypeVarInHLJS, {
+      aliases: {
+        bash: ["bsh", "systemd", "code", "powershell"],
+      },
       languages: { hcl: hcl },
     })
     .use(rehypeMdxToHast)
@@ -114,6 +117,21 @@ Suite("Insert Var components as HTML nodes: text after a Var", () => {
     (result.value as string).trim(),
     readFileSync(
       resolve("server/fixtures/result/hcl-vars.html"),
+      "utf-8"
+    ).trim()
+  );
+});
+
+Suite("Insert Var components as HTML nodes: powershell snippet", () => {
+  const result = transformer({
+    value: readFileSync(resolve("server/fixtures/powershell-var.mdx"), "utf-8"),
+    path: "/docs/index.mdx",
+  });
+
+  assert.equal(
+    (result.value as string).trim(),
+    readFileSync(
+      resolve("server/fixtures/result/powershell-var.html"),
       "utf-8"
     ).trim()
   );

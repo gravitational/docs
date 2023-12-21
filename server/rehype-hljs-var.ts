@@ -86,7 +86,6 @@ export const rehypeVarInHLJS = (
       const el = node as Element;
       if (
         el.type === "element" &&
-        el.tagName === "span" &&
         el.children.length === 1 &&
         el.children[0].type === "text"
       ) {
