@@ -70,6 +70,12 @@ declare global {
 const Analytics = () => {
   return (
     <>
+      {/* Crazy Egg interaction data */}
+      <script
+        type="text/javascript"
+        src="//script.crazyegg.com/pages/scripts/0110/1610.js"
+        async="async"
+      ></script>
       <Script id="add_dataLayer">
         {`window.dataLayer = window.dataLayer || []`}
       </Script>
