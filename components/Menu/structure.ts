@@ -195,10 +195,6 @@ const menu: MenuCategoryProps[] = [
             title: "Tech Papers",
             href: "/resources/white-papers/",
           },
-          {
-            title: "Hot Takes",
-            href: "/resources/hot-takes/",
-          },
         ],
       },
       {

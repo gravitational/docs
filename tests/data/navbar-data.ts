@@ -230,11 +230,6 @@ export const navigationData: NavbarData = [
           isExternal: true,
         },
         {
-          title: "Hot Takes",
-          href: "/resources/hot-takes/",
-          isExternal: true,
-        },
-        {
           title: "Support Portal",
           href: "/support/",
           isExternal: true,
