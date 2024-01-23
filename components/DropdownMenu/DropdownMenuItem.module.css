@@ -64,7 +64,7 @@ max-width: min-content;
   max-width: 250px;
   flex-shrink: 0;
   position: relative;
-  img {
+  &:img {
     position: relative;
     object-fit: cover;
   }
