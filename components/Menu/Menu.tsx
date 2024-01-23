@@ -14,6 +14,7 @@ const Menu = () => {
           id={id}
           opened={id === openedCategoryId}
           onToggleOpened={setOpenedCategoryId}
+          onHover={setOpenedCategoryId}
           {...props}
         />
       ))}
