@@ -1,4 +1,5 @@
 export { default as arrow } from "./svg/arrow.svg?react";
+export { default as arrowRight } from "./svg/arrow-right.svg?react";
 export { default as bolt } from "./svg/bolt.svg?react";
 export { default as book } from "./svg/book.svg?react";
 export { default as building } from "./svg/building.svg?react";
@@ -9,6 +10,7 @@ export { default as check } from "./svg/check.svg?react";
 export { default as chip } from "./svg/chip.svg?react";
 export { default as clock } from "./svg/clock.svg?react";
 export { default as close } from "./svg/close.svg?react";
+export { default as closeLarger } from "./svg/close-larger.svg?react";
 export { default as cloud } from "./svg/cloud.svg?react";
 export { default as cloud2 } from "./svg/simple-cloud.svg?react";
 export { default as clouds } from "./svg/clouds.svg?react";
