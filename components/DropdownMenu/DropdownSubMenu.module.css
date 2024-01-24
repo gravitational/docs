@@ -24,7 +24,6 @@ flex-direction: column;
   }
 }
 .submenuLink {
-  box-sizing: border-box;
   text-decoration: none;
   font-size: 16px;
   font-weight: bold;
@@ -40,7 +39,7 @@ flex-direction: column;
   cursor: pointer;
   color:var(--color-code);
   @media (--nav) {
-width:250px;
+min-width:250px;
 border-bottom: 1px solid #DFDFDF;
 padding: 28px 16px 28px 24px;
   }
