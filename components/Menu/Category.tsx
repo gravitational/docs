@@ -131,7 +131,7 @@ const MenuCategory = ({
         )}
         {children && (
           <div
-            className={cn(styles.dropdown, !opened && styles.opened)}
+            className={cn(styles.dropdown, opened && styles.opened)}
             onMouseLeave={() => toggleOpened(null)}
             data-testid={menuTestId}
           >
