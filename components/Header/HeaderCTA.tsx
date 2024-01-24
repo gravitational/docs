@@ -36,7 +36,7 @@ const HeaderCTA = ({
               key={`navCTA-${cta.href}-${i}`}
               variant={i !== 0 ? "secondary" : "primary"}
               id={cta?.id || ""}
-              shape="lg"
+              shape="md"
             >
               {cta.title}
             </Button>
