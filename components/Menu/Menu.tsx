@@ -1,14 +1,16 @@
 import { useState } from "react";
 import MenuCategory from "./Category";
-import structure from "./structure";
 import styles from "./Menu.module.css";
-
-const Menu = () => {
+import { NavigationItem } from "server/sanity-types";
+interface menuProps {
+  navbarData?: NavigationItem[];
+}
+const Menu = ({ navbarData }: menuProps) => {
   const [openedCategoryId, setOpenedCategoryId] = useState<number | null>(null);
 
   return (
     <nav className={styles.navItems}>
-      {structure.map((props, id) => (
+      {navbarData?.map((props, id) => (
         <MenuCategory
           key={id}
           id={id}

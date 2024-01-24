@@ -9,6 +9,7 @@ import HeaderCTA from "./HeaderCTA";
 import styles from "./Header.module.css";
 import Magnifier from "./assets/magnify.svg?react";
 import Link from "components/Link";
+import Button from "components/Button";
 import {
   EventBanner,
   EventProps,
@@ -16,44 +17,62 @@ import {
 } from "components/EventBanner";
 // @ts-ignore
 import eventData from "../../public/data/events.json";
-
+import data from "../../public/data/navbar.json";
+import { HeaderNavigation } from "server/sanity-types";
 const Header = () => {
-  const selectedEvent = eventData
-    ? getComingEvent(eventData as EventProps)
-    : null;
   const [isNavigationVisible, setIsNavigationVisible] =
     useState<boolean>(false);
   const toggleNavigaton = useCallback(() => {
     setIsNavigationVisible((value) => !value);
     blockBodyScroll(isNavigationVisible);
   }, [isNavigationVisible]);
+
+  const { navbarData, bannerButtons } = data as unknown as HeaderNavigation;
+  const mobileBtn = navbarData.rightSide?.mobileBtn;
+  const logo = navbarData.logo;
+  const event = eventData ? getComingEvent(eventData) : null;
   return (
     <>
-      {selectedEvent && (
-        <EventBanner initialEvent={selectedEvent as EventProps} />
-      )}
-      <header
-        className={`${styles.wrapper} ${selectedEvent ? styles.margin : " "}`}
-      >
+      {event && <EventBanner initialEvent={event} />}
+      <header className={`${styles.wrapper} ${event ? styles.margin : " "}`}>
         <a href="/" className={styles["logo-link"]}>
           <Logo />
         </a>
+        {mobileBtn && (
+          <Button
+            as="link"
+            href={mobileBtn?.href || ""}
+            id={mobileBtn?.id || ""}
+            variant="secondary"
+            className={styles.mobileCTA}
+          >
+            {mobileBtn?.title}
+          </Button>
+        )}
         <HeadlessButton
           onClick={toggleNavigaton}
           className={styles.hamburger}
           data-testid="hamburger"
           aria-details="Toggle Main navigation"
         >
-          <Icon name={isNavigationVisible ? "close" : "hamburger"} size="md" />
+          <Icon
+            name={isNavigationVisible ? "closeLarger" : "hamburger"}
+            size="lg"
+          />
         </HeadlessButton>
         <div
           className={cn(styles.content, {
             [styles.visible]: isNavigationVisible,
           })}
-          style={{ top: selectedEvent ? "96px" : "48px" }}
+          style={{ top: event ? "96px" : "48px" }}
         >
-          <Menu />
-          <HeaderCTA />
+          <Menu navbarData={navbarData.menu} />
+          {navbarData?.rightSide && (
+            <HeaderCTA
+              ctas={navbarData.rightSide}
+              actionButtons={bannerButtons}
+            />
+          )}
         </div>
       </header>
     </>
