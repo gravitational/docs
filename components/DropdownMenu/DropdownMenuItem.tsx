@@ -61,7 +61,7 @@ const DropdownMenuItem = ({
               alt=""
             />
           </div>
-          <div className={cn(styles.item, styles.moreMargin)} {...props}>
+          <div className={cn(styles.item, styles.imageItemText)} {...props}>
             <p className={styles.imageItemTitle}>{customImage?.itemTitle}</p>
             {customImage?.imageDate && (
               <p className={styles.dateText}>{customImage?.imageDate}</p>
