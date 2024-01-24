@@ -8,8 +8,6 @@ box-sizing: unset;
 flex-direction: column;
 @media (--nav) {
   flex-direction: row;
-  padding-left: 4.5%;
-  padding-right: 4.5%;
   background-color: transparent;
  }
 }
