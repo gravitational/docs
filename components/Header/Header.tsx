@@ -1,20 +1,14 @@
 import cn from "classnames";
 import { useState, useCallback, useEffect } from "react";
 import Icon from "components/Icon";
-import Logo from "components/Logo";
+import Image from "next/image";
 import Menu from "components/Menu";
 import HeadlessButton from "components/HeadlessButton";
 import blockBodyScroll from "utils/block-body-scroll";
 import HeaderCTA from "./HeaderCTA";
 import styles from "./Header.module.css";
-import Magnifier from "./assets/magnify.svg?react";
-import Link from "components/Link";
 import Button from "components/Button";
-import {
-  EventBanner,
-  EventProps,
-  getComingEvent,
-} from "components/EventBanner";
+import { EventBanner, getComingEvent } from "components/EventBanner";
 // @ts-ignore
 import eventData from "../../public/data/events.json";
 import data from "../../public/data/navbar.json";
@@ -36,7 +30,7 @@ const Header = () => {
       {event && <EventBanner initialEvent={event} />}
       <header className={`${styles.wrapper} ${event ? styles.margin : " "}`}>
         <a href="/" className={styles["logo-link"]}>
-          <Logo />
+          <Image src={logo || ""} alt="Teleport logo" width={121} height={24} />
         </a>
         {mobileBtn && (
           <Button
