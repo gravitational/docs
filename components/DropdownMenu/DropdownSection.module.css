@@ -1,6 +1,6 @@
-.menu{
+.dropdownSection {
     margin: 0 24px;
-    width:auto;
+    width:605px;
     padding-top: 12px;
     max-width: none;
     border-top: 1px solid #dfdfdf;
@@ -16,7 +16,7 @@
     }
 }
 
-.title{
+.title {
     margin:0 initial;
     padding:0 initial;
         font-size: 14px;
@@ -38,7 +38,7 @@
         font-size: 14px;
         line-height: 18px;
         font-weight: regular;
-        color: var(--colors-gray);
+        color: var(--color-gray);
         display:none;
        @media (--nav) {
         display:initial;

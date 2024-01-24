@@ -90,6 +90,7 @@ padding: 28px 16px 28px 24px;
   &.active {
     @media (--nav) {
     display: flex;
+    flex-direction: row;
     }
   }
 }
@@ -102,7 +103,7 @@ padding: 28px 16px 28px 24px;
   border-right: none;
   @media (--nav) {
     border-right: 1px solid #DFDFDF;
-    display:block;
+    display: block;
     padding-right: 24px;
     margin-left: 24px;
   }

@@ -21,7 +21,7 @@ const DropdownSubMenu = ({ items }: DropdownMenuProps) => {
             return (
               <Link
                 href={titleLink}
-                className={styles.submenulink}
+                className={styles.submenuLink}
                 key={`submenu-${submenuTitle}-${index}`}
               >
                 {submenuTitle}
@@ -32,11 +32,14 @@ const DropdownSubMenu = ({ items }: DropdownMenuProps) => {
               <div
                 key={`submenu-${submenuTitle}-${index}`}
                 className={cn(
-                  styles.submenu,
+                  styles.subMenu,
                   index === activeTab ? styles.active : ""
                 )}
                 onClick={() => setActiveTab(index)}
-              ></div>
+              >
+                {submenuTitle}
+                <Icon name="arrowRight" size="sm" />
+              </div>
             );
           }
         })}
