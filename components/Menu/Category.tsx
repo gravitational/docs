@@ -3,6 +3,7 @@ import { useClickAway } from "react-use";
 import { useCallback, useRef, useState, useEffect } from "react";
 import styles from "./Category.module.css";
 import Icon from "components/Icon";
+import Link from "components/Link";
 import {
   DropdownMenu,
   DropdownSection,
@@ -73,7 +74,7 @@ const MenuCategory = ({
   const toggleOpened = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>) => {
       if (children) {
-        e.preventDefault();
+        e?.preventDefault();
         !opened ? onToggleOpened(id) : onToggleOpened(null);
       } else {
         onClick && onClick();
@@ -101,7 +102,7 @@ const MenuCategory = ({
         ref={ref}
       >
         {isDropdown === "link" ? (
-          <a
+          <Link
             href={url || ""}
             onClick={toggleOpened}
             onMouseEnter={open}
@@ -109,7 +110,7 @@ const MenuCategory = ({
             data-testid={testId}
           >
             {title}
-          </a>
+          </Link>
         ) : (
           <span
             className={cn(styles.menuButton, opened ? styles.opened : "")}

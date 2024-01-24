@@ -9,7 +9,7 @@ export interface LinkProps extends Omit<NextLinkProps, "href"> {
   scheme?: string;
   className?: string;
   href: string;
-  onClick?: () => void;
+  onClick?: (e?: any) => void;
   children: React.ReactNode;
 }
 
