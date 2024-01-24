@@ -1,6 +1,6 @@
 .dropdownSection {
     margin: 0 24px;
-    width:605px;
+    width:auto;
     padding-top: 12px;
     max-width: none;
     border-top: 1px solid #dfdfdf;
@@ -49,7 +49,7 @@
 padding-bottom: 16px;
 }
 
-.sectionBox{
+.sectionBox {
     border-top: none;
     padding-top: none;
     min-width: unset;
