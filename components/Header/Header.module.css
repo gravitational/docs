@@ -70,6 +70,7 @@
 }
 
 .content {
+  min-width:0;
   display: none;
   width:auto;
   max-width: none;
