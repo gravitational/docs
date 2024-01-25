@@ -73,6 +73,31 @@ const Analytics = () => {
       <Script id="add_dataLayer">
         {`window.dataLayer = window.dataLayer || []`}
       </Script>
+      {/* Munchin Script */}
+      <Script id="munchkin-script">
+        {`
+        (function() {
+          var didInit = false;
+          function initMunchkin() {
+            if(didInit === false) {
+              didInit = true;
+              Munchkin.init('819-WHT-483');
+            }
+          }
+          var s = document.createElement('script');
+          s.type = 'text/javascript';
+          s.async = true;
+          s.src = '//munchkin.marketo.net/munchkin.js';
+          s.onreadystatechange = function() {
+            if (this.readyState == 'complete' || this.readyState == 'loaded') {
+              initMunchkin();
+            }
+          };
+          s.onload = initMunchkin;
+          document.getElementsByTagName('head')[0].appendChild(s);
+        })();
+      `}
+      </Script>
       {NEXT_PUBLIC_GTM_ID && (
         <>
           {/* Google Tag Manager */}
