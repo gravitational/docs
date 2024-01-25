@@ -7,7 +7,7 @@ flex-shrink: 0;
 margin-top: 24px;
 margin-left: 32px;
 margin-right:32px;
-width:auto;
+width:100%;
 max-width: 100%;
 box-sizing: border-box;
 padding-left: 24px;
