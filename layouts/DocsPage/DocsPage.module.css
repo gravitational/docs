@@ -16,6 +16,8 @@
   display: flex;
   flex-grow: 1;
   flex-direction: column;
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 .notice {
