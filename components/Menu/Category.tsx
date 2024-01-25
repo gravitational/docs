@@ -104,6 +104,7 @@ const MenuCategory = ({
         {isDropdown === "link" ? (
           <Link
             href={url || ""}
+            passthrough={!!onClick}
             onClick={toggleOpened}
             onMouseEnter={open}
             className={cn(styles.link, opened ? styles.active : "")}
