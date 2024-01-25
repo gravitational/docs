@@ -21,6 +21,7 @@ max-width: min-content;
 }
 
 .styledLink {
+  cursor: pointer;
   display:flex;
   flex-direction: row;
   align-items: flex-start;
@@ -35,7 +36,7 @@ max-width: min-content;
     max-width: none;
   }
   &:hover, &:active, &:focus{
-    color:var(--color-dark-purple);
+    color: var(--color-dark-purple);
     background-color: none;
   }
 }
@@ -78,7 +79,6 @@ max-width: min-content;
 }
 .item {
   margin-left: 8px;
-  color: var(--color-code);
  @media (--nav) {
   margin-left: 16px;
  }
@@ -101,7 +101,6 @@ max-width: min-content;
       line-height: 22px;
       font-weight: bold;
   }
-  color: var(--color-code);
 }
 .description {
     font-size: 14px;
