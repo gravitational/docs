@@ -73,6 +73,19 @@ const Analytics = () => {
       <Script id="add_dataLayer">
         {`window.dataLayer = window.dataLayer || []`}
       </Script>
+      {/* Script for adding Qualified (https://www.qualified.com/)*/}
+      <Script id="script_qualified">
+        {`
+              (function(w,q){
+                w['QualifiedObject']=q;
+                w[q]=w[q]||function(){
+                  (w[q].q=w[q].q||[]).push(arguments)
+                };
+              })(window,'qualified')
+            `}
+      </Script>
+      <Script src="https://js.qualified.com/qualified.js?token=GWPbwWJLtjykim4W" />
+      {/* End script for adding Qualified */}
       {NEXT_PUBLIC_GTM_ID && (
         <>
           {/* Google Tag Manager */}
