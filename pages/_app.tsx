@@ -57,6 +57,7 @@ import "styles/global.css";
 
 const NEXT_PUBLIC_GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 const NEXT_PUBLIC_GTAG_ID = process.env.NEXT_PUBLIC_GTAG_ID;
+const MUNCHKIN_ID = process.env.MUNCHKIN_ID;
 
 interface dataLayerItem {
   [key: string]: unknown;
@@ -73,6 +74,36 @@ const Analytics = () => {
       <Script id="add_dataLayer">
         {`window.dataLayer = window.dataLayer || []`}
       </Script>
+      {/* Munchin Script */}
+      {MUNCHKIN_ID && (
+        <>
+          <Script id="munchkin-script">
+            {`
+          (function() {
+            var didInit = false;
+            function initMunchkin() {
+              if(didInit === false) {
+                didInit = true;
+                Munchkin.init('${MUNCHKIN_ID}');
+              }
+            }
+            var s = document.createElement('script');
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src = '//munchkin.marketo.net/munchkin.js';
+            s.onreadystatechange = function() {
+              if (this.readyState == 'complete' || this.readyState == 'loaded') {
+                initMunchkin();
+              }
+            };
+            s.onload = initMunchkin;
+            document.getElementsByTagName('head')[0].appendChild(s);
+          })();
+        `}
+          </Script>
+        </>
+      )}
+      {/* End Munchin Script */}
       {/* Script for adding Qualified (https://www.qualified.com/)*/}
       <Script id="script_qualified">
         {`
