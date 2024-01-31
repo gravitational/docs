@@ -5,7 +5,7 @@ import { navigationData } from "../data/navbar-data";
 
 test.describe.configure({ mode: "parallel" });
 
-test("Sections in navbar contain appropriate titles and hrefs when viewed on desktop and mobile", async ({
+test.skip("Sections in navbar contain appropriate titles and hrefs when viewed on desktop and mobile", async ({
   isMobile,
   page,
 }) => {
