@@ -8,7 +8,6 @@ import {
   DropdownMenu,
   DropdownSection,
   DropdownMenuItem,
-  DropdownMenuOverlay,
   DropdownSubMenu,
 } from "../DropdownMenu";
 import { NavigationItem } from "server/sanity-types";
@@ -93,13 +92,13 @@ const MenuCategory = ({
 
   return (
     <>
-      {opened && <DropdownMenuOverlay />}
       <div
         className={cn(
           styles.wrapper,
           containsSubCategories && styles.withSubMenus
         )}
         ref={ref}
+        onMouseLeave={() => toggleOpened(null)}
       >
         {isDropdown === "link" ? (
           <Link
