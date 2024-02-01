@@ -62,7 +62,7 @@ height:37px;
 .container {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 4px;
   white-space: nowrap;
   @media (--nav) {
@@ -78,6 +78,7 @@ height:37px;
   flex-shrink: 1;
   gap: 4px;
   color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
   @media (--nav) {
     flex-shrink: 0;
   }

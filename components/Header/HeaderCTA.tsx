@@ -12,7 +12,7 @@ const HeaderCTA = ({
   ctas: HeaderNavigation["navbarData"]["rightSide"];
   actionButtons: HeaderNavigation["bannerButtons"];
 }) => {
-  const { search, CTAs } = ctas || {};
+  const { CTAs } = ctas || {};
   const { first, second } = actionButtons || {};
   const ref = useRef(null);
 
