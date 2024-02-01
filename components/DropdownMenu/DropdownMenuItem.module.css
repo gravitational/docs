@@ -43,6 +43,11 @@
     background-color: none;
   }
 }
+
+.center {
+  align-items: center;
+}
+
 .imageItem {
   display: flex;
   justify-content: flex-start;

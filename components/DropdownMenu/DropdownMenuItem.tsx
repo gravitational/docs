@@ -33,7 +33,11 @@ const DropdownMenuItem = ({
 }: MenuItemProps & { itemAmount?: number }) => {
   const { imageTitle, customImage } = imageItem || {};
   return itemType !== "image" ? (
-    <Link className={styles.styledLink} href={link} passthrough>
+    <Link
+      className={cn(styles.styledLink, !description && styles.center)}
+      href={link}
+      passthrough
+    >
       <Image src={icon || ""} width={35} height={35} alt="" />
       <div className={styles.item}>
         <p className={styles.itemTitle}>{title}</p>
