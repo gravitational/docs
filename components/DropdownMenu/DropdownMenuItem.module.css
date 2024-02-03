@@ -58,11 +58,10 @@
   width: 100%;
   min-width: unset;
   box-sizing: unset;
-  @media (max-width: 1200px) {
+  @media (max-width: 1250px) {
     flex-direction: column;
   }
   @media (max-width: 1650px) {
-    flex-direction: row;
     &.asColumn {
       flex-direction: column;
     }
@@ -105,8 +104,8 @@
   font-weight: 400;
   margin: 0;
   @media (--nav) {
-    font-size: 16px;
-    line-height: 22px;
+    font-size: 14px;
+    line-height: 20px;
     font-weight: bold;
   }
 }
@@ -129,8 +128,8 @@
   color: var(--color-gray);
 }
 .imageTitle {
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 14px;
+  line-height: 20px;
   font-weight: bold;
   margin-top: 0;
 }
