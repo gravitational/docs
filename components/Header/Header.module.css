@@ -18,8 +18,8 @@
   }
   &.margin {
     top: 48px;
-    @media (--nav) {
-      top:0;
+    @media (--lg-scr) {
+      top:37px;
     }
   }
 }
