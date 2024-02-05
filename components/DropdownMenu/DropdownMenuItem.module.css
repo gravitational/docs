@@ -8,16 +8,6 @@
   }
 
   max-width: min-content;
-  &.moreThan {
-    @media (max-width: 1650px) {
-      display: block;
-    }
-  }
-  &.lessThan {
-    @media (max-width: 1250px) {
-      display: block;
-    }
-  }
 }
 
 .styledLink {
@@ -51,26 +41,18 @@
 .imageItem {
   display: flex;
   justify-content: flex-start;
-  flex-direction: row;
+  align-items: flex-start;
+  flex-direction: column;
   border: 1px solid #f0f2f4;
   overflow: hidden;
-  min-height: 140px;
-  width: 100%;
+  width: 180px;
   min-width: unset;
   box-sizing: unset;
-  @media (max-width: 1250px) {
-    flex-direction: column;
-  }
-  @media (max-width: 1650px) {
-    &.asColumn {
-      flex-direction: column;
-    }
-  }
 }
 .imageBox {
   width: 180px;
-  height: 100%;
   max-width: 180px;
+  height: auto;
   flex-shrink: 0;
   align-self: center;
   position: relative;
@@ -95,6 +77,7 @@
     @media (--nav) {
       min-width: 40%;
       max-width: 50%;
+      margin-right: 8px;
     }
   }
 }
@@ -130,7 +113,7 @@
 .imageTitle {
   font-size: 14px;
   line-height: 18px;
-  font-weight: 400;  
+  font-weight: 400;
   @media (--nav) {
     font-size: 14px;
     line-height: 20px;
@@ -148,7 +131,7 @@
   font-size: 14px;
   line-height: 18px;
   font-weight: 400;
-  
+
   @media (--nav) {
     font-size: 14px;
     line-height: 20px;

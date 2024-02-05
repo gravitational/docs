@@ -45,23 +45,16 @@ const DropdownMenuItem = ({
       </div>
     </Link>
   ) : (
-    <div
-      className={cn(
-        styles.wrapper,
-        itemAmount > 3 ? styles.moreThan : styles.lessThan
-      )}
-    >
+    <div className={styles.wrapper}>
       {imageTitle && <h3 className={styles.imageTitle}>{imageTitle}</h3>}
       <Link className={styles.styledLink} href={link}>
-        <div
-          className={cn(styles.imageItem, itemAmount > 3 && styles.asColumn)}
-        >
+        <div className={styles.imageItem}>
           <div className={styles.imageBox}>
             <Image
               src={customImage?.itemImage || ""}
-              width={250}
-              height={150}
-              sizes="250px"
+              width={180}
+              height={100}
+              sizes="180px"
               alt=""
             />
           </div>
