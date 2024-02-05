@@ -67,10 +67,6 @@ export const EventBanner: React.FC<{
     };
     fetchEvent();
   }, []);
-  // Hot Fix for Event URL being relative vs absolute on Blog
-  const eventURL = event?.link?.includes("goteleport.com")
-    ? event.link
-    : "https://goteleport.com" + event.link;
   const { sideButtons } = event;
   return (
     <div className={styles.banner}>
