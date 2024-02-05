@@ -129,8 +129,13 @@
 }
 .imageTitle {
   font-size: 14px;
-  line-height: 20px;
-  font-weight: bold;
+  line-height: 18px;
+  font-weight: 400;  
+  @media (--nav) {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: bold;
+  }
   margin-top: 0;
 }
 .paragraph {
@@ -140,7 +145,13 @@
   color: var(--color-dark-purple);
 }
 .imageItemTitle {
-  font-size: 18px;
-  line-height: 22px;
-  font-weight: bold;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 400;
+  
+  @media (--nav) {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: bold;
+  }
 }
