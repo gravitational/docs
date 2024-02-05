@@ -11,6 +11,7 @@ import Button from "components/Button";
 import { EventBanner, getComingEvent } from "components/EventBanner";
 // @ts-ignore
 import eventData from "../../public/data/events.json";
+// @ts-ignore
 import data from "../../public/data/navbar.json";
 import { HeaderNavigation } from "server/sanity-types";
 const Header = () => {
