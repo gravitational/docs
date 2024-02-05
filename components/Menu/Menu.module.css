@@ -1,30 +1,15 @@
-.wrapper {
-  display: flex;
-  margin-right: 10px;
-
-  @media (--sm-scr) {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  @media (--lg-scr) {
-    flex-direction: row;
-  }
-}
-
 .navItems {
   box-sizing: border-box;
   display: flex;
-  flex-direction: row;
-  width: auto;
-  flex-shrink: 1;
-  margin-right: 10px;
+  flex-direction: column;
+  margin-right: 0;
+  margin-left: 0;
+  width:100%;
   min-width: 0;
-  @media (--sm-scr) {
-    flex-direction: column;
-    width: 100%;
-    margin-right: 0;
-    flex-shrink: 0;
-    max-width: none;
+  @media (--nav) {
+    flex-direction: row;
+    margin-right: 91px;
+    width:auto;
+    flex-shrink: 1;
   }
 }

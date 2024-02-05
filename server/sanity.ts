@@ -1,7 +1,7 @@
 const PROJECT_ID = process.env["NEXT_PUBLIC_SANITY_PROJECT_ID"] || "";
 const DATASET = process.env["NEXT_PUBLIC_SANITY_DATASET"] || "";
 
-const query = ` *[_type == "topBanner"][0] {
+const bannerQuery = `*[_type == "topBanner"][0] {
       bannerType,
       event -> {
         location,
@@ -15,17 +15,108 @@ const query = ` *[_type == "topBanner"][0] {
       cta,
       link,
       end,
+      defaultContent,
+      sideButtons,
     }`;
-
 export async function fetchEventsFromSanity() {
   const apiUrl = `https://${PROJECT_ID}.api.sanity.io/v1/data/query/${DATASET}?query=${encodeURIComponent(
-    query
+    bannerQuery
   )}`;
 
-  const response = await fetch(apiUrl).then((res) => res.json());
+  const response = await fetch(apiUrl);
 
-  const data = response.result;
+  const data = await response.json().then((res) => res?.result);
+  if (!data) return undefined;
   if (data?.bannerType === "event")
-    return { ...data?.event, cta: data?.cta, bannerType: data?.bannerType };
+    return {
+      ...data?.event,
+      cta: data?.cta,
+      bannerType: data?.bannerType,
+      sideButtons: data?.sideButtons,
+    };
   return data;
 }
+
+const navQuery = `
+{
+"navbarData": *[_type == "navigation"][0] {
+  "logo": logo.asset->url,
+  menu[]{
+    title,
+    isDropdown,
+    url,
+    menuType,
+    columns[]{
+      columnSections[]{
+        title,
+        subtitle,
+        sectionItems[]{
+          itemType,
+          "icon": icon.asset->url,
+          title,
+          description,
+          link,
+          imageItem {
+            imageTitle,
+            useMetadata,
+            customImage {
+              "itemImage": itemImage.asset->url,
+              itemTitle,
+              imageCTA,
+              imageDate
+            }
+          }
+        }
+      }
+    },
+    submenus[]{
+      submenuTitle,
+      titleLink,
+      submenuSections[]{
+        title,
+        subtitle,
+        sectionItems[]{
+          itemType,
+          "icon": icon.asset->url,
+          title,
+          description,
+          link,
+          imageItem {
+            imageTitle,
+            useMetadata,
+            customImage {
+              "itemImage": itemImage.asset->url,
+              itemTitle,
+              imageCTA,
+              imageDate
+            }
+          }
+        }
+      }
+    }
+  },
+  rightSide {
+    search {
+      "searchIcon": searchIcon.asset->url,
+      searchLink
+    },
+    CTAs,
+    mobileBtn
+  }
+},
+"bannerButtons": *[_type == "topBanner"][0] {
+  "first": sideButtons.first,
+   "second": sideButtons.second
+  }
+}`;
+
+export const getNavData = async () => {
+  const apiUrl = `https://${PROJECT_ID}.api.sanity.io/v1/data/query/${DATASET}?query=${encodeURIComponent(
+    navQuery
+  )}`;
+  const response = await fetch(apiUrl);
+
+  const data = await response.json().then((res) => res?.result);
+  if (!data) return undefined;
+  return data;
+};

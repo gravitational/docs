@@ -4,7 +4,10 @@ import { getRedirects } from "./.build/server/paths.mjs";
 import { securityHeaders } from "./server/headers.mjs";
 import { deprecatedVersionRedirects } from "./server/redirects/redirects.mjs";
 import { resolve } from "path";
-import { generateEvent } from "./.build/server/events.mjs";
+import {
+  generateEvent,
+  generateNavigation,
+} from "./.build/server/sanity-settings.mjs";
 
 const publicRoot = resolve("public");
 
@@ -14,7 +17,12 @@ const publicRoot = resolve("public");
 generateEvent({
   file: resolve(publicRoot + "/data/", "events.json"),
 });
-
+/*=========================================================
+  Get navigation settings
+=========================================================*/
+generateNavigation({
+  file: resolve(publicRoot + "/data/", "navbar.json"),
+});
 const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
 });
@@ -43,7 +51,7 @@ export default withBundleAnalyzer({
   images: {
     path: "/docs/_next/image",
     disableStaticImages: true,
-    domains: ["i.ytimg.com", "goteleport.com"], // Images for youtube preview, goteleport.com for featured resource
+    domains: ["i.ytimg.com", "goteleport.com", "cdn.sanity.io"], // Images for youtube preview, goteleport.com for featured resource
   },
   trailingSlash: true,
   env: {
