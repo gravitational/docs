@@ -58,7 +58,7 @@ export const EventBanner: React.FC<{
   initialEvent: EventProps;
 }> = ({ initialEvent }) => {
   const [event, setEvent] = useState<EventProps>(initialEvent);
-  useEffect(() => {
+  /*useEffect(() => {
     const fetchEvent = async () => {
       const tempEvent = await fetch("/api/getfeaturedevent/").then(
         (res) => res.status === 200 && res.json()
@@ -66,7 +66,7 @@ export const EventBanner: React.FC<{
       tempEvent && setEvent(tempEvent.data as EventProps);
     };
     fetchEvent();
-  }, []);
+  }, []);*/
   const { sideButtons } = event;
   return (
     <div className={styles.banner}>
