@@ -58,7 +58,9 @@ export const EventBanner: React.FC<{
   initialEvent: EventProps;
 }> = ({ initialEvent }) => {
   const [event, setEvent] = useState<EventProps>(initialEvent);
-  /*useEffect(() => {
+  /* There was an excessive amount of api requests coming in to fetch the event data
+so this fetch is disable until we find and fix the issue or decide to completely drop this version of the revalidation
+useEffect(() => {
     const fetchEvent = async () => {
       const tempEvent = await fetch("/api/getfeaturedevent/").then(
         (res) => res.status === 200 && res.json()
