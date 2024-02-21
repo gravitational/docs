@@ -137,16 +137,11 @@ const processFiles = () => {
 const processEntry = ({ title, slug, entries }) => {
   let newSlug;
 
-  if (slug) {
-    // index.mdx case
-    if (slug === "/") {
-      newSlug = "index";
-      // ver/16.x/index.mdx case
-    } else if (/^\/ver\/[0-9x\.]+\/$/.test(slug)) {
-      newSlug = `${slug.replace(/^\/+/g, "")}index`;
-    } else {
-      newSlug = slug.replace(/^\/+/g, "").replace(/\/\s*$/, "");
-    }
+  // index.mdx case
+  if (/index.mdx$/.test(docsPageMap[slug])) {
+    newSlug = `${slug.replace(/^\/+/g, "")}index`;
+  } else {
+    newSlug = slug.replace(/^\/+/g, "").replace(/\/\s*$/, "");
   }
 
   // Mintlyfy does not allows categories to be links themselves so we need to move current link
