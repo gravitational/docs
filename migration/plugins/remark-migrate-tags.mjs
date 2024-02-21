@@ -95,10 +95,7 @@ export default function remarkMigrateTags() {
       }
 
       // Replace Var with uppercase content
-      if (
-        ["mdxJsxFlowElement", "mdxJsxTextElement"].includes(node.type) &&
-        node.name === "Var"
-      ) {
+      if (isMdxNode(node) && node.name === "Var") {
         parent.children[index] = {
           type: "text",
           value: node.attributes
@@ -129,6 +126,16 @@ export default function remarkMigrateTags() {
         if (node.lang === "code") {
           node.lang === "bash";
         }
+      }
+
+      // Remove string styles from nodes
+      if (isMdxNode(node)) {
+        const hasStringStyles = (attrs) =>
+          attrs.name === "style" && typeof attrs.value === "string";
+
+        node.attributes = node.attributes.filter(
+          (attrs) => !hasStringStyles(attrs)
+        );
       }
     });
   };
