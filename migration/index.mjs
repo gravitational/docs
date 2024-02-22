@@ -134,7 +134,7 @@ const processFiles = () => {
 };
 
 // Process navigation entry
-const processEntry = ({ title, slug, entries }) => {
+const processEntry = ({ title, slug, entries }, version) => {
   let newSlug;
 
   // index.mdx case
@@ -150,11 +150,13 @@ const processEntry = ({ title, slug, entries }) => {
     return {
       group: title,
       pages: [newSlug, ...entries.map((entry) => processEntry(entry))],
+      version,
     };
   } else if (entries) {
     return {
       group: title,
       pages: entries.map((entry) => processEntry(entry)),
+      version,
     };
   }
 
@@ -179,6 +181,7 @@ const generateMintJson = () => {
         return {
           group: category.title,
           pages: category.entries.map((entry) => processEntry(entry, version)),
+          version,
         };
       })
     );
