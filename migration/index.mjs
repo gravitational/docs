@@ -113,14 +113,17 @@ const processFiles = () => {
 
       const file = readSync(filePath, "utf-8");
 
-      const newFileBase = resolve(`${resultDir}/${slug}`);
+      const newFileBase = resolve(`${resultDir}/docs${slug}`);
+
       const newFilePath = isIndexFile
         ? `${newFileBase}/index.mdx`
         : `${newFileBase}.mdx`;
 
       const result = await processFile(file, {
         slug: dirname(
-          isIndexFile ? `${slug}index.mdx` : `${slug.replace(/\/$/, "")}.mdx`
+          isIndexFile
+            ? `/docs${slug}index.mdx`
+            : `/docs${slug.replace(/\/$/, "")}.mdx`
         ), // dir of current file, needs for resolving relative links
         newFilePath, // path to file, needs to resolve paths to images
       });
@@ -139,9 +142,9 @@ const processEntry = ({ title, slug, entries }, version) => {
 
   // index.mdx case
   if (/index.mdx$/.test(docsPageMap[slug])) {
-    newSlug = `${slug.replace(/^\/+/g, "")}index`;
+    newSlug = `docs${slug}index`;
   } else {
-    newSlug = slug.replace(/^\/+/g, "").replace(/\/\s*$/, "");
+    newSlug = `docs${slug.replace(/\/\s*$/, "")}`;
   }
 
   // Mintlyfy does not allows categories to be links themselves so we need to move current link
@@ -189,7 +192,7 @@ const generateMintJson = () => {
     // Make hash from redirects to remove duplicated (Mintlify throws error on them)
     const redirectsHash = versionConfig.redirects.reduce(
       (result, { source, destination }) => {
-        return { ...result, [source]: destination };
+        return { ...result, [`/docs${source}`]: `/docs${destination}` };
       },
       {}
     );
