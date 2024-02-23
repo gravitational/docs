@@ -79,8 +79,7 @@ const processFile = async (vfile, { slug, newFilePath }) => {
     .use(remarkLinks, { currentUri: slug }) // Make links absolute and remove mdx extension
     .use(remarkCopyLinkedFiles, {
       destinationDir: assetsDir,
-      buildUrl: ({ filename }) =>
-        relative(newFilePath, resolve(assetsDir, filename)),
+      buildUrl: ({ filename }) => `/assets/${filename}`,
     }) // Move all assets to result dir
     .use(remarkMigrateTags) // Migrate tags to Mintlify analogues
     .use(remarkStringify, {
