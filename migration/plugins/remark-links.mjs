@@ -8,7 +8,7 @@
  *
  */
 
-import { resolve } from "path";
+import { dirname, resolve } from "path";
 import { visit } from "unist-util-visit";
 import { isExternalLink, isHash, isPage } from "../../.build/utils/url.mjs";
 
@@ -56,11 +56,11 @@ const isRemarkLinkWilthLocalHref = (node) => {
   return node.type === "link" && isLocalHref(node.url);
 };
 
-export default function remarkLinks({ currentUri } = {}) {
+export default function remarkLinks({ slug, isIndex } = {}) {
   return (root) => {
     visit(root, (node) => {
       if (isRemarkLinkWilthLocalHref(node)) {
-        node.url = updateHref(currentUri, node.url);
+        node.url = updateHref(isIndex ? slug : dirname(slug), node.url);
       } else if (isMdxComponentWithLocalHref(node)) {
         const hrefAttribute = node.attributes.find(
           ({ name }) => name === "href"

@@ -63,7 +63,7 @@ const initialMintJson = {
   redirects: [],
 };
 
-const processFile = async (vfile, { slug, newFilePath }) => {
+const processFile = async (vfile, { slug, isIndex }) => {
   return unified()
     .use(remarkParse) // Parse to AST
     .use(remarkMDX) // Add mdx parser
@@ -76,7 +76,7 @@ const processFile = async (vfile, { slug, newFilePath }) => {
     .use(remarkVariables, {
       variables: loadConfig(getVersion(vfile.path)).variables || {},
     }) // Resolves (=variable=) syntax
-    .use(remarkLinks, { currentUri: slug }) // Make links absolute and remove mdx extension
+    .use(remarkLinks, { slug, isIndex }) // Make links absolute and remove mdx extension
     .use(remarkCopyLinkedFiles, {
       destinationDir: assetsDir,
       buildUrl: ({ filename }) => `/assets/${filename}`,
@@ -108,26 +108,20 @@ const processFiles = () => {
     )
     .forEach(async (slug) => {
       const filePath = docsPageMap[slug]; // get filepath for slug
-      const isIndexFile = filePath.endsWith("index.mdx");
+      const isIndex = filePath.endsWith("index.mdx");
 
       const file = readSync(filePath, "utf-8");
 
-      const newFileBase = resolve(`${resultDir}/docs${slug}`);
+      const newBasePath = `/docs${slug.replace(/\/$/, "")}.mdx`;
 
-      const newFilePath = isIndexFile
-        ? `${newFileBase}/index.mdx`
-        : `${newFileBase}.mdx`;
+      const newFilePath = resolve(`${resultDir}${newBasePath}`);
 
       const result = await processFile(file, {
-        slug: dirname(
-          isIndexFile
-            ? `/docs${slug}index.mdx`
-            : `/docs${slug.replace(/\/$/, "")}.mdx`
-        ), // dir of current file, needs for resolving relative links
-        newFilePath, // path to file, needs to resolve paths to images
+        slug: `/docs${slug.replace(/\/$/, "")}`,
+        isIndex, // for old index pages we need to modify paths differently
       });
 
-      // Create folder recursevly
+      // Create folder recursively
       ensureFileSync(newFilePath);
 
       // Replace fixes bug with includes' stringifying
@@ -137,14 +131,7 @@ const processFiles = () => {
 
 // Process navigation entry
 const processEntry = ({ title, slug, entries }, version) => {
-  let newSlug;
-
-  // index.mdx case
-  if (/index.mdx$/.test(docsPageMap[slug])) {
-    newSlug = `docs${slug}index`;
-  } else {
-    newSlug = `docs${slug.replace(/\/\s*$/, "")}`;
-  }
+  let newSlug = `docs${slug.replace(/\/\s*$/, "")}`;
 
   // Mintlyfy does not allows categories to be links themselves so we need to move current link
   // to the pages array to
