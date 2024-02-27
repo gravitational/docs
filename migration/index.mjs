@@ -2,7 +2,7 @@
  * List of plugins and settings for them used on the docs pages.
  */
 
-import { dirname, relative, resolve } from "path";
+import { resolve } from "path";
 import { writeFileSync, rmSync, existsSync, cpSync } from "fs";
 import { ensureFileSync } from "fs-extra/esm";
 import { readSync } from "to-vfile";
@@ -26,6 +26,7 @@ import { getDocsPagesMap } from "../.build/server/paths.mjs";
 import { getDocsPaths } from "../.build/server/docs-helpers.mjs";
 
 import remarkLinks from "./plugins/remark-links.mjs";
+import remarkImages from "./plugins/remark-images.mjs";
 import remarkMigrateTags from "./plugins/remark-migrate-tags.mjs";
 import remarkUpdateFrontmatter from "./plugins/remark-update-frontmatter.mjs";
 
@@ -81,6 +82,7 @@ const processFile = async (vfile, { slug, isIndex }) => {
       destinationDir: assetsDir,
       buildUrl: ({ filename }) => `/assets/${filename}`,
     }) // Move all assets to result dir
+    .use(remarkImages, { staticPath: "/assets", destinationDir: assetsDir })
     .use(remarkMigrateTags) // Migrate tags to Mintlify analogues
     .use(remarkStringify, {
       bullet: "-",
