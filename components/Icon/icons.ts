@@ -53,7 +53,6 @@ export { default as success } from "./svg/success.svg?react";
 export { default as thumbsUp } from "./svg/thumbs-up.svg?react";
 export { default as thumbsDown } from "./svg/thumbs-down.svg?react";
 export { default as wand } from "./svg/magic-wand.svg?react";
-export { default as users } from "./svg/users.svg?react";
 export { default as warning } from "./svg/warning.svg?react";
 export { default as window } from "./svg/window.svg?react";
 export { default as wrench } from "./svg/wrench.svg?react";

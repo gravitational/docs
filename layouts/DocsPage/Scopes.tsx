@@ -16,7 +16,7 @@ interface ScopeDescription {
 }
 
 const SCOPE_DESCRIPTIONS: Record<
-  "oss" | "enterprise" | "cloud" | "team",
+  "oss" | "enterprise" | "cloud",
   ScopeDescription
 > = {
   oss: {
@@ -29,19 +29,13 @@ const SCOPE_DESCRIPTIONS: Record<
     icon: "building2",
     value: "enterprise",
     title: "Enterprise",
-    color: "gray",
+    color: "green",
   },
   cloud: {
     icon: "cloud2",
     value: "cloud",
     title: "Cloud",
-    color: "gray",
-  },
-  team: {
-    icon: "users",
-    value: "team",
-    title: "Team",
-    color: "gray",
+    color: "blue",
   },
 };
 
@@ -72,12 +66,25 @@ interface ScopesProps {
 export const Scopes = ({ scopes, className }: ScopesProps) => {
   if (scopes[0] === "noScope" || scopes[0] === "") return <></>;
 
-  const scopeItems = scopes?.map((item) => (
-    <ScopesItem
-      key={SCOPE_DESCRIPTIONS[item].value}
-      scopeFeatures={SCOPE_DESCRIPTIONS[item]}
-    />
-  ));
+  // When initializing a ScopesItem from the scopes prop, filter out any scopes
+  // that are invalid. This way, we retain compatibility with docs pages that
+  // have a forScopes setting that includes a deprecated scope.
+  const scopeItems = scopes?.reduce((accum, item) => {
+    if (SCOPE_DESCRIPTIONS[item] !== undefined) {
+      accum.push(
+        <ScopesItem
+          key={SCOPE_DESCRIPTIONS[item].value}
+          scopeFeatures={SCOPE_DESCRIPTIONS[item]}
+        />
+      );
+    }
+
+    return accum;
+  }, []);
+
+  if (scopeItems.length === 0) {
+    return <></>;
+  }
 
   return (
     <ul className={cn(styles.list, className)}>
