@@ -7,6 +7,11 @@ import type {
 import type { Content as MdastContent } from "mdast";
 import type { Node as AcornNode } from "acorn";
 
+export interface YamlNode extends Node {
+  type: "yaml";
+  value: string;
+}
+
 export type MdxJsxAttributeValue =
   | boolean
   | number

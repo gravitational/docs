@@ -24,11 +24,11 @@ import { loadConfig as loadConfigSite } from "../.build/server/config-site.mjs";
 import { loadConfig } from "../.build/server/config-docs.mjs";
 import { getDocsPagesMap } from "../.build/server/paths.mjs";
 import { getDocsPaths } from "../.build/server/docs-helpers.mjs";
+import remarkMintlifyUpdateFrontmatter from "../.build/server/remark-mintlify-update-frontmatter.mjs";
 
 import remarkLinks from "./plugins/remark-links.mjs";
 import remarkImages from "./plugins/remark-images.mjs";
 import remarkMigrateTags from "./plugins/remark-migrate-tags.mjs";
-import remarkUpdateFrontmatter from "./plugins/remark-update-frontmatter.mjs";
 
 const resultDir = resolve("migration-result"); // Name of the result folder
 const assetsDir = `${resultDir}/assets`;
@@ -70,7 +70,7 @@ const processFile = async (vfile, { slug, isIndex }) => {
     .use(remarkMDX) // Add mdx parser
     .use(remarkGFM) // Add tables parser
     .use(remarkFrontmatter) // Add frontmatter support
-    .use(remarkUpdateFrontmatter, { version: getVersion(vfile.path) }) // Add version to the frontmatter
+    .use(remarkMintlifyUpdateFrontmatter, { version: getVersion(vfile.path) }) // Add version to the frontmatter
     .use(remarkIncludes, {
       rootDir: getVersionRootPath(vfile.path),
     }) // Resolves (!include.ext!) syntax
