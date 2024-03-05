@@ -24,10 +24,11 @@ import { loadConfig as loadConfigSite } from "../.build/server/config-site.mjs";
 import { loadConfig } from "../.build/server/config-docs.mjs";
 import { getDocsPagesMap } from "../.build/server/paths.mjs";
 import { getDocsPaths } from "../.build/server/docs-helpers.mjs";
+import remarkMintlifyUpdateImages from "../.build/server/remark-mintlify-update-images.mjs";
 import remarkMintlifyUpdateFrontmatter from "../.build/server/remark-mintlify-update-frontmatter.mjs";
 
 import remarkLinks from "./plugins/remark-links.mjs";
-import remarkImages from "./plugins/remark-images.mjs";
+
 import remarkMigrateTags from "./plugins/remark-migrate-tags.mjs";
 
 const resultDir = resolve("migration-result"); // Name of the result folder
@@ -82,7 +83,10 @@ const processFile = async (vfile, { slug, isIndex }) => {
       destinationDir: assetsDir,
       buildUrl: ({ filename }) => `/assets/${filename}`,
     }) // Move all assets to result dir
-    .use(remarkImages, { staticPath: "/assets", destinationDir: assetsDir })
+    .use(remarkMintlifyUpdateImages, {
+      staticPath: "/assets",
+      destinationDir: assetsDir,
+    }) // Convert markdown images to mdx images and add width and height
     .use(remarkMigrateTags) // Migrate tags to Mintlify analogues
     .use(remarkStringify, {
       bullet: "-",
