@@ -3,7 +3,7 @@
  */
 
 import { resolve } from "path";
-import { writeFileSync, rmSync, existsSync, cpSync } from "fs";
+import { readFileSync, writeFileSync, rmSync, existsSync, cpSync } from "fs";
 import { ensureFileSync } from "fs-extra/esm";
 import { readSync } from "to-vfile";
 import { unified } from "unified";
@@ -16,6 +16,10 @@ import remarkCopyLinkedFiles from "remark-copy-linked-files";
 
 import remarkIncludes from "../.build/server/remark-includes.mjs";
 import remarkVariables from "../.build/server/remark-variables.mjs";
+import remarkMintlifyUpdateImages from "../.build/server/remark-mintlify-update-images.mjs";
+import remarkMintlifyUpdateFrontmatter from "../.build/server/remark-mintlify-update-frontmatter.mjs";
+import remarkMintlifyUpdateLinks from "../.build/server/remark-mintlify-update-links.mjs";
+
 import {
   getVersion,
   getVersionRootPath,
@@ -24,48 +28,18 @@ import { loadConfig as loadConfigSite } from "../.build/server/config-site.mjs";
 import { loadConfig } from "../.build/server/config-docs.mjs";
 import { getDocsPagesMap } from "../.build/server/paths.mjs";
 import { getDocsPaths } from "../.build/server/docs-helpers.mjs";
-import remarkMintlifyUpdateImages from "../.build/server/remark-mintlify-update-images.mjs";
-import remarkMintlifyUpdateFrontmatter from "../.build/server/remark-mintlify-update-frontmatter.mjs";
-
-import remarkLinks from "./plugins/remark-links.mjs";
 
 import remarkMigrateTags from "./plugins/remark-migrate-tags.mjs";
 
-const resultDir = resolve("migration-result"); // Name of the result folder
-const assetsDir = `${resultDir}/assets`;
+const RESULT_DIR = resolve("migration-result"); // Name of the result folder
+const ASSETS_DIR = `${RESULT_DIR}/assets`; // Name of the assets folder
 
-const initialMintJson = {
-  $schema: "https://mintlify.com/schema.json",
-  name: "Teleport",
-  logo: {
-    light: "/logo/light.png",
-    dark: "/logo/dark.png",
-  },
-  favicon: "/favicon.png",
-  colors: {
-    primary: "#512FC9",
-    light: "#7956F5",
-    dark: "#512FC9",
-  },
-  feedback: {
-    thumbsRating: true,
-  },
-  topbarCtaButton: {
-    name: "Get Started",
-    url: "https://goteleport.com/pricing/",
-  },
-  topbarLinks: [
-    {
-      name: "Sign In",
-      url: "https://teleport.sh/",
-    },
-  ],
-  versions: [],
-  navigation: [],
-  redirects: [],
-};
+// Base mint.json fields
+const initialMintJson = JSON.parse(
+  readFileSync(resolve("migration/initial-mint.json"), "utf-8")
+);
 
-const processFile = async (vfile, { slug, isIndex }) => {
+const processFile = async (vfile, { slug }) => {
   return unified()
     .use(remarkParse) // Parse to AST
     .use(remarkMDX) // Add mdx parser
@@ -78,15 +52,15 @@ const processFile = async (vfile, { slug, isIndex }) => {
     .use(remarkVariables, {
       variables: loadConfig(getVersion(vfile.path)).variables || {},
     }) // Resolves (=variable=) syntax
-    .use(remarkLinks, { slug, isIndex }) // Make links absolute and remove mdx extension
+    .use(remarkMintlifyUpdateLinks, { slug }) // Make links absolute and remove mdx extension
     .use(remarkCopyLinkedFiles, {
-      destinationDir: assetsDir,
+      destinationDir: ASSETS_DIR,
       buildUrl: ({ filename }) => `/assets/${filename}`,
-    }) // Move all assets to result dir
+    }) // Move all assets to public dir, add hashed to filenams and removes duplicates
     .use(remarkMintlifyUpdateImages, {
       staticPath: "/assets",
-      destinationDir: assetsDir,
-    }) // Convert markdown images to mdx images and add width and height
+      destinationDir: ASSETS_DIR,
+    }) // Convert markdown images to mdx images and add correct width and height
     .use(remarkMigrateTags) // Migrate tags to Mintlify analogues
     .use(remarkStringify, {
       bullet: "-",
@@ -99,11 +73,11 @@ const processFile = async (vfile, { slug, isIndex }) => {
       tablePipeAlign: false,
       tableCellPadding: true,
       listItemIndent: 1,
-    }) // Stringify AST to string
+    }) // Stringify AST to string with correct syntax options
     .process(vfile);
 };
 
-const docsPageMap = getDocsPagesMap(); // Hash in { slug: filepath } format
+const docsPageMap = getDocsPagesMap(); // Slugs' hash in { slug: filepath } format
 
 const processFiles = () => {
   // Get list of slugs that needs to be build
@@ -114,24 +88,31 @@ const processFiles = () => {
     )
     .forEach(async (slug) => {
       const filePath = docsPageMap[slug]; // get filepath for slug
-      const isIndex = filePath.endsWith("index.mdx");
 
       const file = readSync(filePath, "utf-8");
 
+      // Generates slug for the page in mintlify format
       const newBasePath = `/docs${slug.replace(/\/$/, "")}.mdx`;
 
-      const newFilePath = resolve(`${resultDir}${newBasePath}`);
+      // Location for the generated mdx page
+      const newFilePath = resolve(`${RESULT_DIR}${newBasePath}`);
 
       const result = await processFile(file, {
         slug: `/docs${slug.replace(/\/$/, "")}`,
-        isIndex, // for old index pages we need to modify paths differently
       });
 
       // Create folder recursively
       ensureFileSync(newFilePath);
 
-      // Replace fixes bug with includes' stringifying
-      writeFileSync(newFilePath, result.value.replaceAll(/\<!----\>\n\n/g, ""));
+      writeFileSync(
+        newFilePath,
+        result.value
+          .replaceAll(/\<!----\>\n\n/g, "") // HACK: Fixes bug with includes'stringifying
+          .replaceAll(
+            "project\\_path:{group}/{project}:ref\\_type:{type}:ref:{branch_name}",
+            "`project\\_path:{group}/{project}:ref\\_type:{type}:ref:{branch_name}`"
+          ) // HACK: Fixes bug with non-existing variables
+      );
     });
 };
 
@@ -200,22 +181,18 @@ const generateMintJson = () => {
 
   // Write config to file
   writeFileSync(
-    resolve(`${resultDir}/mint.json`),
+    resolve(`${RESULT_DIR}/mint.json`),
     JSON.stringify(initialMintJson)
   );
 };
 
-const migration = () => {
-  // Remove previous build results
-  if (existsSync(resultDir)) {
-    rmSync(resultDir, { recursive: true });
-  }
+// Remove previous build results
+if (existsSync(RESULT_DIR)) {
+  rmSync(RESULT_DIR, { recursive: true });
+}
 
-  // Copy assets and favicons to result folder
-  cpSync(resolve("migration/base"), resultDir, { recursive: true });
+// Copy assets and favicons to result folder
+cpSync(resolve("migration/base"), RESULT_DIR, { recursive: true });
 
-  processFiles(); // Process, move and rename mdx files
-  generateMintJson(); // Generate one config from separate configs
-};
-
-migration();
+processFiles(); // Process, move and rename mdx files
+generateMintJson(); // Generate one config from separate configs

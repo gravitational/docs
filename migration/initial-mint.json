@@ -1,0 +1,30 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Teleport",
+  "logo": {
+    "light": "/logo/light.png",
+    "dark": "/logo/dark.png"
+  },
+  "favicon": "/favicon.png",
+  "colors": {
+    "primary": "#512FC9",
+    "light": "#7956F5",
+    "dark": "#512FC9"
+  },
+  "feedback": {
+    "thumbsRating": true
+  },
+  "topbarCtaButton": {
+    "name": "Get Started",
+    "url": "https://goteleport.com/pricing/"
+  },
+  "topbarLinks": [
+    {
+      "name": "Sign In",
+      "url": "https://teleport.sh/"
+    }
+  ],
+  "versions": [],
+  "navigation": [],
+  "redirects": []
+}
