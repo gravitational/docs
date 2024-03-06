@@ -15,13 +15,13 @@ import { visit } from "unist-util-visit";
 
 import { isExternalLink, isHash } from "../utils/url";
 import { getScaleRatio } from "./image-helpers";
-import { isMdxNode } from "./mdx-helpers";
+import { isMdxNode, getAttributeValue } from "./mdx-helpers";
 
 const isMdxImg = (
   node: Node
 ): node is MdxJsxFlowElement | MdxJsxTextElement => {
   if (isMdxNode(node) && node.name === "img") {
-    const src = node.attributes.find(({ name }) => name === "src")?.value;
+    const src = getAttributeValue(node, "src");
 
     return typeof src === "string" && !isExternalLink(src) && !isHash(src);
   }
@@ -34,7 +34,7 @@ const isMarkdownImage = (node: Node): node is MdastImage =>
   !isExternalLink((node as MdastImage).url) &&
   !isHash((node as MdastImage).url);
 
-type PluginOptions = {
+export type PluginOptions = {
   destinationDir: string;
   staticPath: string;
 };
@@ -69,8 +69,7 @@ export default function remarkMintlifyUpdateImages({
 
     // If it is mdx <img /> add width and height
     visit(root, isMdxImg, (node: MdxJsxFlowElement | MdxJsxTextElement) => {
-      const srcValue = node.attributes.find(({ name }) => name === "src")
-        ?.value as string;
+      const srcValue = getAttributeValue(node, "src") as string;
 
       const src = srcValue.replace(staticPath, `${destinationDir}/`);
 

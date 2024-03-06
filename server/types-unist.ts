@@ -27,17 +27,17 @@ export interface MdxJsxAttribute {
   value: MdxJsxAttributeValue;
 }
 
-export interface MdxElement extends UnistParent {
+export interface MdxJsxElement extends UnistParent {
   name: string;
   attributes: MdxJsxAttribute[];
   children: MdxastNode[];
 }
 
-export interface MdxJsxFlowElement extends MdxElement {
+export interface MdxJsxFlowElement extends MdxJsxElement {
   type: "mdxJsxFlowElement";
 }
 
-export interface MdxJsxTextElement extends MdxElement {
+export interface MdxJsxTextElement extends MdxJsxElement {
   type: "mdxJsxTextElement";
 }
 

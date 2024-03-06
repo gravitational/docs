@@ -13,10 +13,11 @@
 import type { Transformer } from "unified";
 import type { Literal as MdastLiteral, Link as MdastLink } from "mdast";
 import type { VFile } from "vfile";
-import type { MdxElement } from "./types-unist";
+import type { MdxJsxElement } from "./types-unist";
 
 import { visit } from "unist-util-visit";
 import updateMessages from "./update-vfile-messages";
+import { isMdxNode } from "./mdx-helpers";
 
 type NameMap = Record<string, string>;
 
@@ -52,7 +53,7 @@ const replaceVars = (value: string, names: NameMap) =>
 
 const lintVars = (
   vfile: VFile,
-  node: MdastLiteral | MdastLink | MdxElement,
+  node: MdastLiteral | MdastLink | MdxJsxElement,
   value: string,
   variables: string[]
 ) => {
@@ -66,13 +67,11 @@ const lintVars = (
   });
 };
 
-type LocalNode = MdastLink | MdastLiteral | MdxElement;
+type LocalNode = MdastLink | MdastLiteral | MdxJsxElement;
 
 const nodeHasValue = (node: LocalNode): node is MdastLiteral =>
   typeof (node as MdastLiteral).value === "string";
 const nodeIsLink = (node: LocalNode): node is MdastLink => node.type === "link";
-const nodeIsAJsx = (node: LocalNode): node is MdxElement =>
-  ["mdxJsxFlowElement", "mdxJsxTextElement"].includes(node.type);
 
 type Variables = Record<string, unknown>;
 
@@ -120,7 +119,7 @@ export default function remarkVariables({
             lintVars(vfile, node, node.url, names);
           }
         }
-      } else if (nodeIsAJsx(node)) {
+      } else if (isMdxNode(node)) {
         if (node.attributes) {
           Object.values(node.attributes as { value: string }[]).forEach(
             (attribute) => {
