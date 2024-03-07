@@ -19,6 +19,7 @@ import remarkVariables from "../.build/server/remark-variables.mjs";
 import remarkMintlifyUpdateImages from "../.build/server/remark-mintlify-update-images.mjs";
 import remarkMintlifyUpdateFrontmatter from "../.build/server/remark-mintlify-update-frontmatter.mjs";
 import remarkMintlifyUpdateLinks from "../.build/server/remark-mintlify-update-links.mjs";
+import remarkMintlifyUpdateMTags from "../.build/server/remark-mintlify-update-tags.mjs";
 
 import {
   getVersion,
@@ -28,8 +29,6 @@ import { loadConfig as loadConfigSite } from "../.build/server/config-site.mjs";
 import { loadConfig } from "../.build/server/config-docs.mjs";
 import { getDocsPagesMap } from "../.build/server/paths.mjs";
 import { getDocsPaths } from "../.build/server/docs-helpers.mjs";
-
-import remarkMigrateTags from "./plugins/remark-migrate-tags.mjs";
 
 const RESULT_DIR = resolve("migration-result"); // Name of the result folder
 const ASSETS_DIR = `${RESULT_DIR}/assets`; // Name of the assets folder
@@ -61,7 +60,7 @@ const processFile = async (vfile, { slug }) => {
       staticPath: "/assets",
       destinationDir: ASSETS_DIR,
     }) // Convert markdown images to mdx images and add correct width and height
-    .use(remarkMigrateTags) // Migrate tags to Mintlify analogues
+    .use(remarkMintlifyUpdateMTags) // Migrate tags to Mintlify analogues
     .use(remarkStringify, {
       bullet: "-",
       ruleRepetition: 3,
