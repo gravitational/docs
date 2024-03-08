@@ -1,0 +1,46 @@
+name: Migrate to Mintlify
+
+on:
+  workflow_call:
+    
+  push:
+    branches:
+      - main
+    paths:
+      - migration/**.mjs
+      - server/**.ts
+
+jobs:
+  run-migration:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate GitHub token
+        id: generate_token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.MINTLIFY_MIGRATION_APP_ID }}
+          private-key: ${{ secrets.MINTLIFY_MIGRATION_PRIVATE_KEY }}
+
+      - name: Check out mintlify branch
+        uses: actions/checkout@v4
+        with:
+          ref: mintlify
+
+      - name: Run the migration script
+        run: |
+          yarn
+          yarn git-update
+          yarn build-node
+          yarn mintlify
+
+      - name: Push to the remote
+        run: |
+          git config --global user.email "noreply@github.com"
+          git config --global user.name "GitHub"
+          git add migration-result
+          # Use the latest version of the Mintlify script, remark plugins, etc.
+          git rebase main
+          git commit -m "[auto] Sync Mintlify source" 
+          git push --set-upstream origin mintlify
+        env:
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
