@@ -2,7 +2,6 @@
   display: none;
   color: var(--color-light-gray);
   text-decoration: none;
-
   &:hover {
     color: var(--color-gray);
   }
@@ -13,6 +12,10 @@
 }
 
 .wrapper {
+  scroll-margin-top:100px;
+  @media (--md-scr) {
+    scroll-margin-top:120px;
+  }
   & code {
     font-size: 0.875em;
   }
