@@ -15,13 +15,13 @@
     "thumbsRating": true
   },
   "topbarCtaButton": {
-    "name": "Get Started",
-    "url": "https://goteleport.com/pricing/"
+    "name": "Contact Sales",
+    "url": "https://goteleport.com/signup/enterprise/"
   },
   "topbarLinks": [
     {
-      "name": "Sign In",
-      "url": "https://teleport.sh/"
+      "name": "Try for Free",
+      "url": "https://goteleport.com/signup/"
     }
   ],
   "versions": [],
