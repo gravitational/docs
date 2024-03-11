@@ -51,7 +51,6 @@ inkeepScript.addEventListener("load", function () {
     aiChatSettings: {
       botName: "Teleport",
       botAvatarSrcUrl: "https://goteleport.com/static/pam-standing.svg",
-      isControlledMessage: true,
       defaultChatMode: "AUTO",
     },
     searchSettings: {
@@ -63,7 +62,6 @@ inkeepScript.addEventListener("load", function () {
         alwaysDisplayedTabs: ["Docs", "GitHub"],
         disabledDefaultTabs: undefined,
       },
-      isControlledSearchQuery: true,
       shouldOpenLinksInNewTab: true,
     },
     modalSettings: {
