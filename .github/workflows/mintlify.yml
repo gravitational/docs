@@ -24,23 +24,24 @@ jobs:
       - name: Check out mintlify branch
         uses: actions/checkout@v4
         with:
-          ref: mintlify
+          ref: main
 
-      - name: Run the migration script
+      - name: "Set up git"
+        run: |
+          git config --global user.email "noreply@github.com"
+          git config --global user.name "GitHub"
+
+      - name: Run the migration script and push
         run: |
           yarn
           yarn git-update
           yarn build-node
           yarn mintlify
-
-      - name: Push to the remote
-        run: |
-          git config --global user.email "noreply@github.com"
-          git config --global user.name "GitHub"
           git add migration-result
-          # Use the latest version of the Mintlify script, remark plugins, etc.
-          git rebase main
           git commit -m "[auto] Sync Mintlify source" 
-          git push --set-upstream origin mintlify
+          git checkout mintlify
+          git rebase main
+          git push
+
         env:
           GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
