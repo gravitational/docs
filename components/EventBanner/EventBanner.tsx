@@ -44,8 +44,8 @@ export interface Event {
 export const getComingEvent = (event?: EventProps) => {
   if (!event || !event?.title)
     return { ...event?.defaultContent, sideButtons: { ...event?.sideButtons } };
-  const currentDate = new Date().setHours(0, 0, 0, 0);
-  const endDate = event.end ? new Date(event.end).setHours(0, 0, 0, 0) : null;
+  const currentDate = new Date();
+  const endDate = event.end ? new Date(event.end) : null;
 
   if (endDate && currentDate > endDate) {
     //Event end date has gone
