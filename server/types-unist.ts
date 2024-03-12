@@ -7,6 +7,11 @@ import type {
 import type { Content as MdastContent } from "mdast";
 import type { Node as AcornNode } from "acorn";
 
+export interface YamlNode extends Node {
+  type: "yaml";
+  value: string;
+}
+
 export type MdxJsxAttributeValue =
   | boolean
   | number
@@ -22,17 +27,17 @@ export interface MdxJsxAttribute {
   value: MdxJsxAttributeValue;
 }
 
-export interface MdxElement extends UnistParent {
+export interface MdxJsxElement extends UnistParent {
   name: string;
   attributes: MdxJsxAttribute[];
   children: MdxastNode[];
 }
 
-export interface MdxJsxFlowElement extends MdxElement {
+export interface MdxJsxFlowElement extends MdxJsxElement {
   type: "mdxJsxFlowElement";
 }
 
-export interface MdxJsxTextElement extends MdxElement {
+export interface MdxJsxTextElement extends MdxJsxElement {
   type: "mdxJsxTextElement";
 }
 

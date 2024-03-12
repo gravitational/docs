@@ -22,7 +22,7 @@ const transformer = (options: VFileOptions) =>
     .processSync(new VFile(options))
     .toString();
 
-const Suite = suite("server/remark-images");
+const Suite = suite("server/rehype-images");
 
 Suite("Add actual sizes to image without suffix", () => {
   const result = transformer({
