@@ -24,7 +24,7 @@
     "lint": "yarn base:eslint --fix && yarn base:prettier --write -l",
     "lint-check": "yarn base:eslint && yarn base:prettier --check",
     "typecheck": "tsc --noEmit --skipLibCheck --incremental --tsBuildInfoFile node_modules/.cache/tsc/tsbuildinfo --project .",
-    "markdown-lint": "remark --rc-path .remarkrc.mjs 'content/**/docs/pages/**/*.mdx' --frail --ignore-pattern '**/includes/**' --silently-ignore",
+    "markdown-lint": "remark --rc-path .remarkrc.mjs 'content/**/docs/pages/**/*.mdx' --quiet --frail --ignore-pattern '**/includes/**' --silently-ignore",
     "markdown-lint-external-links": "WITH_EXTERNAL_LINKS=true yarn markdown-lint",
     "markdown-fix": "FIX=true yarn markdown-lint -o",
     "storybook": "storybook dev -p 6006",
@@ -35,10 +35,7 @@
     "mintlify": "node migration/index.mjs"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint",
-      "prettier --check"
-    ],
+    "*.{js,jsx,ts,tsx}": ["eslint", "prettier --check"],
     "*.{json}": "prettier --check"
   },
   "simple-git-hooks": {
