@@ -11,9 +11,7 @@ import {
 } from "./.build/server/docs-helpers.mjs";
 import {
   loadConfig,
-  loadMessagingConfig,
 } from "./.build/server/config-docs.mjs";
-import { remarkLintMessaging } from "./.build/server/remark-lint-messaging.mjs";
 
 const configFix = {
   settings: {
@@ -76,10 +74,6 @@ const configLint = {
     // Disabling the remarkLintFrontmatter check until we fix
     // gravitational/docs#80
     // [remarkLintFrontmatter, ["error"]],
-    [
-      remarkLintMessaging,
-      loadMessagingConfig(resolve("messaging-config.json")),
-    ],
   ],
 };
 

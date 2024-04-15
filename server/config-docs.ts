@@ -13,7 +13,6 @@ import { existsSync, readFileSync } from "fs";
 import { isExternalLink, isHash, splitPath } from "../utils/url";
 import { NavigationCategory, NavigationItem } from "../layouts/DocsPage/types";
 import { loadConfig as loadSiteConfig } from "./config-site";
-import { RemarkLintMessagingOptions } from "./remark-lint-messaging";
 
 const { latest } = loadSiteConfig();
 export interface Config {
@@ -128,32 +127,6 @@ const validator = ajv.compile({
   },
   required: ["navigation"],
   additionalProperties: false,
-});
-
-// Schema for the document that configures the messaging linter
-const messagingConfigValidator = ajv.compile({
-  type: "array",
-  items: {
-    type: "object",
-    properties: {
-      incorrect: {
-        type: "string",
-      },
-      correct: {
-        type: "string",
-      },
-      explanation: {
-        type: "string",
-      },
-      where: {
-        type: "array",
-        items: {
-          type: "string",
-          enum: ["title", "description", "comments", "body", "headers"],
-        },
-      },
-    },
-  },
 });
 
 /*
@@ -355,17 +328,4 @@ export const loadConfig = (version: string) => {
   validateConfig<Config>(validator, config);
 
   return normalize(config, version);
-};
-
-export const loadMessagingConfig = (
-  path: string
-): RemarkLintMessagingOptions => {
-  if (!existsSync(path)) {
-    throw Error(`File ${path} does not exist.`);
-  }
-  const content = readFileSync(path, "utf-8");
-  const config = JSON.parse(content) as RemarkLintMessagingOptions;
-  validateConfig<RemarkLintMessagingOptions>(messagingConfigValidator, config);
-
-  return config;
 };
