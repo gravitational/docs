@@ -93,7 +93,6 @@ const DocsPage = ({
             icon={icon}
             getNewVersionPath={getPath}
             latest={latest}
-            scopes={scopes}
             isVersionAgnosticPage={isVersionAgnosticPage(route)}
           />
           {videoBanner && (

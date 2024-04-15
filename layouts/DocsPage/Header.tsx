@@ -2,18 +2,16 @@ import { useContext } from "react";
 import NextImage from "next/image";
 import Button from "components/Button";
 import Icon from "components/Icon";
-import { Scopes } from "./Scopes";
 import Versions from "./Versions";
 import { DocsContext } from "./context";
 import type { IconName } from "components/Icon";
-import type { VersionsInfo, ScopesInMeta } from "./types";
+import type { VersionsInfo } from "./types";
 import styles from "./Header.module.css";
 import forkmeUrl from "./assets/forkme.webp";
 
 interface DocHeaderProps {
   title: string;
   icon?: IconName;
-  scopes: ScopesInMeta;
   githubUrl?: string;
   latest?: string;
   versions?: VersionsInfo;
@@ -29,7 +27,6 @@ const DocHeader = ({
   versions,
   getNewVersionPath,
   latest,
-  scopes,
   isVersionAgnosticPage,
 }: DocHeaderProps) => {
   return (
@@ -56,7 +53,6 @@ const DocHeader = ({
               latest={latest}
             />
           )}
-          <Scopes className={styles.scopes} scopes={scopes} />
         </div>
       </div>
     </section>

@@ -21,35 +21,6 @@ const SCOPE_DICTIONARY: Record<string, ScopeType> = {
   cloud2: "cloud",
 };
 
-const getScopeIcons = (scopes: ScopesInMeta) => {
-  if (scopes[0] === "noScope" || scopes[0] === "") {
-    return;
-  }
-
-  const scopeIcons = Object.keys(SCOPE_DICTIONARY).map(
-    (scope: "code3" | "building2" | "cloud2") => {
-      const hideScope = !scopes.includes(SCOPE_DICTIONARY[scope]);
-      const ariaLabel = hideScope ? "" : SCOPE_DICTIONARY[scope];
-
-      return (
-        <li
-          className={cn(
-            styles["scope-item"],
-            hideScope && styles["non-visible"]
-          )}
-          key={scope}
-          aria-label={ariaLabel}
-          aria-hidden={hideScope}
-        >
-          <Icon name={scope} size="xxs" />
-        </li>
-      );
-    }
-  );
-
-  return <ul className={styles["scope-list"]}>{scopeIcons}</ul>;
-};
-
 interface DocsNavigationItemsProps {
   entries: NavigationItem[];
   onClick: () => void;
@@ -82,7 +53,6 @@ const DocsNavigationItems = ({
                 onClick={onClick}
               >
                 {entry.title}
-                {!!entry.forScopes?.length && getScopeIcons(entry.forScopes)}
                 {!!entry.entries?.length && (
                   <Icon size="sm" name="ellipsis" className={styles.ellipsis} />
                 )}
