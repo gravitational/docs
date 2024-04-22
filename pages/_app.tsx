@@ -5,7 +5,7 @@ import type { AppProps } from "next/app";
 import { DocsContextProvider } from "layouts/DocsPage/context";
 import { posthog, sendPageview } from "utils/posthog";
 import { TabContextProvider } from "components/Tabs";
-
+import { TrackingEvent } from "utils/tracking";
 // https://larsmagnus.co/blog/how-to-optimize-custom-fonts-with-next-font
 // Next Font to enable zero layout shift which is hurting SEO.
 import localUbuntu from "next/font/local";
@@ -69,6 +69,37 @@ declare global {
 }
 
 const Analytics = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    const PageViews = () => {
+      TrackingEvent("LinkedIn_docs_page_view", {
+        page_title: document.title,
+        page_location: location.href,
+      });
+      // Start timer for 30s pageviews
+      timer = setTimeout(() => {
+        TrackingEvent("LinkedIn_30s_page_view", {
+          page_title: document.title,
+          page_location: location.href,
+        });
+      }, 30000);
+    };
+    // Trigger pageview events on first load
+    PageViews();
+    // Function to manually clear timeout when routing to another page internally to prevent false analytics
+    const routeStarted = () => {
+      timer && clearTimeout(timer);
+    };
+    // Triggers pageview events after routing to a new page
+    router.events.on("routeChangeComplete", PageViews);
+    router.events.on("routeChangeStart", routeStarted);
+    return () => {
+      router.events.off("routeChangeComplete", PageViews);
+      router.events.off("routeChangeStart", routeStarted);
+    };
+  }, [router.events]);
   return (
     <>
       <Script id="add_dataLayer">
