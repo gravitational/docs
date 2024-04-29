@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Script from "next/script";
 import type { AppProps } from "next/app";
 import { DocsContextProvider } from "layouts/DocsPage/context";
-import { posthog, sendPageview } from "utils/posthog";
+import { posthog, sendEngagedView, sendPageview } from "utils/posthog";
 import { TabContextProvider } from "components/Tabs";
 
 // https://larsmagnus.co/blog/how-to-optimize-custom-fonts-with-next-font
@@ -193,14 +193,24 @@ const Analytics = () => {
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
+  const isEngaged = useIsEngaged();
 
+  useEffect(() => {
+    if (!isEngaged) return;
+    // Trigger engagement view events here
+    sendEngagedView();
+  }, [isEngaged]);
+
+  const Pageviews = () => {
+    // Trigger page views here
+    sendPageview();
+  };
   useEffect(() => {
     posthog(); // init posthog
 
-    router.events.on("routeChangeComplete", sendPageview);
-
+    router.events.on("routeChangeComplete", Pageviews);
     return () => {
-      router.events.off("routeChangeComplete", sendPageview);
+      router.events.off("routeChangeComplete", Pageviews);
     };
   }, [router.events]);
 
