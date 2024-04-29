@@ -215,6 +215,10 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
   const Pageviews = () => {
     // Trigger page views here
+
+    // Qualified page view
+    if (!!window["qualified"]) window["qualified"]("page");
+    // Posthog page view
     sendPageview();
   };
   useEffect(() => {
