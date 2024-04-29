@@ -187,6 +187,18 @@ const Analytics = () => {
           {/* End Google Tag Manager (noscript) */}
         </>
       )}
+      {/* Quailified Script */}
+      <Script id="script_qualified">
+        {`(function (w, q) {
+          w["QualifiedObject"] = q;
+          w[q] =
+            w[q] ||
+            function () {
+              (w[q].q = w[q].q || []).push(arguments);
+            };
+        })(window, "qualified")`}
+      </Script>
+      <Script src="https://js.qualified.com/qualified.js?token=GWPbwWJLtjykim4W" />
     </>
   );
 };
