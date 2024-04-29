@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Script from "next/script";
 import type { AppProps } from "next/app";
@@ -67,7 +67,32 @@ interface dataLayerItem {
 declare global {
   var dataLayer: dataLayerItem[]; // eslint-disable-line no-var
 }
+const useIsEngaged = () => {
+  const router = useRouter();
+  const [timerReached, setTimerReached] = useState(false);
+  const [secondPageReached, setSecondPageReached] = useState(false);
+  const [isEngaged, setIsEngaged] = useState(false);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setTimerReached(true);
+    }, 30000);
+    const routeChanged = () => {
+      setSecondPageReached(true);
+    };
+
+    router.events.on("routeChangeComplete", routeChanged);
+    return () => {
+      router.events.off("routeChangeComplete", routeChanged);
+    };
+  }, [router.events]);
+
+  useEffect(() => {
+    setIsEngaged(secondPageReached && timerReached);
+  }, [secondPageReached, timerReached]);
+
+  return isEngaged;
+};
 const Analytics = () => {
   return (
     <>
