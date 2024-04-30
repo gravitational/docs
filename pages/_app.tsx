@@ -54,6 +54,7 @@ export const lato = localLato({
 
 import "styles/varaibles.css";
 import "styles/global.css";
+import { GoogleAdsEvent } from "utils/tracking";
 
 const NEXT_PUBLIC_GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 const NEXT_PUBLIC_GTAG_ID = process.env.NEXT_PUBLIC_GTAG_ID;
@@ -214,12 +215,14 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
     if (!isEngaged) return;
     // Trigger engagement view events here
+    GoogleAdsEvent("30sView");
     sendEngagedView();
   }, [isEngaged]);
 
   const Pageviews = () => {
     // Trigger page views here
-
+    // Google Ads Docs Page Conversion event
+    GoogleAdsEvent("DocsPageView");
     // Qualified page view
     if (!!window["qualified"]) window["qualified"]("page");
     // Posthog page view
