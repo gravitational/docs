@@ -57,6 +57,7 @@ import "styles/global.css";
 
 const NEXT_PUBLIC_GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 const NEXT_PUBLIC_GTAG_ID = process.env.NEXT_PUBLIC_GTAG_ID;
+const NEXT_PUBLIC_GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
 const MUNCHKIN_ID = process.env.MUNCHKIN_ID;
 
 interface dataLayerItem {
@@ -175,6 +176,9 @@ const Analytics = () => {
                   function gtag(){dataLayer.push(arguments);}
                   gtag('js', new Date());
                   gtag('config', "${NEXT_PUBLIC_GTAG_ID}", {
+                    send_page_view: false
+                  });
+                  gtag('config', "${NEXT_PUBLIC_GOOGLE_ADS_ID}", {
                     send_page_view: false
                   });`}
           </Script>
