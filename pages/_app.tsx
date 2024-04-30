@@ -94,37 +94,6 @@ const useIsEngaged = () => {
   return isEngaged;
 };
 const Analytics = () => {
-  const router = useRouter();
-
-  useEffect(() => {
-    let timer: ReturnType<typeof setTimeout> | null = null;
-    const PageViews = () => {
-      TrackingEvent("LinkedIn_docs_page_view", {
-        page_title: document.title,
-        page_location: location.href,
-      });
-      // Start timer for 30s pageviews
-      timer = setTimeout(() => {
-        TrackingEvent("LinkedIn_30s_page_view", {
-          page_title: document.title,
-          page_location: location.href,
-        });
-      }, 30000);
-    };
-    // Trigger pageview events on first load
-    PageViews();
-    // Function to manually clear timeout when routing to another page internally to prevent false analytics
-    const routeStarted = () => {
-      timer && clearTimeout(timer);
-    };
-    // Triggers pageview events after routing to a new page
-    router.events.on("routeChangeComplete", PageViews);
-    router.events.on("routeChangeStart", routeStarted);
-    return () => {
-      router.events.off("routeChangeComplete", PageViews);
-      router.events.off("routeChangeStart", routeStarted);
-    };
-  }, [router.events]);
   return (
     <>
       <Script id="add_dataLayer">
@@ -266,12 +235,15 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
     if (!isEngaged) return;
     // Trigger engagement view events here
+    // Linked in engagement view
+    window["lintrk"]("track", { conversion_id: 14913124 });
     sendEngagedView();
   }, [isEngaged]);
 
   const Pageviews = () => {
     // Trigger page views here
-
+    // Linked In Docs Page Visit
+    window["lintrk"]("track", { conversion_id: 14913132 });
     // Qualified page view
     if (!!window["qualified"]) window["qualified"]("page");
     // Posthog page view
