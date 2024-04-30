@@ -223,7 +223,8 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   };
   useEffect(() => {
     posthog(); // init posthog
-
+    // Trigger initial load page views
+    Pageviews();
     router.events.on("routeChangeComplete", Pageviews);
     return () => {
       router.events.off("routeChangeComplete", Pageviews);
