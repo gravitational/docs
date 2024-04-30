@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Script from "next/script";
 import type { AppProps } from "next/app";
 import { DocsContextProvider } from "layouts/DocsPage/context";
-import { posthog, sendPageview } from "utils/posthog";
+import { posthog, sendEngagedView, sendPageview } from "utils/posthog";
 import { TabContextProvider } from "components/Tabs";
 import { TrackingEvent } from "utils/tracking";
 // https://larsmagnus.co/blog/how-to-optimize-custom-fonts-with-next-font
@@ -67,7 +67,32 @@ interface dataLayerItem {
 declare global {
   var dataLayer: dataLayerItem[]; // eslint-disable-line no-var
 }
+const useIsEngaged = () => {
+  const router = useRouter();
+  const [timerReached, setTimerReached] = useState(false);
+  const [secondPageReached, setSecondPageReached] = useState(false);
+  const [isEngaged, setIsEngaged] = useState(false);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setTimerReached(true);
+    }, 30000);
+    const routeChanged = () => {
+      setSecondPageReached(true);
+    };
+
+    router.events.on("routeChangeComplete", routeChanged);
+    return () => {
+      router.events.off("routeChangeComplete", routeChanged);
+    };
+  }, [router.events]);
+
+  useEffect(() => {
+    setIsEngaged(secondPageReached && timerReached);
+  }, [secondPageReached, timerReached]);
+
+  return isEngaged;
+};
 const Analytics = () => {
   const router = useRouter();
 
@@ -218,20 +243,47 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);`}
           src="https://px.ads.linkedin.com/collect/?pid=1271444&fmt=gif"
         />
       </noscript>
+      {/* Quailified Script */}
+      <Script id="script_qualified">
+        {`(function (w, q) {
+          w["QualifiedObject"] = q;
+          w[q] =
+            w[q] ||
+            function () {
+              (w[q].q = w[q].q || []).push(arguments);
+            };
+        })(window, "qualified")`}
+      </Script>
+      <Script src="https://js.qualified.com/qualified.js?token=GWPbwWJLtjykim4W" />
     </>
   );
 };
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
+  const isEngaged = useIsEngaged();
 
   useEffect(() => {
+    if (!isEngaged) return;
+    // Trigger engagement view events here
+    sendEngagedView();
+  }, [isEngaged]);
+
+  const Pageviews = () => {
+    // Trigger page views here
+
+    // Qualified page view
+    if (!!window["qualified"]) window["qualified"]("page");
+    // Posthog page view
+    sendPageview();
+  };
+  useEffect(() => {
     posthog(); // init posthog
-
-    router.events.on("routeChangeComplete", sendPageview);
-
+    // Trigger initial load page views
+    Pageviews();
+    router.events.on("routeChangeComplete", Pageviews);
     return () => {
-      router.events.off("routeChangeComplete", sendPageview);
+      router.events.off("routeChangeComplete", Pageviews);
     };
   }, [router.events]);
 
