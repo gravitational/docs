@@ -54,6 +54,7 @@ export const lato = localLato({
 
 import "styles/varaibles.css";
 import "styles/global.css";
+import { TrackingEvent } from "utils/tracking";
 
 const NEXT_PUBLIC_GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 const NEXT_PUBLIC_GTAG_ID = process.env.NEXT_PUBLIC_GTAG_ID;
@@ -211,11 +212,14 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     if (!isEngaged) return;
     // Trigger engagement view events here
     sendEngagedView();
+    TrackingEvent("session_threshold", {
+      session_threshold_reached: 30,
+    });
   }, [isEngaged]);
 
   const Pageviews = () => {
     // Trigger page views here
-
+    TrackingEvent("page_view");
     // Qualified page view
     if (!!window["qualified"]) window["qualified"]("page");
     // Posthog page view
