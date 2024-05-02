@@ -11,25 +11,11 @@ export const TrackingEvent = (
 ) => {
   return new Promise<void>((resolve) => {
     if (isGtagEnabled()) {
-      window.dataLayer.push({
-        event,
+      window.gtag("event", event, {
         ...payload,
-
-        /*eventCallback and eventTimeout are not found in GTM official docs!
-        eventCallback is a function which will execute when all tags which fire on
-        the event have executed; it is scoped to this promise. Always add eventTimeout
-        when you use eventCallback.
-        */
-        eventCallback: () => resolve(),
-
-        /*eventTimeout takes a number in milliseconds as a value after which it calls eventCallback, so
-        even if the tags don't fire or signal completion, eventCallback will be invoked (and
-        this promise resolved)
-        */
-        eventTimeout: 1000,
       });
     } else {
-      console.log("Datalayer Tracking Event", payload);
+      console.log("GA4 Tracking Event", payload);
       resolve();
     }
   });
