@@ -78,7 +78,7 @@ const Link = ({
       prefetch={false}
       onClick={(e) => {
         TrackingEvent("internal_link_click", {
-          title: e.currentTarget.innerHTML || "",
+          title: e.currentTarget.firstChild.nodeValue || "",
           href: href,
         });
         onClick && onClick(e);
