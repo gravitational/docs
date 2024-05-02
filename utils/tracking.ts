@@ -19,8 +19,7 @@ export const GoogleAdsEvent = (
       // Define that we're sending a Google Ads conversion event
       // https://developers.google.com/tag-platform/devguides/events#google_ads_conversions
       // the gtag() function in the docs effectively just calls window.dataLayer.push()
-      window.dataLayer.push({
-        event: "conversion",
+      window.gtag("event", "conversion", {
         // send_to: Defines the type of conversion we're sending
         send_to: `${process.env["NEXT_PUBLIC_GOOGLE_ADS_ID"]}/${getLabel(
           conversion_label
