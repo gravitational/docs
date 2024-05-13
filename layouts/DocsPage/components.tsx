@@ -4,7 +4,7 @@ import Icon from "components/Icon";
 import Notice from "components/Notice";
 import Snippet from "components/Snippet";
 import { Tabs, TabItem } from "components/Tabs";
-import { Var, VarList } from "components/Variables";
+import { Var } from "components/Variables";
 import Details from "components/Details";
 import {
   Code,
@@ -67,5 +67,4 @@ export const components = {
   snippet: Snippet,
   details: Details,
   var: (props) => <Var {...props} />, // needed to circumvent props mismatch in types
-  varlist: VarList,
 };

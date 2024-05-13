@@ -149,9 +149,6 @@ between browser sessions.
 
 #### Var component properties
 
-The `description` field is used in the `VarList` component, which we explain in
-the next section. You only need to specify the `description` once.
-
 By default, the `Var` component displays its `name` until the user assigns a
 value to it. To configure the component to display an initial value beside its
 name, set the `initial` field:
@@ -162,20 +159,6 @@ name, set the `initial` field:
 
 You should only set an `initial` field for a single occurrence of a `Var` with a
 particular name. Otherwise, `Var`s will overwrite one another's initial values.
-
-### The VarList component
-
-To provide a key for all of the global and page-local variables the docs have
-defined, use the `VarList` component:
-
-```markdown
-<Details title="Page variables" opened>
-<VarList/>
-</Details>
-```
-
-The description we added to the `proxy` variable appears here. Since the `user`
-variable does not have a description, the `VarList` shows its name instead.
 
 ## Notices
 
