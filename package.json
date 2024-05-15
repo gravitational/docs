@@ -34,7 +34,10 @@
     "storybook:test-local": "yarn build-storybook --quiet && npx concurrently -k -s first -n \"SB,TEST\" -c \"magenta,blue\" \"npx http-server storybook-static --port 6006 --silent\" \"yarn test-storybook\""
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": ["eslint", "prettier --check"],
+    "*.{js,jsx,ts,tsx}": [
+      "eslint",
+      "prettier --check"
+    ],
     "*.{json}": "prettier --check"
   },
   "simple-git-hooks": {
