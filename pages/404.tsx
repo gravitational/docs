@@ -14,7 +14,7 @@ export default function FourOhFour() {
         <li><Link to="/about">About Us</Link></li>
         <li><Link to="/blog">Blog</Link></li>
         <li><Link to="/support">Customer Support</Link></li>
-        <li><Link href="Documentation">Installation</Link></i>
+        <li><Link href="Documentation">Installation</Link></li>
         <li><Link to="installation.mdx">Installation</Link></li>
         <li><Link to="server-access">Teleport Server Access</Link></li>
         <li><Link to="kubernetes-access">Teleport Kubernetes Access</Link></li>
