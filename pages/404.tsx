@@ -11,16 +11,16 @@ export default function FourOhFour() {
       <h2>Pages you may find useful</h2>
       <ul style={{ listStyleType: 'none', padding: 0 }}>
       <li><a href="/">Home Page</a></li>
-        <li><Link to="/about">About Us</Link></li>
-        <li><Link to="/blog">Blog</Link></li>
-        <li><Link to="/support">Customer Support</Link></li>
-        <li><Link to="/Documentation">Documentation</Link></li>
-        <li><Link to="installation.mdx">Installation</Link></li>
-        <li><Link to="server-access">Teleport Server Access</Link></li>
-        <li><Link to="kubernetes-access">Teleport Kubernetes Access</Link></li>
-        <li><Link to="database-access">Teleport Database Access</Link></li>
-        <li><Link to="desktop-access">Teleport Desktop Access</Link></li>
-        <li><Link to="application-access">Teleport Application Access</Link></li>
+        <li><Link href="/about">About Us</Link></li>
+        <li><Link href="/blog">Blog</Link></li>
+        <li><Link href="/Support">Customer Support</Link></li>
+        <li><Link href="/">Documentation</Link></li>
+        <li><Link href="installation">Installation</Link></li>
+        <li><Link href="server-access">Teleport Server Access</Link></li>
+        <li><Link href="kubernetes-access">Teleport Kubernetes Access</Link></li>
+        <li><Link href="database-access">Teleport Database Access</Link></li>
+        <li><Link href="desktop-access">Teleport Desktop Access</Link></li>
+        <li><Link href="application-access">Teleport Application Access</Link></li>
       </ul>
     </div>
   );
