@@ -57,7 +57,8 @@
     },
     {
       "name": "13.x",
-      "branch": "branch/v13"
+      "branch": "branch/v13",
+      "deprecated": true
     },
     {
       "name": "14.x",
