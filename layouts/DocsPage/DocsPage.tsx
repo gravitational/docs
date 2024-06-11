@@ -69,8 +69,7 @@ const DocsPage = ({
 
   let urlCurrent = "/docs" + path;
   // handles the case where it's the home page with / to avoid /docs/docs/
-  if (path == "/")
-    urlCurrent = "/";
+  if (path == "/") urlCurrent = "/";
 
   return (
     <>
