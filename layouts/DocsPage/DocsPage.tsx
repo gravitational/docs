@@ -67,6 +67,10 @@ const DocsPage = ({
 
   let path = getPath(latest);
 
+  let urlCurrent = "/docs" + path;
+  // handles the case where it's the home page with / to avoid /docs/docs/
+  if (path == "/") urlCurrent = "/";
+
   return (
     <>
       <Head
@@ -105,14 +109,14 @@ const DocsPage = ({
                   {isOldVersion && (
                     <>
                       This chapter covers a past release: {current}. We
-                      recommend the <Link href={`/docs${path}`}>latest</Link>{" "}
+                      recommend the <Link href={`${urlCurrent}`}>latest</Link>{" "}
                       version instead.
                     </>
                   )}
                   {isBetaVersion && (
                     <>
                       This chapter covers an upcoming release: {current}. We
-                      recommend the <Link href={`/docs${path}`}>latest</Link>{" "}
+                      recommend the <Link href={`${urlCurrent}`}>latest</Link>{" "}
                       version instead.
                     </>
                   )}
