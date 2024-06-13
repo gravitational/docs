@@ -66,11 +66,15 @@
     },
     {
       "name": "15.x",
-      "branch": "branch/v15",
-      "latest": true
+      "branch": "branch/v15"
     },
     {
       "name": "16.x",
+      "branch": "branch/v16",
+      "latest": true
+    },
+    {
+      "name": "17.x",
       "branch": "master"
     }
   ]
