@@ -183,6 +183,20 @@ If a commonly debated style question does not have a resolution in this guide
 (e.g., the Oxford comma), all we ask is that you keep your style consistent
 within a particular page to maintain a professional polish.
 
+### Use of frontend components
+
+In general, we want pages in the documentation to emphasize text and provide an
+uncluttered experience to readers. Before adding a component besides a
+paragraph, heading, or example code snippet, ask what benefit the component adds
+to a page, and if it is possible to achieve a similar result with only
+paragraphs, headings, and code snippets. 
+
+For example, when adding a `Tabs` component, ask if it would make sense to add a
+subheading instead of each `TabItem`. `TabItems` would be useful if only one
+variation of the instructions you are adding is relevant to a reader, and the
+other two would only add distraction. If all variations of the instructions are
+useful, subheadings would make more sense.
+
 ### Voice
 
 The documentation should be technically precise and directed toward a technical

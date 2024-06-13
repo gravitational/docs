@@ -1,12 +1,10 @@
 import Admonition from "components/Admonition";
 import Command, { CommandLine, CommandComment } from "components/Command";
 import Icon from "components/Icon";
-import InlineCode from "components/InlineCode";
 import Notice from "components/Notice";
 import Snippet from "components/Snippet";
 import { Tabs, TabItem } from "components/Tabs";
-import { TileSet, TileList, TileListItem } from "components/Tile";
-import { Var, VarList } from "components/Variables";
+import { Var } from "components/Variables";
 import Details from "components/Details";
 import {
   Code,
@@ -62,16 +60,11 @@ export const components = {
   commandline: CommandLine,
   commandcomment: CommandComment,
   icon: Icon,
-  inlinecode: InlineCode,
   tabs: Tabs,
   tabitem: TabItem,
-  tileset: TileSet,
-  tilelist: TileList,
-  tilelistitem: TileListItem,
   figure: Figure,
   notice: Notice,
   snippet: Snippet,
   details: Details,
   var: (props) => <Var {...props} />, // needed to circumvent props mismatch in types
-  varlist: VarList,
 };
