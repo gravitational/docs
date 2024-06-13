@@ -188,12 +188,14 @@ const Analytics = () => {
         </>
       )}
       {/* LinkedIn Tracking script */}
-      <Script id="linkedin" type="text/javascript">
+      <Script id="linkedin_partnerid" type="text/javascript">
         {`_linkedin_partner_id = "1271444";
 window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
 window._linkedin_data_partner_ids.push(_linkedin_partner_id);
-</script><script type="text/javascript">
-(function(l) {
+`}
+      </Script>
+      <Script id="linkedin_tracking" type="text/javascript">
+        {`(function(l) {
 if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
 window.lintrk.q=[]}
 var s = document.getElementsByTagName("script")[0];
