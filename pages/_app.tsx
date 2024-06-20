@@ -56,6 +56,7 @@ import "styles/varaibles.css";
 import "styles/global.css";
 import { TrackingEvent } from "utils/tracking";
 
+const NEXT_PUBLIC_REDDIT_ID = process.env.NEXT_PUBLIC_REDDIT_ID;
 const NEXT_PUBLIC_GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 const NEXT_PUBLIC_GTAG_ID = process.env.NEXT_PUBLIC_GTAG_ID;
 const MUNCHKIN_ID = process.env.MUNCHKIN_ID;
@@ -200,6 +201,17 @@ const Analytics = () => {
         })(window, "qualified")`}
       </Script>
       <Script src="https://js.qualified.com/qualified.js?token=GWPbwWJLtjykim4W" />
+
+      {NEXT_PUBLIC_REDDIT_ID && (
+        <>
+          {/* Reddit Pixel */}
+          <Script id="reddit-pixel">
+            {`!function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js",t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);rdt('init','${NEXT_PUBLIC_REDDIT_ID}');rdt('track', 'PageVisit');`}
+          </Script>
+          {/* DO NOT MODIFY UNLESS TO REPLACE A USER IDENTIFIER /*}
+      {/* End Reddit Pixel */}
+        </>
+      )}
     </>
   );
 };
