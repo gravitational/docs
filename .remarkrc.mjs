@@ -48,6 +48,7 @@ const configLint = {
     ["lint-ordered-list-marker-value", "single"],
     ["lint-maximum-heading-length", false],
     ["lint-no-shortcut-reference-link", false],
+    ["lint-no-file-name-irregular-characters", false],
     [
       remarkIncludes, // Lints (!include.ext!) syntax
       {
