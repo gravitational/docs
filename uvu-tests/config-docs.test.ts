@@ -140,10 +140,6 @@ title: Database RBAC Reference
 
   const expected = [
     {
-      title: "Protect Databases with Teleport",
-      slug: "/database-access/introduction/",
-    },
-    {
       title: "Database Access Guides",
       slug: "/database-access/guides/guides/",
       entries: [
@@ -162,14 +158,18 @@ title: Database RBAC Reference
       slug: "/database-access/rbac/rbac/",
       entries: [
         {
-          title: "Get Started with DB RBAC",
-          slug: "/database-access/rbac/get-started/",
-        },
-        {
           title: "Database RBAC Reference",
           slug: "/database-access/rbac/reference/",
         },
+        {
+          title: "Get Started with DB RBAC",
+          slug: "/database-access/rbac/get-started/",
+        },
       ],
+    },
+    {
+      title: "Protect Databases with Teleport",
+      slug: "/database-access/introduction/",
     },
   ];
 
@@ -178,6 +178,96 @@ title: Database RBAC Reference
   const actual = generateNavPaths(fs, "/docs/pages/database-access");
   assert.equal(actual, expected);
 });
+
+Suite(
+  "generateNavPaths alphabetizes second-level links except 'Introduction'",
+  () => {
+    const files = {
+      "/docs/pages/database-access/mongodb.mdx": `---
+title: MongoDB 
+---`,
+      "/docs/pages/database-access/azure-dbs.mdx": `---
+title: Azure
+---`,
+      "/docs/pages/database-access/introduction.mdx": `---
+title: Introduction to Database Access
+---`,
+    };
+
+    const expected = [
+      {
+        title: "Introduction to Database Access",
+        slug: "/database-access/introduction/",
+      },
+      {
+        title: "Azure",
+        slug: "/database-access/azure-dbs/",
+      },
+      {
+        title: "MongoDB",
+        slug: "/database-access/mongodb/",
+      },
+    ];
+
+    const vol = Volume.fromJSON(files);
+    const fs = createFsFromVolume(vol);
+    const actual = generateNavPaths(fs, "/docs/pages/database-access");
+    assert.equal(actual, expected);
+  }
+);
+
+Suite(
+  "generateNavPaths alphabetizes third-level links except 'Introduction'",
+  () => {
+    const files = {
+      "/docs/pages/database-access/guides/guides.mdx": `---
+title: Database Access Guides
+---`,
+      "/docs/pages/database-access/guides/postgres.mdx": `---
+title: Postgres Guide
+---`,
+      "/docs/pages/database-access/guides/mysql.mdx": `---
+title: MySQL Guide
+---`,
+      "/docs/pages/database-access/guides/get-started.mdx": `---
+title: Introduction to Database RBAC
+---`,
+      "/docs/pages/database-access/guides/reference.mdx": `---
+title: Database RBAC Reference
+---`,
+    };
+
+    const expected = [
+      {
+        title: "Database Access Guides",
+        slug: "/database-access/guides/guides/",
+        entries: [
+          {
+            title: "Introduction to Database RBAC",
+            slug: "/database-access/guides/get-started/",
+          },
+          {
+            title: "Database RBAC Reference",
+            slug: "/database-access/guides/reference/",
+          },
+          {
+            title: "MySQL Guide",
+            slug: "/database-access/guides/mysql/",
+          },
+          {
+            title: "Postgres Guide",
+            slug: "/database-access/guides/postgres/",
+          },
+        ],
+      },
+    ];
+
+    const vol = Volume.fromJSON(files);
+    const fs = createFsFromVolume(vol);
+    const actual = generateNavPaths(fs, "/docs/pages/database-access");
+    assert.equal(actual, expected);
+  }
+);
 
 Suite(
   "generateNavPaths throws if there is no category page in a subdirectory",
@@ -196,6 +286,104 @@ title: MySQL Guide
     assert.throws(() => {
       generateNavPaths(fs, "/docs/pages/database-access");
     }, "database-access/guides/guides.mdx");
+  }
+);
+
+Suite(
+  "generateNavPaths shows third-level category pages on the sidebar",
+  () => {
+    const files = {
+      "/docs/pages/database-access/guides/guides.mdx": `---
+title: Database Access Guides
+---`,
+      "/docs/pages/database-access/guides/postgres.mdx": `---
+title: Postgres Guide
+---`,
+      "/docs/pages/database-access/guides/mysql.mdx": `---
+title: MySQL Guide
+---`,
+      "/docs/pages/database-access/guides/rbac/rbac.mdx": `---
+title: Database Access RBAC
+---`,
+      "/docs/pages/database-access/guides/rbac/get-started.mdx": `---
+title: Get Started with DB RBAC
+---`,
+    };
+
+    const expected = [
+      {
+        title: "Database Access Guides",
+        slug: "/database-access/guides/guides/",
+        entries: [
+          {
+            title: "Database Access RBAC",
+            slug: "/database-access/guides/rbac/rbac/",
+          },
+          {
+            title: "MySQL Guide",
+            slug: "/database-access/guides/mysql/",
+          },
+          {
+            title: "Postgres Guide",
+            slug: "/database-access/guides/postgres/",
+          },
+        ],
+      },
+    ];
+
+    const vol = Volume.fromJSON(files);
+    const fs = createFsFromVolume(vol);
+    const actual = generateNavPaths(fs, "/docs/pages/database-access");
+    assert.equal(actual, expected);
+  }
+);
+
+Suite(
+  "allows category pages in the same directory as the associated subdirectory",
+  () => {
+    const files = {
+      "/docs/pages/database-access/guides.mdx": `---
+title: Database Access Guides
+---`,
+      "/docs/pages/database-access/guides/postgres.mdx": `---
+title: Postgres Guide
+---`,
+      "/docs/pages/database-access/guides/mysql.mdx": `---
+title: MySQL Guide
+---`,
+      "/docs/pages/database-access/guides/rbac.mdx": `---
+title: Database Access RBAC
+---`,
+      "/docs/pages/database-access/guides/rbac/get-started.mdx": `---
+title: Get Started with DB RBAC
+---`,
+    };
+
+    const expected = [
+      {
+        title: "Database Access Guides",
+        slug: "/database-access/guides/",
+        entries: [
+          {
+            title: "Database Access RBAC",
+            slug: "/database-access/guides/rbac/",
+          },
+          {
+            title: "MySQL Guide",
+            slug: "/database-access/guides/mysql/",
+          },
+          {
+            title: "Postgres Guide",
+            slug: "/database-access/guides/postgres/",
+          },
+        ],
+      },
+    ];
+
+    const vol = Volume.fromJSON(files);
+    const fs = createFsFromVolume(vol);
+    let actual = generateNavPaths(fs, "/docs/pages/database-access");
+    assert.equal(actual, expected);
   }
 );
 
