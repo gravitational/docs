@@ -2,9 +2,10 @@ import { Redirect } from "next/dist/lib/load-custom-routes";
 import { suite } from "uvu";
 import * as assert from "uvu/assert";
 import { Config, checkURLsForCorrespondingFiles } from "../server/config-docs";
+import { generateNavPaths } from "../server/pages-helpers";
 import { randomUUID } from "crypto";
 import { join } from "path";
-import { opendirSync } from "fs";
+import { Volume, createFsFromVolume } from "memfs";
 
 const Suite = suite("server/config-docs");
 
@@ -111,5 +112,91 @@ Suite("Ensures that URLs correspond to docs pages", () => {
 
   assert.equal(actual, expected);
 });
+
+Suite("generateNavPaths generates a sidebar from a file tree", () => {
+  const files = {
+    "/docs/pages/database-access/introduction.mdx": `---
+title: Protect Databases with Teleport
+---`,
+    "/docs/pages/database-access/guides/guides.mdx": `---
+title: Database Access Guides
+---`,
+    "/docs/pages/database-access/guides/postgres.mdx": `---
+title: Postgres Guide
+---`,
+    "/docs/pages/database-access/guides/mysql.mdx": `---
+title: MySQL Guide
+---`,
+    "/docs/pages/database-access/rbac/rbac.mdx": `---
+title: Database Access RBAC
+---`,
+    "/docs/pages/database-access/rbac/get-started.mdx": `---
+title: Get Started with DB RBAC
+---`,
+    "/docs/pages/database-access/rbac/reference.mdx": `---
+title: Database RBAC Reference
+---`,
+  };
+
+  const expected = [
+    {
+      title: "Protect Databases with Teleport",
+      slug: "/database-access/introduction/",
+    },
+    {
+      title: "Database Access Guides",
+      slug: "/database-access/guides/guides/",
+      entries: [
+        {
+          title: "MySQL Guide",
+          slug: "/database-access/guides/mysql/",
+        },
+        {
+          title: "Postgres Guide",
+          slug: "/database-access/guides/postgres/",
+        },
+      ],
+    },
+    {
+      title: "Database Access RBAC",
+      slug: "/database-access/rbac/rbac/",
+      entries: [
+        {
+          title: "Get Started with DB RBAC",
+          slug: "/database-access/rbac/get-started/",
+        },
+        {
+          title: "Database RBAC Reference",
+          slug: "/database-access/rbac/reference/",
+        },
+      ],
+    },
+  ];
+
+  const vol = Volume.fromJSON(files);
+  const fs = createFsFromVolume(vol);
+  const actual = generateNavPaths(fs, "/docs/pages/database-access");
+  assert.equal(actual, expected);
+});
+
+Suite(
+  "generateNavPaths throws if there is no category page in a subdirectory",
+  () => {
+    const files = {
+      "/docs/pages/database-access/guides/postgres.mdx": `---
+title: Postgres Guide
+---`,
+      "/docs/pages/database-access/guides/mysql.mdx": `---
+title: MySQL Guide
+---`,
+    };
+
+    const vol = Volume.fromJSON(files);
+    const fs = createFsFromVolume(vol);
+    assert.throws(() => {
+      generateNavPaths(fs, "/docs/pages/database-access");
+    }, "database-access/guides/guides.mdx");
+  }
+);
 
 Suite.run();

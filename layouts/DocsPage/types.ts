@@ -43,6 +43,7 @@ export interface NavigationCategory {
   icon: IconName;
   title: string;
   entries: NavigationItem[];
+  generateFrom?: string;
 }
 
 interface LinkWithRedirect {

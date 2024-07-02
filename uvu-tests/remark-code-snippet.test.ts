@@ -243,7 +243,7 @@ Suite("Variables in multiline command support", () => {
   assert.equal(result, expected);
 });
 
-Suite.only("Includes empty lines in example command output", () => {
+Suite("Includes empty lines in example command output", () => {
   const value = readFileSync(
     resolve("server/fixtures/code-snippet-empty-line.mdx"),
     "utf-8"

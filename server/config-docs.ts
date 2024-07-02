@@ -8,11 +8,12 @@ import type { Redirect } from "next/dist/lib/load-custom-routes";
 
 import Ajv from "ajv";
 import { validateConfig } from "./config-common";
-import { resolve, join } from "path";
-import { existsSync, readFileSync } from "fs";
+import { dirname, resolve, join } from "path";
+import fs from "fs";
 import { isExternalLink, isHash, splitPath } from "../utils/url";
 import { NavigationCategory, NavigationItem } from "../layouts/DocsPage/types";
 import { loadConfig as loadSiteConfig } from "./config-site";
+import { generateNavPaths } from "./pages-helpers";
 
 const { latest } = loadSiteConfig();
 export interface Config {
@@ -31,8 +32,8 @@ const getConfigPath = (version: string) =>
 export const load = (version: string) => {
   const path = getConfigPath(version);
 
-  if (existsSync(path)) {
-    const content = readFileSync(path, "utf-8");
+  if (fs.existsSync(path)) {
+    const content = fs.readFileSync(path, "utf-8");
 
     return JSON.parse(content) as Config;
   } else {
@@ -61,6 +62,8 @@ const validator = ajv.compile({
         properties: {
           icon: { type: "string" },
           title: { type: "string" },
+          generateFrom: { type: "string" },
+          // Entries must be empty if generateFrom is present.
           entries: {
             type: "array",
             items: {
@@ -228,7 +231,7 @@ const correspondingFileExistsForURL = (
 
   if (
     [docsPagePath, indexPath, introPath].find((p) => {
-      return existsSync(p);
+      return fs.existsSync(p);
     }) == undefined
   ) {
     return false;
@@ -304,8 +307,6 @@ export const normalize = (config: Config, version: string): Config => {
   return config;
 };
 
-/* Load, validate and normalize config. */
-
 export const loadConfig = (version: string) => {
   const config = load(version);
 
@@ -326,6 +327,19 @@ export const loadConfig = (version: string) => {
   }
 
   validateConfig<Config>(validator, config);
+
+  config.navigation.forEach((item, i) => {
+    if (!!item.generateFrom && item.entries.length > 0) {
+      throw "a navigation item cannot contain both generateFrom and entries";
+    }
+
+    if (!!item.generateFrom) {
+      config.navigation[i].entries = generateNavPaths(
+        fs,
+        join("content", version, "docs", "pages", item.generateFrom)
+      );
+    }
+  });
 
   return normalize(config, version);
 };
