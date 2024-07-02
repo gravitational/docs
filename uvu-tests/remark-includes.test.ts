@@ -590,21 +590,19 @@ boundary" section.
   }
 );
 
-Suite.only(
-  "Interprets anchor-only links correctly when loading partials",
-  () => {
-    const actual = transformer({
-      value: `Here is the outer page.
+Suite("Interprets anchor-only links correctly when loading partials", () => {
+  const actual = transformer({
+    value: `Here is the outer page.
 
 (!anchor-links.mdx!)
 
 `,
-      path: "server/fixtures/mypage.mdx",
-    }).toString();
+    path: "server/fixtures/mypage.mdx",
+  }).toString();
 
-    assert.equal(
-      actual,
-      `Here is the outer page.
+  assert.equal(
+    actual,
+    `Here is the outer page.
 
 This is a [link to an anchor](#this-is-a-section).
 
@@ -612,8 +610,7 @@ This is a [link to an anchor](#this-is-a-section).
 
 This is content within the section.
 `
-    );
-  }
-);
+  );
+});
 
 Suite.run();
