@@ -4,6 +4,7 @@ import remarkIncludes from "./.build/server/remark-includes.mjs";
 import remarkCodeSnippet from "./.build/server/remark-code-snippet.mjs";
 import remarkLintDetails from "./.build/server/remark-lint-details.mjs";
 import remarkLintFrontmatter from "./.build/server/remark-lint-frontmatter.mjs";
+import remarkTOC from "./.build/server/remark-toc.mjs";
 import { remarkLintTeleportDocsLinks} from "./.build/server/lint-teleport-docs-links.mjs"
 import {
   getVersion,
@@ -49,6 +50,7 @@ const configLint = {
     ["lint-maximum-heading-length", false],
     ["lint-no-shortcut-reference-link", false],
     ["lint-no-file-name-irregular-characters", false],
+    [remarkTOC],
     [
       remarkIncludes, // Lints (!include.ext!) syntax
       {
