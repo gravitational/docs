@@ -338,6 +338,23 @@ Here is an image:
 When including the partial, the docs engine will rewrite the link path to load
 the image in `docs/img/screenshot.png`.
 
+## Tables of Contents
+
+You can add a list of links to pages in the current directory by adding the
+following line to a docs page:
+
+```
+(!toc!)
+```
+
+The docs engine replaces this line with a list of links to pages in the current
+directory, using the title and description of each page to populate the link:
+
+```
+- [Page 1](page1.mdx): This is a description of Page 1.
+- [Page 2](page2.mdx): This is a description of Page 2.
+```
+
 ## Tabs
 
 To insert a tabs block like the one above, use this syntax:
