@@ -16,6 +16,7 @@ import remarkVariables from "./remark-variables";
 import remarkCodeSnippet from "./remark-code-snippet";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
+import remarkTOC from "./remark-toc";
 import remarkCopyLinkedFiles from "remark-copy-linked-files";
 import rehypeImages from "./rehype-images";
 import { getVersion, getVersionRootPath } from "./docs-helpers";
@@ -42,6 +43,8 @@ export const transformToAST = async (value: string, vfile: VFile) => {
 
   // run() will apply plugins and return modified AST
   const AST = await unified()
+    // Resolves (!toc dir/path!) syntax
+    .use(remarkTOC)
     .use(remarkIncludes, {
       rootDir: getVersionRootPath(vfile.path),
     }) // Resolves (!include.ext!) syntax
