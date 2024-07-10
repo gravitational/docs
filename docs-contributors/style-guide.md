@@ -60,7 +60,7 @@ In most cases, how-to guides contain the following sections:
 
 - Frontmatter with a guide title, description, and other information.
   The title should be short and identify the subject of the how-to topic in the fewest words possible.
-  The description should be a sentence that starts with a verb and summarizes the content of the topic.
+  The description should be a sentence that starts with a verb, summarizes the content of the topic, and ends with a period.
   Additional information might include a video banner link, a list of keywords, or an alternate 
   first-level heading.
 
@@ -138,7 +138,7 @@ Conceptual guides typically contain the following sections:
 
 - Frontmatter with a guide title, description, and other information.
   The title should be short and identify the subject of the how-to topic in the fewest words possible.
-  The description should be a sentence that starts with a verb and summarizes the content of the topic.
+  The description should be a sentence that starts with a verb, summarizes the content of the topic, and ends with a period.
   Additional information might include a list of keywords, or an alternate first-level heading.
 - Body paragraphs that explain that explain concepts, components, system operations, and context to
   help the reader understand what something is, why it's important, and how it works.
@@ -164,7 +164,7 @@ Reference manuals typically contain the following sections:
 
 - Frontmatter with a guide title, description, and other information.
   The title should be short and identify the subject of the how-to topic in the fewest words possible.
-  The description should be a sentence that starts with a verb and summarizes the content of the topic.
+  The description should be a sentence that starts with a verb, summarizes the content of the topic, and ends with a period.
   Additional information might include a list of keywords.
 - One or more introductory paragraphs that explain what information the covers.
 - Formatted reference information. The format might resemble a `man` page or API description with a 
