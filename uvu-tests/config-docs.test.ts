@@ -387,4 +387,42 @@ title: Get Started with DB RBAC
   }
 );
 
+Suite("generates four levels of the sidebar", () => {
+  const files = {
+    "/docs/pages/database-access/guides/guides.mdx": `---
+title: Database Access Guides
+---`,
+    "/docs/pages/database-access/guides/deployment/kubernetes.mdx": `---
+title: Database Access Kubernetes Deployment
+---`,
+    "/docs/pages/database-access/guides/deployment/deployment.mdx": `---
+title: Database Access Deployment Guides
+---`,
+  };
+
+  const expected = [
+    {
+      title: "Database Access Guides",
+      slug: "/database-access/guides/",
+      entries: [
+        {
+          title: "Database Access Deployment Guides",
+          slug: "/database-access/guides/deployment/",
+          entries: [
+            {
+              title: "Database Access Kubernetes Deployment",
+              slug: "/database-access/guides/deployment/kubernetes/",
+            },
+          ],
+        },
+      ],
+    },
+  ];
+
+  const vol = Volume.fromJSON(files);
+  const fs = createFsFromVolume(vol);
+  let actual = generateNavPaths(fs, "/docs/pages/database-access");
+  assert.equal(actual, expected);
+});
+
 Suite.run();
