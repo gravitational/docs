@@ -124,6 +124,16 @@ export const navEntriesForDir = (fs, dirPath) => {
       firstLvlDirs.add(fullPath);
       return;
     }
+    const fileName = parse(fullPath).name;
+    const dirName = parse(dirPath).name;
+
+    // This is a category page for the containing directory. We would have
+    // already handled this in the previous iteration. The first iteration
+    // does not require a category page.
+    if (fileName == dirName) {
+      return;
+    }
+
     firstLvlFiles.add(fullPath);
   });
 
