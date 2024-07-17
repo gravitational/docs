@@ -35,13 +35,16 @@ const DocsNavigationItems = ({
   const docPath = currentPath.split(SCOPELESS_HREF_REGEX)[0];
   const { getVersionAgnosticRoute } = useVersionAgnosticPages();
 
+  console.log("entries:", entries);
+
   return (
     <>
       {!!entries.length &&
         entries.map((entry) => {
           const selected = entry.slug === docPath;
           const active =
-            selected || entry.entries?.some((entry) => entry.slug === docPath);
+            selected ||
+            entry.entries?.some((entry) => docPath.includes(entry.slug));
 
           return (
             <li key={entry.slug}>
@@ -152,8 +155,11 @@ const DocNavigation = ({
   data,
   section,
   currentVersion,
-  currentPathGetter = { useCurrentHref },
+  currentPathGetter,
 }: DocNavigationProps) => {
+  if (!currentPathGetter) {
+    currentPathGetter = useCurrentHref;
+  }
   const route = currentPathGetter();
 
   const [openedId, setOpenedId] = useState<number>(

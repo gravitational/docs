@@ -21,7 +21,7 @@ export const NavigationFourLevels = () => {
               slug: "/enroll-resources/machine-id/deployment/",
               entries: [
                 {
-                  title: "Deploy Machine ID on AWs",
+                  title: "Deploy Machine ID on AWS",
                   slug: "/enroll-resources/machine-id/deployment/aws/",
                 },
               ],
