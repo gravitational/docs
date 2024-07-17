@@ -370,6 +370,12 @@ title: Get Started with DB RBAC
           {
             title: "Database Access RBAC",
             slug: "/database-access/guides/rbac/",
+            entries: [
+              {
+                title: "Get Started with DB RBAC",
+                slug: "/database-access/guides/rbac/get-started/",
+              },
+            ],
           },
           {
             title: "MySQL Guide",
