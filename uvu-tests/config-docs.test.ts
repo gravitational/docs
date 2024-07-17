@@ -412,11 +412,11 @@ title: Database Access Deployment Guides
   const expected = [
     {
       title: "Database Access Guides",
-      slug: "/database-access/guides/",
+      slug: "/database-access/guides/guides/",
       entries: [
         {
           title: "Database Access Deployment Guides",
-          slug: "/database-access/guides/deployment/",
+          slug: "/database-access/guides/deployment/deployment/",
           entries: [
             {
               title: "Database Access Kubernetes Deployment",
