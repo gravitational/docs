@@ -62,6 +62,8 @@ export const getPageInfo = <T = MDXPageFrontmatter>(
   return result;
 };
 
+// getEntryForPath returns a navigation item for the file at filePath in the
+// given filesystem.
 const getEntryForPath = (fs, filePath) => {
   const txt = fs.readFileSync(filePath, "utf8");
   const { data } = matter(txt);
@@ -113,6 +115,8 @@ export const generateNavPaths = (fs, dirPath) => {
   let result = [];
   let firstLvlFiles = new Set();
   let firstLvlDirs = new Set();
+
+  // Sort the contents of dirPath into files and directoreis.
   firstLvl.forEach((p) => {
     const fullPath = join(dirPath, p);
     const info = fs.statSync(fullPath);
@@ -124,7 +128,8 @@ export const generateNavPaths = (fs, dirPath) => {
   });
 
   // Map category pages to the directories they introduce so we can can add a
-  // sidebar entry for the category page, then traverse the directory.
+  // sidebar entry for each category page, then traverse each directory to add
+  // further sidebar pages.
   let sectionIntros = new Map();
   firstLvlDirs.forEach((d: string) => {
     sectionIntros.set(categoryPagePathForDir(fs, d), d);
@@ -145,6 +150,9 @@ export const generateNavPaths = (fs, dirPath) => {
     result.push(getEntryForPath(fs, f));
   });
 
+  // Add a category page for each section intro, then traverse the contents of
+  // the directory that the category page introduces, adding the contents to
+  // entries.
   sectionIntros.forEach((dirPath, categoryPagePath) => {
     const { slug, title } = getEntryForPath(fs, categoryPagePath);
     const section = {
@@ -152,6 +160,10 @@ export const generateNavPaths = (fs, dirPath) => {
       slug: slug,
       entries: [],
     };
+
+    // TODO: From this point, we can probably make this recursive (remove
+    // everything below here and assign entries to another call of the
+    // recursive function).
     const secondLvl = new Set(fs.readdirSync(dirPath, "utf8"));
 
     // Find all second-level category pages first so we don't
