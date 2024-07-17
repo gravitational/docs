@@ -289,54 +289,57 @@ title: MySQL Guide
   }
 );
 
-Suite(
-  "generateNavPaths shows third-level category pages on the sidebar",
-  () => {
-    const files = {
-      "/docs/pages/database-access/guides/guides.mdx": `---
+Suite("generateNavPaths shows third-level pages on the sidebar", () => {
+  const files = {
+    "/docs/pages/database-access/guides/guides.mdx": `---
 title: Database Access Guides
 ---`,
-      "/docs/pages/database-access/guides/postgres.mdx": `---
+    "/docs/pages/database-access/guides/postgres.mdx": `---
 title: Postgres Guide
 ---`,
-      "/docs/pages/database-access/guides/mysql.mdx": `---
+    "/docs/pages/database-access/guides/mysql.mdx": `---
 title: MySQL Guide
 ---`,
-      "/docs/pages/database-access/guides/rbac/rbac.mdx": `---
+    "/docs/pages/database-access/guides/rbac/rbac.mdx": `---
 title: Database Access RBAC
 ---`,
-      "/docs/pages/database-access/guides/rbac/get-started.mdx": `---
+    "/docs/pages/database-access/guides/rbac/get-started.mdx": `---
 title: Get Started with DB RBAC
 ---`,
-    };
+  };
 
-    const expected = [
-      {
-        title: "Database Access Guides",
-        slug: "/database-access/guides/guides/",
-        entries: [
-          {
-            title: "Database Access RBAC",
-            slug: "/database-access/guides/rbac/rbac/",
-          },
-          {
-            title: "MySQL Guide",
-            slug: "/database-access/guides/mysql/",
-          },
-          {
-            title: "Postgres Guide",
-            slug: "/database-access/guides/postgres/",
-          },
-        ],
-      },
-    ];
+  const expected = [
+    {
+      title: "Database Access Guides",
+      slug: "/database-access/guides/guides/",
+      entries: [
+        {
+          title: "Database Access RBAC",
+          slug: "/database-access/guides/rbac/rbac/",
+          entries: [
+            {
+              title: "Get Started with DB RBAC",
+              slug: "/database-access/guides/rbac/get-started/",
+            },
+          ],
+        },
+        {
+          title: "MySQL Guide",
+          slug: "/database-access/guides/mysql/",
+        },
+        {
+          title: "Postgres Guide",
+          slug: "/database-access/guides/postgres/",
+        },
+      ],
+    },
+  ];
 
-    const vol = Volume.fromJSON(files);
-    const fs = createFsFromVolume(vol);
-    const actual = generateNavPaths(fs, "/docs/pages/database-access");
-    assert.equal(actual, expected);
-  }
-);
+  const vol = Volume.fromJSON(files);
+  const fs = createFsFromVolume(vol);
+  const actual = generateNavPaths(fs, "/docs/pages/database-access");
+  assert.equal(actual, expected);
+});
 
 Suite(
   "allows category pages in the same directory as the associated subdirectory",
