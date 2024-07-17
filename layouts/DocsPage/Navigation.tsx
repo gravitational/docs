@@ -93,6 +93,8 @@ const DocNavigationCategory = ({
     [id, opened, onToggleOpened]
   );
 
+  console.log("id:", id, "opened:", opened, "entries:", entries);
+
   return (
     <>
       <HeadlessButton
@@ -134,20 +136,24 @@ interface DocNavigationProps {
   section?: boolean;
   currentVersion?: string;
   data: NavigationCategory[];
+  currentPathGetter: () => string;
 }
 
+// TODO: inject the router for mocking
 const DocNavigation = ({
   data,
   section,
   currentVersion,
 }: DocNavigationProps) => {
-  const route = useCurrentHref();
+  const route = currentPathGetter();
 
   const [openedId, setOpenedId] = useState<number>(
     getCurrentCategoryIndex(data, route)
   );
   const [visible, setVisible] = useState<boolean>(false);
-  const toggleMenu = useCallback(() => setVisible((visible) => !visible), []);
+  const toggleMenu = useCallback(() => {
+    setVisible((visible) => !visible);
+  }, []);
 
   useEffect(() => {
     setOpenedId(getCurrentCategoryIndex(data, route));

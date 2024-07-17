@@ -22,7 +22,7 @@ export const NavigationFourLevels = () => {
               entries: [
                 {
                   title: "Deploy Machine ID on AWs",
-                  slug: "/enroll-resources/machine-id/deployment/",
+                  slug: "/enroll-resources/machine-id/deployment/aws/",
                 },
               ],
             },
