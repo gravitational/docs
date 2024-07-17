@@ -37,6 +37,9 @@ export const NavigationFourLevels = () => {
       data={data}
       section={true}
       currentVersion="16.x"
+      currentPathGetter={() => {
+        return "/enroll-resources/machine-id/deployment/aws/";
+      }}
     ></DocNavigation>
   );
 };

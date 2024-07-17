@@ -24,13 +24,15 @@ const SCOPE_DICTIONARY: Record<string, ScopeType> = {
 interface DocsNavigationItemsProps {
   entries: NavigationItem[];
   onClick: () => void;
+  currentPath: string;
 }
 
 const DocsNavigationItems = ({
   entries,
   onClick,
+  currentPath,
 }: DocsNavigationItemsProps) => {
-  const docPath = useCurrentHref().split(SCOPELESS_HREF_REGEX)[0];
+  const docPath = currentPath.split(SCOPELESS_HREF_REGEX)[0];
   const { getVersionAgnosticRoute } = useVersionAgnosticPages();
 
   return (
@@ -62,6 +64,7 @@ const DocsNavigationItems = ({
                   <DocsNavigationItems
                     entries={entry.entries}
                     onClick={onClick}
+                    currentPath={currentPath}
                   />
                 </ul>
               )}
@@ -77,6 +80,7 @@ interface DocNavigationCategoryProps extends NavigationCategory {
   opened: boolean;
   onToggleOpened: (value: number) => void;
   onClick: () => void;
+  currentPath: string;
 }
 
 const DocNavigationCategory = ({
@@ -87,6 +91,7 @@ const DocNavigationCategory = ({
   icon,
   title,
   entries,
+  currentPath,
 }: DocNavigationCategoryProps) => {
   const toggleOpened = useCallback(
     () => onToggleOpened(opened ? null : id),
@@ -107,7 +112,11 @@ const DocNavigationCategory = ({
       </HeadlessButton>
       {opened && (
         <ul className={styles["category-links"]}>
-          <DocsNavigationItems entries={entries} onClick={onClick} />
+          <DocsNavigationItems
+            entries={entries}
+            onClick={onClick}
+            currentPath={currentPath}
+          />
         </ul>
       )}
     </>
@@ -139,11 +148,11 @@ interface DocNavigationProps {
   currentPathGetter: () => string;
 }
 
-// TODO: inject the router for mocking
 const DocNavigation = ({
   data,
   section,
   currentVersion,
+  currentPathGetter = { useCurrentHref },
 }: DocNavigationProps) => {
   const route = currentPathGetter();
 
@@ -177,6 +186,7 @@ const DocNavigation = ({
                 opened={index === openedId}
                 onToggleOpened={setOpenedId}
                 onClick={toggleMenu}
+                currentPath={route}
                 {...props}
               />
             </li>
