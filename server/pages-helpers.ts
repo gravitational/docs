@@ -110,6 +110,64 @@ const categoryPagePathForDir = (fs, dirPath) => {
   );
 };
 
+export const navEntriesForDir = (fs, dirPath) => {
+  const firstLvl = fs.readdirSync(dirPath, "utf8");
+  let result = [];
+  let firstLvlFiles = new Set();
+  let firstLvlDirs = new Set();
+
+  // Sort the contents of dirPath into files and directoreis.
+  firstLvl.forEach((p) => {
+    const fullPath = join(dirPath, p);
+    const info = fs.statSync(fullPath);
+    if (info.isDirectory()) {
+      firstLvlDirs.add(fullPath);
+      return;
+    }
+    firstLvlFiles.add(fullPath);
+  });
+
+  // Map category pages to the directories they introduce so we can can add a
+  // sidebar entry for each category page, then traverse each directory to add
+  // further sidebar pages.
+  let sectionIntros = new Map();
+  firstLvlDirs.forEach((d: string) => {
+    sectionIntros.set(categoryPagePathForDir(fs, d), d);
+  });
+
+  // Add files with no corresponding directory to the navigation first. Section
+  // introductions, by convention, have a filename that corresponds to the
+  // subdirectory containing pages in the section, or have the name
+  // "introduction.mdx".
+  firstLvlFiles.forEach((f: string) => {
+    // Handle section intros separately
+    if (sectionIntros.has(f)) {
+      return;
+    }
+    if (!f.endsWith(".mdx")) {
+      return;
+    }
+    result.push(getEntryForPath(fs, f));
+  });
+
+  // Add a category page for each section intro, then traverse the contents of
+  // the directory that the category page introduces, adding the contents to
+  // entries.
+  sectionIntros.forEach((dirPath, categoryPagePath) => {
+    const { slug, title } = getEntryForPath(fs, categoryPagePath);
+    const section = {
+      title: title,
+      slug: slug,
+      entries: [],
+    };
+
+    section.entries = navEntriesForDir(fs, dirPath);
+    result.push(section);
+  });
+  result.sort(sortByTitle);
+  return result;
+};
+
 export const generateNavPaths = (fs, dirPath) => {
   const firstLvl = fs.readdirSync(dirPath, "utf8");
   let result = [];
