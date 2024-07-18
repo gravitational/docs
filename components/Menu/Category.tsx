@@ -112,6 +112,11 @@ const MenuCategory = ({
         )}
         ref={ref}
         onMouseLeave={() => toggleOpened(null)}
+        onKeyDown={(e) => {
+          if (e.key === "Escape") {
+            onToggleOpened(null);
+          }
+        }}
       >
         {isDropdown === "link" ? (
           <Link
