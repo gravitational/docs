@@ -36,6 +36,14 @@ const DropdownSubMenu = ({ items }: DropdownMenuProps) => {
                   index === activeTab ? styles.active : ""
                 )}
                 onClick={() => setActiveTab(index)}
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setActiveTab(index);
+                  }
+                }}
+                aria-expanded={activeTab === index}
               >
                 {submenuTitle}
                 <Icon name="arrowRight" size="sm" />

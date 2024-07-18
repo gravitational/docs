@@ -70,6 +70,7 @@ const MenuCategory = ({
         ? submenus
         : columns
       : null;
+
   const toggleOpened = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>) => {
       if (children) {
@@ -81,11 +82,23 @@ const MenuCategory = ({
     },
     [opened, children, id, onToggleOpened, onClick]
   );
+
   const open = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>) => {
       onHover(id);
     },
     [id, onHover]
+  );
+
+  const keyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        !opened ? onToggleOpened(id) : onToggleOpened(null);
+      }
+      if (e.key === "Escape") onToggleOpened(null);
+    },
+    [id, opened, onToggleOpened]
   );
 
   const containsSubCategories = !!columns || !!submenus;
@@ -116,7 +129,10 @@ const MenuCategory = ({
             className={cn(styles.menuButton, opened ? styles.opened : "")}
             onClick={toggleOpened}
             onMouseEnter={open}
+            tabIndex={0}
             data-testid={testId}
+            onKeyDown={keyDown}
+            aria-expanded={opened}
           >
             {title}
             {isDropdown === "dropdown" && (
