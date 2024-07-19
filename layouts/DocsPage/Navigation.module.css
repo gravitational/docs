@@ -107,10 +107,21 @@
     display: block;
   }
 
-  & .link {
-    padding-left: var(--m-4);
+  & .link{
     font-size: var(--fs-text-sm);
     line-height: var(--lh-md);
+  }
+
+  & .link-1 {
+    padding-left: var(--m-4);
+  }
+
+  & .link-2 {
+    padding-left: var(--m-5);
+  }
+
+  & .link-3 {
+    padding-left: var(--m-6);
   }
 
   .link.active + & {

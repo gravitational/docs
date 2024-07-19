@@ -25,7 +25,7 @@ const relativePathToFile = (root: string, filepath: string) => {
 // properties:
 // - result: a string containing the resulting list of links.
 // - error: an error message encountered during processing
-export const getTOC = (filePath: string, fs = nodeFS) => {
+export const getTOC = (filePath: string, fs: any = nodeFS) => {
   const dirPath = path.dirname(filePath);
   if (!fs.existsSync(dirPath)) {
     return {
