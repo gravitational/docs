@@ -62,6 +62,8 @@ export const getPageInfo = <T = MDXPageFrontmatter>(
   return result;
 };
 
+// getEntryForPath returns a navigation item for the file at filePath in the
+// given filesystem.
 const getEntryForPath = (fs, filePath) => {
   const txt = fs.readFileSync(filePath, "utf8");
   const { data } = matter(txt);
@@ -108,11 +110,13 @@ const categoryPagePathForDir = (fs, dirPath) => {
   );
 };
 
-export const generateNavPaths = (fs, dirPath) => {
+export const navEntriesForDir = (fs, dirPath) => {
   const firstLvl = fs.readdirSync(dirPath, "utf8");
   let result = [];
   let firstLvlFiles = new Set();
   let firstLvlDirs = new Set();
+
+  // Sort the contents of dirPath into files and directoreis.
   firstLvl.forEach((p) => {
     const fullPath = join(dirPath, p);
     const info = fs.statSync(fullPath);
@@ -120,11 +124,22 @@ export const generateNavPaths = (fs, dirPath) => {
       firstLvlDirs.add(fullPath);
       return;
     }
+    const fileName = parse(fullPath).name;
+    const dirName = parse(dirPath).name;
+
+    // This is a category page for the containing directory. We would have
+    // already handled this in the previous iteration. The first iteration
+    // does not require a category page.
+    if (fileName == dirName) {
+      return;
+    }
+
     firstLvlFiles.add(fullPath);
   });
 
   // Map category pages to the directories they introduce so we can can add a
-  // sidebar entry for the category page, then traverse the directory.
+  // sidebar entry for each category page, then traverse each directory to add
+  // further sidebar pages.
   let sectionIntros = new Map();
   firstLvlDirs.forEach((d: string) => {
     sectionIntros.set(categoryPagePathForDir(fs, d), d);
@@ -145,6 +160,9 @@ export const generateNavPaths = (fs, dirPath) => {
     result.push(getEntryForPath(fs, f));
   });
 
+  // Add a category page for each section intro, then traverse the contents of
+  // the directory that the category page introduces, adding the contents to
+  // entries.
   sectionIntros.forEach((dirPath, categoryPagePath) => {
     const { slug, title } = getEntryForPath(fs, categoryPagePath);
     const section = {
@@ -152,49 +170,14 @@ export const generateNavPaths = (fs, dirPath) => {
       slug: slug,
       entries: [],
     };
-    const secondLvl = new Set(fs.readdirSync(dirPath, "utf8"));
 
-    // Find all second-level category pages first so we don't
-    // repeat them in the sidebar.
-    secondLvl.forEach((f2: string) => {
-      let fullPath2 = join(dirPath, f2);
-      const stat = fs.statSync(fullPath2);
-
-      // List category pages on the second level, but not their contents.
-      if (!stat.isDirectory()) {
-        return;
-      }
-      const catPath = categoryPagePathForDir(fs, fullPath2);
-      fullPath2 = catPath;
-      secondLvl.delete(f2);
-
-      // Delete the category page from the set so we don't add it again
-      // when we add individual files.
-      secondLvl.delete(parse(catPath).base);
-      section.entries.push(getEntryForPath(fs, fullPath2));
-    });
-
-    secondLvl.forEach((f2: string) => {
-      // Only add entries for MDX files here
-      if (!f2.endsWith(".mdx")) {
-        return;
-      }
-
-      let fullPath2 = join(dirPath, f2);
-
-      // This is a first-level category page that happens to exist on the second
-      // level.
-      if (sectionIntros.has(fullPath2)) {
-        return;
-      }
-
-      const stat = fs.statSync(fullPath2);
-      section.entries.push(getEntryForPath(fs, fullPath2));
-    });
-
-    section.entries.sort(sortByTitle);
+    section.entries = navEntriesForDir(fs, dirPath);
     result.push(section);
   });
   result.sort(sortByTitle);
   return result;
+};
+
+export const generateNavPaths = (fs, dirPath) => {
+  return navEntriesForDir(fs, dirPath);
 };

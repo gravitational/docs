@@ -24,14 +24,22 @@ const SCOPE_DICTIONARY: Record<string, ScopeType> = {
 interface DocsNavigationItemsProps {
   entries: NavigationItem[];
   onClick: () => void;
+  currentPath: string;
+  level?: number;
 }
 
 const DocsNavigationItems = ({
   entries,
   onClick,
+  currentPath,
+  level,
 }: DocsNavigationItemsProps) => {
-  const docPath = useCurrentHref().split(SCOPELESS_HREF_REGEX)[0];
+  const docPath = currentPath.split(SCOPELESS_HREF_REGEX)[0];
   const { getVersionAgnosticRoute } = useVersionAgnosticPages();
+  const maxLevel = 3;
+  if (!level) {
+    level = 1;
+  }
 
   return (
     <>
@@ -39,13 +47,15 @@ const DocsNavigationItems = ({
         entries.map((entry) => {
           const selected = entry.slug === docPath;
           const active =
-            selected || entry.entries?.some((entry) => entry.slug === docPath);
+            selected ||
+            entry.entries?.some((entry) => docPath.startsWith(entry.slug));
 
           return (
             <li key={entry.slug}>
               <Link
                 className={cn(
                   styles.link,
+                  styles[`link-${level}`],
                   active && styles.active,
                   selected && styles.selected
                 )}
@@ -57,11 +67,13 @@ const DocsNavigationItems = ({
                   <Icon size="sm" name="ellipsis" className={styles.ellipsis} />
                 )}
               </Link>
-              {!!entry.entries?.length && (
+              {!!entry.entries?.length && level <= maxLevel && (
                 <ul className={cn(styles.submenu, active && styles.opened)}>
                   <DocsNavigationItems
                     entries={entry.entries}
                     onClick={onClick}
+                    currentPath={currentPath}
+                    level={level + 1}
                   />
                 </ul>
               )}
@@ -77,6 +89,7 @@ interface DocNavigationCategoryProps extends NavigationCategory {
   opened: boolean;
   onToggleOpened: (value: number) => void;
   onClick: () => void;
+  currentPath: string;
 }
 
 const DocNavigationCategory = ({
@@ -87,6 +100,7 @@ const DocNavigationCategory = ({
   icon,
   title,
   entries,
+  currentPath,
 }: DocNavigationCategoryProps) => {
   const toggleOpened = useCallback(
     () => onToggleOpened(opened ? null : id),
@@ -105,7 +119,11 @@ const DocNavigationCategory = ({
       </HeadlessButton>
       {opened && (
         <ul className={styles["category-links"]}>
-          <DocsNavigationItems entries={entries} onClick={onClick} />
+          <DocsNavigationItems
+            entries={entries}
+            onClick={onClick}
+            currentPath={currentPath}
+          />
         </ul>
       )}
     </>
@@ -134,14 +152,19 @@ interface DocNavigationProps {
   section?: boolean;
   currentVersion?: string;
   data: NavigationCategory[];
+  currentPathGetter?: () => string;
 }
 
 const DocNavigation = ({
   data,
   section,
   currentVersion,
+  currentPathGetter,
 }: DocNavigationProps) => {
-  const route = useCurrentHref();
+  if (!currentPathGetter) {
+    currentPathGetter = useCurrentHref;
+  }
+  const route = currentPathGetter();
 
   const [openedId, setOpenedId] = useState<number>(
     getCurrentCategoryIndex(data, route)
@@ -171,6 +194,7 @@ const DocNavigation = ({
                 opened={index === openedId}
                 onToggleOpened={setOpenedId}
                 onClick={toggleMenu}
+                currentPath={route}
                 {...props}
               />
             </li>
