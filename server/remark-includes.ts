@@ -425,7 +425,6 @@ export default function remarkIncludes({
       vfile,
       startIndex: lastErrorIndex,
       ruleId: "includes",
-      source: "remark-lint",
     });
   };
 }
