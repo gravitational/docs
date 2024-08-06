@@ -98,11 +98,18 @@ const categoryPagePathForDir = (fs, dirPath) => {
 
   const outerCategoryPage = join(dirname(dirPath), name + ".mdx");
   const innerCategoryPage = join(dirPath, name + ".mdx");
+  const outerExists = fs.existsSync(outerCategoryPage);
+  const innerExists = fs.existsSync(innerCategoryPage);
 
-  if (fs.existsSync(outerCategoryPage)) {
+  if (outerExists && innerExists) {
+    throw new Error(
+      `cannot generate the docs navigation sidebar due to an ambiguous category page: must have a page named ${outerCategoryPage} or ${innerCategoryPage}, not not both`
+    );
+  }
+  if (outerExists) {
     return outerCategoryPage;
   }
-  if (fs.existsSync(innerCategoryPage)) {
+  if (innerExists) {
     return innerCategoryPage;
   }
   throw new Error(
