@@ -12,6 +12,7 @@ import {
 } from "./types";
 import styles from "./Navigation.module.css";
 import { useVersionAgnosticPages } from "utils/useVersionAgnosticPages";
+import { dirname } from "path";
 
 const SCOPELESS_HREF_REGEX = /\?|\#/;
 
@@ -45,10 +46,13 @@ const DocsNavigationItems = ({
     <>
       {!!entries.length &&
         entries.map((entry) => {
+          // Determine whether to highlight the entry in the navigation sidebar.
+          // We highlight an entry if:
+          // - It is the currently selected entry.
+          // - One of its entries is either the currently selected entry or the
+          //   parent of the currently selected entry.
           const selected = entry.slug === docPath;
-          const active =
-            selected ||
-            entry.entries?.some((entry) => docPath.startsWith(entry.slug));
+          const active = hasChildEntry(entry, docPath);
 
           return (
             <li key={entry.slug}>
@@ -83,6 +87,20 @@ const DocsNavigationItems = ({
     </>
   );
 };
+
+// hasChildEntry recursively descends through entry to determine if it or one of
+// its children has the provided slug.
+function hasChildEntry(entry: NavigationCategory, slug: string) {
+  if (entry.slug === slug) {
+    return true;
+  }
+  if (!entry.entries) {
+    return false;
+  }
+  return entry.entries.some((e) => {
+    return hasChildEntry(e, slug);
+  });
+}
 
 interface DocNavigationCategoryProps extends NavigationCategory {
   id: number;

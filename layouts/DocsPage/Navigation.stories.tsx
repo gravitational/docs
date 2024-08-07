@@ -22,6 +22,10 @@ export const NavigationFourLevels = () => {
                   title: "Deploy Machine ID on AWS",
                   slug: "/enroll-resources/machine-id/deployment/aws/",
                 },
+                {
+                  title: "General Deployment Tips",
+                  slug: "/enroll-resources/machine-id/deployment/deployment/",
+                },
               ],
             },
           ],
