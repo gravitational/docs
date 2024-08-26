@@ -16,7 +16,6 @@ export const posthog = async (): Promise<PostHog | undefined> => {
 
       return;
     }
-
     if (PH_IS_ENABLED && PH_API_URL && PH_API_KEY) {
       posthogGlobal.init(PH_API_KEY, {
         api_host: PH_API_URL,
@@ -39,6 +38,11 @@ export const posthog = async (): Promise<PostHog | undefined> => {
 export const sendPageview = async () => {
   const ph = await posthog();
   ph?.capture("$pageview");
+};
+
+export const sendPageNotFoundError = async () => {
+  const ph = await posthog();
+  ph?.capture("web.errors.pageNotFound");
 };
 
 export const sendDocsFeedback = async (rating: string, comment: string) => {
