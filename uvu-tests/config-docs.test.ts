@@ -434,4 +434,29 @@ title: Database Access Deployment Guides
   assert.equal(actual, expected);
 });
 
+Suite("page named after directory at two possible dir levels", () => {
+  const files = {
+    "/docs/pages/database-access/deployment/deployment.mdx": `---
+title: Database Access Deployment Guides
+---`,
+    "/docs/pages/database-access/deployment.mdx": `---
+title: Deploying the Database Service
+---`,
+    "/docs/pages/database-access/deployment/kubernetex.mdx": `---
+title: Deploying the Database Service on Kubernetes
+---`,
+  };
+
+  const vol = Volume.fromJSON(files);
+  const fs = createFsFromVolume(vol);
+  assert.throws(
+    () => {
+      const actual = generateNavPaths(fs, "/docs/pages/database-access");
+      console.log(actual);
+    },
+    "database-access/deployment/deployment.mdx",
+    "database-access/deployment.mdx"
+  );
+});
+
 Suite.run();
