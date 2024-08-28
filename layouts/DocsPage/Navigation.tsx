@@ -90,8 +90,12 @@ const DocsNavigationItems = ({
 
 // hasChildEntry recursively descends through entry to determine if it or one of
 // its children has the provided slug.
-function hasChildEntry(entry: NavigationCategory, slug: string) {
-  if (entry.slug === slug) {
+function hasChildEntry(
+  entry: NavigationCategory | NavigationItem,
+  slug: string
+) {
+  const item = entry as NavigationItem;
+  if (item.slug && item.slug === slug) {
     return true;
   }
   if (!entry.entries) {
