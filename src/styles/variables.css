@@ -1,0 +1,100 @@
+:root {
+  /* colors */
+  --color-page-bg: #f6f8f9;
+  --color-dark-purple: #512fc9;
+  --color-light-purple: #651fff;
+  --color-white: #fff;
+  --color-lightest-gray: #f0f2f4;
+  --color-lighter-gray: #d2dbdf;
+  --color-light-blue: #0091ea;
+  --color-light-gray: #b5bec7;
+  --color-gray: #607d8b;
+  --color-green: #00bfa5;
+  --color-red: #f50057;
+  --color-dark-gray: #455a64;
+  --color-darkest: #37474f;
+  --color-black: #000;
+  --color-warning: #ffb400;
+  --color-danger: #f80061;
+  --color-text: #263238;
+  --color-code: #01172c;
+  --color-tip: #00c7ae;
+  --color-note: #009cf1;
+
+  /* fonts */
+  --font-base: Lato, sans-serif;
+  --font-body: var(--font-base);
+  --font-serif: "Georgia", serif;
+  --font-monospace: var(--font-ubunt);
+
+  /* font sizes */
+  --fs-text-xs: 10px;
+  --fs-text-sm: 12px;
+  --fs-text-md: 14px;
+  --fs-text-lg: 16px;
+  --fs-text-xl: 18px;
+  --fs-header-4: 20px;
+  --fs-header-3: 24px;
+  --fs-header-2: 28px;
+  --fs-header-1: 32px;
+
+  /* font weights */
+  --fw-regular: 400;
+  --fw-bold: 700;
+  --fw-black: 900;
+
+  /* line heights */
+  --lh-sm: 16px;
+  --lh-md: 24px;
+  --lh-lg: 32px;
+  --lh-xl: 40px;
+  --lh-xxl: 48px;
+
+  /* spacing modules */
+  --m-0-5: 4px;
+  --m-1: 8px;
+  --m-1-5: 12px;
+  --m-2: 16px;
+  --m-3: 24px;
+  --m-4: 32px;
+  --m-5: 40px;
+  --m-6: 48px;
+  --m-7: 56px;
+  --m-8: 64px;
+  --m-9: 72px;
+  --m-10: 80px;
+
+  /* timings */
+  --t-fast: 150ms;
+  --t-interaction: 300ms;
+  --t-shift: 600ms;
+  --t-slow: 1200ms;
+
+  /* radii */
+  --r-sm: 2px;
+  --r-md: 8px;
+  --r-lg: 16px;
+  --r-default: 4px;
+  --r-circle: 99999px;
+
+  /* docusaurus theme */
+  --ifm-color-primary: var(--color-dark-purple);
+  --ifm-color-primary-dark: #29784c;
+  --ifm-color-primary-darker: #277148;
+  --ifm-color-primary-darkest: #205d3b;
+  --ifm-color-primary-light: var(--color-light-purple);
+  --ifm-color-primary-lighter: #359962;
+  --ifm-color-primary-lightest: #3cad6e;
+
+  --ifm-navbar-height: 80px;
+
+  --ifm-navbar-padding-vertical: 0;
+  --ifm-navbar-padding-horizontal: 0;
+  --ifm-navbar-shadow: none;
+}
+
+@media (max-width: 996px) {
+  :root {
+    --ifm-navbar-height: 48px;
+  }
+}

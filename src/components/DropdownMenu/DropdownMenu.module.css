@@ -1,0 +1,30 @@
+.wrapper {
+
+background-color: #f8f7fd;
+overflow: hidden;
+max-width: 100%;
+width:100%;
+border-top: none;
+border-bottom:1px solid #D2DBDF;
+box-shadow: none;
+box-sizing: border-box;
+@media (--nav) {
+  background-color: white;
+  width: 100vw;
+  border-top: 1px solid #B3B3B3;
+  border-bottom: 1px solid #f0f2f4;
+  padding-bottom: 10px;
+  padding-left: 4.5%;
+  padding-right: 4.5%;
+  box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.15);
+}
+}
+.body {
+  box-sizing: unset;
+  display: block;
+  justify-content: flex-start;
+  @media (--nav) {
+    display:flex;
+  }
+  min-width:unset;
+}

@@ -1,0 +1,19 @@
+.docItemContainer header + *,
+.docItemContainer article > *:first-child {
+  margin-top: 0;
+}
+
+.sidebar {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (min-width: 997px) {
+  .docItemCol {
+    max-width: 75% !important;
+  }
+
+  .sidebar {
+    display: none;
+  }
+}

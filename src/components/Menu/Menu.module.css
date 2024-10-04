@@ -1,0 +1,15 @@
+.navItems {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin-right: 0;
+  margin-left: 0;
+  width:100%;
+  min-width: 0;
+  @media (--nav) {
+    flex-direction: row;
+    margin-right: 91px;
+    width:auto;
+    flex-shrink: 1;
+  }
+}

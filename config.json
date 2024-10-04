@@ -1,0 +1,82 @@
+{
+  "versions": [
+    {
+      "name": "4.4",
+      "branch": "branch/4.4",
+      "deprecated": true
+    },
+    {
+      "name": "5.0",
+      "branch": "branch/5.0",
+      "deprecated": true
+    },
+    {
+      "name": "6.0",
+      "branch": "branch/v6.0",
+      "deprecated": true
+    },
+    {
+      "name": "6.1",
+      "branch": "branch/v6.1",
+      "deprecated": true
+    },
+    {
+      "name": "6.2",
+      "branch": "branch/v6.2",
+      "deprecated": true
+    },
+    {
+      "name": "7.x",
+      "branch": "branch/v7",
+      "deprecated": true
+    },
+    {
+      "name": "8.x",
+      "branch": "branch/v8",
+      "deprecated": true
+    },
+    {
+      "name": "9.x",
+      "branch": "branch/v9",
+      "deprecated": true
+    },
+    {
+      "name": "10.x",
+      "branch": "branch/v10",
+      "deprecated": true
+    },
+    {
+      "name": "11.x",
+      "branch": "branch/v11",
+      "deprecated": true
+    },
+    {
+      "name": "12.x",
+      "branch": "branch/v12",
+      "deprecated": true
+    },
+    {
+      "name": "13.x",
+      "branch": "branch/v13",
+      "deprecated": true
+    },
+    {
+      "name": "14.x",
+      "branch": "branch/v14"
+    },
+    {
+      "name": "15.x",
+      "branch": "branch/v15"
+    },
+    {
+      "name": "16.x",
+      "branch": "master",
+      "latest": true
+    },
+    {
+      "name": "17.x",
+      "branch": "master",
+      "current": true
+    }
+  ]
+}

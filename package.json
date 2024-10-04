@@ -1,0 +1,81 @@
+{
+  "name": "docusaurus",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "git-update": "git submodule update --init --remote --progress",
+    "prepare-files": "npx vite-node ./scripts/prepare-files.mts",
+    "prepare-sanity-data": "npx vite-node ./scripts/prepare-sanity-data.mts",
+    "docusaurus": "docusaurus",
+    "start": "yarn prepare-files && yarn prepare-sanity-data && docusaurus start",
+    "build": "yarn git-update && yarn prepare-files && yarn prepare-sanity-data && docusaurus build",
+    "swizzle": "docusaurus swizzle",
+    "deploy": "docusaurus deploy",
+    "clear": "docusaurus clear",
+    "serve": "docusaurus serve",
+    "write-translations": "docusaurus write-translations",
+    "write-heading-ids": "docusaurus write-heading-ids",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "@docusaurus/core": "^3.4.0",
+    "@docusaurus/plugin-content-docs": "^3.4.0",
+    "@docusaurus/plugin-debug": "^3.4.0",
+    "@docusaurus/plugin-sitemap": "^3.4.0",
+    "@docusaurus/theme-classic": "^3.4.0",
+    "@inkeep/widgets": "^0.2.288",
+    "@mdx-js/react": "^3.0.0",
+    "clsx": "^2.1.1",
+    "date-fns": "^3.6.0",
+    "prism-react-renderer": "^2.3.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-loadable": "^5.5.0",
+    "react-use": "^17.5.0"
+  },
+  "devDependencies": {
+    "@csstools/postcss-global-data": "^2.1.1",
+    "@docusaurus/module-type-aliases": "^3.4.0",
+    "@docusaurus/plugin-client-redirects": "^3.4.0",
+    "@docusaurus/tsconfig": "^3.4.0",
+    "@docusaurus/types": "^3.4.0",
+    "@types/react": "^18.3.3",
+    "ajv": "^8.16.0",
+    "dotenv": "^16.4.5",
+    "hast": "^1.0.0",
+    "js-yaml": "^4.1.0",
+    "mdast": "^3.0.0",
+    "mdast-util-from-markdown": "^2.0.1",
+    "mdast-util-frontmatter": "^2.0.1",
+    "mdast-util-gfm": "^3.0.0",
+    "mdast-util-mdx": "^3.0.0",
+    "micromark-extension-frontmatter": "^2.0.0",
+    "micromark-extension-gfm": "^3.0.0",
+    "micromark-extension-mdxjs": "^3.0.0",
+    "nanoid": "^5.0.7",
+    "postcss": "^8.4.38",
+    "postcss-preset-env": "^9.5.14",
+    "typescript": "~5.5.2",
+    "unified": "^11.0.5",
+    "unified-lint-rule": "^3.0.0",
+    "unist-util-find": "^3.0.0",
+    "unist-util-visit-parents": "^6.0.1",
+    "vfile": "^6.0.1",
+    "vite-node": "^1.6.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 3 chrome version",
+      "last 3 firefox version",
+      "last 5 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=18.0"
+  }
+}

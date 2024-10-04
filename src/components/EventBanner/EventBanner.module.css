@@ -1,0 +1,166 @@
+.banner {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  z-index: 1999;
+  top: 0;
+  background-color: #009984;
+  color: white;
+  height: 48px;
+  gap: 16px;
+  text-decoration: none;
+  max-width: 100vw;
+  @media (--nav) {
+    gap: 24px;
+  }
+  @media (--lg-scr) {
+    height: 37px;
+  }
+}
+.linkWrapper {
+  box-sizing: border-box;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  z-index: 1999;
+  top: 0;
+  background-color: #009984;
+  color: #ffffff;
+  height: 48px;
+  gap: 16px;
+  text-decoration: none;
+  padding: 0 16px;
+
+  &:hover {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  @media (--nav) {
+    gap: 24px;
+    padding: 0;
+    position: relative;
+  }
+  @media (--lg-scr) {
+    height: 37px;
+  }
+}
+
+.mainText {
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 16px;
+  max-width: 600px;
+  @media (min-width: 975px) {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  display: -webkit-box;
+  -webkit-line-clamp: 2 /* Number of lines to show before truncating */;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  @media (--nav) {
+    flex-direction: row;
+    gap: 12px;
+  }
+}
+
+.styledBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 1;
+  gap: 4px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  @media (--nav) {
+    flex-shrink: 0;
+  }
+}
+
+.styledText {
+  font-size: 12px;
+  min-width: fit-content;
+  font-weight: 400;
+  min-width: fit-content;
+  line-height: 16px;
+  @media (--nav) {
+    font-size: 14px;
+    line-height: 18px;
+  }
+}
+
+.linkButton {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  white-space: nowrap;
+  text-decoration: none;
+  font-size: 12px;
+  line-height: 16px;
+  padding: 0;
+  min-width: unset;
+  text-transform: none;
+  vertical-align: inherit;
+  color: white;
+  @media (--nav) {
+    font-size: 14px;
+    line-height: 21px;
+  }
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.linkButton a {
+  text-decoration: none;
+  text-transform: uppercase;
+  color: white;
+}
+.ctaWrapper {
+  display: flex;
+  align-items: center;
+}
+.icon {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.icon svg {
+  height: 12px;
+  max-height: 12px;
+  width: 12px;
+  max-width: 12px;
+  @media (--nav) {
+    height: 16px;
+    max-height: 16px;
+    width: 16px;
+    max-width: 16px;
+  }
+}
+.sideButtonBox {
+  display: none;
+  gap: 24px;
+  padding: 0 32px;
+  height: 100%;
+  @media (min-width: 700px) {
+    display: flex;
+  }
+
+  background-color: #007a6a;
+  @media (--nav) {
+    background-color: #008a77;
+  }
+}

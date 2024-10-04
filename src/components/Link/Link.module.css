@@ -1,0 +1,19 @@
+.wrapper {
+  box-sizing: border-box;
+  min-width: 0;
+  transition: color var(--t-interaction);
+
+  &.docs {
+    color: var(--color-note);
+
+    &:visited {
+      color: var(--color-dark-purple);
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: var(--color-light-purple);
+    }
+  }
+}

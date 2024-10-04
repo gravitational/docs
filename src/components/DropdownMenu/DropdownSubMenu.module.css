@@ -1,0 +1,116 @@
+.subMenuWrapper {
+  display: flex;
+  width: 100%;
+  padding-left: 0;
+  background-color: #f8f7fd;
+  min-width: unset;
+  box-sizing: unset;
+  flex-direction: column;
+  @media (--nav) {
+    flex-direction: row;
+    background-color: transparent;
+  }
+}
+
+.subMenus {
+  display: none;
+  flex-direction: column;
+  border-right: 1px solid #dfdfdf;
+  min-width: unset;
+  box-sizing: unset;
+  @media (--nav) {
+    display: flex;
+  }
+}
+.submenuLink {
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  border-bottom: none;
+  cursor: pointer;
+  color: var(--color-code);
+  @media (--nav) {
+    min-width: 250px;
+    border-bottom: 1px solid #dfdfdf;
+    padding: 28px 16px 28px 24px;
+  }
+  &:hover {
+    background-color: f8f7fd;
+  }
+}
+.subMenu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  min-width: unset;
+  box-sizing: unset;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: bold;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  cursor: pointer;
+  border-bottom: none;
+  @media (--nav) {
+    padding: 28px 16px 28px 24px;
+    width: 250px;
+    border-bottom: 1px solid #dfdfdf;
+  }
+  &.active {
+    background-color: "f8f7fd";
+    color: var(--color-dark-purple);
+  }
+  &:hover {
+    background-color: #f8f7fd;
+  }
+}
+.wrapper {
+  margin-left: 24px;
+  margin-right: 16px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  @media (--nav) {
+    display: none;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  &.active {
+    @media (--nav) {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+}
+.dropdownSection {
+  display: none;
+  margin-left: 0;
+  width: 100%;
+  padding-right: 0;
+  margin-right: 0;
+  border-right: none;
+  @media (--nav) {
+    border-right: 1px solid #dfdfdf;
+    display: block;
+    padding-right: 24px;
+    margin-left: 24px;
+  }
+  &.normal {
+    display: block;
+  }
+  &.last {
+    @media (--nav) {
+      border-right: none;
+    }
+  }
+}

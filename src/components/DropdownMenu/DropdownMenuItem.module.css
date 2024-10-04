@@ -1,0 +1,140 @@
+.wrapper {
+  display: none;
+  @media (--nav) {
+    display: block;
+  }
+  @media (--lg-scr) {
+    display: initial;
+  }
+
+  max-width: min-content;
+}
+
+.styledLink {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-bottom: 24px;
+  text-decoration: none;
+  color: var(--color-code);
+  max-width: unset;
+  @media (--nav) {
+    max-width: 250px;
+    align-items: flex-start;
+  }
+  @media (--lg-scr) {
+    max-width: none;
+  }
+  &:hover,
+  &:active,
+  &:focus {
+    color: var(--color-dark-purple);
+    background-color: none;
+  }
+}
+
+.center {
+  align-items: center;
+}
+
+.imageItem {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  border: 1px solid #f0f2f4;
+  overflow: hidden;
+  width: 180px;
+  min-width: unset;
+  box-sizing: unset;
+}
+.imageBox {
+  width: 180px;
+  max-width: 180px;
+  height: auto;
+  flex-shrink: 0;
+  align-self: center;
+  position: relative;
+  @media (--lg-scr) {
+    flex-shrink: 1;
+  }
+}
+.imageBox img {
+  position: relative;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+.item {
+  margin-left: 8px;
+  @media (--nav) {
+    margin-left: 16px;
+  }
+  &.imageitemText {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    @media (--nav) {
+      min-width: 40%;
+      max-width: 50%;
+      margin-right: 8px;
+    }
+  }
+}
+.itemTitle {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 400;
+  margin: 0;
+  @media (--nav) {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: bold;
+  }
+}
+.description {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 400;
+  margin-bottom: 0;
+  margin-top: 4px;
+  color: var(--color-gray);
+  display: none;
+  @media (--nav) {
+    display: initial;
+  }
+}
+.dateText {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 400;
+  color: var(--color-gray);
+}
+.imageTitle {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 400;
+  @media (--nav) {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: bold;
+  }
+  margin-top: 0;
+}
+.paragraph {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: bold;
+  color: var(--color-dark-purple);
+}
+.imageItemTitle {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 400;
+
+  @media (--nav) {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: bold;
+  }
+}
