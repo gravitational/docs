@@ -483,6 +483,27 @@ Suite("Resolves template variables in includes", () => {
   assert.equal(result, expected);
 });
 
+Suite("Throws an error if a variable is unresolved and has no default", () => {
+  const value = readFileSync(
+    resolve("server/fixtures/includes-vars-erroneous-include.mdx"),
+    "utf-8"
+  );
+
+  const out = transformer(
+    {
+      value,
+      path: "/content/4.0/docs/pages/filename.mdx",
+    },
+    { lint: true }
+  );
+
+  assert.equal(out.messages.length, 1);
+  assert.equal(
+    out.messages[0].reason,
+    "The following partial parameters were not assigned and have no default value: {{ unsupported }}"
+  );
+});
+
 Suite(
   "Resolves relative links in partials based on the path of the partial",
   () => {

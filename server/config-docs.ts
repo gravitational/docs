@@ -211,8 +211,41 @@ export const checkURLsForCorrespondingFiles = (
   }, []);
 };
 
+// checkForRedirectsFromExistingFiles returns an array of redirects in which the
+// source corresponds to a file at a path rooted at dirRoot.
+export const checkForRedirectsFromExistingFiles = (
+  dirRoot: string,
+  redirects: Redirect[]
+): Redirect[] => {
+  let result: Redirect[] = [];
+
+  redirects.forEach((r) => {
+    if (correspondingFileExistsForURL(dirRoot, r.source)) {
+      result.push(r);
+    }
+  });
+  return result;
+};
+
+// checkDuplicateRedirects checks the provided redirects for duplicates and
+// returns an array of Redirect objects. Duplicate checks are based on the
+// source of each redirect.
+export const checkDuplicateRedirects = (redirects: Redirect[]): Redirect[] => {
+  const result: Redirect[] = [];
+  const uniques = new Set();
+  redirects.forEach((r) => {
+    if (uniques.has(r.source)) {
+      result.push(r);
+      return;
+    }
+    uniques.add(r.source);
+  });
+  return result;
+};
+
 // checkURLForCorrespondingFile determines whether a file exists in the content
-// directory rooted at dirRoot for the file corresponding to the provided URL path.// If a file does not exist, it returns false.
+// directory rooted at dirRoot for the file corresponding to the provided URL path.
+// If a file does not exist, it returns false.
 const correspondingFileExistsForURL = (
   dirRoot: string,
   urlpath: string
@@ -323,6 +356,30 @@ export const loadConfig = (version: string) => {
         ": The following navigation slugs or redirect destinations do not " +
         "correspond to actual MDX files:\n\t- " +
         badSlugs.join("\n\t- ")
+    );
+  }
+
+  const redirsFrom = checkForRedirectsFromExistingFiles(
+    join("content", version, "docs", "pages"),
+    config.redirects
+  );
+
+  if (redirsFrom.length > 0) {
+    throw new Error(
+      "Error parsing docs config file " +
+        join("content", version, "docs", "config.json") +
+        ': Each of the following redirects includes a "source" that corresponds to an existing file: ' +
+        JSON.stringify(redirsFrom, null, 2)
+    );
+  }
+
+  const duplicateRedirects = checkDuplicateRedirects(config.redirects);
+  if (duplicateRedirects.length > 0) {
+    throw new Error(
+      "Error parsing docs config file " +
+        join("content", version, "docs", "config.json") +
+        ": Found redirects with duplicate sources: " +
+        JSON.stringify(duplicateRedirects, null, 2)
     );
   }
 
