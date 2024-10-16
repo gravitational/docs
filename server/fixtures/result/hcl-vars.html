@@ -1,0 +1,8 @@
+<p>Assign <var name="proxy" initial="teleport.example.com:443"></var> to the address of
+your Teleport Proxy Service.</p>
+<pre><code class="hljs language-hcl"><span class="hljs-keyword">provider</span> <span class="hljs-string">"teleport"</span> {
+  <span class="hljs-comment"># Update addr to point to your Teleport Cloud tenant URL's host:port</span>
+  addr               = <span class="hljs-string">"</span><var name="proxy"></var><span class="hljs-string">"</span>
+  identity_file_path = <span class="hljs-string">"terraform-identity"</span>
+}
+</code></pre>

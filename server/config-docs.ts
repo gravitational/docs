@@ -65,6 +65,7 @@ export interface NavigationCategory {
   icon: string;
   title: string;
   entries: NavigationItem[];
+  generateFrom?: string;
 }
 
 const latest = getLatestVersion();

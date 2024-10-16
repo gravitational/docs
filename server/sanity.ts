@@ -18,6 +18,18 @@ const bannerQuery = `*[_type == "topBanner"][0] {
       defaultContent,
       sideButtons,
     }`;
+
+interface BannerResponse {
+  result: BannerData;
+}
+
+interface BannerData {
+  bannerType: string;
+  event: any;
+  cta: any;
+  sideButtons: any;
+}
+
 export async function fetchEventsFromSanity() {
   const apiUrl = `https://${PROJECT_ID}.api.sanity.io/v1/data/query/${DATASET}?query=${encodeURIComponent(
     bannerQuery
@@ -25,7 +37,7 @@ export async function fetchEventsFromSanity() {
 
   const response = await fetch(apiUrl);
 
-  const data = await response.json().then((res) => res?.result);
+  const data = await response.json().then((res: BannerResponse) => res?.result);
   if (!data) return undefined;
   if (data?.bannerType === "event")
     return {
@@ -116,7 +128,7 @@ export const getNavData = async () => {
   )}`;
   const response = await fetch(apiUrl);
 
-  const data = await response.json().then((res) => res?.result);
+  const data = await response.json().then((res: any) => res?.result);
   if (!data) return undefined;
   return data;
 };
