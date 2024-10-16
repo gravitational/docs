@@ -82,8 +82,8 @@ export async function fetchVideoMeta(id: string): Promise<Meta | FullMeta> {
         `${YOUTUBE_API_URL}/${REQUEST_PATH}?part=snippet&part=contentDetails&id=${id}&key=${YOUTUBE_API_KEY}`
       );
 
-      const rawData: RawVideoMeta = await response.json();
-      const rawDataItem = rawData.items[0];
+      const rawData: unknown = await response.json();
+      const rawDataItem = (rawData as RawVideoMeta).items[0];
 
       data = {
         href: data.href,

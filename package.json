@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "spellcheck": "bash scripts/check-spelling.sh",
     "git-update": "git submodule update --init --remote --progress",
     "prepare-files": "npx vite-node ./scripts/prepare-files.mts",
     "prepare-sanity-data": "npx vite-node ./scripts/prepare-sanity-data.mts",
@@ -15,7 +16,24 @@
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "typecheck": "tsc"
+    "typecheck": "tsc --noEmit --skipLibCheck --incremental --tsBuildInfoFile node_modules/.cache/tsc/tsbuildinfo --project .",
+    "uvu-test": "loadr -- uvu uvu-tests",
+    "base:eslint": "eslint --cache --cache-location node_modules/.cache/eslint '**/*.{js,jsx,ts,tsx}'",
+    "base:prettier": "prettier '**/*.{js,jsx,ts,tsx,json}'",
+    "lint": "yarn base:eslint --fix && yarn base:prettier --write -l",
+    "lint-check": "yarn base:eslint && yarn base:prettier --check",
+    "markdown-lint": "remark --rc-path .remarkrc.mjs 'content/**/docs/pages/**/*.mdx' --quiet --frail --ignore-pattern '**/includes/**' --silently-ignore",
+    "markdown-lint-external-links": "WITH_EXTERNAL_LINKS=true yarn markdown-lint"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint",
+      "prettier --check"
+    ],
+    "*.{json}": "prettier --check"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "yarn lint-staged"
   },
   "dependencies": {
     "@docusaurus/core": "^3.4.0",
@@ -31,7 +49,8 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-loadable": "^5.5.0",
-    "react-use": "^17.5.0"
+    "react-use": "^17.5.0",
+    "highlightjs-terraform": "https://github.com/highlightjs/highlightjs-terraform#eb1b9661e143a43dff6b58b391128ce5cdad31d4"
   },
   "devDependencies": {
     "@csstools/postcss-global-data": "^2.1.1",
@@ -44,6 +63,8 @@
     "dotenv": "^16.4.5",
     "hast": "^1.0.0",
     "js-yaml": "^4.1.0",
+    "jsdom": "^25.0.1",
+    "loadr": "^0.1.1",
     "mdast": "^3.0.0",
     "mdast-util-from-markdown": "^2.0.1",
     "mdast-util-frontmatter": "^2.0.1",
@@ -55,9 +76,15 @@
     "nanoid": "^5.0.7",
     "postcss": "^8.4.38",
     "postcss-preset-env": "^9.5.14",
+    "rehype-highlight": "^7.0.0",
+    "rehype-stringify": "^10.0.1",
+    "remark": "^15.0.1",
+    "to-vfile": "^8.0.0",
+    "tsm": "^2.3.0",
     "typescript": "~5.5.2",
     "unified": "^11.0.5",
     "unified-lint-rule": "^3.0.0",
+    "unist": "^0.0.1",
     "unist-util-find": "^3.0.0",
     "unist-util-visit-parents": "^6.0.1",
     "vfile": "^6.0.1",

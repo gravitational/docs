@@ -7,7 +7,7 @@ import type {
 import type { RootContent as MdastContent } from "mdast";
 import type { Node as AcornNode } from "acorn";
 
-export interface YamlNode extends Node {
+export interface YamlNode extends UnistNode {
   type: "yaml";
   value: string;
 }
