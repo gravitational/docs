@@ -50,7 +50,8 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-loadable": "^5.5.0",
-    "react-use": "^17.5.0"
+    "react-use": "^17.5.0",
+    "highlightjs-terraform": "https://github.com/highlightjs/highlightjs-terraform#eb1b9661e143a43dff6b58b391128ce5cdad31d4"
   },
   "devDependencies": {
     "@csstools/postcss-global-data": "^2.1.1",

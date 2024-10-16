@@ -35,7 +35,6 @@ const transformer = (options: VFileOptions) =>
       aliases: {
         bash: ["bsh", "systemd", "code", "powershell"],
       },
-      languages: {},
     })
     .use(rehypeMdxToHast)
     // rehypeStringify is not used in transformToAST. We use it to generate
