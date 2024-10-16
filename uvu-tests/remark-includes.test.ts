@@ -14,6 +14,9 @@ import remarkIncludes, {
   parseParamDefaults,
   resolveParamValue,
 } from "../server/remark-includes";
+import {
+  updatePathsInIncludes,
+} from "../server/asset-path-helpers";
 
 const transformer = (
   vfileOptions: VFileOptions,
@@ -26,6 +29,7 @@ const transformer = (
     .use(remarkGFM)
     .use(remarkIncludes, {
       rootDir: "server/fixtures/includes/",
+      updatePaths: updatePathsInIncludes,
       ...pluginOptions,
     })
     .processSync(file);
