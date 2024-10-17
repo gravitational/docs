@@ -101,8 +101,9 @@ const categoryPagePathForDir = (fs, dirPath) => {
   const innerExists = fs.existsSync(innerCategoryPage);
 
   if (outerExists && innerExists) {
-    // Docusaurus only accepts a category page within its associated directory.
-    return innerCategoryPage;
+    throw new Error(
+      `cannot generate the docs navigation sidebar due to an ambiguous category page: remove ${outerCategoryPage} and keep ${innerCategoryPage}`
+    );
   }
   if (outerExists) {
     throw new Error(
