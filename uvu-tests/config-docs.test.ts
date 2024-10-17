@@ -295,6 +295,29 @@ title: MySQL Guide
   }
 );
 
+Suite(
+  "generateNavPaths throws if there is a category page at an incorrect location",
+  () => {
+    const files = {
+      "/docs/pages/database-access/guides/postgres.mdx": `---
+title: Postgres Guide
+---`,
+      "/docs/pages/database-access/guides/mysql.mdx": `---
+title: MySQL Guide
+---`,
+      "/docs/pages/database-access/guides.mdx": `---
+title: "Database Access Guides"
+---`,
+    };
+
+    const vol = Volume.fromJSON(files);
+    const fs = createFsFromVolume(vol);
+    assert.throws(() => {
+      generateNavPaths(fs, "/docs/pages/database-access");
+    }, "database-access/guides/guides.mdx");
+  }
+);
+
 Suite("generateNavPaths shows third-level pages on the sidebar", () => {
   const files = {
     "/docs/pages/database-access/guides/guides.mdx": `---
