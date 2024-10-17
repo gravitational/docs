@@ -481,7 +481,6 @@ title: Deploying the Database Service on Kubernetes
   assert.throws(
     () => {
       const actual = generateNavPaths(fs, "/docs/pages/database-access");
-      console.log(actual);
     },
     "database-access/deployment/deployment.mdx",
     "database-access/deployment.mdx"

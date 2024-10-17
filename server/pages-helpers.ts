@@ -90,9 +90,8 @@ const sortByTitle = (a, b) => {
   }
 };
 
-// categoryPagePathForDir looks for a category page at the same directory level
-// as its associated directory OR within the associated directory. Throws an
-// error if there is no category page for the directory.
+// categoryPagePathForDir looks for a category page within the associated
+// directory. Throws an error if there is no category page for the directory.
 const categoryPagePathForDir = (fs, dirPath) => {
   const { name } = parse(dirPath);
 
@@ -102,18 +101,19 @@ const categoryPagePathForDir = (fs, dirPath) => {
   const innerExists = fs.existsSync(innerCategoryPage);
 
   if (outerExists && innerExists) {
-    throw new Error(
-      `cannot generate the docs navigation sidebar due to an ambiguous category page: must have a page named ${outerCategoryPage} or ${innerCategoryPage}, not not both`
-    );
+    // Docusaurus only accepts a category page within its associated directory.
+    return innerCategoryPage;
   }
   if (outerExists) {
-    return outerCategoryPage;
+    throw new Error(
+      `subdirectory in generated sidebar section ${dirPath} needs a page called ${innerCategoryPage}. Move ${outerCategoryPage}`
+    );
   }
   if (innerExists) {
     return innerCategoryPage;
   }
   throw new Error(
-    `subdirectory in generated sidebar section ${dirPath} has no category page ${innerCategoryPage} or ${outerCategoryPage}`
+    `subdirectory in generated sidebar section ${dirPath} has no category page ${innerCategoryPage}`
   );
 };
 
