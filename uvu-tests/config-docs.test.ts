@@ -1,11 +1,17 @@
 import { Redirect } from "next/dist/lib/load-custom-routes";
 import { suite } from "uvu";
 import * as assert from "uvu/assert";
-import { Config, checkURLsForCorrespondingFiles } from "../server/config-docs";
+import {
+  Config,
+  checkURLsForCorrespondingFiles,
+  checkForRedirectsFromExistingFiles,
+  checkDuplicateRedirects,
+} from "../server/config-docs";
 import { generateNavPaths } from "../server/pages-helpers";
 import { randomUUID } from "crypto";
 import { join } from "path";
 import { Volume, createFsFromVolume } from "memfs";
+import type { Redirect } from "next/dist/lib/load-custom-routes";
 
 const Suite = suite("server/config-docs");
 
@@ -457,6 +463,91 @@ title: Deploying the Database Service on Kubernetes
     "database-access/deployment/deployment.mdx",
     "database-access/deployment.mdx"
   );
+});
+
+Suite("Checks for duplicate redirects", () => {
+  const redirects: Array<Redirect> = [
+    {
+      source: "/getting-started/",
+      destination: "/get-started/",
+      permanent: true,
+    },
+    {
+      source: "/getting-started/",
+      destination: "/get-started/",
+      permanent: true,
+    },
+    {
+      source: "/application-access/",
+      destination: "/connecting-apps/",
+      permanent: true,
+    },
+    {
+      source: "/application-access/",
+      destination: "/connecting-apps/",
+      permanent: true,
+    },
+    {
+      source: "/database-access/",
+      destination: "/connecting-databases/",
+      permanent: true,
+    },
+  ];
+
+  const expected: Array<Redirect> = [
+    {
+      source: "/getting-started/",
+      destination: "/get-started/",
+      permanent: true,
+    },
+    {
+      source: "/application-access/",
+      destination: "/connecting-apps/",
+      permanent: true,
+    },
+  ];
+
+  const actual = checkDuplicateRedirects(redirects);
+  assert.equal(actual, expected);
+});
+
+Suite("Checks for redirects from existing paths", () => {
+  const redirects: Array<Redirect> = [
+    {
+      source: "/contact/offices/",
+      destination: "/get-in-touch/offices/",
+      permanent: true,
+    },
+    {
+      source: "/locations/",
+      destination: "/contact/offices/",
+      permanent: true,
+    },
+    {
+      source: "/about/projects/project1/",
+      destination: "/project1/",
+      permanent: true,
+    },
+  ];
+
+  const expected: Array<Redirect> = [
+    {
+      source: "/contact/offices/",
+      destination: "/get-in-touch/offices/",
+      permanent: true,
+    },
+    {
+      source: "/about/projects/project1/",
+      destination: "/project1/",
+      permanent: true,
+    },
+  ];
+
+  const actual = checkForRedirectsFromExistingFiles(
+    join("server", "fixtures", "fake-content"),
+    redirects
+  );
+  assert.equal(actual, expected);
 });
 
 Suite.run();

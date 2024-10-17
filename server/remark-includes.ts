@@ -244,6 +244,21 @@ const resolveIncludes = ({
         content = content.replace(varRegexp, finalVal);
       }
 
+      // Catch unresolved parameters, which can break docs builds
+      const paramRE = new RegExp(`{{ ?\\w+ ?}}`, "g");
+      const unresolvedParams = Array.from(content.matchAll(paramRE));
+      if (unresolvedParams.length > 0) {
+        const errs = unresolvedParams
+          .map((el) => {
+            return el[0];
+          })
+          .join(",");
+
+        error =
+          `${includePath}: the following partial parameters were not assigned and have no default value: ` +
+          errs;
+      }
+
       return content;
     } else {
       error = `Wrong import path ${includePath} in file ${filePath}.`;
