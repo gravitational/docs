@@ -500,7 +500,7 @@ Suite("Throws an error if a variable is unresolved and has no default", () => {
   assert.equal(out.messages.length, 1);
   assert.equal(
     out.messages[0].reason,
-    "The following partial parameters were not assigned and have no default value: {{ unsupported }}"
+    "install-version.mdx: the following partial parameters were not assigned and have no default value: {{ unsupported }}"
   );
 });
 
