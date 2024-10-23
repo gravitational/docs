@@ -41,6 +41,11 @@ export const sendPageview = async () => {
   ph?.capture("$pageview");
 };
 
+export const sendPageNotFoundError = async () => {
+  const ph = await posthog();
+  ph?.capture("web.errors.pageNotFound");
+};
+
 export const sendDocsFeedback = async (rating: string, comment: string) => {
   const ph = await posthog();
 

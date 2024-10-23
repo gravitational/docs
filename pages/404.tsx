@@ -1,15 +1,63 @@
 // 404.js
 
 import Link from "next/link";
+import { sendPageNotFoundError } from "utils/posthog";
+import { useEffect } from "react";
+import SiteHeader from "components/Header";
+import Footer from "layouts/DocsPage/Footer";
 
 export default function FourOhFour() {
+  useEffect(() => {
+    void sendPageNotFoundError(); // Report Error to PostHog for tracking
+  }, []);
+
   return (
-    <>
-      <title>404 | Teleport</title>
-      <h1>404 - Page Not Found</h1>
-      We&apos;re very sorry - we could not find the page you were looking for.
-      Please navigate to the Teleport <Link href="/">Documentation</Link> or the
-      &nbsp;<a href="/">Home Page</a> to find what you&apos;re looking for.
-    </>
+    <div>
+      <SiteHeader />
+      <div style={{ padding: "50px" }}>
+        <h1>404 Page Not Found</h1>
+        <p>Sorry, we couldn&apos;t find that page!</p>
+        <p>
+          Go back to Documentation <Link href="/">home</Link>?
+        </p>
+        <h2>Other pages you may find useful</h2>
+        <ul style={{ marginLeft: 1 }}>
+          <li>
+            <a href="https://goteleport.com/">Home Page</a>
+          </li>
+          <li>
+            <Link href="https://goteleport.com/about/">About Us</Link>
+          </li>
+          <li>
+            <Link href="https://goteleport.com/blog/">Blog</Link>
+          </li>
+          <li>
+            <Link href="/support/">Customer Support</Link>
+          </li>
+          <li>
+            <Link href="/">Documentation Home</Link>
+          </li>
+          <li>
+            <Link href="installation">Installation</Link>
+          </li>
+          <li>
+            <Link href="server-access">Teleport Server Access</Link>
+          </li>
+          <li>
+            <Link href="kubernetes-access">Teleport Kubernetes Access</Link>
+          </li>
+          <li>
+            <Link href="database-access">Teleport Database Access</Link>
+          </li>
+          <li>
+            <Link href="desktop-access">Teleport Desktop Access</Link>
+          </li>
+          <li>
+            <Link href="application-access">Teleport Application Access</Link>
+          </li>
+        </ul>
+      </div>
+      <Footer section={true}></Footer>
+    </div>
   );
 }
