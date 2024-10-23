@@ -32,7 +32,10 @@ export default function FourOhFour() {
             <Link href="https://goteleport.com/blog/">Blog</Link>
           </li>
           <li>
-            <Link href="/support/">Customer Support</Link>
+            <Link href="faq">Frequently Asked Questions</Link>
+          </li>
+          <li>
+            <Link href="https://goteleport.com/support/">Help & Support</Link>
           </li>
           <li>
             <Link href="/">Documentation Home</Link>
@@ -41,19 +44,19 @@ export default function FourOhFour() {
             <Link href="installation">Installation</Link>
           </li>
           <li>
-            <Link href="server-access">Teleport Server Access</Link>
+            <Link href="server-access/guides">Teleport Server Access</Link>
           </li>
           <li>
             <Link href="kubernetes-access">Teleport Kubernetes Access</Link>
           </li>
           <li>
-            <Link href="database-access">Teleport Database Access</Link>
+            <Link href="database-access/guides">Teleport Database Access</Link>
           </li>
           <li>
             <Link href="desktop-access">Teleport Desktop Access</Link>
           </li>
           <li>
-            <Link href="application-access">Teleport Application Access</Link>
+            <Link href="application-access/guides">Teleport Application Access</Link>
           </li>
         </ul>
       </div>
