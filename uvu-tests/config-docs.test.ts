@@ -11,6 +11,7 @@ import { generateNavPaths } from "../server/pages-helpers";
 import { randomUUID } from "crypto";
 import { join } from "path";
 import { Volume, createFsFromVolume } from "memfs";
+import type { Redirect } from "next/dist/lib/load-custom-routes";
 
 const Suite = suite("server/config-docs");
 
