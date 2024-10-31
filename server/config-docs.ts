@@ -253,17 +253,13 @@ const correspondingFileExistsForURL = (
   // Each URL in the docs config begins at docs/pages within a given version's
   // content directory. Get the MDX file for a given URL and check if it
   // exists in the filesystem. URL paths must point to (a) an MDX file with
-  // the same name as the final path segment; (b) a file named "index.mdx"; or
-  // (c) a file named "introduction.mdx".
+  // the same name as the final path segment; or (b) a file named "index.mdx".
   const mdxPath = urlpath.replace(/\/$/, ".mdx");
   const docsPagePath = resolve(join(dirRoot, mdxPath));
-
   const indexPath = resolve(join(dirRoot, urlpath + "index.mdx"));
 
-  const introPath = resolve(join(dirRoot, urlpath + "introduction.mdx"));
-
   if (
-    [docsPagePath, indexPath, introPath].find((p) => {
+    [docsPagePath, indexPath].find((p) => {
       return fs.existsSync(p);
     }) == undefined
   ) {
