@@ -62,7 +62,8 @@
     },
     {
       "name": "14.x",
-      "branch": "branch/v14"
+      "branch": "branch/v14",
+      "deprecated": true
     },
     {
       "name": "15.x",
@@ -75,6 +76,10 @@
     },
     {
       "name": "17.x",
+      "branch": "branch/v17"
+    },
+    {
+      "name": "edge",
       "branch": "master"
     }
   ]
