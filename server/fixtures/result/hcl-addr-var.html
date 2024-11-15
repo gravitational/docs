@@ -1,0 +1,30 @@
+<ol>
+<li>
+<p>Create a <code>main.tf</code> file containing this minimal Terraform code:</p>
+<pre><code class="hljs language-hcl"><span class="hljs-keyword">terraform</span> {
+  required_providers {
+    teleport = {
+      source  = <span class="hljs-string">"terraform.releases.teleport.dev/gravitational/teleport"</span>
+      version = <span class="hljs-string">"~> (=teleport.major_version=).0"</span>
+    }
+  }
+}
+
+<span class="hljs-keyword">provider</span> <span class="hljs-string">"teleport"</span> {
+  addr               = '<var name="teleport.example.com:443"></var>'
+}
+</code></pre>
+</li>
+<li>
+<p>Then, init your Terraform working directory to download the Teleport provider:</p>
+<pre><code class="hljs language-code">$ terraform init
+Initializing the backend...
+
+Initializing provider plugins...
+- Finding terraform.releases.teleport.dev/gravitational/teleport versions matching ...
+</code></pre>
+</li>
+<li>
+<p>Finally, run a Terraform plan:</p>
+</li>
+</ol>

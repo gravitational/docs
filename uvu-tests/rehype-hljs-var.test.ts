@@ -145,4 +145,19 @@ Suite("Ignore VarList in code snippet components", () => {
   });
 });
 
+Suite("Next node as one of several code node children", () => {
+  const result = transformer({
+    value: readFileSync(resolve("server/fixtures/hcl-addr-var.mdx"), "utf-8"),
+    path: "/docs/index.mdx",
+  });
+
+  assert.equal(
+    (result.value as string).trim(),
+    readFileSync(
+      resolve("server/fixtures/result/hcl-addr-var.html"),
+      "utf-8"
+    ).trim()
+  );
+});
+
 Suite.run();

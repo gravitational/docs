@@ -1,0 +1,29 @@
+1. Create a `main.tf` file containing this minimal Terraform code:
+
+   ```hcl
+   terraform {
+     required_providers {
+       teleport = {
+         source  = "terraform.releases.teleport.dev/gravitational/teleport"
+         version = "~> (=teleport.major_version=).0"
+       }
+     }
+   }
+   
+   provider "teleport" {
+     addr               = '<Var name="teleport.example.com:443" />'
+   }
+   ```
+   
+1. Then, init your Terraform working directory to download the Teleport provider:
+   
+   ```code
+   $ terraform init
+   Initializing the backend...
+   
+   Initializing provider plugins...
+   - Finding terraform.releases.teleport.dev/gravitational/teleport versions matching ...
+   ```
+   
+1. Finally, run a Terraform plan:
+
