@@ -63,7 +63,6 @@ const DocsPage = ({
   const icon = navigation[categoryId]?.icon || "book";
 
   const isOldVersion = available.indexOf(current) < available.indexOf(latest);
-  const isBetaVersion = available.indexOf(current) > available.indexOf(latest);
 
   let path = getPath(latest);
 
@@ -104,18 +103,11 @@ const DocsPage = ({
           )}
           <div className={cn(styles["main-wrapper"], styles[layout])}>
             <div className={styles.main}>
-              {(isOldVersion || isBetaVersion) && (
+              {isOldVersion && (
                 <Notice type="danger" className={styles.notice}>
                   {isOldVersion && (
                     <>
                       This chapter covers a past release: {current}. We
-                      recommend the <Link href={`${urlCurrent}`}>latest</Link>{" "}
-                      version instead.
-                    </>
-                  )}
-                  {isBetaVersion && (
-                    <>
-                      This chapter covers an upcoming release: {current}. We
                       recommend the <Link href={`${urlCurrent}`}>latest</Link>{" "}
                       version instead.
                     </>

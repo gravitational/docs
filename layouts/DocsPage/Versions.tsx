@@ -7,6 +7,9 @@ import styles from "./Versions.module.css";
 
 // renders strikethrough for deprecated versions
 const renderVersion = (version: VersionsDropdown) => {
+  if (version.value === "edge") {
+    return "Edge version";
+  }
   if (version.deprecated) return <s>Version {version.value}</s>;
 
   if (version.value === "Older Versions") return version.value;
@@ -24,6 +27,10 @@ const validVersion = (thisVersion: string, latestVersion: string) => {
   const majorVersionRe = new RegExp("^[0-9]+");
   const currentMajorVersion = majorVersionRe.exec(thisVersion);
   const latestMajorVersion = majorVersionRe.exec(latestVersion);
+
+  if (thisVersion === "edge") {
+    return true;
+  }
 
   // Can't calculate validity, so the version is invalid. This happens, e.g.,
   // if we're dealing with a dropdown option like "Older Versions".
