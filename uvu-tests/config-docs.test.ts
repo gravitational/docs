@@ -34,11 +34,6 @@ Suite("Ensures that URLs correspond to docs pages", () => {
         title: "About",
         entries: [
           {
-            title: "Introduction",
-            slug: "/about/",
-            forScopes: ["oss"],
-          },
-          {
             title: "Projects",
             slug: "/about/projects/",
             forScopes: ["oss"],
