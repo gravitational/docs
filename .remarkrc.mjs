@@ -5,14 +5,12 @@ import remarkCodeSnippet from "./.build/server/remark-code-snippet.mjs";
 import remarkLintDetails from "./.build/server/remark-lint-details.mjs";
 import remarkLintFrontmatter from "./.build/server/remark-lint-frontmatter.mjs";
 import remarkTOC from "./.build/server/remark-toc.mjs";
-import { remarkLintTeleportDocsLinks} from "./.build/server/lint-teleport-docs-links.mjs"
+import { remarkLintTeleportDocsLinks } from "./.build/server/lint-teleport-docs-links.mjs";
 import {
   getVersion,
   getVersionRootPath,
 } from "./.build/server/docs-helpers.mjs";
-import {
-  loadConfig,
-} from "./.build/server/config-docs.mjs";
+import { loadConfig } from "./.build/server/config-docs.mjs";
 
 const configFix = {
   settings: {
@@ -35,6 +33,8 @@ const configLint = {
     "frontmatter",
     "mdx",
     "preset-lint-markdown-style-guide",
+    ["lint-emphasis-marker", false],
+    ["lint-unordered-list-marker-style", false],
     ["lint-table-pipe-alignment", false],
     ["lint-table-cell-padding", false],
     ["lint-maximum-line-length", false],
@@ -46,7 +46,7 @@ const configLint = {
     ["lint-list-item-spacing", { checkBlanks: true }],
     ["lint-no-shell-dollars", false],
     ["lint-list-item-indent", "space"],
-    ["lint-ordered-list-marker-value", "single"],
+    ["lint-ordered-list-marker-value", false],
     ["lint-maximum-heading-length", false],
     ["lint-no-shortcut-reference-link", false],
     ["lint-no-file-name-irregular-characters", false],
