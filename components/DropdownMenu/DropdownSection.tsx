@@ -10,6 +10,7 @@ export interface DropdownMenuProps {
   isImageLink?: boolean;
   childLength?: number;
   isFirst: boolean;
+  inTwoColumns?: boolean;
 }
 
 const DropdownSection = ({
@@ -22,6 +23,7 @@ const DropdownSection = ({
   childLength = 3,
   isFirst,
   className,
+  inTwoColumns = false,
   ...props
 }: DropdownMenuProps & React.HTMLAttributes<HTMLDivElement>) => {
   const textExists = title || subtitle ? true : false;
@@ -40,7 +42,13 @@ const DropdownSection = ({
           {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
         </div>
       )}
-      <div className={cn(styles.sectionBox, textExists && styles.hasText)}>
+      <div
+        className={cn(
+          styles.sectionBox,
+          textExists && styles.hasText,
+          inTwoColumns && styles.inTwoColumns
+        )}
+      >
         {children}
       </div>
     </div>

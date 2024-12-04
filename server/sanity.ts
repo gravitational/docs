@@ -91,7 +91,8 @@ const navQuery = `
               imageDate
             }
           }
-        }
+        },
+        inTwoColumns
       }
     }
   },

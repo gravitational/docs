@@ -61,3 +61,12 @@
     }
   }
 }
+
+.inTwoColumns {
+  display: grid;
+  grid-template-columns: 1fr;
+  column-gap: 4px;
+  @media (--nav) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
