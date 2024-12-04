@@ -26,6 +26,7 @@ type NavSection = {
       } | null;
     };
   }[];
+  inTwoColumns?: boolean | null;
 };
 export type NavigationItem = {
   title: string;
