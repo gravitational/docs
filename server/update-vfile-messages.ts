@@ -8,14 +8,12 @@ interface UpdateMessagesOptions {
   vfile: VFile;
   startIndex: number;
   ruleId: string;
-  source: string;
 }
 
 export default function updateMessages({
   vfile,
   startIndex,
   ruleId,
-  source,
 }: UpdateMessagesOptions) {
   let index = startIndex;
 
@@ -23,7 +21,6 @@ export default function updateMessages({
     const message = vfile.messages[index];
 
     message.ruleId = ruleId;
-    message.source = source;
     message.fatal = true;
 
     index++;
