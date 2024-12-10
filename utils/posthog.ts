@@ -54,3 +54,11 @@ export const sendDocsFeedback = async (rating: string, comment: string) => {
     "web.docs.comment": comment,
   });
 };
+
+export const sendEngagedView = async () => {
+  const ph = await posthog();
+  ph?.capture("web.engagement.timer", {
+    "web.engagement.sessionTimerThreshold": 30,
+    "web.engagement.sessionPageThreshold": 2,
+  });
+};

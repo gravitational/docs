@@ -3,6 +3,7 @@ import NextLink, { LinkProps as NextLinkProps } from "next/link";
 import { isHash, isExternalLink, isLocalAssetFile } from "utils/url";
 import { useNormalizedHref } from "./hooks";
 import styles from "./Link.module.css";
+import { TrackingEvent } from "utils/tracking";
 
 export interface LinkProps extends Omit<NextLinkProps, "href"> {
   passthrough?: boolean;
@@ -25,6 +26,7 @@ const Link = ({
   prefetch,
   locale,
   scheme,
+  onClick,
   ...linkProps
 }: LinkProps) => {
   const normalizedHref = useNormalizedHref(href);
@@ -74,6 +76,13 @@ const Link = ({
     <NextLink
       {...nextProps}
       prefetch={false}
+      onClick={(e) => {
+        TrackingEvent("internal_link_click", {
+          title: e.currentTarget.firstChild.nodeValue || "",
+          href: href,
+        });
+        onClick && onClick(e);
+      }}
       className={cn(styles.wrapper, styles[scheme], className)}
     >
       {children}
