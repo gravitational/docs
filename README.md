@@ -22,12 +22,3 @@ following guides:
   available to documentation authors.
 - [Documentation style guide](docs-contributors/style-guide.md): Rules for
   maintaining consistent Teleport docs.
-
-## Docs engine development
-
-Read the following guides to learn how to work on the Teleport docs engine:
-
-- [Yarn command reference](docs-contributors/yarn-commands.md): `yarn` commands
-  available for development-related tasks.
-- [Docs configuration guide](docs-contributors/config-guide.md): Options for
-  configuring the Teleport docs site.
