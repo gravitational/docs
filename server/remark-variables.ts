@@ -142,7 +142,6 @@ export default function remarkVariables({
       vfile,
       startIndex: lastErrorIndex,
       ruleId: "variables",
-      source: "remark-lint",
     });
   };
 }
